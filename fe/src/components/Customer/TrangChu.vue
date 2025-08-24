@@ -1,6 +1,32 @@
 <template>
     <div>
-        trang của khách hàng
+        <div id="carouselExample" class="carousel slide">
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <img src="https://bizweb.dktcdn.net/100/295/221/themes/894730/assets/slider_2.jpg?1753157779024"
+                        class="d-block w-100" style="height: 400px;" alt="...">
+                </div>
+                <div class="carousel-item">
+                    <img src="https://bizweb.dktcdn.net/100/295/221/themes/894730/assets/slider_2.jpg?1753157779024"
+                        class="d-block w-100" alt="...">
+                </div>
+                <div class="carousel-item">
+                    <img src="https://bizweb.dktcdn.net/100/295/221/themes/894730/assets/slider_2.jpg?1753157779024"
+                        class="d-block w-100" alt="...">
+                </div>
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+        </div>
+        <div class="container">
+            heheheheh
+        </div>
     </div>
 </template>
 <script>

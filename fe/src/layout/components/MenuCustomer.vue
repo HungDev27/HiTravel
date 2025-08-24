@@ -1,6 +1,6 @@
 <template>
     <header>
-        <nav class="navbar navbar-expand-lg navbar-dark py-0" style="background-color: #3399FF">
+        <nav class="navbar navbar-expand-lg bd-navbar sticky-top" style="background-color: #3399FF">
             <div class="container"> <a class="navbar-brand fs-4 fw-bold" href="#"><span
                         class="text-danger"><i>Hi</i></span><i>Travel</i></a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
@@ -17,8 +17,9 @@
                                         Chủ</b></a>
                             </li>
                         </router-link>
-                        <router-link to="/">
-                            <li class="nav-item"> <a class="nav-link text-light fs-6" href="/"><b>Giới Thiệu</b></a>
+                        <router-link to="/gioi-thieu">
+                            <li class="nav-item"> <a class="nav-link text-light fs-6" href="/gioi-thieu"><b>Giới
+                                        Thiệu</b></a>
                             </li>
                         </router-link>
                         <router-link to="/">
@@ -47,8 +48,9 @@
                             <li class="nav-item"> <a class="nav-link text-light fs-6" href="/"><b>Faqs</b></a>
                             </li>
                         </router-link>
-                        <router-link to="/about">
-                            <li class="nav-item"> <a class="nav-link text-light fs-6" href="/"><b>Liên Hệ</b></a>
+                        <router-link to="/lien-he">
+                            <li class="nav-item"> <a class="nav-link text-light fs-6" href="/gioi-thieu"><b>Liên
+                                        Hệ</b></a>
                             </li>
                         </router-link>
                     </ul>

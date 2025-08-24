@@ -102,7 +102,7 @@
 
         <!-- Copyright -->
         <div class="text-center p-2 " style="background-color: #363636; font-size: 17px;">
-            © 2025 STARCINEMA. All rights reserved.
+            © 2025 HITRAVEL. All rights reserved.
         </div>
     </footer>
 </template>

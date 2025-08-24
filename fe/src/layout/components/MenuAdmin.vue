@@ -3,7 +3,7 @@
         <div class="nav-container primary-menu ">
             <div class="mobile-topbar-header">
                 <div>
-                    <img src="assets/images/logo-icon.png" class="logo-icon" alt="logo icon">
+                    <img src="../../assets/images/logo-icon.png" class="logo-icon" alt="logo icon">
                 </div>
                 <div>
                     <h4 class="logo-text">Rukada</h4>
@@ -51,7 +51,7 @@
                                         class="bx bx-right-arrow-alt"></i>Forms Layouts</a>
                             </li>
                         </ul>
-                    </li>
+                    </li>   
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle dropdown-toggle-nocaret" href="javascript:;"
                             data-bs-toggle="dropdown">

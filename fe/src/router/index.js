@@ -34,6 +34,11 @@ const routes = [
         component: ()=>import('../components/Customer/GioiThieu.vue'),
         meta: { layout: "customer" },
     },
+    {
+        path : '/faqs',
+        component: ()=>import('../components/Customer/Faqs.vue'),
+        meta: { layout: "customer" },
+    },
 ]
 
 const router = createRouter({

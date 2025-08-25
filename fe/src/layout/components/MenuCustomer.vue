@@ -44,8 +44,8 @@
                             </li>
                         </router-link>
 
-                        <router-link to="/about">
-                            <li class="nav-item"> <a class="nav-link text-light fs-6" href="/"><b>Faqs</b></a>
+                        <router-link to="/faqs">
+                            <li class="nav-item"> <a class="nav-link text-light fs-6" href="/faqs"><b>Faqs</b></a>
                             </li>
                         </router-link>
                         <router-link to="/lien-he">

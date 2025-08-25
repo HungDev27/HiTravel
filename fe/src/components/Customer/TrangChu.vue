@@ -1,4 +1,8 @@
 <template>
+
+    <head>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+    </head>
     <div>
         <div id="carouselExample" class="carousel slide">
             <div class="carousel-inner">
@@ -25,11 +29,33 @@
             </button>
         </div>
         <div class="container">
-            heheheheh
+            <div class="card mt-4 border border-primary mb-3">
+                <div class="card-body">
+                    <div class="d-flex flex-row mb-3">
+                        <div class="p-2"><img src="../../assets/images/homecustomer/search-history.png" alt=""></div>
+                        <div class="p-2">
+                            <h3 class="text-primary"><b>Điểm đến xem gần đây</b></h3>
+                        </div>
+                    </div>
+                    <div class="position-relative">
+                         <i class="bi bi-geo-alt position-absolute fa-2x" style="top:50%; left:10px; transform:translateY(-50%); color:#007bff;"></i>
+                        <input type="text" class="form-control ps-5" placeholder="Bạn muốn đi đâu?">
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <label>Chọn điểm đi:</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
+
+
     </div>
+
 </template>
 <script>
+
 export default {
 
 }

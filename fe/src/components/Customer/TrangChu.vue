@@ -1,6 +1,4 @@
 <template>
-    <!-- Bootstrap Icons (giữ nguyên cách bạn đang nhúng) -->
-
     <head>
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" />
     </head>
@@ -33,7 +31,6 @@
         </div>
 
         <div class="container">
-            <!-- Marquee thay cho <marquee> cũ -->
             <div class="marquee-box mt-3">
                 <span class="marquee-text">
                     <h6 class="m-0"><i><span class="text-warning">2025</span> Ghi dấu từng khoảnh khắc</i></h6>
@@ -51,7 +48,7 @@
                         </div>
                     </div>
 
-                    <div class="row ms-2 me-2 gy-3">
+                    <div class="row ms-2 me-2 gy-3 mb-2">
                         <div class="col-lg-4">
                             <label for="selectFrom" class="form-label fw-bold">Chọn điểm đi<span
                                     class="text-danger">*</span></label>
@@ -64,13 +61,6 @@
                                 <option value="5">Huế</option>
                                 <option value="6">Quy Nhơn</option>
                                 <option value="7">Phú Quốc</option>
-                                <option value="8">Úc</option>
-                                <option value="9">Nhật Bản</option>
-                                <option value="10">Dubai</option>
-                                <option value="11">Hàn Quốc</option>
-                                <option value="12">Trung Quốc</option>
-                                <option value="13">Thái Lan</option>
-                                <option value="14">Singapore</option>
                             </select>
                         </div>
 
@@ -86,13 +76,6 @@
                                 <option value="5">Huế</option>
                                 <option value="6">Quy Nhơn</option>
                                 <option value="7">Phú Quốc</option>
-                                <option value="8">Úc</option>
-                                <option value="9">Nhật Bản</option>
-                                <option value="10">Dubai</option>
-                                <option value="11">Hàn Quốc</option>
-                                <option value="12">Trung Quốc</option>
-                                <option value="13">Thái Lan</option>
-                                <option value="14">Singapore</option>
                             </select>
                         </div>
 
@@ -124,7 +107,6 @@
 
         <hr class="border border-primary border-1 mt-5 mb-4 opacity-75" />
 
-        <!-- Vì sao chọn HITravel -->
         <div class="container">
             <h2 class="text-center">Vì sao bạn nên chọn HITravel</h2>
             <div class="row gy-4 mt-2">
@@ -177,7 +159,7 @@
 
     <!-- Booking cùng ND Travel -->
     <div class="my-5 position-relative booking-steps">
-        <h2 class="fw-bold text-center mb-2">Booking cùng ND Travel</h2>
+        <h2 class="fw-bold text-center mb-2">Booking cùng HITravel</h2>
         <h6><p class="text-center text-muted mb-5">
             Chỉ với 3 bước đơn giản và dễ dàng có ngay trải nghiệm tuyệt vời!
         </p></h6>

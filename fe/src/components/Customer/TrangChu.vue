@@ -48,7 +48,7 @@
                         </div>
                     </div>
 
-                    <div class="row ms-2 me-2 gy-3 mb-2">
+                    <div class="row ms-2 me-2 gy-3 mb-3">
                         <div class="col-lg-4">
                             <label for="selectFrom" class="form-label fw-bold">Chọn điểm đi<span
                                     class="text-danger">*</span></label>
@@ -109,7 +109,7 @@
 
         <div class="container">
             <h2 class="text-center">Vì sao bạn nên chọn HITravel</h2>
-            <div class="row gy-4 mt-2">
+            <div class="row gy-4 mt-2 mb-4">
                 <div class="col-lg-4 col-md-4">
                     <div class="d-flex flex-row">
                         <div class="p-2 mt-2">

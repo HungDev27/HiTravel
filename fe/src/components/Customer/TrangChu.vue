@@ -11,131 +11,188 @@
         <!-- Thiết kế chức năng -->
         <div class="container">
 
-            <!-- Navbar -->
+            <!-- Navbar TẤT CẢ CÁC TAB -->
             <ul class="nav nav-tabs mt-5" id="myTab" role="tablist">
-                <li class="nav-item" role="presentation">
-                    <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home-tab-pane"
-                        type="button" role="tab" aria-controls="home-tab-pane" aria-selected="true">
+
+                <!-- Tab khách sạn -->
+                <li class="ms-5 nav-item me-3" role="presentation">
+                    <button class="nav-link active d-flex justify-content-start" id="home-tab" data-bs-toggle="tab"
+                        data-bs-target="#home-tab-pane" type="button" role="tab" aria-controls="home-tab-pane"
+                        aria-selected="true">
                         <img src="../../assets/images/homecustomer/hotel.png" alt="">
-                        <h6 class="mt-2">Khách sạn</h6>
+                        <h5 class="mt-2 ms-3">Khách sạn</h5>
                     </button>
                 </li>
-                <li class="nav-item" role="presentation">
-                    <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile-tab-pane"
-                        type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false">
+
+                <!-- Tab Vé máy bay -->
+                <li class="nav-item me-3" role="presentation">
+                    <button class="nav-link d-flex justify-content-start" id="profile-tab" data-bs-toggle="tab"
+                        data-bs-target="#profile-tab-pane" type="button" role="tab" aria-controls="profile-tab-pane"
+                        aria-selected="false">
                         <img src="../../assets/images/homecustomer/plane.png" alt="">
-                        <h6 class="mt-2">Vé máy bay</h6>
+                        <h5 class="mt-2 ms-3">Vé máy bay</h5>
                     </button>
                 </li>
-                <li class="nav-item" role="presentation">
-                    <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact-tab-pane"
-                        type="button" role="tab" aria-controls="contact-tab-pane" aria-selected="false">
+
+                <!-- Tab vé xe khách -->
+                <li class="nav-item me-3" role="presentation">
+                    <button class="nav-link d-flex justify-content-start" id="contact-tab" data-bs-toggle="tab"
+                        data-bs-target="#contact-tab-pane" type="button" role="tab" aria-controls="contact-tab-pane"
+                        aria-selected="false">
                         <img src="../../assets/images/homecustomer/bus.png" alt="">
-                        <h6 class="mt-2">Vé xe khách</h6>
+                        <h5 class="mt-2 ms-3">Vé xe khách</h5>
                     </button>
                 </li>
-                <li class="nav-item" role="presentation">
-                    <button class="nav-link" id="driver-tab" data-bs-toggle="tab" data-bs-target="#driver-tab-pane"
-                        type="button" role="tab" aria-controls="driver-tab-pane" aria-selected="false">
+
+                <!-- Tab đưa đón sân bay -->
+                <li class="nav-item me-3" role="presentation">
+                    <button class="nav-link d-flex justify-content-start" id="driver-tab" data-bs-toggle="tab"
+                        data-bs-target="#driver-tab-pane" type="button" role="tab" aria-controls="driver-tab-pane"
+                        aria-selected="false">
                         <img src="../../assets/images/homecustomer/airport.png" alt="">
-                        <h6 class="mt-2">Đưa đón sân bay</h6>
+                        <h5 class="mt-2 ms-3">Đưa đón sân bay</h5>
                     </button>
                 </li>
-                <li class="nav-item" role="presentation">
-                    <button class="nav-link" id="rental-tab" data-bs-toggle="tab" data-bs-target="#rental-tab-pane"
-                        type="button" role="tab" aria-controls="rental-tab-pane" aria-selected="false">
+
+                <!-- Tab cho thuê xe -->
+                <li class="nav-item me-3" role="presentation">
+                    <button class="nav-link d-flex justify-content-start" id="rental-tab" data-bs-toggle="tab"
+                        data-bs-target="#rental-tab-pane" type="button" role="tab" aria-controls="rental-tab-pane"
+                        aria-selected="false">
                         <img src="../../assets/images/homecustomer/car-rental.png" alt="">
-                        <h6 class="mt-2">Cho thuê xe</h6>
+                        <h5 class="mt-2 ms-3">Cho thuê xe</h5>
                     </button>
                 </li>
-                <li class="nav-item" role="presentation">
-                    <button class="nav-link" data-bs-toggle="modal" data-bs-target="#exampleModal" type="button">
+
+                <!-- Tab thêm -->
+                <li class="nav-item me-5" role="presentation">
+                    <button class="nav-link d-flex justify-content-start" data-bs-toggle="modal"
+                        data-bs-target="#exampleModal" type="button">
                         <img src="../../assets/images/homecustomer/map-travel.png" alt="">
-                        <h6 class="mt-2">Khác</h6>
+                        <h5 class="mt-2 ms-3">Khác</h5>
                     </button>
                 </li>
+
             </ul>
+
+
             <div class="tab-content" id="myTabContent">
+
+                <!-- Nội dung trong tab KHÁCH SẠN -->
                 <div class="tab-pane fade show active" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab"
                     tabindex="0">...</div>
+
+                <!-- Nội dung trong tab VÉ MÁY BAY -->
                 <div class="tab-pane fade" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab"
                     tabindex="0">...</div>
+
+                <!-- Nội dung trong tab VÉ XE KHÁCH -->
                 <div class="tab-pane fade" id="contact-tab-pane" role="tabpanel" aria-labelledby="contact-tab"
-                    tabindex="0">...</div>
-                <div class="tab-pane fade" id="driver-tab-pane" role="tabpanel" aria-labelledby="driver-tab"
-                    tabindex="0">...</div>
-                <div class="tab-pane fade" id="rental-tab-pane" role="tabpanel" aria-labelledby="rental-tab"
-                    tabindex="0">...</div>
-            </div>
-
-            <!-- Card “Điểm đến xem gần đây” -->
-            <div class="card mt-2 border border-primary mb-3 rounded-5">
-                <div class="card-body">
-                    <div class="d-flex flex-row mb-3 align-items-center">
-                        <div class="p-2">
-                            <img src="../../assets/images/homecustomer/search-history.png" alt="recent" />
-                        </div>
-                        <div class="p-2">
-                            <h3 class="text-primary mb-0"><b>Điểm đến xem gần đây</b></h3>
-                        </div>
-                    </div>
-
-                    <div class="row ms-2 me-2 gy-3 mb-3">
-                        <div class="col-lg-4">
-                            <label for="selectFrom" class="form-label fw-bold">Chọn điểm đi<span
-                                    class="text-danger">*</span></label>
-                            <select class="form-select input__noBorder" id="selectFrom" required>
-                                <option value="">-- Chọn điểm đi --</option>
-                                <option value="1">Hà Nội</option>
-                                <option value="2">Hồ Chí Minh</option>
-                                <option value="3">Đà Nẵng</option>
-                                <option value="4">Nha Trang</option>
-                                <option value="5">Huế</option>
-                                <option value="6">Quy Nhơn</option>
-                                <option value="7">Phú Quốc</option>
-                            </select>
+                    tabindex="0">
+                    <div>
+                        <div class="d-flex align-items-center mt-4 ">
+                            <img src="../../assets/images/homecustomer/bus_lane.png">
+                            <h2 style="margin-bottom: 0px;" class="ms-4"><b>Tìm Chuyến Xe</b></h2>
                         </div>
 
-                        <div class="col-lg-4">
-                            <label for="selectTo" class="form-label fw-bold">Chọn điểm đến<span
-                                    class="text-danger">*</span></label>
-                            <select class="form-select input__noBorder" id="selectTo" required>
-                                <option value="">-- Chọn điểm đến --</option>
-                                <option value="1">Hà Nội</option>
-                                <option value="2">Hồ Chí Minh</option>
-                                <option value="3">Đà Nẵng</option>
-                                <option value="4">Nha Trang</option>
-                                <option value="5">Huế</option>
-                                <option value="6">Quy Nhơn</option>
-                                <option value="7">Phú Quốc</option>
-                            </select>
-                        </div>
+                        <div style="display: flex; flex-wrap: wrap; gap: 15px;" class="mt-4">
 
-                        <div class="col-lg-2">
-                            <div class="d-flex align-items-end h-100">
-                                <div class="dropdown w-100">
-                                    <button class="btn btn-info dropdown-toggle w-100" data-bs-toggle="dropdown"
-                                        aria-expanded="false">
-                                        Ngân sách
-                                    </button>
-                                    <ul class="dropdown-menu dropdown-menu-dark w-100">
-                                        <li><a class="dropdown-item" href="#">Từ 5-10 triệu</a></li>
-                                        <li>
-                                            <a class="dropdown-item" href="#">Từ 10-20 triệu</a>
-                                        </li>
-                                        <li><a class="dropdown-item" href="#">Trên 20 triệu</a></li>
-                                    </ul>
-                                </div>
+                            <!-- Điểm đi -->
+                            <div style="flex: 1 1 200px;">
+                                <label for="selectFrom" class="form-label fw-bold">Chọn điểm đi<span
+                                        class="text-danger"> *</span></label>
+                                <select class="form-select input__noBorder" id="selectFrom" required>
+                                    <option value="">-- Chọn điểm đi --</option>
+                                    <option value="1">Hà Nội</option>
+                                    <option value="2">Hồ Chí Minh</option>
+                                    <option value="3">Đà Nẵng</option>
+                                    <option value="4">Nha Trang</option>
+                                    <option value="5">Huế</option>
+                                    <option value="6">Quy Nhơn</option>
+                                    <option value="7">Phú Quốc</option>
+                                </select>
                             </div>
+
+                            <!-- Icon chuyển đổi -->
+                            <div style="display: flex; align-items: center; justify-content: center;">
+                                <button id="swapBtn" class="btn-gradient-blue btn-pill mt-4" type="button"
+                                    aria-label="Đổi điểm đi/đến" :class="{ 'rot-180': rot }" @click="rot = !rot">
+                                    <img src="../../assets/images/homecustomer/exchange.png" class="swap-icon">
+                                </button>
+                            </div>
+
+                            <!-- Điểm đến -->
+                            <div style="flex: 1 1 200px;">
+                                <label for="selectTo" class="form-label fw-bold">Chọn điểm đến<span class="text-danger">
+                                        *</span></label>
+                                <select class="form-select input__noBorder" id="selectTo" required>
+                                    <option value="">-- Chọn điểm đến --</option>
+                                    <option value="1">Hà Nội</option>
+                                    <option value="2">Hồ Chí Minh</option>
+                                    <option value="3">Đà Nẵng</option>
+                                    <option value="4">Nha Trang</option>
+                                    <option value="5">Huế</option>
+                                    <option value="6">Quy Nhơn</option>
+                                    <option value="7">Phú Quốc</option>
+                                </select>
+                            </div>
+
+                            <!-- Ngày đi -->
+                            <div style="flex: 1 1 200px;">
+                                <label for="selectTo" class="form-label fw-bold">Chọn ngày đi<span class="text-danger">
+                                        *</span></label>
+                                <input class="form-control input__noBorder" type="date" required>
+                            </div>
+
+                            <!-- Ngày về -->
+                            <div style="flex: 1 1 200px;">
+                                <label>
+                                    <input type="checkbox" style="margin-right: 8px; margin-bottom: 13px;"> <b>Khứ
+                                        hồi</b>
+                                </label><br>
+                                <input class="form-control input__noBorder" type="date" required>
+                            </div>
+
+                            <div>
+                                <label for="selectTo" class="form-label fw-bold">Số ghế<span class="text-danger">
+                                        *</span></label>
+                            <input class="form-control" type="number" required>
+                            </div>
+
+                            <!-- Nút tìm kiếm -->
+                            <div style="flex: 1 1 100%; text-align: right;">
+                                <button class="btn-gradient-blue btn-pill">
+                                    <img src="../../assets/images/homecustomer/magnifier.png" alt="">
+                                    Tìm kiếm</button>
+                            </div>
+
+
                         </div>
 
-                        <div class="col-lg-2">
-                            <div class="d-flex align-items-end h-100">
-                                <button class="btn-gradient-blue btn-pill">Tìm kiếm</button>
+                        <!-- Gợi ý nhanh -->
+                        <div>
+                            <strong>Gợi ý nhanh:</strong><br>
+                            <div style="margin-top: 10px; display: flex; flex-wrap: wrap; gap: 10px;">
+                                <button class="btn-gradient-blue btn-pill btn-pill">
+                                    Đà Nẵng - Đà Lạt</button>
+                                <button class="btn-gradient-blue btn-pill btn-pill">
+                                    Đà Nẵng - Cần Thơ</button>
+                                <button class="btn-gradient-blue btn-pill btn-pill">
+                                    Đà Nẵng - Hồ Chí Minh</button>
+                                <button class="btn-gradient-blue btn-pill btn-pill">
+                                    Đà Nẵng - Nha Trang</button>
                             </div>
                         </div>
                     </div>
                 </div>
+
+                <!-- Nội dung trong tab CHO THUÊ XE -->
+                <div class="tab-pane fade" id="driver-tab-pane" role="tabpanel" aria-labelledby="driver-tab"
+                    tabindex="0">...</div>
+
+                <!-- Nội dung trong tab THÊM -->
+                <div class="tab-pane fade" id="rental-tab-pane" role="tabpanel" aria-labelledby="rental-tab"
+                    tabindex="0">...</div>
             </div>
         </div>
 
@@ -286,10 +343,27 @@
 import Carousel from "../Customer/Carousel.vue";
 export default {
     components: { Carousel },
+    data() {
+        return {
+            rot: false,
+        };
+    },
 };
 </script>
 
 <style scoped>
+.swap-icon {
+    width: 24px;
+    height: 24px;
+    transform-origin: center;
+    transition: transform .28s ease;
+}
+
+/* ảnh xoay 180° */
+.rot-180 .swap-icon {
+    transform: rotate(180deg);
+}
+
 .input__noBorder {
     border-radius: 12px;
 }
@@ -383,14 +457,10 @@ export default {
     }
 }
 
-/* Nút gradient xanh */
 .btn-gradient-blue {
-    --from: #001a6e;
-    /* indigo */
-    --via: #4f7ee4;
-    /* blue */
-    --to: #66c3d3;
-    /* cyan */
+    --from: #4a6ad3;
+    --via: #8caae9;
+    --to: #c1f5fe;
 
     color: #fff;
     background-image: linear-gradient(135deg, var(--from) 0%, var(--via) 48%, var(--to) 100%);
@@ -407,12 +477,10 @@ export default {
 .btn-gradient-blue:hover {
     background-position: 100% 0;
     transform: translateY(-1px);
-    box-shadow: 0 14px 28px rgba(37, 99, 235, .34);
+    box-shadow: 0 14px 28px rgb(255, 255, 255);
 }
 
-
-/* (tùy chọn) phiên bản bo góc lớn và full-width */
 .btn-pill {
-    border-radius: 16px;
+    border-radius: 50px;
 }
 </style>

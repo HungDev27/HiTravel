@@ -10,7 +10,6 @@ const routes = [
         path : '/admin/trang-chu',
         component: ()=>import('../components/Admin/TrangChu.vue')
     },
-
     //Staff
     {
         path : '/staff/trang-chu',

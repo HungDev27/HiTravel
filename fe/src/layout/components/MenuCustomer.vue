@@ -1,6 +1,6 @@
 <template>
     <header>
-        <nav class="navbar navbar-expand-lg bd-navbar sticky-top" style="background-color: #3399ff">
+        <nav class="navbar navbar-expand-lg bd-navbar fixed-top" style="background-color: #3399ff">
             <div class="container">
                 <a class="navbar-brand" href="#">
                     <LogoText />

@@ -130,7 +130,7 @@
 
     <!-- BOOKING CÙNG HITRAVEL -->
 
-    <div style="padding: 4rem 1rem; background-color: #fff; text-align: center; position: relative; overflow: hidden;">
+    <div style="padding: 4rem 10rem; background-color: #fff; text-align: center; position: relative; overflow: hidden;">
 
         <h2> Booking cùng HITravel</h2>
 
@@ -142,50 +142,174 @@
             <hr class="mt-5" style="width:100%; height:150px; border-top:4px dashed #007bff; border-radius:50%;">
         </div>
 
-       <div class="container">
-         <div class="row">
-            <div class="col-lg-4">
-                <button class="btn btn-white text-white"
-                    style="border-radius: 60%; background-color: deepskyblue;"><b>1</b></button>
-                <p><img src="../../assets/images/homecustomer/step1.png" alt="Tìm nơi muốn đến"
-                        style="width: 100px;"></img></p>
+        <div class="container">
 
-                <h4 style="font-weight: bold;">Tìm nơi muốn đến</h4>
-                <p style="color: #666;">Bất cứ nơi đâu bạn muốn đến, chúng tôi có tất cả những gì bạn cần</p>
+            <!-- Booking cùng HITravel -->
+            <div class="row">
+                <div class="col-lg-4">
+                    <button class="btn btn-white text-white"
+                        style="border-radius: 60%; background-color: deepskyblue;"><b>1</b></button>
+                    <p><img src="../../assets/images/homecustomer/step1.png" alt="Tìm nơi muốn đến"
+                            style="width: 100px;"></img></p>
+
+                    <h4 style="font-weight: bold;">Tìm nơi muốn đến</h4>
+                    <p style="color: #666;">Bất cứ nơi đâu bạn muốn đến, chúng tôi có tất cả những gì bạn cần</p>
+                </div>
+
+                <div class="col-lg-4">
+                    <button class="btn btn-white text-white"
+                        style="border-radius: 60%; background-color: deepskyblue;"><b>2</b></button>
+                    <p><img src="../../assets/images/homecustomer/step2.png" alt="Tìm nơi muốn đến"
+                            style="width: 100px;"></img></p>
+
+                    <h4 style="font-weight: bold;">Đặt vé</h4>
+                    <p style="color: #666;">HITravel sẽ hỗ trợ bạn đặt vé trực tiếp nhanh chóng và thuận tiện</p>
+                </div>
+
+                <div class="col-lg-4">
+                    <button class="btn btn-white text-white"
+                        style="border-radius: 60%; background-color: deepskyblue;"><b>2</b></button>
+                    <p><img src="../../assets/images/homecustomer/step3.png" alt="Tìm nơi muốn đến"
+                            style="width: 100px;"></img></p>
+                    <h4 style="font-weight: bold;">Thanh toán</h4>
+                    <p style="color: #666;">Hoàn thành bước thanh toán và sẵn sàng cho chuyến đi ngay thôi</p>
+                </div>
             </div>
 
-            <div class="col-lg-4">
-                <button class="btn btn-white text-white"
-                    style="border-radius: 60%; background-color: deepskyblue;"><b>2</b></button>
-                <p><img src="../../assets/images/homecustomer/step2.png" alt="Tìm nơi muốn đến"
-                        style="width: 100px;"></img></p>
 
-                <h4 style="font-weight: bold;">Đặt vé</h4>
-                <p style="color: #666;">HITravel sẽ hỗ trợ bạn đặt vé trực tiếp nhanh chóng và thuận tiện</p>
+            <div class="row" style="padding: 6rem 1rem;">
+                <!-- Hiểu hơn về chúng tôi -->
+                <div class="col-lg-6 text-start">
+                    <h4 class="text-primary"><b>Hiểu hơn về chúng tôi</b></h4>
+                    <h2 class="mb-4">Lên kế hoạch cho chuyến đi của bạn cùng HITravel</h2>
+                    <span class="text-secondary">Vinh hạnh của chúng tôi là mang đến cho bạn những chuyến đi đáng nhớ.
+                        Mang đến cho bạn những chuyến đi đầy cảm hứng. Khám phá những vùng đất mới. Tự do khám phá cùng
+                        chúng tôi.</span>
+                    <h4 class="text-primary mt-5"><b>Cơ hội tuyệt vời để gửi gắm niềm tin cùng HITravel. Tại sao
+                            không?</b></h4>
+
+                    <div class="row" style="display: flex; align-items: flex-start; max-width: 500px;">
+                        <div class="col-lg-2">
+                            <img src="../../assets/images/homecustomer/checklist.png" style="margin-top: 10px;"
+                                class="ms-3">
+                        </div>
+                        <div class="col-lg-10" style="font-size: 19px;">
+                            Hơn 10.000 khách hàng trên khắp cả nước đã đồng hành cùng chúng tôi
+                        </div>
+                    </div>
+
+                    <div class="row mt-4" style="display: flex; align-items: flex-start; max-width: 500px;">
+                        <div class="col-lg-2">
+                            <img src="../../assets/images/homecustomer/checklist.png" class="ms-3">
+                        </div>
+                        <div class="col-lg-10" style="font-size: 19px;">
+                            Bao phủ hơn 1.000 tour trong và ngoài nước
+
+                        </div>
+                    </div>
+
+                    <div class="row mt-4" style="display: flex; align-items: flex-start; max-width: 500px;">
+                        <div class="col-lg-2">
+                            <img src="../../assets/images/homecustomer/checklist.png" class="ms-3">
+                        </div>
+                        <div class="col-lg-10" style="font-size: 19px;">
+                            Tour và giá cả đa dạng
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Ảnh -->
+                <div class="col-lg-6">
+                    <img src="../../assets/images/homecustomer/travel.png"
+                        style="width: 450px; height: 500px; border-radius:14px; transition:0.4s;"
+                        onmouseover="this.style.transform='scale(1.05)';" onmouseout="this.style.transform='scale(1)';">
+                </div>
             </div>
 
-            <div class="col-lg-4">
-                <button class="btn btn-white text-white"
-                    style="border-radius: 60%; background-color: deepskyblue;"><b>2</b></button>
-                <p><img src="../../assets/images/homecustomer/step3.png" alt="Tìm nơi muốn đến"
-                        style="width: 100px;"></img></p>
-                <h4 style="font-weight: bold;">Thanh toán</h4>
-                <p style="color: #666;">Hoàn thành bước thanh toán và sẵn sàng cho chuyến đi ngay thôi</p>
+            <!-- Hot Deal -->
+            <div class="d-flex justify-content-between" style="padding: 1rem 1rem;">
+                <h3 style="font-family: 'Arial Black', Impact, sans-serif; letter-spacing: 1px;">HOT DEAL</h3>
+                <u class="text-success" style="transition:0.4s;" onmouseover="this.style.transform='scale(1.05)';"
+                    onmouseout="this.style.transform='scale(1)';">Xem thêm tour</u>
+            </div>
+
+            <!-- Tour -->
+            <div class="row">
+                <template v-for="(value, index) in listTour" :key="index">
+                    <div class="col-lg-3">
+                        <div class="position-relative">
+                            <div class="card" style="width: 18rem; height: 25rem; transition:0.4s;"
+                                onmouseover="this.style.transform='scale(1.05)';"
+                                onmouseout="this.style.transform='scale(1)';">
+                                <div class="position-relative">
+                                    <img :src="value.hinh_anh" class="card-img-top"
+                                        style="height: 200px; width: 287px;">
+                                    <!-- map -->
+                                    <div class="position-absolute bottom-0 start-0">
+                                        <button class="btn-white">
+                                            <img src="../../assets/images/homecustomer/location.png">
+                                            {{ value.dia_diem }}
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <div class="card-body">
+                                    <h5 class="card-title">{{ value.ten_tour }}</h5>
+                                    <p class="card-text">
+                                    <div class="d-flex justify-content-between mt-2">
+                                        <div class="text-secondary">
+                                            <i class="fa-solid fa-clock me-2"></i>
+                                            <span>
+                                                {{ formatDate(value.ngay_di) }} → {{ formatDate(value.ngay_ve) }}
+                                            </span>
+                                        </div>
+                                        <div class="text-secondary">
+                                            <i class="fa-solid fa-car me-3"></i>
+                                            <i class="fa-solid fa-bus-simple"></i>
+                                        </div>
+                                    </div>
+                                    <h4 style="color: darkorange;" class="text-start mt-2">
+                                        {{ formatVND(value.gia) }}
+                                    </h4>
+                                    </p>
+                                    <a href="#" class="btn text-white" style="background-color: darkorange;">Xem chi tiết</a>
+                                </div>
+                            </div>
+                            <!-- deal -->
+                            <div class="position-absolute top-0 start-0">
+                                <button class="btn btn-warning text-white"
+                                    style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-size: 100%;"><b>DEAL
+                                        Giá sốc!</b></button>
+                            </div>
+                        </div>
+                    </div>
+                </template>
             </div>
         </div>
-       </div>
 
     </div>
-
-
-
-
-
 
 </template>
 <script>
 export default {
-
+    data() {
+        return {
+            listTour: [
+                { id: 1, ten_tour: "Nha Trang - Vinpearl Land", hinh_anh: "https://cdn.vntrip.vn/cam-nang/wp-content/uploads/2017/04/vinpearl-nha-trang.jpg", gia: 1800000, ngay_di: "2025-09-24", ngay_ve: "2025-09-27", dia_diem: "Nha Trang" },
+                { id: 2, ten_tour: "Đà Nẵng - Bà Nà Hills", hinh_anh: "https://i.imgur.com/dCOnyqu.jpg", gia: 2500000, ngay_di: "2025-10-10", ngay_ve: "2025-10-12", dia_diem: "Đà Nẵng" },
+                { id: 3, ten_tour: "Phú Quốc - Thiên đường biển", hinh_anh: "https://dongtayland.vn/wp-content/uploads/2019/03/du-hoc-singapore-jcus-minh-hoa-phu-quoc.jpg", gia: 3200000, ngay_di: "2025-11-05", ngay_ve: "2025-11-09", dia_diem: "Phú Quốc" },
+                { id: 4, ten_tour: "Hà Nội - Vịnh Hạ Long", hinh_anh: "https://res.klook.com/images/fl_lossy.progressive,q_65/c_fill,w_1200,h_630/w_80,x_15,y_15,g_south_west,l_Klook_water_br_trans_yhcmh3/activities/qmgtdjekctlyucr8itqw/%C4%90%E1%BA%B7t%20tour%20%C4%91i%20V%E1%BB%8Bnh%20H%E1%BA%A1%20Long%20t%E1%BB%AB%20H%C3%A0%20N%E1%BB%99i.jpg", gia: 2800000, ngay_di: "2025-11-20", ngay_ve: "2025-11-22", dia_diem: "Hạ Long" },
+            ]
+        }
+    },
+    methods: {
+        formatVND(number) {
+            return new Intl.NumberFormat('vi-VI', { style: 'currency', currency: 'VND' }).format(number,);
+        },
+        formatDate(date) {
+            return new Date(date).toLocaleDateString('vi-VI');
+        }
+    }
 }
 </script>
 <style></style>

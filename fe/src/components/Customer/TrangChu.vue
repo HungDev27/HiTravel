@@ -129,7 +129,6 @@
     </div>
 
     <!-- BOOKING CÙNG HITRAVEL -->
-
     <div style="padding: 4rem 10rem; background-color: #fff; text-align: center; position: relative; overflow: hidden;">
 
         <h2> Booking cùng HITravel</h2>
@@ -143,7 +142,6 @@
         </div>
 
         <div class="container">
-
             <!-- Booking cùng HITravel -->
             <div class="row">
                 <div class="col-lg-4">
@@ -175,7 +173,6 @@
                     <p style="color: #666;">Hoàn thành bước thanh toán và sẵn sàng cho chuyến đi ngay thôi</p>
                 </div>
             </div>
-
 
             <div class="row" style="padding: 6rem 1rem;">
                 <!-- Hiểu hơn về chúng tôi -->
@@ -272,7 +269,8 @@
                                         {{ formatVND(value.gia) }}
                                     </h4>
                                     </p>
-                                    <a href="#" class="btn text-white" style="background-color: darkorange;">Xem chi tiết</a>
+                                    <a href="#" class="btn text-white" style="background-color: darkorange;">Xem chi
+                                        tiết</a>
                                 </div>
                             </div>
                             <!-- deal -->
@@ -286,9 +284,107 @@
                 </template>
             </div>
         </div>
-
     </div>
 
+    <!-- Khách hàng đánh giá  -->
+    <div class="row bg-white text-center">
+        <h2 style="font-family: 'Arial Black', Impact, sans-serif;">Khách hàng đánh giá</h2>
+        <p class="mt-2 mb-3">Mục tiêu hàng đầu của chúng tôi là sự hài lòng của khách hàng</p>
+
+        <!-- Đánh giá của người dùng -->
+        <div class="position-relative">
+            <!-- Ảnh -->
+            <img src="../../assets/images/homecustomer/danhgia.jpg">
+
+            <!-- Đánh giá -->
+            <div class="position-absolute top-0 start-50 translate-middle-x">
+
+                <div id="carouselExampleIndicators" class="carousel slide">
+                    <div class="carousel-inner">
+
+                        <div v-for="(value, index) in danhGiaList" :key="index" class="carousel-item"
+                            :class="{ active: index === 0 }">
+
+                            <div class="text-center p-4">
+                                <p style="font-size: 1.1rem; font-style: italic;">"{{ value.binh_luan }}"</p>
+                                <p style="margin-top: 1rem; font-weight: bold;">⭐ {{ value.diem }}/5</p>
+                                <p>
+                                    <img src="../../assets/images/homecustomer/avata.jpg" class="rounded-circle"
+                                        style="height: 80px; width: 80px;">
+                                </p>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <!-- Nút điều hướng -->
+                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators"
+                        data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" style="background-color: #555;"></span>
+                        <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators"
+                        data-bs-slide="next">
+                        <span class="carousel-control-next-icon" style="background-color: #555;"></span>
+                        <span class="visually-hidden">Next</span>
+                    </button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+
+        <!-- Điểm đến yêu thích -->
+        <div class="row mt-5">
+            <!-- Tiêu đề -->
+            <div class="text-center mb-3">
+                <h2 style="font-family: 'Palatino Linotype', 'Book Antiqua', Palatino, serif; letter-spacing: 1px;"
+                    class="text-primary"><b>Điểm đến yêu thích</b></h2>
+                <span class="text-secondary">Tour du lịch Trong nước với HITravel. Hành hương đầu xuân - Tận hưởng bản
+                    sắc
+                    Việt.</span>
+            </div>
+        </div>
+
+        <!-- Ảnh -->
+        <div class="row mt-3">
+            <template v-for="(value, index) in listDiaDiem" :key="index">
+                <div class="col-lg-3">
+                    <div class="position-relative">
+                        <img :src="value.hinh_anh"
+                            style="border-radius: 10%;height: 310px; width: 310px; transition:0.4s;"
+                            onmouseover="this.style.transform='translateY(-10px)';"
+                            onmouseout="this.style.transform='translateY(0)';">
+                        <div class="position-absolute bottom-0 start-50 translate-middle-x">
+                            <div class="text-center text-white ms-3 mb-5 fa-xl">
+                                <b>{{ value.dia_diem }}</b>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </template>
+        </div>
+
+        <div class="row mt-3 mb-5">
+            <u class="text-success text-center" style="transition:0.4s;"
+                onmouseover="this.style.transform='scale(1.05)';" onmouseout="this.style.transform='scale(1)';">Xem thêm tỉnh thành </u>
+        </div>
+
+        <!-- Bạn có muốn nhận tin khuyến mãi? -->
+        <div class="row text-center mb-5">
+            <h3>Bạn có muốn nhận tin khuyến mãi?</h3>
+            <div class="mt-3 d-flex justify-content-center">
+                <form class="d-flex" role="search" style="width: 600px;">
+                <input class="form-control me-2" type="search" placeholder="Nhập địa chỉ email" aria-label="Search" />
+                <button class="btn btn-success text-nowrap" type="submit"><i class="fa-solid fa-paper-plane me-2"></i>Gửi ngay</button>
+            </form>
+            </div>
+        </div>
+
+    </div>
 </template>
 <script>
 export default {
@@ -299,7 +395,20 @@ export default {
                 { id: 2, ten_tour: "Đà Nẵng - Bà Nà Hills", hinh_anh: "https://i.imgur.com/dCOnyqu.jpg", gia: 2500000, ngay_di: "2025-10-10", ngay_ve: "2025-10-12", dia_diem: "Đà Nẵng" },
                 { id: 3, ten_tour: "Phú Quốc - Thiên đường biển", hinh_anh: "https://dongtayland.vn/wp-content/uploads/2019/03/du-hoc-singapore-jcus-minh-hoa-phu-quoc.jpg", gia: 3200000, ngay_di: "2025-11-05", ngay_ve: "2025-11-09", dia_diem: "Phú Quốc" },
                 { id: 4, ten_tour: "Hà Nội - Vịnh Hạ Long", hinh_anh: "https://res.klook.com/images/fl_lossy.progressive,q_65/c_fill,w_1200,h_630/w_80,x_15,y_15,g_south_west,l_Klook_water_br_trans_yhcmh3/activities/qmgtdjekctlyucr8itqw/%C4%90%E1%BA%B7t%20tour%20%C4%91i%20V%E1%BB%8Bnh%20H%E1%BA%A1%20Long%20t%E1%BB%AB%20H%C3%A0%20N%E1%BB%99i.jpg", gia: 2800000, ngay_di: "2025-11-20", ngay_ve: "2025-11-22", dia_diem: "Hạ Long" },
-            ]
+            ],
+            danhGiaList: [
+                { id: 1, id_khach_hang: 2, id_tour: 1, diem: 5, binh_luan: "Chuyến đi Nha Trang thật sự tuyệt vời. Hướng dẫn viên rất nhiệt tình, vui vẻ và luôn tạo không khí thoải mái cho đoàn. Các điểm tham quan được sắp xếp hợp lý, giúp mọi người vừa được trải nghiệm biển đảo, vừa có thời gian nghỉ ngơi chụp ảnh." },
+                { id: 2, id_khach_hang: 3, id_tour: 1, diem: 4, binh_luan: "Lịch trình được bố trí khá hợp lý, đi từ sáng đến chiều nhưng không quá mệt. Tôi thích nhất là được tham gia các hoạt động trải nghiệm như lặn ngắm san hô và đi thuyền." },
+                { id: 3, id_khach_hang: 5, id_tour: 2, diem: 3, binh_luan: "Chuyến đi Đà Nẵng mang lại nhiều kỷ niệm, các địa điểm nổi tiếng như Bà Nà Hills hay Ngũ Hành Sơn rất đẹp. Tuy nhiên do thời tiết nắng gắt nên việc di chuyển hơi vất vả. Nếu công ty chuẩn bị thêm nước uống hoặc khăn lạnh cho đoàn thì sẽ tuyệt vời hơn." },
+                { id: 4, id_khach_hang: 6, id_tour: 3, diem: 5, binh_luan: "Phú Quốc đúng là thiên đường biển. Nước biển trong xanh, bãi cát mịn và không khí trong lành. Tôi rất ấn tượng với chuyến đi cáp treo Hòn Thơm, cảm giác ngắm toàn cảnh từ trên cao thực sự khó quên." },
+                { id: 5, id_khach_hang: 7, id_tour: 2, diem: 4, binh_luan: "Tour giá cả hợp lý so với chất lượng dịch vụ. Nhân viên tư vấn từ lúc đăng ký đến khi đi đều rất tận tình. Tôi ấn tượng nhất là được ghé thăm các làng nghề truyền thống và thưởng thức ẩm thực địa phương." }
+            ],
+            listDiaDiem: [
+                { id: 1, dia_diem: "Hà Nội", hinh_anh: "https://vietmytravel.com/wp-content/uploads/2019/04/vietmytravel_du-l%E1%BB%8Bch-h%C3%A0-n%E1%BB%99i.jpg" },
+                { id: 2, dia_diem: "Ninh Bình", hinh_anh: "https://i.pinimg.com/1200x/e0/12/65/e01265f9116c51d9f2a0bddc628f5510.jpg" },
+                { id: 3, dia_diem: "Đà Nẵng", hinh_anh: "https://i.pinimg.com/1200x/b1/b6/2e/b1b62ebf11a34189ae0ee007550a30e2.jpg" },
+                { id: 4, dia_diem: "Sapa", hinh_anh: "https://i.pinimg.com/1200x/30/d4/38/30d4381118c455f270cd53dd38ec675e.jpg" }]
+
         }
     },
     methods: {

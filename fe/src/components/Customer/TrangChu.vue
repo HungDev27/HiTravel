@@ -182,7 +182,7 @@
                     <span class="text-secondary">Vinh hạnh của chúng tôi là mang đến cho bạn những chuyến đi đáng nhớ.
                         Mang đến cho bạn những chuyến đi đầy cảm hứng. Khám phá những vùng đất mới. Tự do khám phá cùng
                         chúng tôi.</span>
-                    <h4 class="text-primary mt-5"><b>Cơ hội tuyệt vời để gửi gắm niềm tin cùng HITravel. Tại sao
+                    <h4 class="text-primary mt-5 mb-3"><b>Cơ hội tuyệt vời để gửi gắm niềm tin cùng HITravel. Tại sao
                             không?</b></h4>
 
                     <div class="row" style="display: flex; align-items: flex-start; max-width: 500px;">
@@ -226,8 +226,10 @@
             <!-- Hot Deal -->
             <div class="d-flex justify-content-between" style="padding: 1rem 1rem;">
                 <h3 style="font-family: 'Arial Black', Impact, sans-serif; letter-spacing: 1px;">HOT DEAL</h3>
-                <u class="text-success" style="transition:0.4s;" onmouseover="this.style.transform='scale(1.05)';"
-                    onmouseout="this.style.transform='scale(1)';">Xem thêm tour</u>
+                <router-link to="/tour">
+                    <button class="btn btn-outline-success" style="border-radius: 1rem; transition:0.4s;" onmouseover="this.style.transform='scale(1.05)';"
+                        onmouseout="this.style.transform='scale(1)';">Xem thêm tour →</button>
+                </router-link>
             </div>
 
             <!-- Tour -->
@@ -235,12 +237,12 @@
                 <template v-for="(value, index) in listTour" :key="index">
                     <div class="col-lg-3">
                         <div class="position-relative">
-                            <div class="card" style="width: 18rem; height: 25rem; transition:0.4s;"
+                            <div class="card" style="width: 18rem; height: 28rem; transition:0.4s;"
                                 onmouseover="this.style.transform='scale(1.05)';"
                                 onmouseout="this.style.transform='scale(1)';">
                                 <div class="position-relative">
                                     <img :src="value.hinh_anh" class="card-img-top"
-                                        style="height: 200px; width: 287px;">
+                                        style="height: 250px; width: 288px;">
                                     <!-- map -->
                                     <div class="position-absolute bottom-0 start-0">
                                         <button class="btn-white">
@@ -251,7 +253,7 @@
                                 </div>
 
                                 <div class="card-body">
-                                    <h5 class="card-title">{{ value.ten_tour }}</h5>
+                                    <h5 class="card-title text-nowrap">{{ value.ten_tour }}</h5>
                                     <p class="card-text">
                                     <div class="d-flex justify-content-between mt-2">
                                         <div class="text-secondary">
@@ -286,9 +288,69 @@
         </div>
     </div>
 
+    <div class="container">
+
+        <!-- Điểm đến yêu thích -->
+        <div class="row mt-5">
+            <!-- Tiêu đề -->
+            <div class="text-center mb-3">
+                <h2 style="font-family: 'Palatino Linotype', 'Book Antiqua', Palatino, serif; letter-spacing: 1px;"
+                    class="text-primary"><b>Điểm đến yêu thích</b></h2>
+                <span class="text-secondary">Tour du lịch Trong nước với HITravel. Hành hương đầu xuân - Tận hưởng bản
+                    sắc
+                    Việt.</span>
+            </div>
+        </div>
+
+        <!-- Ảnh -->
+        <div class="row mt-3">
+            <template v-for="(value, index) in listDiaDiem" :key="index">
+                <div class="col-lg-3">
+                    <div class="position-relative">
+                        <img :src="value.hinh_anh"
+                            style="border-radius: 10%;height: 310px; width: 310px; transition:0.4s;"
+                            onmouseover="this.style.transform='translateY(-10px)';"
+                            onmouseout="this.style.transform='translateY(0)';">
+                        <div class="position-absolute bottom-0 start-50 translate-middle-x">
+                            <div class="text-center text-white ms-3 mb-5 fa-xl">
+                                <b>{{ value.dia_diem }}</b>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </template>
+        </div>
+
+        <div class="row mt-4 mb-5">
+            <span class="text-success text-center" style="transition:0.4s; font-size: 130%;"
+                onmouseover="this.style.transform='scale(1.05)';" onmouseout="this.style.transform='scale(1)';">Xem thêm
+                tỉnh thành →</span>
+        </div>
+
+        <!-- BÀI VIẾT -->
+        <h3 class="text-center mb-4 mt-4">BÀI VIẾT</h3>
+        <div class="row">
+            <!-- listBaiViet.slice(0, 6) -->
+            <template v-for="(value, index) in listBaiViet" :key="index">
+                <div class="col-lg-4 mb-4 ">
+                    <router-link :to="`/chi-tiet-bai-viet/${value.id}`">
+                        <div class="card h-100">
+                            <img :src="value.hinh_anh" class="card-img-top" style="height: 250px;">
+                            <div class="card-body">
+                                <h5 class="card-title text-truncate">{{ value.tieu_de }}
+                                </h5>
+                                <p class="card-text text-dark">{{ value.mo_ta_ngan }}</p>
+                            </div>
+                        </div>
+                    </router-link>
+                </div>
+            </template>
+        </div>
+    </div>
+
     <!-- Khách hàng đánh giá  -->
     <div class="row bg-white text-center">
-        <h2 style="font-family: 'Arial Black', Impact, sans-serif;">Khách hàng đánh giá</h2>
+        <h2 class="mt-4" style="font-family: 'Arial Black', Impact, sans-serif;">Khách hàng đánh giá</h2>
         <p class="mt-2 mb-3">Mục tiêu hàng đầu của chúng tôi là sự hài lòng của khách hàng</p>
 
         <!-- Đánh giá của người dùng -->
@@ -335,56 +397,19 @@
         </div>
     </div>
 
-    <div class="container">
-
-        <!-- Điểm đến yêu thích -->
-        <div class="row mt-5">
-            <!-- Tiêu đề -->
-            <div class="text-center mb-3">
-                <h2 style="font-family: 'Palatino Linotype', 'Book Antiqua', Palatino, serif; letter-spacing: 1px;"
-                    class="text-primary"><b>Điểm đến yêu thích</b></h2>
-                <span class="text-secondary">Tour du lịch Trong nước với HITravel. Hành hương đầu xuân - Tận hưởng bản
-                    sắc
-                    Việt.</span>
-            </div>
-        </div>
-
-        <!-- Ảnh -->
-        <div class="row mt-3">
-            <template v-for="(value, index) in listDiaDiem" :key="index">
-                <div class="col-lg-3">
-                    <div class="position-relative">
-                        <img :src="value.hinh_anh"
-                            style="border-radius: 10%;height: 310px; width: 310px; transition:0.4s;"
-                            onmouseover="this.style.transform='translateY(-10px)';"
-                            onmouseout="this.style.transform='translateY(0)';">
-                        <div class="position-absolute bottom-0 start-50 translate-middle-x">
-                            <div class="text-center text-white ms-3 mb-5 fa-xl">
-                                <b>{{ value.dia_diem }}</b>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </template>
-        </div>
-
-        <div class="row mt-3 mb-5">
-            <u class="text-success text-center" style="transition:0.4s;"
-                onmouseover="this.style.transform='scale(1.05)';" onmouseout="this.style.transform='scale(1)';">Xem thêm tỉnh thành </u>
-        </div>
-
-        <!-- Bạn có muốn nhận tin khuyến mãi? -->
-        <div class="row text-center mb-5">
-            <h3>Bạn có muốn nhận tin khuyến mãi?</h3>
-            <div class="mt-3 d-flex justify-content-center">
-                <form class="d-flex" role="search" style="width: 600px;">
+    <!-- Bạn có muốn nhận tin khuyến mãi? -->
+    <div class="row text-center mb-5 mt-5">
+        <h3>Bạn có muốn nhận tin khuyến mãi?</h3>
+        <div class="mt-3 d-flex justify-content-center">
+            <form class="d-flex" role="search" style="width: 600px;">
                 <input class="form-control me-2" type="search" placeholder="Nhập địa chỉ email" aria-label="Search" />
-                <button class="btn btn-success text-nowrap" type="submit"><i class="fa-solid fa-paper-plane me-2"></i>Gửi ngay</button>
+                <button class="btn btn-success text-nowrap" type="submit"><i
+                        class="fa-solid fa-paper-plane me-2"></i>Gửi
+                    ngay</button>
             </form>
-            </div>
         </div>
-
     </div>
+
 </template>
 <script>
 export default {
@@ -407,7 +432,17 @@ export default {
                 { id: 1, dia_diem: "Hà Nội", hinh_anh: "https://vietmytravel.com/wp-content/uploads/2019/04/vietmytravel_du-l%E1%BB%8Bch-h%C3%A0-n%E1%BB%99i.jpg" },
                 { id: 2, dia_diem: "Ninh Bình", hinh_anh: "https://i.pinimg.com/1200x/e0/12/65/e01265f9116c51d9f2a0bddc628f5510.jpg" },
                 { id: 3, dia_diem: "Đà Nẵng", hinh_anh: "https://i.pinimg.com/1200x/b1/b6/2e/b1b62ebf11a34189ae0ee007550a30e2.jpg" },
-                { id: 4, dia_diem: "Sapa", hinh_anh: "https://i.pinimg.com/1200x/30/d4/38/30d4381118c455f270cd53dd38ec675e.jpg" }]
+                { id: 4, dia_diem: "Sapa", hinh_anh: "https://i.pinimg.com/1200x/30/d4/38/30d4381118c455f270cd53dd38ec675e.jpg" }
+            ],
+            listBaiViet: [
+                { id: 1, tieu_de: "Top 5 tour du lịch Việt Nam năm 2025", hinh_anh: "https://statics.vinpearl.com/diem-du-lich-01_1632671030%20(1)_1661249974.jpg", mo_ta_ngan: "Danh sách những tour du lịch hấp dẫn nhất năm 2025 trải dài từ Bắc vào Nam, mang đến cho bạn nhiều lựa chọn độc đáo và chất lượng." },
+                { id: 2, tieu_de: "Trải nghiệm tour biển đảo tuyệt đẹp", hinh_anh: "https://resource.kinhtedothi.vn/2022/05/10/1fcea0e8-8981-4fe2-bea3-7acc01de4d98.jpg", mo_ta_ngan: "Nếu bạn là tín đồ của biển cả thì tour này sẽ đưa bạn đến những bãi cát trắng mịn, làn nước trong xanh cùng nhiều hoạt động vui chơi giải trí." },
+                { id: 3, tieu_de: "Tour khám phá văn hoá, ẩm thực Đà Nẵng", hinh_anh: "https://truongsatour.com/uploads/images/tour-mua-he-da-nang-gia-sieu-re.jpg", mo_ta_ngan: "Một hành trình đặc sắc dành cho những ai yêu thích văn hóa Nhật Bản với trải nghiệm ẩm thực, tham quan đền chùa và các thành phố nổi tiếng." },
+                { id: 4, tieu_de: "Khám phá bí mật thú vị trong tour đến miền Nam", hinh_anh: "https://cdn.tgdd.vn/Files/2022/03/26/1422479/17-diem-du-lich-mien-nam-dep-ly-tuong-nhat-khong-nen-bo-lo-202203261508470331.jpg", mo_ta_ngan: "Tour du lịch đến miền Nam độc đáo, đưa bạn đến những địa điểm quay nổi tiếng trong lịch sử và tận hưởng không khí mới lạ." },
+                { id: 5, tieu_de: "Top 10 hướng dẫn viên nổi bật của công ty", hinh_anh: "https://hethonggiaoduc.edu.vn/uploads/news/imager_1175.jpg", mo_ta_ngan: "Danh sách những hướng dẫn viên được yêu thích nhất, luôn tận tâm và nhiệt huyết để mang đến trải nghiệm đáng nhớ cho khách hàng." },
+                { id: 6, tieu_de: "Làm sao để nhận biết một tour chất lượng?", hinh_anh: "https://tour.dulichvietnam.com.vn/uploads/tour/tmp_1654660048.jpg", mo_ta_ngan: "Bí quyết lựa chọn tour du lịch uy tín thông qua lịch trình rõ ràng, phản hồi khách hàng trước đó và dịch vụ chu đáo từ công ty lữ hành." }
+            ]
+
 
         }
     },

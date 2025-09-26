@@ -39,6 +39,17 @@ const routes = [
         component: ()=>import('../components/Customer/Faqs.vue'),
         meta: { layout: "customer" },
     },
+        {
+        path: "/chi-tiet-bai-viet/:id_bai_viet",
+        component: () => import("../components/Customer/ChiTietBaiViet.vue"),
+        meta: { layout: "customer" },
+        props: true,
+    },
+        {
+        path: "/tour",
+        component: () => import("../components/Customer/Tour.vue"),
+        meta: { layout: "customer" },
+    },
 ]
 
 const router = createRouter({

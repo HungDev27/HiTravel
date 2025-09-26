@@ -1,6 +1,6 @@
-<template>
+<template lang="">
     <div>
-        đây là trang chủ
+        danh sánh tuor
     </div>
 </template>
 <script>
@@ -8,4 +8,6 @@ export default {
 
 }
 </script>
-<style></style>
+<style lang="">
+
+</style>

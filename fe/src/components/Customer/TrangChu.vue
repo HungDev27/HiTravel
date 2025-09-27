@@ -226,9 +226,10 @@
             <!-- Hot Deal -->
             <div class="d-flex justify-content-between" style="padding: 1rem 1rem;">
                 <h3 style="font-family: 'Arial Black', Impact, sans-serif; letter-spacing: 1px;">HOT DEAL</h3>
-                <router-link to="/tour">
-                    <button class="btn btn-outline-success" style="border-radius: 1rem; transition:0.4s;" onmouseover="this.style.transform='scale(1.05)';"
-                        onmouseout="this.style.transform='scale(1)';">Xem thêm tour →</button>
+                <router-link to="/tour-bac">
+                    <div class="text-success" style="font-size: 13px; border-radius: 1rem; transition:0.4s;"
+                        onmouseover="this.style.transform='scale(1.05)';" onmouseout="this.style.transform='scale(1)';">
+                        <u>Xem thêm tour →</u></div>
                 </router-link>
             </div>
 
@@ -271,8 +272,9 @@
                                         {{ formatVND(value.gia) }}
                                     </h4>
                                     </p>
-                                    <a href="#" class="btn text-white" style="background-color: darkorange;">Xem chi
-                                        tiết</a>
+                                    <router-link :to="`/chi-tiet-tour/${value.id}`">
+                                        <button class="btn text-white" style="background-color: darkorange;">Xem chi
+                                            tiết</button></router-link>
                                 </div>
                             </div>
                             <!-- deal -->
@@ -322,13 +324,41 @@
         </div>
 
         <div class="row mt-4 mb-5">
-            <span class="text-success text-center" style="transition:0.4s; font-size: 130%;"
-                onmouseover="this.style.transform='scale(1.05)';" onmouseout="this.style.transform='scale(1)';">Xem thêm
-                tỉnh thành →</span>
+            <span class="text-success text-center" style="transition:0.4s; font-size: 100%;"
+                onmouseover="this.style.transform='scale(1.05)';" onmouseout="this.style.transform='scale(1)';"><u>Xem
+                    thêm
+                    tỉnh thành →</u></span>
+        </div>
+
+
+        <!-- TRẢI NGHIỆM SẮC XUÂN VIỆT NAM -->
+        <div class="position-relative text-center">
+            <img src="../../assets/images/homecustomer/nui.jpg" style="width: 1290px; height: 400px;">
+            <div class="position-absolute top-50 translate-middle" style="margin-left: 32rem;">
+                <div class="row">
+                    <div class="col-lg-7 text-start" style="margin-top: 8rem;">
+                        <h5 class="text-white me-5 "><b>TRẢI NGHIỆM SẮC XUÂN VIỆT NAM</b></h5>
+                        <hr class="text-white">
+                        <p>
+                        <h2 class="text-white me-5 "><b>LỄ HỘI HOA 3 MIỀN</b></h2>
+                        </p>
+                        <span class="text-white">
+                            Hòa mình vào sắc xuân rực rỡ khắp ba miền Việt Nam: ngắm hoa đào miền Bắc, hoa giấy và nét
+                            cổ
+                            kính miền Trung, mai vàng rực rỡ miền Nam, cùng trải nghiệm văn hóa – ẩm thực – lễ hội đặc
+                            sắc
+                            trên mọi nẻo đường.
+                        </span>
+                    </div>
+                    <div class="col-lg-5" style="margin-top: 10rem;">
+                        <img src="../../assets/images/homecustomer/hoa.jpg" style="height: 300px; width: 600px;">
+                    </div>
+                </div>
+            </div>
         </div>
 
         <!-- BÀI VIẾT -->
-        <h3 class="text-center mb-4 mt-4">BÀI VIẾT</h3>
+        <h2 class="text-center mb-4" style="margin-top: 5rem;">Cẩm nang du lịch</h2>
         <div class="row">
             <!-- listBaiViet.slice(0, 6) -->
             <template v-for="(value, index) in listBaiViet" :key="index">
@@ -347,6 +377,7 @@
             </template>
         </div>
     </div>
+
 
     <!-- Khách hàng đánh giá  -->
     <div class="row bg-white text-center">
@@ -397,6 +428,7 @@
         </div>
     </div>
 
+
     <!-- Bạn có muốn nhận tin khuyến mãi? -->
     <div class="row text-center mb-5 mt-5">
         <h3>Bạn có muốn nhận tin khuyến mãi?</h3>
@@ -417,7 +449,7 @@ export default {
         return {
             listTour: [
                 { id: 1, ten_tour: "Nha Trang - Vinpearl Land", hinh_anh: "https://cdn.vntrip.vn/cam-nang/wp-content/uploads/2017/04/vinpearl-nha-trang.jpg", gia: 1800000, ngay_di: "2025-09-24", ngay_ve: "2025-09-27", dia_diem: "Nha Trang" },
-                { id: 2, ten_tour: "Đà Nẵng - Bà Nà Hills", hinh_anh: "https://i.imgur.com/dCOnyqu.jpg", gia: 2500000, ngay_di: "2025-10-10", ngay_ve: "2025-10-12", dia_diem: "Đà Nẵng" },
+                { id: 2, ten_tour: "Đà Nẵng - Bà Nà Hills", hinh_anh: "https://i.pinimg.com/1200x/b1/b6/2e/b1b62ebf11a34189ae0ee007550a30e2.jpg", gia: 2500000, ngay_di: "2025-10-10", ngay_ve: "2025-10-12", dia_diem: "Đà Nẵng" },
                 { id: 3, ten_tour: "Phú Quốc - Thiên đường biển", hinh_anh: "https://dongtayland.vn/wp-content/uploads/2019/03/du-hoc-singapore-jcus-minh-hoa-phu-quoc.jpg", gia: 3200000, ngay_di: "2025-11-05", ngay_ve: "2025-11-09", dia_diem: "Phú Quốc" },
                 { id: 4, ten_tour: "Hà Nội - Vịnh Hạ Long", hinh_anh: "https://res.klook.com/images/fl_lossy.progressive,q_65/c_fill,w_1200,h_630/w_80,x_15,y_15,g_south_west,l_Klook_water_br_trans_yhcmh3/activities/qmgtdjekctlyucr8itqw/%C4%90%E1%BA%B7t%20tour%20%C4%91i%20V%E1%BB%8Bnh%20H%E1%BA%A1%20Long%20t%E1%BB%AB%20H%C3%A0%20N%E1%BB%99i.jpg", gia: 2800000, ngay_di: "2025-11-20", ngay_ve: "2025-11-22", dia_diem: "Hạ Long" },
             ],

@@ -28,15 +28,15 @@
                                     <b>Tour Du Lịch</b>
                                 </a>
                                 <ul class="dropdown-menu">
-                                    <router-link to="/">
+                                    <router-link to="/tour-bac">
                                         <li><a class="dropdown-item" href="/">Tour Miền Bắc</a>
                                         </li>
                                     </router-link>
-                                    <router-link to="/">
+                                    <router-link to="/tour-trung">
                                         <li><a class="dropdown-item" href="/">Tour Miền Trung</a>
                                         </li>
                                     </router-link>
-                                    <router-link to="/">
+                                    <router-link to="/tour-nam">
                                         <li><a class="dropdown-item" href="/">Tour Miền Nam</a>
                                         </li>
                                     </router-link>

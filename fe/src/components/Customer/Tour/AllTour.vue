@@ -119,7 +119,7 @@
                             line-height: 1.8; 
                             color: #333333; 
                             font-family: 'Arial', 'Helvetica', sans-serif; 
-                            text-align: justify;">Times Travel tự hào là công ty du lịch và lữ hành hàng đầu, chuyên
+                            text-align: justify;">HITravel tự hào là công ty du lịch và lữ hành hàng đầu, chuyên
                     cung cấp các dịch vụ ký
                     quỹ Commitment cho phòng Khách sạn và Resort trên toàn quốc với mức giá cạnh tranh nhất thị trường.
                     Hệ thống so sánh giá trực tuyến thông minh giúp bạn dễ dàng tìm kiếm sản pha phẩm phù hợp với ngân

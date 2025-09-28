@@ -43,6 +43,10 @@
                                 </ul>
                             </li>
                         </router-link>
+                        <router-link to="/bai-viet">
+                            <li class="nav-item"> <a class="nav-link text-light fs-6" href="/bai-viet"><b>Bài Viết</b></a>
+                            </li>
+                        </router-link>
 
                         <router-link to="/faqs">
                             <li class="nav-item"> <a class="nav-link text-light fs-6" href="/faqs"><b>Faqs</b></a>

@@ -46,6 +46,12 @@ const routes = [
     props: true,
   },
   {
+    path: "/bai-viet",
+    component: () => import("../components/Customer/BaiViet.vue"),
+    meta: { layout: "customer" },
+    props: true,
+  },
+  {
     path: "/tour-bac",
     component: () => import("../components/Customer/Tour/TourBac.vue"),
     meta: { layout: "customer" },

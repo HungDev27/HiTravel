@@ -61,6 +61,11 @@ const routes = [
     meta: { layout: "customer" },
   },
   {
+    path: "/tour-all",
+    component: () => import("../components/Customer/Tour/AllTour.vue"),
+    meta: { layout: "customer" },
+  },
+  {
     path: "/chi-tiet-tour/:id_tour",
     component: () => import("../components/Customer/ChiTietTour.vue"),
     meta: { layout: "customer" },

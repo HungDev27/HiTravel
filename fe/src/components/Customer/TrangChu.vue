@@ -226,10 +226,11 @@
             <!-- Hot Deal -->
             <div class="d-flex justify-content-between" style="padding: 1rem 1rem;">
                 <h3 style="font-family: 'Arial Black', Impact, sans-serif; letter-spacing: 1px;">HOT DEAL</h3>
-                <router-link to="/tour-bac">
+                <router-link to="/tour-all">
                     <div class="text-success" style="font-size: 13px; border-radius: 1rem; transition:0.4s;"
                         onmouseover="this.style.transform='scale(1.05)';" onmouseout="this.style.transform='scale(1)';">
-                        <u>Xem thêm tour →</u></div>
+                        <u>Xem thêm tour →</u>
+                    </div>
                 </router-link>
             </div>
 
@@ -351,7 +352,11 @@
                         </span>
                     </div>
                     <div class="col-lg-5" style="margin-top: 10rem;">
-                        <img src="../../assets/images/homecustomer/hoa.jpg" style="height: 300px; width: 600px;">
+                        <video playsinline="" loop="" preload="auto"
+                            poster="https://marketplace.canva.com/EAGC3ebVNXk/2/0/1600w/canva-GKQlDLVBLCo.jpg"
+                            src="https://marketplace.canva.com/EAGC3ebVNXk/2/document_1440w/canva-IjuSvQXfjJQ.mp4"
+                            autoplay="" class="CwbC6w" style="height: 300px; width: 600px;"></video>
+                        <!-- <img src="../../assets/images/homecustomer/hoa.jpg" style="height: 300px; width: 600px;"> -->
                     </div>
                 </div>
             </div>

@@ -1,6 +1,6 @@
 <template>
     <div>
-        đây là trang chủ
+        liên Hệ
     </div>
 </template>
 <script>

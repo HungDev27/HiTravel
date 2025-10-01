@@ -5,17 +5,50 @@ const routes = [
     //     path : '/',
     //     component: ()=>import('../layout/wrapper/index.vue')
     // },
+
+
+
     //Admin
     {
-        path : '/admin/trang-chu',
-        component: ()=>import('../components/Admin/TrangChu.vue')
+        path : '/admin',
+        component: ()=>import('../components/Admin/TrangChu/index.vue')
     },
-    //Staff
     {
-        path : '/staff/trang-chu',
-        component: ()=>import('../components/Staff/TrangChu.vue'),
-        meta: { layout: "staff" },
+        path : '/admin/quan-ly-nguoi-dung',
+        component: ()=>import('../components/Admin/QLNguoiDung/index.vue')
     },
+    {
+        path : '/admin/them-tour',
+        component: ()=>import('../components/Admin/QLTour/ThemTour/index.vue')
+    },
+    {
+        path : '/admin/danh-sach-tour',
+        component: ()=>import('../components/Admin/QLTour/DanhSachTour/index.vue')
+    },
+    {
+        path : '/admin/quan-ly-booking',
+        component: ()=>import('../components/Admin/QLBooking/index.vue')
+    },
+    {
+        path : '/admin/quan-ly-khuyen-mai',
+        component: ()=>import('../components/Admin/QLKhuyenMai/index.vue')
+    },
+    {
+        path : '/admin/quan-ly-lien-he',
+        component: ()=>import('../components/Admin/QLLienHe/indedx.vue')
+    },
+
+
+
+    
+    //Staff
+    // {
+    //     path : '/staff/trang-chu',
+    //     component: ()=>import('../components/Staff/TrangChu.vue'),
+    //     meta: { layout: "staff" },
+    // },
+
+
 
     //Customer
     {

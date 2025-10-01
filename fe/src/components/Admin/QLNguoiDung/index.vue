@@ -25,6 +25,7 @@
                                         <div>
                                             <img v-bind:src="(value.avatar)" alt=""
                                                 style="border-radius: 50%; width: 150px;height: 140px;">
+
                                         </div>
                                         <div>
                                             <h5 class="text-nowrap">{{ value.ho_ten }}</h5>
@@ -33,7 +34,9 @@
                                             <p class="text-nowrap" v-if="value.tinh_trang == 1">trạng thái: Hoạt Động
                                             </p>
                                             <p class="text-nowrap" v-else>trạng thái: Chưa Kích Hoạt</p>
+                                            <button class="btn btn-danger">Xóa</button>
                                         </div>
+
                                     </div>
                                 </div>
                             </div>

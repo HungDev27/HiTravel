@@ -2,7 +2,7 @@
     <header>
         <nav class="navbar navbar-expand-lg bd-navbar sticky-top" style="background-color: #3399FF">
             <div class="container"> <a class="navbar-brand fs-4 fw-bold" href="#"><span
-                        class="text-danger"><i>Hi</i></span><i>Travel</i></a>
+                        class="text-danger"><i>NH</i></span><i>Travel</i></a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                     data-bs-target="#navbarSupportedContent1" aria-controls="navbarSupportedContent1"
                     aria-expanded="false" aria-label="Toggle navigation"> <span class="navbar-toggler-icon"></span>

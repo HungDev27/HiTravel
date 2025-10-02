@@ -1,24 +1,6 @@
 import { createRouter, createWebHistory } from "vue-router"; // cài vue-router: npm install vue-router@next --save
 
 const routes = [
-<<<<<<< HEAD
-  // {
-  //     path : '/',
-  //     component: ()=>import('../layout/wrapper/index.vue')
-  // },
-  //Admin
-  {
-    path: "/admin/trang-chu",
-    component: () => import("../components/Admin/TrangChu.vue"),
-  },
-
-  //Staff
-  {
-    path: "/staff/trang-chu",
-    component: () => import("../components/Staff/TrangChu.vue"),
-    meta: { layout: "staff" },
-  },
-=======
     // {
     //     path : '/',
     //     component: ()=>import('../layout/wrapper/index.vue')
@@ -67,7 +49,6 @@ const routes = [
     // },
 
 
->>>>>>> main
 
   //Customer
   {

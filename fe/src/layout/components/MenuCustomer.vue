@@ -28,7 +28,6 @@
                                     <b>Tour Du Lịch</b>
                                 </a>
                                 <ul class="dropdown-menu">
-<<<<<<< HEAD
                                     <router-link to="/tour-bac">
                                         <li><a class="dropdown-item" href="/">Tour Miền Bắc</a>
                                         </li>
@@ -40,18 +39,6 @@
                                     <router-link to="/tour-nam">
                                         <li><a class="dropdown-item" href="/">Tour Miền Nam</a>
                                         </li>
-=======
-                                    <router-link to="/">
-                                        <li><a class="dropdown-item" href="/">Tour Miền Bắc</a></li>
-                                    </router-link>
-                                    <router-link to="/">
-                                        <li>
-                                            <a class="dropdown-item" href="/">Tour Miền Trung</a>
-                                        </li>
-                                    </router-link>
-                                    <router-link to="/">
-                                        <li><a class="dropdown-item" href="/">Tour Miền Nam</a></li>
->>>>>>> main
                                     </router-link>
                                 </ul>
                             </li>

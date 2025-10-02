@@ -45,7 +45,7 @@
                 <div class="row text-start">
                     <!-- Brand Name -->
                     <div class="col-lg-3 col-md-6 mb-4 mb-md-0">
-                        <h5 class="text-uppercase fw-bold mb-3 text-light">HITRAVEL</h5>
+                        <h5 class="text-uppercase fw-bold mb-3 text-light">NHTRAVEL</h5>
                         <p>
                             Đặt vé du lịch dễ dàng, nhanh chóng với trải nghiệm tuyệt vời!
                         </p>
@@ -90,7 +90,7 @@
                     <div class="col-lg-5 col-md-6 mb-4 mb-md-0">
                         <h6 class="fw-bold mb-3 text-light">Thông tin công ty</h6>
                         <p>
-                            CÔNG TY TNHH HITRAVEL<br>
+                            CÔNG TY TNHH NHTRAVEL<br>
                             Nơi cấp: Sở Kế hoạch và Đầu tư Tp. Hồ Chí Minh<br>
                             Ngày đăng ký: 15/06/2021<br>
                             Địa chỉ: Điện Biên Phủ, Q. Thanh Khê, Tp. Đà Nẵng
@@ -102,7 +102,7 @@
 
         <!-- Copyright -->
         <div class="text-center p-2 " style="background-color: #363636; font-size: 17px;">
-            © 2025 HITRAVEL. All rights reserved.
+            © 2025 NHTravel. All rights reserved.
         </div>
     </footer>
 </template>

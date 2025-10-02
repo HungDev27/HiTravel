@@ -4,11 +4,11 @@
         <nav class="navbar navbar-expand">
             <div class="topbar-logo-header" style="margin-left: 1cm;">
                 <div>
-                    <img src="../../assets/images/logo-icon.png" class="logo-icon" alt="logo icon"
+                    <img src="/public/logoweb.png" class="logo-icon" alt="logo icon"
                         style="width: 60px; height: 40px;">
                 </div>
                 <div>
-                    <h4 class="logo-text" style="font-size: 2.1rem;"><b><i>HiTravel</i></b></h4>
+                    <h4 class="logo-text" style="font-size: 2.1rem;"><b><i>NHTravel</i></b></h4>
                 </div>
             </div>
             <div class="mobile-toggle-menu"><i class='bx bx-menu'></i></div>

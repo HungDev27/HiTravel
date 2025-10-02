@@ -4,7 +4,14 @@
         <div class="container">
             <h3 class="text-white" style="padding-top: 200px;">Tour</h3>
             <router-link :to="'/'">
-                <p class="text-white">Trang chủ<i class="ms-2 fa-solid fa-angles-right me-2"></i>Tour</p>
+                <p class="text-white">
+                    <span style=" color: #333; 
+          transition: color 0.3s ease;" onmouseover="this.style.color='#0d6efd';"
+                        onmouseout="this.style.color='white';">
+                        Trang chủ
+                    </span>
+                    <i class=" ms-2 fa-solid fa-angles-right me-2"></i>Tour
+                </p>
             </router-link>
         </div>
     </div>
@@ -46,43 +53,18 @@
                         <div class="mt-1"
                             style="border: 1px solid #ccc; border-radius: 8px; padding: 10px; width: 275px; height: 100px; overflow-y: auto;">
                             <div>
-                                <input type="checkbox" id="sunworld" name="loai_tour" value="Sunworld">
-                                <label for="sunworld">Sunworld</label>
+                                <input class="me-2" type="checkbox" id="sunworld" name="loai_tour" value="Sunworld">
+                                <label for="mienbac">Miền Bắc</label>
                             </div>
 
                             <div>
-                                <input type="checkbox" id="hanoi" name="loai_tour" value="Hà Nội">
-                                <label for="hanoi">Du Lịch Hà Nội</label>
+                                <input class="me-2" type="checkbox" id="hanoi" name="loai_tour" value="Hà Nội">
+                                <label for="mientrung">Miền Trung</label>
                             </div>
 
                             <div>
-                                <input type="checkbox" id="dalat" name="loai_tour" value="Đà Lạt">
-                                <label for="dalat">Du Lịch Đà Lạt</label>
-                            </div>
-
-                            <div>
-                                <input type="checkbox" id="phuquoc" name="loai_tour" value="Phú Quốc">
-                                <label for="phuquoc">Du Lịch Phú Quốc</label>
-                            </div>
-
-                            <div>
-                                <input type="checkbox" id="mien-tay" name="loai_tour" value="Miền Tây">
-                                <label for="mien-tay">Du Lịch Miền Tây</label>
-                            </div>
-
-                            <div>
-                                <input type="checkbox" id="mien-bac" name="loai_tour" value="Miền Bắc">
-                                <label for="mien-bac">Du Lịch Miền Bắc</label>
-                            </div>
-
-                            <div>
-                                <input type="checkbox" id="mien-trung" name="loai_tour" value="Miền Trung">
-                                <label for="mien-trung">Du Lịch Miền Trung</label>
-                            </div>
-
-                            <div>
-                                <input type="checkbox" id="mien-nam" name="loai_tour" value="Miền Nam">
-                                <label for="mien-nam">Du Lịch Miền Nam</label>
+                                <input class="me-2" type="checkbox" id="dalat" name="loai_tour" value="Đà Lạt">
+                                <label for="miennam">Miền Nam</label>
                             </div>
                         </div>
 
@@ -91,13 +73,7 @@
                                     class="fa-solid fa-users me-2"></i>Số lượng hành khách</label></div>
                         <div class="mt-2"
                             style="display: flex; align-items: center; border: 1px solid #ddd; border-radius: 6px; width: 275px; height: 40px; justify-content: space-between;">
-                            <label class="ms-2" for="nguoiLon" style="color: gray;">Người lớn:</label>
-                            <input id="nguoiLon" type="number" value="0" min="1"
-                                style="color: dodgerblue;border: none; width: 50px; text-align: center; font-weight: bold; font-size: 16px; outline: none;" />
-                        </div>
-                        <div class="mt-2"
-                            style="display: flex; align-items: center; border: 1px solid #ddd; border-radius: 6px; width: 275px; height: 40px; justify-content: space-between;">
-                            <label class="ms-2" for="nguoiLon" style="color: gray;">Trẻ em:</label>
+                            <label class="ms-2" for="nguoiLon" style="color: gray;">Hành khách:</label>
                             <input id="nguoiLon" type="number" value="0" min="1"
                                 style="color: dodgerblue;border: none; width: 50px; text-align: center; font-weight: bold; font-size: 16px; outline: none;" />
                         </div>
@@ -119,11 +95,10 @@
                             line-height: 1.8; 
                             color: #333333; 
                             font-family: 'Arial', 'Helvetica', sans-serif; 
-                            text-align: justify;">HITravel tự hào là công ty du lịch và lữ hành hàng đầu, chuyên
-                    cung cấp các dịch vụ ký
-                    quỹ Commitment cho phòng Khách sạn và Resort trên toàn quốc với mức giá cạnh tranh nhất thị trường.
-                    Hệ thống so sánh giá trực tuyến thông minh giúp bạn dễ dàng tìm kiếm sản pha phẩm phù hợp với ngân
-                    sách của mình.</p>
+                            text-align: justify;">HITravel tự hào là công ty du lịch lữ hành uy tín, chuyên tổ chức các
+                    tour trong nước với lịch trình hấp dẫn và chi phí cạnh tranh. Chúng tôi mang đến nhiều lựa chọn
+                    phong phú từ Bắc vào Nam, giúp bạn dễ dàng khám phá vẻ đẹp Việt Nam theo cách thuận tiện và tiết
+                    kiệm nhất.</p>
 
                 <!-- Bảng tìm kiếm -->
                 <div class="row mt-5">
@@ -179,7 +154,8 @@
                                     </div>
                                 </div>
                                 <div class="col" style="padding-left: 25%; padding-top: 1%;">
-                                    <span>Tất cả: <b class="text-primary">12 Tour</b></span>
+                                    <div style="font-size: 17px;">Chúng tôi tìm thấy<b class="text-primary ms-2 me-2"
+                                            style="font-size: 20px;">12 Tour</b>chương trình tour cho quý khách</div>
                                 </div>
                             </div>
                         </form>
@@ -189,37 +165,47 @@
                 <!-- List Tour -->
                 <div class="row mt-5">
                     <div class="col-12 mb-3">
+
                         <template v-for="(value, index) in listTour" :key="index">
-                            <div class="card-group">
+                            <div class="card-group"
+                                style=" transition: 0.4s; box-shadow: 0 2px 4px rgba(0,0,0,0.1); border-radius: 8px;"
+                                onmouseover="this.style.transform='scale(1.05)'; this.style.boxShadow='0 12px 20px rgba(0,0,0,0.2)';"
+                                onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 2px 4px rgba(0,0,0,0.1)';">
                                 <div class="position-relative">
                                     <img :src="value.url"
-                                        style="height: 241px; width: 320px; border-top-left-radius: 20px; border-bottom-left-radius: 20px;">
+                                        style="height: 280px; width: 320px; border-top-left-radius: 20px; border-bottom-left-radius: 20px;">
                                     <div class="position-absolute top-0 start-0">
                                         <button class="btn btn-primary d-flex align-items-center justify-content-center"
                                             style="height: 30px;border-top-left-radius: 20px; border-bottom-right-radius: 10px; font-size: 15px;">Giảm
                                             {{ value.phan_tram_giam }}%</button>
                                     </div>
                                 </div>
-                                <div class="card"
-                                    style="border-top-right-radius: 20px; border-bottom-right-radius: 20px;">
+                                <div class="card" style="height: 280px;">
                                     <div class="card-body rounded-end ms-3">
-                                        <h4>{{ value.ten_tour }}</h4>
+                                        <h4><b>{{ value.ten_tour }}</b></h4>
                                         <div class="d-flex justify-content-between">
-                                            <p class="mt-4 mb-2">Số chỗ: <span class="badge text-bg-secondary">{{
-                                                value.so_cho }}</span>
+                                            <p class="mt-4 mb-2 text-black" style="font-size: 17px;">
+                                                <img src="../../../assets/images/homecustomer/seat.png" class="me-2">
+                                                Số chỗ: <span class="badge text-bg-secondary">{{
+                                                    value.so_cho }}</span>
                                             </p>
-                                            <span class="mt-4 text-secondary" style="font-size: 15px;">Điểm đến:
-                                                {{ value.dia_diem }}</span>
+                                            <span class="mt-4 text-black" style="font-size: 17px;"><i
+                                                    class="fa-solid fa-map-location-dot me-2"></i>Khởi hành:
+                                                <b class="text-primary">{{ value.dia_diem }}</b></span>
                                         </div>
                                         <div class="d-flex justify-content-between">
-                                            <span class="mb-2">Số chỗ còn lại: <span class="badge text-bg-primary">{{
-                                                value.so_cho_con }}</span></span>
-                                            <span class="text-warning" style="font-size: 15px;"><b>Giá:
-                                                    {{ formatVND(value.gia) }}</b></span>
+                                            <span class="mb-2 text-black" style="font-size: 17px;">
+                                                <img src="../../../assets/images/homecustomer/seat(1).png" class="me-2">
+                                                Số chỗ còn lại: <span class="badge text-bg-primary">{{
+                                                    value.so_cho_con }}</span></span>
+                                            <span class="text-black mb-1" style="font-size: 17px;">
+                                                <img src="../../../assets/images/homecustomer/airplane.png" class="me-2">
+                                                Phương tiện:
+                                                {{ value.ten_phuong_tien }}</span>
                                         </div>
 
-                                        <div class="d-flex justify-content-between">
-                                            <p class="mt-2">Đánh giá:
+                                        <div class="d-flex justify-content-between" style="font-size: 17px;">
+                                            <p class="mt-2 text-black">Đánh giá:
                                                 <!-- Sao vàng -->
                                                 <i v-for="n in value.diem" :key="'star-' + n"
                                                     class="fa-solid fa-star text-warning me-1"></i>
@@ -227,12 +213,16 @@
                                                 <i v-for="n in (5 - value.diem)" :key="'empty-' + n"
                                                     class="fa-regular fa-star me-1" style="color: #FFD43B;"></i>
                                             </p>
+                                            <span class="text-black text-end" style="font-size: 17px;">Giá:
+                                                    <p class="text-danger mt-2 mb-2" style="font-size: 25px;">
+                                                        <b>{{ formatVND(value.gia) }}</b>
+                                                    </p></span>
 
-                                            <span class="text-secondary mb-1" style="font-size: 15px;">Ngày khởi hành:
-                                                {{ value.ngay_di }}</span>
                                         </div>
                                         <div class="d-flex justify-content-between mt-2">
-                                            <button class="btn btn-outline-warning">Xem chi tiết</button>
+                                            <router-link :to="`/chi-tiet-tour/${value.id}`">
+                                                <button class="btn btn-outline-warning">Xem chi tiết</button>
+                                            </router-link>
                                             <button class="btn btn-outline-primary">Đặt ngay<i
                                                     class="fa-solid fa-cart-shopping ms-2"></i></button>
                                         </div>
@@ -243,13 +233,16 @@
                     </div>
                 </div>
 
+                <!-- Nhận ưu đãi -->
                 <div class="row">
                     <div class="card" style="background-color: deepskyblue;">
                         <div class="car-body">
                             <div class="row mt-5 ms-5 mb-4 me-5">
                                 <div class="col-lg-6 ">
                                     <h4 class="mb-2 text-white"><b>NHẬN ƯU ĐÃI</b></h4>
-                                    <p class="text-white">Đăng ký ngay hôm nay để không bỏ lỡ các ưu đãi & nhận voucher giảm giá trực tiếp
+                                    <p class="text-white">Đăng ký ngay hôm nay để không bỏ lỡ các ưu đãi & nhận voucher
+                                        giảm giá trực
+                                        tiếp
                                     </p>
                                 </div>
                                 <div class="col-lg-6">
@@ -257,10 +250,11 @@
                                         <span class="position-absolute top-50 start-0 translate-middle-y">
                                             <i class="fa-regular fa-envelope fa-lg ms-4" style="color: #74C0FC;"></i>
                                         </span>
-                                        <input type="email" placeholder="Nhập Email của bạn"
-                                            class="form-control" style="height: 60px; padding-left: 50px; border-radius: 8px;">
+                                        <input type="email" placeholder="Nhập Email của bạn" class="form-control"
+                                            style="height: 60px; padding-left: 50px; border-radius: 8px;">
                                         <span class="position-absolute top-50 end-0 translate-middle-y me-3">
-                                            <button class="btn btn-dark"><i class="fa-solid fa-paper-plane"></i></button>
+                                            <button class="btn btn-dark"><i
+                                                    class="fa-solid fa-paper-plane"></i></button>
                                         </span>
                                     </div>
                                 </div>
@@ -268,6 +262,21 @@
                         </div>
                     </div>
                 </div>
+
+                <!-- Pagination -->
+                <div class="d-flex justify-content-center mt-3 mb-5">
+                    <!-- Nút Previous -->
+                    <button class="btn page-btn rounded-circle btn-outline-primary me-2">&lt;</button>
+
+                    <!-- Các số trang -->
+                    <button class="btn page-btn rounded-circle btn-outline-primary me-2 active">1</button>
+                    <button class="btn page-btn rounded-circle btn-outline-primary me-2">2</button>
+                    <button class="btn page-btn rounded-circle btn-outline-primary me-2">3</button>
+
+                    <!-- Nút Next -->
+                    <button class="btn page-btn rounded-circle btn-outline-primary me-2">&gt;</button>
+                </div>
+
             </div>
         </div>
     </div>
@@ -279,12 +288,12 @@ export default {
         return {
             rangeValue: 50000000,
             listTour: [
-                { id: 1, ten_tour: "Tour Hà Nội - Ninh Bình 3N2Đ", url: "https://sodulich.ninhbinh.gov.vn/uploads/images/32.jpg", gia: 3500000, diem: 5, ngay_di: "2025-10-05", dia_diem: "Hà Nội, Ninh Bình", so_cho: 40, so_cho_con: 25, trang_thai: 1, phan_tram_giam: 100 },
-                { id: 2, ten_tour: "Tour Đà Nẵng - Hội An 4N3Đ", url: "https://dulichvn.org.vn/nhaptin/uploads/images/2023/Thang4/0604Hoi-An1.jpg", gia: 5200000, diem: 4, ngay_di: "2025-11-02", dia_diem: "Đà Nẵng, Hội An", so_cho: 35, so_cho_con: 15, trang_thai: 0, phan_tram_giam: 50 },
-                { id: 3, ten_tour: "Tour Sa Pa - Fansipan 3N2Đ", url: "https://mia.vn/media/uploads/blog-du-lich/dien-dao-truoc-ve-dep-hung-vi-cua-fansipan-noc-nha-dong-duong-1624924043.jpg", gia: 4500000, diem: 5, ngay_di: "2025-12-10", dia_diem: "Sa Pa, Lào Cai", so_cho: 30, so_cho_con: 12, trang_thai: 1, phan_tram_giam: 20 },
-                { id: 4, ten_tour: "Tour Phú Quốc 4N3Đ", url: "https://bcp.cdnchinhphu.vn/334894974524682240/2025/6/23/phu-quoc-17506756503251936667562.jpg", gia: 6900000, diem: 4, ngay_di: "2025-12-20", dia_diem: "Phú Quốc, Kiên Giang", so_cho: 50, so_cho_con: 30, trang_thai: 1, phan_tram_giam: 10 },
-                { id: 5, ten_tour: "Tour Huế - Động Phong Nha 5N4Đ", url: "https://husta.vn/wp-content/uploads/2023/11/Hue-9357c48e.jpg", gia: 7800000, diem: 4, ngay_di: "2026-01-15", dia_diem: "Huế, Quảng Bình", so_cho: 40, so_cho_con: 18, trang_thai: 1, phan_tram_giam: 40 },
-                { id: 6, ten_tour: "Tour Miền Tây Sông Nước 3N2Đ", url: "https://baoduyentourist.com/uploads/tin-tuc/2025_05/du-lich-mien-tay-tet-4.jpg", gia: 3200000, diem: 5, ngay_di: "2026-02-05", dia_diem: "Cần Thơ, An Giang", so_cho: 25, so_cho_con: 10, trang_thai: 0, phan_tram_giam: 30 }
+                { id: 1, ten_tour: "Tour Hà Nội - Ninh Bình 3N2Đ", url: "https://sodulich.ninhbinh.gov.vn/uploads/images/32.jpg", gia: 3500000, diem: 5, ten_phuong_tien: "Máy bay", dia_diem: "Hà Nội, Ninh Bình", so_cho: 40, so_cho_con: 25, trang_thai: 1, phan_tram_giam: 100 },
+                { id: 2, ten_tour: "Tour Đà Nẵng - Hội An 4N3Đ", url: "https://dulichvn.org.vn/nhaptin/uploads/images/2023/Thang4/0604Hoi-An1.jpg", gia: 5200000, diem: 4, ten_phuong_tien: "Máy bay", dia_diem: "Đà Nẵng, Hội An", so_cho: 35, so_cho_con: 15, trang_thai: 0, phan_tram_giam: 50 },
+                { id: 3, ten_tour: "Tour Sa Pa - Fansipan 3N2Đ", url: "https://mia.vn/media/uploads/blog-du-lich/dien-dao-truoc-ve-dep-hung-vi-cua-fansipan-noc-nha-dong-duong-1624924043.jpg", gia: 4500000, diem: 5, ten_phuong_tien: "Máy bay", dia_diem: "Sa Pa, Lào Cai", so_cho: 30, so_cho_con: 12, trang_thai: 1, phan_tram_giam: 20 },
+                { id: 4, ten_tour: "Tour Phú Quốc 4N3Đ", url: "https://bcp.cdnchinhphu.vn/334894974524682240/2025/6/23/phu-quoc-17506756503251936667562.jpg", gia: 6900000, diem: 4, ten_phuong_tien: "Máy bay", dia_diem: "Phú Quốc, Kiên Giang", so_cho: 50, so_cho_con: 30, trang_thai: 1, phan_tram_giam: 10 },
+                { id: 5, ten_tour: "Tour Huế - Động Phong Nha 5N4Đ", url: "https://husta.vn/wp-content/uploads/2023/11/Hue-9357c48e.jpg", gia: 7800000, diem: 4, ten_phuong_tien: "Máy bay", dia_diem: "Huế, Quảng Bình", so_cho: 40, so_cho_con: 18, trang_thai: 1, phan_tram_giam: 40 },
+                { id: 6, ten_tour: "Tour Miền Tây Sông Nước 3N2Đ", url: "https://baoduyentourist.com/uploads/tin-tuc/2025_05/du-lich-mien-tay-tet-4.jpg", gia: 3200000, diem: 5, ten_phuong_tien: "Máy bay", dia_diem: "Cần Thơ, An Giang", so_cho: 25, so_cho_con: 10, trang_thai: 0, phan_tram_giam: 30 }
             ]
 
         };

@@ -243,8 +243,7 @@
                                 onmouseover="this.style.transform='scale(1.05)';"
                                 onmouseout="this.style.transform='scale(1)';">
                                 <div class="position-relative">
-                                    <img :src="value.url" class="card-img-top"
-                                        style="height: 250px; width: 288px;">
+                                    <img :src="value.url" class="card-img-top" style="height: 250px; width: 288px;">
                                     <!-- map -->
                                     <div class="position-absolute bottom-0 start-0">
                                         <button class="btn-white">

@@ -11,54 +11,53 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent1">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0"></ul>
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                        <router-link to="/">
-                            <li class="nav-item">
-                                <a class="nav-link text-light fs-6" aria-current="page" href="#"><b>Trang Chủ</b></a>
-                            </li>
-                        </router-link>
-                        <router-link to="/gioi-thieu">
-                            <li class="nav-item">
-                                <a class="nav-link text-light fs-6" href="/gioi-thieu"><b>Giới Thiệu</b></a>
-                            </li>
-                        </router-link>
-                        <router-link to="/">
-                            <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle text-light fs-6" href="#" role="button"
-                                    data-bs-toggle="dropdown" aria-expanded="false">
-                                    <b>Tour Du Lịch</b>
-                                </a>
-                                <ul class="dropdown-menu">
-                                    <router-link to="/tour-bac">
-                                        <li><a class="dropdown-item" href="/">Tour Miền Bắc</a>
-                                        </li>
-                                    </router-link>
-                                    <router-link to="/tour-trung">
-                                        <li><a class="dropdown-item" href="/">Tour Miền Trung</a>
-                                        </li>
-                                    </router-link>
-                                    <router-link to="/tour-nam">
-                                        <li><a class="dropdown-item" href="/">Tour Miền Nam</a>
-                                        </li>
-                                    </router-link>
-                                </ul>
-                            </li>
-                        </router-link>
-                        <router-link to="/bai-viet">
-                            <li class="nav-item"> <a class="nav-link text-light fs-6" href="/bai-viet"><b>Bài Viết</b></a>
-                            </li>
-                        </router-link>
+                        <!-- Trang Chủ -->
+                        <li class="nav-item">
+                            <router-link to="/" class="nav-link text-light fs-6"><b>Trang Chủ</b></router-link>
+                        </li>
 
-                        <router-link to="/faqs">
-                            <li class="nav-item">
-                                <a class="nav-link text-light fs-6" href="/faqs"><b>Faqs</b></a>
-                            </li>
-                        </router-link>
-                        <router-link to="/lien-he">
-                            <li class="nav-item">
-                                <a class="nav-link text-light fs-6" href="/gioi-thieu"><b>Liên Hệ</b></a>
-                            </li>
-                        </router-link>
+                        <!-- Giới Thiệu -->
+                        <li class="nav-item">
+                            <router-link to="/gioi-thieu" class="nav-link text-light fs-6"><b>Giới
+                                    Thiệu</b></router-link>
+                        </li>
+
+                        <!-- Dropdown Tour Du Lịch -->
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle text-light fs-6" href="#" role="button"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                <b>Tour Du Lịch</b>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <router-link to="/tour-bac" class="dropdown-item">Tour Miền Bắc</router-link>
+                                </li>
+                                <li>
+                                    <router-link to="/tour-trung" class="dropdown-item">Tour Miền Trung</router-link>
+                                </li>
+                                <li>
+                                    <router-link to="/tour-nam" class="dropdown-item">Tour Miền Nam</router-link>
+                                </li>
+                            </ul>
+                        </li>
+                        
+
+                        <!-- Bài Viết -->
+                        <li class="nav-item">
+                            <router-link to="/bai-viet" class="nav-link text-light fs-6"><b>Bài Viết</b></router-link>
+                        </li>
+
+                        <!-- Faqs -->
+                        <li class="nav-item">
+                            <router-link to="/faqs" class="nav-link text-light fs-6"><b>Faqs</b></router-link>
+                        </li>
+
+                        <!-- Liên Hệ -->
+                        <li class="nav-item">
+                            <router-link to="/lien-he" class="nav-link text-light fs-6"><b>Liên Hệ</b></router-link>
+                        </li>
                     </ul>
+
                     <div class="d-flex align-items-center gap-3">
                         <!-- Search Icon -->
                         <a class="nav-link" href="#" title="Tìm kiếm">
@@ -100,7 +99,7 @@
 <script>
 import LogoText from "./LogoText.vue";
 export default {
-    components: { LogoText }, 
+    components: { LogoText },
 };
 </script>
 <style scoped>

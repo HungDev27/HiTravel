@@ -42,7 +42,8 @@
       <div
         style="width: 50px; height: 50px; background: #fff; border-radius: 50%; position: absolute; top: 10px; left: 10px; display: flex; align-items: center; justify-content: center; overflow: hidden; box-shadow: 0 4px 8px rgba(0,0,0,0.2);">
         <a href="tel:0369636310">
-          <img alt="Phone" src="https://media.istockphoto.com/id/971654072/vector/red-call-icon.jpg?s=612x612&w=0&k=20&c=bwlNm0pnNs98evZv4x8N3Cq3XQAWIKLEzJPmQpbMgWY="
+          <img alt="Phone"
+            src="https://media.istockphoto.com/id/971654072/vector/red-call-icon.jpg?s=612x612&w=0&k=20&c=bwlNm0pnNs98evZv4x8N3Cq3XQAWIKLEzJPmQpbMgWY="
             style="width: 100%; height: 100%; object-fit: contain;">
         </a>
       </div>
@@ -59,23 +60,28 @@ export default {
       return (this.$route.meta.layout || default_layout) + "-layout";
     },
   },
+  
 };
 </script>
-  <style>
-    @keyframes pulse {
-      0% {
-        transform: scale(0.9);
-        opacity: 0.7;
-      }
+<style>
+@keyframes pulse {
+  0% {
+    transform: scale(0.9);
+    opacity: 0.7;
+  }
 
-      70% {
-        transform: scale(1.1);
-        opacity: 0.3;
-      }
+  70% {
+    transform: scale(1.1);
+    opacity: 0.3;
+  }
 
-      100% {
-        transform: scale(0.9);
-        opacity: 0.7;
-      }
-    }
-  </style>
+  100% {
+    transform: scale(0.9);
+    opacity: 0.7;
+  }
+}
+
+a {
+  text-decoration: none !important;
+}
+</style>

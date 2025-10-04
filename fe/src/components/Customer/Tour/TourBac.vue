@@ -63,27 +63,27 @@
                                 </router-link>
                             </div>
                             <div class="card-body ms-2 mt-2 me-2">
-                            <h5 class="card-title text-nowrap">{{ value.ten_tour }}</h5>
-                            <p class="card-text">
-                            <div class="d-flex justify-content-between mt-2">
-                                <div class="text-secondary">
-                                    <i class="fa-solid fa-clock me-2"></i>
-                                    <span>
-                                        {{ formatDate(value.ngay_di) }} → {{ formatDate(value.ngay_ve) }}
-                                    </span>
-                                </div>
-                                <div class="text-secondary">
-                                    <i class="fa-solid fa-car me-3"></i>
-                                    <i class="fa-solid fa-bus-simple"></i>
+                                <h5 class="card-title text-nowrap">{{ value.ten_tour }}</h5>
+                                <div class="card-text">
+                                    <div class="d-flex justify-content-between mt-2">
+                                        <div class="text-secondary">
+                                            <i class="fa-solid fa-clock me-2"></i>
+                                            <span>
+                                                {{ formatDate(value.ngay_di) }} → {{ formatDate(value.ngay_ve) }}
+                                            </span>
+                                        </div>
+                                        <div class="text-secondary">
+                                            <i class="fa-solid fa-car me-3"></i>
+                                            <i class="fa-solid fa-bus-simple"></i>
+                                        </div>
+                                    </div>
+                                    <h4 style="color: darkorange;" class="text-start mt-2">
+                                        {{ formatVND(value.gia) }}
+                                    </h4>
                                 </div>
                             </div>
-                            <h4 style="color: darkorange;" class="text-start mt-2">
-                                {{ formatVND(value.gia) }}
-                            </h4>
-                            </p>
                         </div>
-                        </div>
-                        
+
                     </div>
                 </template>
             </template>

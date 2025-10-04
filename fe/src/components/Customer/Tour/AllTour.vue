@@ -214,9 +214,9 @@
                                                     class="fa-regular fa-star me-1" style="color: #FFD43B;"></i>
                                             </p>
                                             <span class="text-black text-end" style="font-size: 17px;">Giá:
-                                                    <p class="text-danger mt-2 mb-2" style="font-size: 25px;">
+                                                    <div class="text-danger mt-2 mb-2" style="font-size: 25px;">
                                                         <b>{{ formatVND(value.gia) }}</b>
-                                                    </p></span>
+                                                    </div></span>
 
                                         </div>
                                         <div class="d-flex justify-content-between mt-2">

@@ -83,12 +83,12 @@
 
     </div>
 
-    <!-- LÝ DO CHỌN HITRAVEL -->
+    <!-- LÝ DO CHỌN NHTRAVEL -->
     <div class="mt-5"
         style="background-color: #f0f8ff; padding: 3rem 1rem; border-top: 1px solid #0099ff; border-bottom: 1px solid #0099ff;">
 
         <h2 style="text-align: center; font-size: 1.8rem; font-weight: bold; margin-bottom: 2rem;">
-            Vì sao bạn nên chọn HITravel
+            Vì sao bạn nên chọn NHTravel
         </h2>
 
         <div
@@ -128,10 +128,10 @@
         </div>
     </div>
 
-    <!-- BOOKING CÙNG HITRAVEL -->
+    <!-- BOOKING CÙNG NHTRAVEL -->
     <div style="padding: 4rem 10rem; background-color: #fff; text-align: center; position: relative; overflow: hidden;">
 
-        <h2> Booking cùng HITravel</h2>
+        <h2> Booking cùng NHTravel</h2>
 
         <p style="color: #666; font-size: 1rem; margin-bottom: 3rem;">
             Chỉ với 3 bước đơn giản và dễ dàng có ngay trải nghiệm tuyệt vời!
@@ -142,7 +142,7 @@
         </div>
 
         <div class="container">
-            <!-- Booking cùng HITravel -->
+            <!-- Booking cùng NHTravel -->
             <div class="row">
                 <div class="col-lg-4">
                     <button class="btn btn-white text-white"
@@ -161,7 +161,7 @@
                             style="width: 100px;"></img></p>
 
                     <h4 style="font-weight: bold;">Đặt vé</h4>
-                    <p style="color: #666;">HITravel sẽ hỗ trợ bạn đặt vé trực tiếp nhanh chóng và thuận tiện</p>
+                    <p style="color: #666;">NHTravel sẽ hỗ trợ bạn đặt vé trực tiếp nhanh chóng và thuận tiện</p>
                 </div>
 
                 <div class="col-lg-4">
@@ -178,11 +178,11 @@
                 <!-- Hiểu hơn về chúng tôi -->
                 <div class="col-lg-6 text-start">
                     <h4 class="text-primary"><b>Hiểu hơn về chúng tôi</b></h4>
-                    <h2 class="mb-4">Lên kế hoạch cho chuyến đi của bạn cùng HITravel</h2>
+                    <h2 class="mb-4">Lên kế hoạch cho chuyến đi của bạn cùng NHTravel</h2>
                     <span class="text-secondary">Vinh hạnh của chúng tôi là mang đến cho bạn những chuyến đi đáng nhớ.
                         Mang đến cho bạn những chuyến đi đầy cảm hứng. Khám phá những vùng đất mới. Tự do khám phá cùng
                         chúng tôi.</span>
-                    <h4 class="text-primary mt-5 mb-3"><b>Cơ hội tuyệt vời để gửi gắm niềm tin cùng HITravel. Tại sao
+                    <h4 class="text-primary mt-5 mb-3"><b>Cơ hội tuyệt vời để gửi gắm niềm tin cùng NHTravel. Tại sao
                             không?</b></h4>
 
                     <div class="row" style="display: flex; align-items: flex-start; max-width: 500px;">
@@ -239,7 +239,7 @@
                 <template v-for="(value, index) in listTour" :key="index">
                     <div class="col-lg-3">
                         <div class="position-relative">
-                            <div class="card" style="width: 18rem; height: 28rem; transition:0.4s;"
+                            <div class="card" style="width: 18rem; height: 30rem; transition:0.4s;"
                                 onmouseover="this.style.transform='scale(1.05)';"
                                 onmouseout="this.style.transform='scale(1)';">
                                 <div class="position-relative">
@@ -253,29 +253,42 @@
                                     </div>
                                 </div>
 
-                                <div class="card-body">
-                                    <h5 class="card-title text-nowrap">{{ value.ten_tour }}</h5>
-                                    <p class="card-text">
-                                    <div class="d-flex justify-content-between mt-2">
-                                        <div class="text-secondary">
+                                <div class="card-body d-flex flex-column justify-content-between text-start"
+                                    style="height: 230px;">
+                                    <div>
+                                        <!-- Tiêu đề tour -->
+                                        <h5 class="card-title truncate-2-lines"
+                                            style="max-width: 100%;">{{ value.ten_tour }}</h5>
+
+                                        <!-- Ngày đi / về -->
+                                        <div class="text-secondary mt-2">
                                             <i class="fa-solid fa-clock me-2"></i>
                                             <span>
                                                 {{ formatDate(value.ngay_di) }} → {{ formatDate(value.ngay_ve) }}
                                             </span>
                                         </div>
-                                        <div class="text-secondary">
+
+                                        <!-- Phương tiện -->
+                                        <div class="text-secondary mt-2">
                                             <i class="fa-solid fa-car me-3"></i>
                                             <i class="fa-solid fa-bus-simple"></i>
                                         </div>
                                     </div>
-                                    <h4 style="color: darkorange;" class="text-start mt-2">
-                                        {{ formatVND(value.gia) }}
-                                    </h4>
-                                    </p>
-                                    <router-link :to="`/chi-tiet-tour/${value.id}`">
-                                        <button class="btn text-white" style="background-color: darkorange;">Xem chi
-                                            tiết</button></router-link>
+
+                                    <div>
+                                        <!-- Giá -->
+                                        <h4 style="color: darkorange;" class="text-start mt-2">
+                                            {{ formatVND(value.gia) }}
+                                        </h4>
+
+                                        <!-- Nút xem chi tiết -->
+                                        <router-link :to="`/chi-tiet-tour/${value.id}`">
+                                            <button class="btn text-white" style="background-color: darkorange;">Xem chi
+                                                tiết</button>
+                                        </router-link>
+                                    </div>
                                 </div>
+
                             </div>
                             <!-- deal -->
                             <div class="position-absolute top-0 start-0">
@@ -298,7 +311,7 @@
             <div class="text-center mb-3">
                 <h2 style="font-family: 'Palatino Linotype', 'Book Antiqua', Palatino, serif; letter-spacing: 1px;"
                     class="text-primary"><b>Điểm đến yêu thích</b></h2>
-                <span class="text-secondary">Tour du lịch Trong nước với HITravel. Hành hương đầu xuân - Tận hưởng bản
+                <span class="text-secondary">Tour du lịch Trong nước với NHTravel. Hành hương đầu xuân - Tận hưởng bản
                     sắc
                     Việt.</span>
             </div>
@@ -339,9 +352,9 @@
                     <div class="col-lg-7 text-start" style="margin-top: 8rem;">
                         <h5 class="text-white me-5 "><b>TRẢI NGHIỆM SẮC XUÂN VIỆT NAM</b></h5>
                         <hr class="text-white">
-                        <p>
-                        <h2 class="text-white me-5 "><b>LỄ HỘI HOA 3 MIỀN</b></h2>
-                        </p>
+                        <div>
+                            <h2 class="text-white me-5 "><b>LỄ HỘI HOA 3 MIỀN</b></h2>
+                        </div>
                         <span class="text-white">
                             Hòa mình vào sắc xuân rực rỡ khắp ba miền Việt Nam: ngắm hoa đào miền Bắc, hoa giấy và nét
                             cổ

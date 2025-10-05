@@ -7,7 +7,7 @@
                     Lũng Korankei Mùa Thu</b></span>
         </div>
         <div class="mt-2" title="Click để xem đánh giá">
-            <a class="nav-link text-black" style="font-size: 17px;" href="#scrollspyHeading5"><span
+            <a class="nav-link text-black" style="font-size: 17px;" href="#scrollspyHeading6"><span
                     style="font-size: 13px;" class="badge text-bg-success">10.0</span>
                 <span class="ms-2 text-success"><b>Xem</b>
                     <span class="ms-2 text-black">2 đánh giá <i class="fa-solid fa-caret-down"></i></span>
@@ -578,8 +578,11 @@ export default {
                     content: 'Đến sân bay Kansai, hướng dẫn viên đón đoàn. Tham quan <b>Chùa Vàng Kinkakuji</b>, phố cổ Gion. Buổi chiều di chuyển đến Osaka, tự do tham quan Dotonbori.',
                     expanded: false
                 }
-            ]
+            ],
         };
+    },
+    mounted() {
+        window.scrollTo({ top: 0, behavior: "smooth" });
     },
     methods: {
         chonNgay(ngay) {

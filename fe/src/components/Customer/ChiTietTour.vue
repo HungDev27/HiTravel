@@ -530,7 +530,7 @@
                             <br>
                             <i class="fa-solid fa-calendar-days"
                                 style="margin-right: 13px; margin-block-end: 10px;"></i>Ngày khởi
-                            hành: <b class="text-primary">10/10</b>
+                            hành: <b class="text-primary">{{ selectedDate }}</b>
                             <br>
                             <img src="../../assets/images/homecustomer/car-seat.png" style="margin-right: 5px;">Số chỗ
                             còn: <b class="text-primary">10</b>
@@ -540,7 +540,7 @@
                     </div>
 
                     <div class="d-flex justify-content-end" v-if="showSchedule">
-                        <button class="btn btn-outline-primary"><i class="fa-solid fa-envelope-open me-2"></i>Liên hệ tư
+                        <button class="btn btn-outline-primary mb-3"><i class="fa-solid fa-envelope-open me-2"></i>Liên hệ tư
                             vấn</button>
                     </div>
                 </div>

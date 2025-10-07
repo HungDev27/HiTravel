@@ -2,7 +2,7 @@
   <div class="container" style="margin-top:20px; margin-bottom:60px; line-height:1.7; font-size:15.5px; color:#222; max-width:980px;">
     <!-- Tiêu đề -->
     <div style="margin-bottom:8px;">
-      <span style="color:#0066CC; font-size:28px; font-weight:700;">ĐIỀU KHOẢN THỎA THUẬN SỬ DỤNG DỊCH VỤ DU LỊCH TRONG NƯỚC</span>
+      <span style="color:#0066CC; font-size:28px; font-weight:700;">ĐIỀU KHOẢN THỎA THUẬN SỬ DỤNG </span>
     </div>
 
     <p style="margin-top:12px;">
@@ -286,11 +286,10 @@
 
     <h4 style="color:#0066CC; margin-top:16px; font-weight:600;">14. THÔNG TIN LIÊN HỆ</h4>
     <p>
-      Trang web chính thức của <strong>NH Travel</strong> là nhtravel.com.vn, trụ sở: 190 Pasteur, phường Hoà Minh, TP Đà Nẵng, Việt Nam. Điện thoại: (84-28) 911 273245
+      Trang web chính thức của <strong>NH Travel</strong> là nhtravel.com.vn, trụ sở: 190 Pasteur, phường Võ Thị Sáu, Quận 3, TP Hồ Chí Minh, Việt Nam. Điện thoại: (84-28) 3822 8898
     </p>
     <p>
-      Liên hệ với Phụ trách bộ phận bảo vệ dữ liệu cá nhân (DPO): phankhanhdn12@gmail.com
-      
+      Liên hệ với Phụ trách bộ phận bảo vệ dữ liệu cá nhân (DPO): hungnt.itc@nhtravel.com
     </p>
 
     <p style="margin-top:16px;">

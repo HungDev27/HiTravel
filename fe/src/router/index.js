@@ -109,6 +109,18 @@ const routes = [
     meta: { layout: "customer" },
     props: true,
   },
+  {
+    path: "/chinh-sach-bao-mat",
+    component: () =>
+      import("../components/Customer/ChinhSachBaoMat/ChinhSachBaoMat.vue"),
+    meta: { layout: "customer" },
+  },
+  {
+    path: "/dieu-khoan-su-dung",
+    component: () =>
+      import("../components/Customer/DieuKhoanSD/DieuKhoanSD.vue"),
+    meta: { layout: "customer" },
+  },
 ];
 
 const router = createRouter({

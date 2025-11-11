@@ -6,7 +6,7 @@ const routes = [
   //     component: ()=>import('../layout/wrapper/index.vue')
   // },
 
-  //Admin
+      // ============= Admin ==================
   {
     path: "/admin",
     component: () => import("../components/Admin/TrangChu/index.vue"),
@@ -44,36 +44,36 @@ const routes = [
   //     meta: { layout: "staff" },
   // },
 
-  //Customer
+  //============= Customer ==================
   {
     path: "/",
-    component: () => import("../components/Customer/TrangChu.vue"),
+    component: () => import("../components/Customer/TrangChu/TrangChu.vue"),
     meta: { layout: "customer" },
   },
   {
     path: "/lien-he",
-    component: () => import("../components/Customer/LienHe.vue"),
+    component: () => import("../components/Customer/LienHe/LienHe.vue"),
     meta: { layout: "customer" },
   },
   {
     path: "/gioi-thieu",
-    component: () => import("../components/Customer/GioiThieu.vue"),
+    component: () => import("../components/Customer/GioiThieu/GioiThieu.vue"),
     meta: { layout: "customer" },
   },
   {
     path: "/faqs",
-    component: () => import("../components/Customer/Faqs.vue"),
+    component: () => import("../components/Customer/Faqs/Faqs.vue"),
     meta: { layout: "customer" },
   },
   {
     path: "/chi-tiet-bai-viet/:id_bai_viet",
-    component: () => import("../components/Customer/ChiTietBaiViet.vue"),
+    component: () => import("../components/Customer/ChiTietBV/ChiTietBaiViet.vue"),
     meta: { layout: "customer" },
     props: true,
   },
   {
     path: "/bai-viet",
-    component: () => import("../components/Customer/BaiViet.vue"),
+    component: () => import("../components/Customer/BaiViet/BaiViet.vue"),
     meta: { layout: "customer" },
     props: true,
   },
@@ -99,7 +99,7 @@ const routes = [
   },
   {
     path: "/chi-tiet-tour/:id_tour",
-    component: () => import("../components/Customer/ChiTietTour.vue"),
+    component: () => import("../components/Customer/ChiTietTour/ChiTietTour.vue"),
     meta: { layout: "customer" },
     props: true,
   },
@@ -119,6 +119,12 @@ const routes = [
     path: "/dieu-khoan-su-dung",
     component: () =>
       import("../components/Customer/DieuKhoanSD/DieuKhoanSD.vue"),
+    meta: { layout: "customer" },
+  },
+  {
+    path: "/test",
+    component: () =>
+      import("../components/Customer/Test/test.vue"),
     meta: { layout: "customer" },
   },
 ];

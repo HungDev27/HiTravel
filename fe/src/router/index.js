@@ -121,12 +121,6 @@ const routes = [
       import("../components/Customer/DieuKhoanSD/DieuKhoanSD.vue"),
     meta: { layout: "customer" },
   },
-  {
-    path: "/test",
-    component: () =>
-      import("../components/Customer/Test/test.vue"),
-    meta: { layout: "customer" },
-  },
 ];
 
 const router = createRouter({

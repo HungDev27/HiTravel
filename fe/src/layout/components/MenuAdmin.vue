@@ -64,24 +64,124 @@
                         <div class="menu-title">Quản Lý Booking</div>
                     </a>
 
-                    <a class="nav-link" href="/admin/quan-ly-khuyen-mai">
-                        <div class="parent-icon" href="/admin/quan-ly-khuyen-mai"><i class="fa-solid fa-ticket"></i>
-                        </div>
-                        <div class="menu-title">Quản lý Khuyến Mãi</div>
-                    </a>
+                    <li class="nav-item dropdown">
+                        <a href="javascript:;" class="nav-link dropdown-toggle dropdown-toggle-nocaret show"
+                            data-bs-toggle="dropdown" aria-expanded="true">
+                            <div class="parent-icon"><i class="fa-brands fa-servicestack"></i>
+                            </div>
+                            <div class="menu-title">Quản lý Dịch Vụ</div>
+                        </a>
+                        <ul class="dropdown-menu show" data-bs-popper="static">
+                            <router-link to="/admin/voucher">
+                                <li>
+                                    <a class="dropdown-item" href="/admin/voucher"><i
+                                            class="bx bx-right-arrow-alt"></i>Voucher</a>
+                                </li>
+                            </router-link>
+                            <router-link to="/admin/phuong-tien">
+                                <li>
+                                    <a class="dropdown-item" href="/admin/phuong-tien"><i
+                                            class="bx bx-right-arrow-alt"></i>Phương tiện</a>
+                                </li>
+                            </router-link>
+                        </ul>
+                    </li>
 
-                    <a class="nav-link" href="/admin/quan-ly-lien-he">
-                        <div class="parent-icon" href="/admin/quan-ly-lien-he"><i
-                                class="fa-solid fa-square-envelope"></i>
-                        </div>
-                        <div class="menu-title">Quản Lý Liên Hệ</div>
-                    </a>
-                    
-                    <a class="nav-link" href="">
-                        <div class="parent-icon" href=""><i class="fa-solid fa-chart-column"></i>
-                        </div>
-                        <div class="menu-title">Thống Kê </div>
-                    </a>
+                    <router-link to="/admin/phan-quyen">
+                        <li class="nav-item">
+                            <a class="nav-link" href="/admin/phan-quyen">
+                                <div class="parent-icon">
+                                    <i class="fa-solid fa-user-shield"></i>
+                                </div>
+                                <div class="menu-title">Phân Quyền</div>
+                            </a>
+                        </li>
+                    </router-link>
+
+                    <li class="nav-item dropdown">
+                        <a href="javascript:;" class="nav-link dropdown-toggle dropdown-toggle-nocaret show"
+                            data-bs-toggle="dropdown" aria-expanded="true">
+                            <div class="parent-icon"><i class="fa-solid fa-star-half-stroke"></i>
+                            </div>
+                            <div class="menu-title">Đánh Giá</div>
+                        </a>
+                        <ul class="dropdown-menu show" data-bs-popper="static">
+                            <router-link to="/admin/binh-luan">
+                                <li>
+                                    <a class="dropdown-item" href="/admin/binh-luan"><i
+                                            class="bx bx-right-arrow-alt"></i>Bình Luận</a>
+                                </li>
+                            </router-link>
+                            <router-link to="/admin/bai-viet">
+                                <li>
+                                    <a class="dropdown-item" href="/admin/bai-viet"><i
+                                            class="bx bx-right-arrow-alt"></i>Bài
+                                        Viết</a>
+                                </li>
+                            </router-link>
+                        </ul>
+                    </li>
+
+                    <li class="nav-item dropdown">
+					<a href="javascript:;" class="nav-link dropdown-toggle dropdown-toggle-nocaret show"
+						data-bs-toggle="dropdown" aria-expanded="true">
+						<div class="parent-icon"><i class="fa-solid fa-chart-line"></i>
+						</div>
+						<div class="menu-title">Thống kê</div>
+					</a>
+					<ul class="dropdown-menu show" data-bs-popper="static">
+						<router-link to="/admin/thong-ke/khach-hang-dang-ky">
+							<li>
+								<a class="dropdown-item" href="/admin/thong-ke/khach-hang-dang-ky"><i
+										class="bx bx-right-arrow-alt"></i>Thống Kê Lượt Đăng Ký</a>
+							</li>
+						</router-link>
+						<!-- <router-link to="/admin/thong-ke/don-hang">
+							<li>
+								<a class="dropdown-item" href="/admin/thong-ke/don-hang"><i
+										class="bx bx-right-arrow-alt"></i>Thống kê đơn hàng</a>
+							</li>
+						</router-link>
+						<router-link to="/admin/thong-ke/ve">
+							<li>
+								<a class="dropdown-item" href="/admin/thong-ke/ve"><i
+										class="bx bx-right-arrow-alt"></i>Thống Kê Vé Bán</a>
+							</li>
+						</router-link>
+						<router-link to="/admin/thong-ke/suat-chieu">
+							<li>
+								<a class="dropdown-item" href="/admin/thong-ke/suat-chieu"><i
+										class="bx bx-right-arrow-alt"></i>Thống Kê Suất Chiếu</a>
+							</li>
+						</router-link>
+						<router-link to="/admin/thong-ke/phim">
+							<li>
+								<a class="dropdown-item" href="/admin/thong-ke/phim"><i
+										class="bx bx-right-arrow-alt"></i>Thống Kê Phim</a>
+							</li>
+						</router-link>
+						<router-link to="/admin/thong-ke/voucher">
+							<li>
+								<a class="dropdown-item" href="/admin/thong-ke/voucher"><i
+										class="bx bx-right-arrow-alt"></i>Thống Kê Voucher</a>
+							</li>
+						</router-link>
+						<router-link to="/admin/thong-ke/dich-vu">
+							<li>
+								<a class="dropdown-item" href="/admin/thong-ke/dich-vu"><i
+										class="bx bx-right-arrow-alt"></i>Thống Kê Dịch Vụ</a>
+							</li>
+						</router-link>
+						<router-link to="/admin/thong-ke/khach-hang-chi-tieu">
+							<li>
+								<a class="dropdown-item" href="/admin/thong-ke/khach-hang-chi-tieu"><i
+										class="bx bx-right-arrow-alt"></i>Thống kê chi tiêu</a>
+							</li>
+						</router-link> -->
+
+
+					</ul>
+				</li>
 
                 </ul>
             </nav>

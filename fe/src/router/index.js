@@ -29,12 +29,32 @@ const routes = [
     component: () => import("../components/Admin/QLBooking/index.vue"),
   },
   {
-    path: "/admin/quan-ly-khuyen-mai",
-    component: () => import("../components/Admin/QLKhuyenMai/index.vue"),
+    path: "/admin/phan-quyen",
+    component: () => import("../components/Admin/PhanQuyen/index.vue"),
   },
   {
-    path: "/admin/quan-ly-lien-he",
-    component: () => import("../components/Admin/QLLienHe/indedx.vue"),
+    path: "/admin/bai-viet",
+    component: () => import("../components/Admin/BaiViet/index.vue"),
+  },
+  {
+    path: "/admin/binh-luan",
+    component: () => import("../components/Admin/BinhLuan/index.vue"),
+  },
+  {
+    path: "/admin/dang-nhap",
+    component: () => import("../components/Admin/DangNhap/index.vue"),
+  },
+  {
+    path: "/admin/phuong-tien",
+    component: () => import("../components/Admin/PhuongTien/index.vue"),
+  },
+  {
+    path: "/admin/voucher",
+    component: () => import("../components/Admin/Voucher/index.vue"),
+  },
+  {
+    path: "/admin/thong-ke/khach-hang-dang-ky",
+    component: () => import("../components/Admin/ThongKe/TKKhachHangDangKy/index.vue"),
   },
 
   //Staff
@@ -119,6 +139,16 @@ const routes = [
     path: "/dieu-khoan-su-dung",
     component: () =>
       import("../components/Customer/DieuKhoanSD/DieuKhoanSD.vue"),
+    meta: { layout: "customer" },
+  },
+  {
+    path: "/dang-ky",
+    component: () => import("../components/Customer/DangKy/index.vue"),
+    meta: { layout: "customer" },
+  },
+  {
+    path: "/dang-nhap",
+    component: () => import("../components/Customer/DangNhap/index.vue"),
     meta: { layout: "customer" },
   },
 ];

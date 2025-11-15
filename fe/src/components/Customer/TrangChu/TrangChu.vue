@@ -213,6 +213,7 @@
                             Tour và giá cả đa dạng
                         </div>
                     </div>
+
                 </div>
 
                 <!-- Ảnh -->
@@ -220,6 +221,19 @@
                     <img src="../../../assets/images/homecustomer/travel.png"
                         style="width: 450px; height: 500px; border-radius:14px; transition:0.4s;"
                         onmouseover="this.style.transform='scale(1.05)';" onmouseout="this.style.transform='scale(1)';">
+                </div>
+
+                <div style="text-align: center; margin-top: 2rem;">
+                    <button onclick="return false;"
+                        onmouseover="const s=this.querySelector('span'); s.style.width='100%'; s.style.opacity='1'; this.style.color='white';"
+                        onmouseout="const s=this.querySelector('span'); s.style.width='0'; s.style.opacity='0'; this.style.color='#e56b2f';"
+                        style="position: relative; display: inline-block; padding: 0.8rem 1.5rem; border: 2px solid #e56b2f; background: transparent;
+                                color: #e56b2f; font-weight: bold; font-size: 15px; cursor: pointer; overflow: hidden; z-index: 1;">
+                        Tìm hiểu thêm →
+                        <span
+                            style="position: absolute; top: 0; left: 0; height: 100%; width: 0; opacity: 0; background: #e56b2f; z-index: -1; transition: width 0.4s, opacity 0.2s;">
+                        </span>
+                    </button>
                 </div>
             </div>
 

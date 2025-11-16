@@ -1,103 +1,64 @@
 <template>
-    <div class="section-authentication-signin d-flex align-items-center justify-content-center my-5 my-lg-0">
-        <div class="container-fluid">
-            <div class="row row-cols-1 row-cols-lg-2 row-cols-xl-3">
-                <div class="col mx-auto">
-                    <div class="card radius-10">
-                        <div class="card-body">
-                            <div class="border p-4 rounded">
-                                <div class="text-center">
-                                    <h3 class="text-uppercase">Đăng Nhập <span
-                                            class="text-primary fw-bold">DZCinema</span></h3>
-                                    <p>Bạn chưa có tài khoản?
-                                        <router-link to="/client/dang-ky">
-                                            <a href="/client/dang-ky">Đăng ký ngay</a>
-                                        </router-link>
-                                    </p>
-                                </div>
-                                <div class="d-grid">
-                                    <a class="btn my-3 shadow-sm btn-white" href="javascript:;"> <span
-                                            class="d-flex justify-content-center align-items-center">
-                                            <img class="me-2" src="../../../assets/images/icons/search.svg" width="16"
-                                                alt="Image Description">
-                                            <span>Đăng nhập bằng Google</span>
-                                        </span>
-                                    </a>
-                                </div>
-                                <div class="login-separater text-center mb-4">
-                                    <span>OR</span>
-                                    <hr>
-                                </div>
-                                <div class="form-body">
-                                    <div class="row g-3">
-                                        <div class="col-12">
-                                            <label class="form-label">Email</label>
-                                            <div class="input-group">
-                                                <span class="input-group-text bg-transparent">
-                                                    <i class="fa-solid fa-envelope"></i>
-                                                </span>
-                                                <input v-model="thong_tin_dang_nhap.email" type="email"
-                                                    class="form-control border-start-0" placeholder="Email">
-                                            </div>
-                                        </div>
-                                        <div class="col-12">
-                                            <label class="form-label">Mật khẩu</label>
-                                            <div class="input-group">
-                                                <span class="input-group-text bg-transparent">
-                                                    <i class="fa-solid fa-lock"></i>
-                                                </span>
-                                                <input v-model="thong_tin_dang_nhap.password" @keydown.enter="dangNhap()" type="password"
-                                                    class="form-control border-start-0" placeholder="Mật khẩu">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                        </div>
-                                        <div class="col-md-6 text-end">
-                                            <router-link to="/client/quen-mat-khau">
-                                                Quên mật khẩu
-                                            </router-link>
-                                        </div>
-                                        <div class="col-12">
-                                            <div class="d-grid">
-                                                <button v-on:click="dangNhap()" class="btn btn-success btn-pill"><i
-                                                        class="bx bxs-lock-open"></i>Đăng Nhập</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+  <div class="position-relative">
+
+    <!-- Ảnh -->
+    <img src="../../../assets/images/homecustomer/Poster2.png" style="max-width: 100%; height: auto; display: block;">
+    <div class="position-absolute top-50 start-0 translate-middle-y">
+      <div class="card" style="width: 500px;;border-radius: 15px; margin-bottom: 400px; margin-left: 250px;">
+        <div class="card-body">
+          <h2 class="text-center"><b>Đăng nhập</b></h2>
+
+          <!-- Thông tin nhập vào -->
+          <label style="font-size: 17px;" class="mb-2 ms-3 mt-3">Tên đăng nhập, email,...</label>
+          <input type="text" class="form-control mt-1" style="border-radius: 90px; width: 465px;">
+          <label style="font-size: 17px;" class="mb-2 ms-3 mt-3">Nhập mật khẩu</label>
+          <input type="password" class="form-control mt-1" style="border-radius: 90px; width: 465px;">
+
+          <!-- Quan trang đăng ký -->
+          <div class="text-center mt-3">
+            <i>Chưa là thành viên?
+              <a href="/dang-ky" style="color: cornflowerblue; text-decoration: underline;"><b><u>Đăng ký
+                    ngay</u></b></a>
+            </i>
+          </div>
+
+          <!-- Nút -->
+          <div class="d-grid gap-2 mt-4 mb-4">
+            <button class="btn btn-lg" type="button"
+              style="background-color: #3b5998; border-radius: 100px; color: #ffffff;"
+              onmouseover="this.style.backgroundColor='#5c76ab'" onmouseout="this.style.backgroundColor='#3b5998'">
+              <b>Đăng ký</b>
+            </button>
+          </div>
+
+          <div class="text-center">───────────
+            <span class="ms-3 me-3">Đăng nhập với</span>
+            ───────────
+          </div>
+
+          <!-- Đăng nhậP với -->
+          <div class="d-flex flex-row mb-3 text-center justify-content-center mt-3">
+            <div class="p-2"><button class="btn" style="background-color: cornflowerblue; border-radius: 100px;"><i
+                  class="fa-brands fa-google" style="color: #ffffff;"></i><b class="text-white ms-2">Google</b></button>
             </div>
+            <div class="p-2"><button class="btn text-center btn-outline-white" style="border-radius: 100px;"><i
+                  class="fa-brands fa-facebook-f" style="color: cornflowerblue;"></i></button></div>
+            <div class="p-2"><button class="btn text-center btn-outline-white" style="border-radius: 100px;"><i
+                  class="fa-brands fa-twitter" style="color: cornflowerblue;"></i></button></div>
+          </div>
+
+          <div class="text-center">
+            <a href="/quen-mat-khau" style="color: cornflowerblue; text-decoration: underline;"><b><u>Quên mật khẩu?</u></b></a>
+          </div>
         </div>
+      </div>
     </div>
+
+  </div>
 </template>
+
 <script>
-import axios from 'axios';
 export default {
-    data() {
-        return {
-            thong_tin_dang_nhap: {}
-        }
-    },
-    /*methods: {
-        dangNhap() {
-            axios.post('http://127.0.0.1:8000/api/client/dang-nhap', this.thong_tin_dang_nhap)
-                .then((res) => {
-                    if (res.data.status) {
-                        this.$toast.success(res.data.message);
-                        console.log(res.data.data);
-                        
-                        localStorage.setItem('key_client', res.data.token)
-                        
-                        this.$router.push('/')
-                    } else {
-                        this.$toast.error(res.data.message);
-                    }
-                });
-        }
-    },*/
+
 }
 </script>
-<style></style>

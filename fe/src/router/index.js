@@ -39,6 +39,7 @@ const routes = [
   {
     path: "/admin/dang-nhap",
     component: () => import("../components/Admin/DangNhap/index.vue"),
+    meta: { layout: "blank" },
   },
   {
     path: "/admin/phuong-tien",
@@ -158,6 +159,11 @@ const routes = [
   {
     path: "/dang-nhap",
     component: () => import("../components/Customer/DangNhap/index.vue"),
+    meta: { layout: "customer" },
+  },
+  {
+    path: "/quen-mat-khau",
+    component: () => import("../components/Customer/QuenMatKhau/index.vue"),
     meta: { layout: "customer" },
   },
 ];

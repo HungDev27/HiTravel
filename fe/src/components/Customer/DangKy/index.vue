@@ -1,131 +1,107 @@
 <template>
-    <div class="d-flex align-items-center justify-content-center my-5 my-lg-0"
-        style="background-position: center; height: 100vh;">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-8 mx-auto">
-                    <div class="my-4 text-center"></div>
-                    <div class="card d-flex">
-                        <div class="card-body flex-full">
-                            <div class="border p-4 rounded">
-                                <div class="text-center">
-                                    <h3 class="text-uppercase ">Đăng ký tài khoản <b class="text-primary">dzcinema</b>
-                                    </h3>
-                                    <p>Bạn đã có tài khoản?
-                                        <router-link to="/client/dang-nhap">
-                                            <a href="/client/dang-nhap">Đăng nhập tại đây</a>
-                                        </router-link>
-                                    </p>
-                                </div>
-                                <div class="form-body">
-                                    <div class="row g-3">
-                                        <div class="col-sm-6">
-                                            <label class="form-label">Họ và tên</label>
-                                            <input v-model="user.ho_va_ten" type="text" class="form-control">
-                                        </div>
-                                        <div class="col-sm-6">
-                                            <label for="inputEmailAddress" class="form-label">Email</label>
-                                            <input v-model="user.email" type="email" class="form-control">
-                                        </div>
-                                        <div class="col-sm-4">
-                                            <label class="form-label">Số điện thoại</label>
-                                            <input v-model="user.so_dien_thoai" type="text" class="form-control">
-                                        </div>
-                                        <div class="col-sm-4">
-                                            <label class="form-label">Số CCCD</label>
-                                            <input v-model="user.cccd" type="text" class="form-control">
-                                        </div>
-                                        <div class="col-sm-4">
-                                            <label class="form-label">Ngày Sinh</label>
-                                            <input v-model="user.ngay_sinh" type="date" class="form-control"
-                                                min="1900-01-01" max="2025-12-31">
-                                        </div>
-                                        <div class="col-6">
-                                            <label class="form-label">Mật khẩu</label>
-                                            <div class="input-group" id="show_hide_password">
-                                                <input v-model="user.password"
-                                                    :type="showPassword ? 'text' : 'password'"
-                                                    class="form-control border-end-0">
-                                                <a href="javascript:;" class="input-group-text bg-transparent"
-                                                    @click="showPassword = !showPassword">
-                                                    <i :class="showPassword ? 'bx bx-show' : 'bx bx-hide'"></i>
-                                                </a>
-                                            </div>
-                                        </div>
-                                        <div class="col-6">
-                                            <label class="form-label">Nhập Lại Mật khẩu</label>
-                                            <div class="input-group" id="show_hide_password">
-                                                <input v-model="user.re_password"
-                                                    :type="showRePassword ? 'text' : 'password'"
-                                                    class="form-control border-end-0">
-                                                <a href="javascript:;" class="input-group-text bg-transparent"
-                                                    @click="showRePassword = !showRePassword">
-                                                    <i :class="showRePassword ? 'bx bx-show' : 'bx bx-hide'"></i>
-                                                </a>
-                                            </div>
-                                        </div>
-                                        <div class="col-12">
-                                            <div class="form-check form-switch">
-                                                <input class="form-check-input" type="checkbox"
-                                                    id="flexSwitchCheckChecked">
-                                                <label class="form-check-label" for="flexSwitchCheckChecked">Bằng việc
-                                                    đăng ký tài khoản, tôi đồng ý với Điều khoản dịch vụ &amp; Chính
-                                                    sách bảo mật của <b>DZCinema</b>.</label>
-                                            </div>
-                                        </div>
-                                        <div class="col-12">
-                                            <div class="d-grid">
-                                                <button v-if="!isLoading" @click="dangKyTaiKhoan()" type="submit"
-                                                    class="btn btn-success text-uppercase"><i class="bx bx-user"></i>
-                                                    Đăng Ký</button>
-                                                <button v-if="isLoading" class="btn btn-success" type="button" disabled>
-                                                    <span class="spinner-border spinner-border-sm" role="status"
-                                                        aria-hidden="true"></span>
-                                                    Đang xử lý...</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+
+    <div class="position-relative">
+        <img src="../../../assets/images/homecustomer/Poster.png"
+            style="max-width: 100%; height: auto; display: block;">
+        <div class="position-absolute top-50 start-50 translate-middle">
+            <h1 style="color: #f1f2d9;">Hello!
+                <br>
+                We are glad to see you :)
+            </h1>
+
+            <!-- Đăng nhập gg -->
+            <div class="d-flex flex-row mb-3">
+                <div class="p-2"><button class="btn"
+                        style="background-color: #f1f2d9; border-radius: 100px; color: #21857f;"><i
+                            class="fa-brands fa-google" style="color: #21857f;"></i><b>Đăng ký với Google</b></button>
+                </div>
+                <div class="p-2"><button class="btn text-center btn-outline-white" style="border-radius: 100px;"><i
+                            class="fa-brands fa-facebook-f text-white"></i></button></div>
+                <div class="p-2"><button class="btn text-center btn-outline-white" style="border-radius: 100px;"><i
+                            class="fa-brands fa-twitter text-white"></i></button></div>
+            </div>
+            <span style="color: #f1f2d9;">────────────── Or ──────────────</span>
+
+            <!-- Tự nhập thông tin -->
+            <div class="row mt-3">
+                <div class="col-lg-6">
+                    <label style="color: #f1f2d9; font-size: 17px;" class="mb-2 ms-3"><b>Tên</b></label>
+                    <input type="text" class="text-white form-control"
+                        style="background: rgba(255, 255, 255, 0.1); border-radius: 100px;">
+                </div>
+                <div class="col-lg-6">
+                    <label style="color: #f1f2d9; font-size: 17px;" class="mb-2 ms-3"><b>Email</b></label>
+                    <input type="email" class="text-white form-control"
+                        style="background: rgba(255, 255, 255, 0.1); border-radius: 100px;">
                 </div>
             </div>
+
+            <div class="row mt-3">
+                <div class="col-lg-4">
+                    <label style="color: #f1f2d9; font-size: 17px;" class="mb-2 ms-3"><b>Số điện thoại</b></label>
+                    <input type="number" class="text-white form-control"
+                        style="background: rgba(255, 255, 255, 0.1); border-radius: 100px;">
+                </div>
+                <div class="col-lg-4">
+                    <label style="color: #f1f2d9; font-size: 17px;" class="mb-2 ms-3"><b>CCCD</b></label>
+                    <input type="number" class="text-white form-control"
+                        style="background: rgba(255, 255, 255, 0.1); border-radius: 100px;">
+                </div>
+                <div class="col-lg-4">
+                    <label style="color: #f1f2d9; font-size: 17px;" class="mb-2 ms-3"><b>Ngày sinh</b></label>
+                    <input type="date" class="text-white form-control"
+                        style="background: rgba(255, 255, 255, 0.1); border-radius: 100px;">
+                </div>
+
+            </div>
+
+            <div class="row mt-3">
+                <div class="col-lg-6">
+                    <label style="color: #f1f2d9; font-size: 17px;" class="mb-2 ms-3"><b>Password</b></label>
+                    <input type="password" class="text-white form-control"
+                        style="background: rgba(255, 255, 255, 0.1); border-radius: 100px;">
+                </div>
+                <div class="col-lg-6">
+                    <label style="color: #f1f2d9; font-size: 17px;" class="mb-2 ms-3"><b>Nhập lại Password</b></label>
+                    <input type="password" class="text-white form-control"
+                        style="background: rgba(255, 255, 255, 0.1); border-radius: 100px;">
+                </div>
+            </div>
+
+            <!-- Xác nhận -->
+            <div class="form-check mt-3">
+                <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                <label class="form-check-label" for="defaultCheck1">
+                    <span class="text-white">Tôi đồng ý với các</span> <a href="/dieu-khoan-su-dung"
+                        style="color: #f1f2d9; text-decoration: underline;"><b><u>Điều khoản sử dụng</u></b></a> <span
+                        class="text-white">và</span> <a href="/chinh-sach-bao-mat"
+                        style="color: #f1f2d9; text-decoration: underline;"><b><u>Chính sách bảo
+                                mật</u></b></a>
+                </label>
+            </div>
+
+            <!-- Nút -->
+            <div class="d-grid gap-2 mt-3">
+                <button class="btn btn-lg" type="button"
+                    style="background-color: #f1f2d9; border-radius: 100px; color: #21857f;"
+                    onmouseover="this.style.backgroundColor='#ffffff'"
+                    onmouseout="this.style.backgroundColor='#f1f2d9'">
+                    <b>Đăng ký</b>
+                </button>
+            </div>
+
+            <!-- Đã có acc -->
+             <div class="text-center mt-3">
+                <span class="text-white">Đã có tài khoản: </span>
+                <a href="/dang-nhap"
+                        style="color: #f1f2d9; text-decoration: underline;"><b><u>Đăng nhập</u></b></a>
+             </div>
         </div>
     </div>
-
 </template>
+
 <script>
-import axios from 'axios'
 export default {
-    data() {
-        return {
-            user: {},
-            showRePassword: false,
-            showPassword: false,
-            isLoading: false
-        }
-    },
-    /*methods: {
-        dangKyTaiKhoan() {
-            this.isLoading = true;
-            axios.post('http://127.0.0.1:8000/api/client/dang-ky', this.user)
-                .then((res) => {
-                    if (res.data.status) {
-                        this.$toast.success(res.data.message);
-                    } else {
-                        this.$toast.error('Đăng ký tài khoản thất bại');
-                    }
-                    this.isLoading = false;
-                })
-                .catch((err) => {
-                    const listErr = err.response.data.errors;
-                    Object.values(listErr).forEach((error) => {
-                        this.$toast.error(error[0]);
-                    });
-                });
-        }
-    },*/
+
 }
 </script>
-<style></style>

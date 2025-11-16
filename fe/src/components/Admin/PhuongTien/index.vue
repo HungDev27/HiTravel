@@ -1,224 +1,251 @@
 <template>
-  <div class="page">
-    <!-- HEADER -->
-    <div class="header">
-      <h1>Quản Lý Phương Tiện</h1>
-      <div class="header-line"></div>
+    <div class="container">
+        <div class="row">
+
+            <!-- Thêm mới -->
+            <div class="col-lg-3">
+                <div
+                    style="font-family: Arial, sans-serif; background: #fff; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); padding: 20px;">
+                    <div
+                        style="background: #1976d2; color: #fff; margin: -20px -20px 20px -20px; padding: 12px; border-top-left-radius: 8px; border-top-right-radius: 8px; font-size: 16px; text-align: center;">
+                        THÊM XE BUÝT MỚI
+                    </div>
+
+                    <input type="text" placeholder="Tên phương tiện"
+                        style="width: 100%; padding: 8px; margin-bottom: 10px; border: none; border-bottom: 1px solid #ccc; outline: none; font-size: 14px; box-sizing: border-box;" />
+
+                    <input type="text" placeholder="Biển số xe"
+                        style="width: 100%; padding: 8px; margin-bottom: 10px; border: none; border-bottom: 1px solid #ccc; outline: none; font-size: 14px; box-sizing: border-box;" />
+
+                    <input type="number" placeholder="Sức chứa"
+                        style="width: 100%; padding: 8px; margin-bottom: 10px; border: none; border-bottom: 1px solid #ccc; outline: none; font-size: 14px; box-sizing: border-box;" />
+
+                    <input type="number" placeholder="Số lượng xe lưu thông"
+                        style="width: 100%; padding: 8px; margin-bottom: 20px; border: none; border-bottom: 1px solid #ccc; outline: none; font-size: 14px; box-sizing: border-box;" />
+
+                    <label><b>Ngày đi</b></label>
+                    <input type="date"
+                        style="width: 100%; padding: 8px; margin-bottom: 20px; border: none; border-bottom: 1px solid #ccc; outline: none; font-size: 14px; box-sizing: border-box;" />
+
+                    <label><b>Ngày về</b></label>
+                    <input type="date"
+                        style="width: 100%; padding: 8px; margin-bottom: 20px; border: none; border-bottom: 1px solid #ccc; outline: none; font-size: 14px; box-sizing: border-box;" />
+
+                    <select class="form-select mb-3" aria-label="Default select example">
+                        <option selected disabled>Chọn trạng thái của xe</option>
+                        <option value="0">Sẵn sàng</option>
+                        <option value="1">Đang sử dụng</option>
+                        <option value="2">Bảo trì</option>
+                    </select>
+
+                    <textarea placeholder="Ghi chú..." rows="4" class="form-control mb-3"
+                        style="width: 100%; height: 80px;;padding: 8px; font-size: 14px; box-sizing: border-box;"></textarea>
+
+                    <button
+                        style="width: 100%; background-color: #1976d2; color: white; padding: 10px; border: none; border-radius: 4px; font-size: 14px; cursor: pointer;">
+                        LƯU THÔNG TIN
+                    </button>
+                </div>
+
+            </div>
+            <div class="col-lg-9">
+                <!-- card của phương tiện -->
+                <div class="row">
+                    <div class="col-lg-6 col-md-6 mb-4">
+                        <div class="card-group" role="group">
+                            <img src="https://cmu-cdn.vinfast.vn/2023/11/42712f26-busvf.jpg"
+                                style="height: 170px; width: 200px;" class="img-fluid rounded-start">
+                            <div class="card" style="height: 170px;">
+                                <div class="card-body" style="width: 270px;">
+                                    <div class="row">
+                                        <div class="d-flex justify-content-between">
+
+                                            <!-- Thông tin trong card -->
+                                            <div>
+                                                <h5>Xe buýt</h5>
+                                                <p class="card-text">
+                                                    <!-- Thuộc tính của phương tiện -->
+                                                    <span><b>Biển số: </b>36B-12345</span>
+                                                    <br>
+                                                    <span><b>Sức chứa: </b>30</span>
+                                                    <br>
+
+                                                    <!-- Tình trạng của phương tiện -->
+                                                    <span class="badge text-bg-danger mt-3">Bảo trì</span>
+                                                    <!-- <span class="badge text-bg-warning">Đang sử dụng</span>
+                                                    <span class="badge text-bg-success">Sẵn sàng</span> -->
+                                                </p>
+                                            </div>
+                                            <div class="text-end">
+                                                <!-- Các nút button -->
+                                                <button
+                                                    style="border-radius: 100px; width: 85px; height: 30px; line-height: 0px;"
+                                                    class="mt-2 btn btn-outline-success" data-bs-toggle="modal"
+                                                    data-bs-target="#chitietModal">Chi tiết</button>
+                                                <br>
+                                                <button
+                                                    style="border-radius: 100px; width: 80px; height: 30px; line-height: 0px;"
+                                                    class="mt-2 btn btn-outline-primary" data-bs-toggle="modal"
+                                                    data-bs-target="#suaModal">Sửa</button>
+                                                <br>
+                                                <button
+                                                    style="border-radius: 100px; width: 80px; height: 30px; line-height: 0px;"
+                                                    class="mt-2 btn btn-outline-danger" data-bs-toggle="modal"
+                                                    data-bs-target="#xoaModal">Xóa</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
-    <!-- TOOLBAR -->
-    <div class="toolbar">
-      <button class="btn-add" @click="openAddModal">+ Thêm Phương Tiện</button>
-      <input type="text" v-model="search" placeholder="🔍 Tìm kiếm phương tiện..." class="search-box">
+    <!-- Modal Chi tiết phương tiện -->
+    <div class="modal fade" id="chitietModal" tabindex="-1" aria-labelledby="chitietModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <!-- Header -->
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="chitietModalLabel">Chi Tiết Xe Buýt</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+
+                <!-- Body -->
+                <div class="modal-body">
+                    <p><strong>Biển số:</strong> 51B-123.45</p>
+                    <p><strong>Loại xe:</strong> Xe buýt mini</p>
+                    <p><strong>Sức chứa:</strong> 30 chỗ</p>
+                    <p><strong>Trạng thái:</strong> <span class="badge text-bg-danger mt-3">Bảo trì</span></p>
+                    <p><strong>Ghi chú:</strong></p>
+                    <textarea rows="4" class="form-control mb-3"
+                        style="width: 100%; height: 80px;;padding: 8px; font-size: 14px; box-sizing: border-box;">Chuyến xe phục vụ tuyến số 8, khởi hành mỗi 15 phút từ 6:00 đến 18:00 hàng ngày.</textarea>
+                </div>
+
+                <!-- Footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                </div>
+
+            </div>
+        </div>
     </div>
 
-    <!-- TABLE -->
-    <div class="table-wrapper">
-      <table class="table">
-        <thead>
-          <tr>
-            <th>Ảnh</th>
-            <th>Mã PT</th>
-            <th>Tên Phương Tiện</th>
-            <th>Biển Số</th>
-            <th>Sức Chứa</th>
-            <th>Loại PT</th>
-            <th>Trạng Thái</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="pt in filteredVehicles" :key="pt.id" class="table-row">
-            <td><img :src="pt.imageUrl || defaultImage" alt="Hình PT" class="vehicle-img"></td>
-            <td>{{ pt.id }}</td>
-            <td>{{ pt.ten_pt }}</td>
-            <td>{{ pt.bien_so }}</td>
-            <td>{{ pt.suc_chua }}</td>
-            <td>{{ pt.loai_pt }}</td>
-            <td>
-              <span :class="statusClass(pt.trang_thai)">
-                {{ statusIcon(pt.trang_thai) }} {{ pt.trang_thai }}
-              </span>
-            </td>
-            <td class="action-btns">
-              <button class="btn-view" @click="viewDetails(pt)">Xem</button>
-              <button class="btn-edit" @click="editVehicle(pt)">Sửa</button>
-              <button class="btn-delete" @click="deleteVehicle(pt.id)">Xóa</button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+    <!-- Modal sửa -->
+    <div class="modal fade" id="suaModal" tabindex="-1" aria-labelledby="suaModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <!-- Header -->
+                <div class="modal-header bg-primary text-white">
+                    <h5 class="modal-title" id="suaModalLabel">Sửa Thông Tin Xe Buýt</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
+                </div>
+
+                <!-- Body -->
+                <div class="modal-body">
+                    <form id="formSuaXe">
+                        <div class="mb-3">
+                            <input type="text" class="form-control" placeholder="Tên phương tiện" name="ten_xe">
+                        </div>
+
+                        <div class="mb-3">
+                            <input type="text" class="form-control" placeholder="Biển số xe" name="bien_so">
+                        </div>
+
+                        <div class="mb-3">
+                            <input type="number" class="form-control" placeholder="Sức chứa" name="suc_chua">
+                        </div>
+
+                        <div class="mb-3">
+                            <input type="number" class="form-control" placeholder="Số lượng xe lưu thông"
+                                name="so_luong">
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Ngày đi</label>
+                            <input type="date" class="form-control" name="ngay_di">
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Ngày về</label>
+                            <input type="date" class="form-control" name="ngay_ve">
+                        </div>
+
+                        <div class="mb-3">
+                            <select class="form-select mb-3" aria-label="Default select example">
+                                <option selected disabled>Chọn trạng thái của xe</option>
+                                <option value="0">Sẵn sàng</option>
+                                <option value="1">Đang sử dụng</option>
+                                <option value="2">Bảo trì</option>
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <textarea class="form-control" name="ghi_chu" rows="3" placeholder="Ghi chú..."></textarea>
+                        </div>
+
+                    </form>
+                </div>
+
+                <!-- Footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                    <button type="submit" form="formSuaXe" class="btn btn-primary">Sửa thông tin</button>
+                </div>
+
+            </div>
+        </div>
     </div>
 
-    <!-- MODAL THÊM/SỬA -->
-    <div class="modal" v-if="showModal">
-      <div class="modal-content modal-two-columns">
-        <div class="modal-column">
-          <label>Tên phương tiện</label>
-          <input v-model="form.ten_pt" class="input" ref="firstInput">
+    <!-- Modal Xác Nhận Xoá Đẹp Mắt -->
+    <div class="modal fade" id="xoaModal" tabindex="-1" aria-labelledby="xoaModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content border-0 shadow">
 
-          <label>Biển số</label>
-          <input v-model="form.bien_so" class="input">
+                <!-- Header đỏ đậm -->
+                <div class="modal-header bg-danger text-white border-0">
+                    <h5 class="modal-title" id="xoaModalLabel">
+                        <i class="bi bi-exclamation-triangle-fill me-2"></i> Xác nhận xoá
+                    </h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                        aria-label="Đóng"></button>
+                </div>
 
-          <label>Sức chứa</label>
-          <input v-model="form.suc_chua" type="number" class="input">
+                <!-- Body có biểu tượng cảnh báo -->
+                <div class="modal-body text-center p-4">
 
-          <label>Loại phương tiện</label>
-          <input v-model="form.loai_pt" class="input">
+                    <div style="font-size: 48px; color: #dc3545;">
+                        <i class="bi bi-trash-fill"></i>
+                    </div>
 
-          <label>Hình ảnh URL</label>
-          <input v-model="form.imageUrl" class="input" placeholder="Nhập link ảnh...">
+                    <p class="mt-3 fs-5 fw-semibold text-dark">Bạn có chắc chắn muốn xoá xe buýt này?</p>
+                    <p class="text-secondary" id="thongTinXeCanXoa">Biển số: <span class="fw-bold">12G12345</span></p>
+
+                </div>
+
+                <!-- Footer hành động -->
+                <div class="modal-footer justify-content-center border-0 pb-4">
+                    <button type="button" class="btn btn-secondary px-4" data-bs-dismiss="modal">Hủy</button>
+                    <button type="button" class="btn btn-danger px-4" id="btnXacNhanXoa">Xoá</button>
+                </div>
+
+            </div>
         </div>
-
-        <div class="modal-column">
-          <label>Trạng thái</label>
-          <select v-model="form.trang_thai" class="input">
-            <option>Đang hoạt động</option>
-            <option>Bảo trì</option>
-            <option>Ngưng hoạt động</option>
-          </select>
-
-          <label>Mô tả</label>
-          <textarea v-model="form.mo_ta" class="input" rows="6" placeholder="Nhập mô tả phương tiện..."></textarea>
-        </div>
-
-        <div class="modal-buttons">
-          <button class="btn-save" @click="save">Lưu</button>
-          <button class="btn-cancel" @click="closeModal">Hủy</button>
-        </div>
-      </div>
     </div>
 
-    <!-- MODAL CHI TIẾT -->
-    <div class="modal" v-if="showDetailModal">
-      <div class="modal-content modal-two-columns">
-        <div class="modal-column">
-          <img :src="detailVehicle.imageUrl || defaultImage" alt="Hình PT" class="detail-img">
-        </div>
 
-        <div class="modal-column">
-          <p><strong>Mã PT:</strong> {{ detailVehicle.id }}</p>
-          <p><strong>Tên PT:</strong> {{ detailVehicle.ten_pt }}</p>
-          <p><strong>Biển số:</strong> {{ detailVehicle.bien_so }}</p>
-          <p><strong>Sức chứa:</strong> {{ detailVehicle.suc_chua }}</p>
-          <p><strong>Loại PT:</strong> {{ detailVehicle.loai_pt }}</p>
-          <p><strong>Trạng thái:</strong> {{ statusIcon(detailVehicle.trang_thai) }} {{ detailVehicle.trang_thai }}</p>
-          <p><strong>Mô tả:</strong> {{ detailVehicle.mo_ta }}</p>
-        </div>
 
-        <div class="modal-buttons">
-          <button class="btn-cancel" @click="closeDetailModal">Đóng</button>
-        </div>
-      </div>
-    </div>
-  </div>
+
 </template>
 
 <script>
 export default {
-  data() {
-    return {
-      search: "",
-      showModal: false,
-      editMode: false,
-      showDetailModal: false,
-      detailVehicle: {},
-      defaultImage: "https://i.ibb.co/Yc3PqKP/default-bus.png",
-      form: { id: null, ten_pt: "", bien_so: "", suc_chua: "", loai_pt: "", trang_thai: "Đang hoạt động", mo_ta: "", imageUrl: "" },
-      vehicles: [
-        { id:1, ten_pt:"Xe 29 chỗ", bien_so:"51B-12345", suc_chua:29, loai_pt:"Xe khách", trang_thai:"Đang hoạt động", mo_ta:"Xe khách 29 chỗ, máy lạnh, ghế êm", imageUrl:"https://thacohcm.com/wp-content/uploads/2023/05/background2-scaled.jpg" },
-        { id:2, ten_pt:"Xe 16 chỗ", bien_so:"72A-44522", suc_chua:16, loai_pt:"Mini Bus", trang_thai:"Bảo trì", mo_ta:"Xe 16 chỗ, thích hợp đưa đón công ty hoặc du lịch nhóm nhỏ", imageUrl:"https://fordtayninhauto.com/wp-content/uploads/2023/03/ford-transit-16-cho-mau-trang.jpg" },
-        { id:3, ten_pt:"Xe 45 chỗ", bien_so:"60C-67890", suc_chua:45, loai_pt:"Xe khách lớn", trang_thai:"Đang hoạt động", mo_ta:"Xe 45 chỗ, máy lạnh, ghế xoay êm ái", imageUrl:"https://chothuexevip.vn/uploads/2021/04/Cho-thue-xe-45-cho-da-nang-02.jpg" },
-        { id:4, ten_pt:"Xe 7 chỗ", bien_so:"29A-33445", suc_chua:7, loai_pt:"Xe nhỏ", trang_thai:"Ngưng hoạt động", mo_ta:"Xe 7 chỗ, thích hợp gia đình hoặc đưa đón cá nhân", imageUrl:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSmWZl0uEAf-_ERs5TJx5dL2uch06lAL1_NdQ&s" }
-      ]
-    };
-  },
-  computed: {
-    filteredVehicles() {
-      return this.vehicles.filter(v =>
-        v.ten_pt.toLowerCase().includes(this.search.toLowerCase()) ||
-        v.bien_so.toLowerCase().includes(this.search.toLowerCase()) ||
-        v.loai_pt.toLowerCase().includes(this.search.toLowerCase()) ||
-        v.trang_thai.toLowerCase().includes(this.search.toLowerCase())
-      );
-    }
-  },
-  methods: {
-    statusClass(status) {
-      switch(status){
-        case 'Đang hoạt động': return 'status-active';
-        case 'Bảo trì': return 'status-maintain';
-        case 'Ngưng hoạt động': return 'status-stop';
-        default: return '';
-      }
-    },
-    statusIcon(status){
-      switch(status){
-        case 'Đang hoạt động': return '🟢';
-        case 'Bảo trì': return '🟠';
-        case 'Ngưng hoạt động': return '🔴';
-        default: return '';
-      }
-    },
-    openAddModal() { this.editMode=false; this.form={id:null, ten_pt:"", bien_so:"", suc_chua:"", loai_pt:"", trang_thai:"Đang hoạt động", mo_ta:"", imageUrl:""}; this.showModal=true; this.$nextTick(()=>this.$refs.firstInput.focus()); },
-    editVehicle(pt){ this.editMode=true; this.form={...pt}; this.showModal=true; this.$nextTick(()=>this.$refs.firstInput.focus()); },
-    deleteVehicle(id){ if(confirm("Bạn có chắc muốn xóa phương tiện này?")) this.vehicles=this.vehicles.filter(v=>v.id!==id); },
-    save(){
-      if(!this.form.ten_pt || !this.form.bien_so || !this.form.suc_chua || !this.form.loai_pt){ alert("Vui lòng điền đầy đủ thông tin!"); return; }
-      if(this.editMode){ const idx=this.vehicles.findIndex(v=>v.id===this.form.id); this.vehicles.splice(idx,1,{...this.form}); }
-      else{ this.form.id=Date.now(); this.vehicles.push({...this.form}); }
-      this.closeModal();
-    },
-    closeModal(){ this.showModal=false; },
-    viewDetails(pt){ this.detailVehicle=pt; this.showDetailModal=true; },
-    closeDetailModal(){ this.showDetailModal=false; }
-  }
+
 };
 </script>
-
-<style>
-.page { width:95%; margin:30px auto; font-family:'Segoe UI', sans-serif; }
-.header h1 { font-size:34px; color:#1e4da8; text-align:center; }
-.header-line { width:200px; height:5px; background:linear-gradient(90deg,#1e88e5,#42a5f5); margin:8px auto 25px; border-radius:10px; }
-
-.toolbar { display:flex; justify-content:space-between; margin-bottom:20px; }
-.search-box { padding:10px 15px; width:280px; border-radius:12px; border:2px solid #d0d7e2; transition:0.3s; }
-.search-box:focus { border-color:#1e88e5; box-shadow:0 0 6px rgba(33,150,243,0.4); }
-
-.btn-add { padding:10px 18px; background:linear-gradient(135deg,#1e88e5,#42a5f5); color:white; border:none; border-radius:12px; font-weight:600; cursor:pointer; box-shadow:0 4px 10px rgba(33,150,243,0.3); transition:0.2s; }
-.btn-add:hover { transform:translateY(-2px); box-shadow:0 6px 14px rgba(33,150,243,0.4); }
-
-.table-wrapper { background:white; padding:15px; border-radius:16px; box-shadow:0 4px 15px rgba(0,0,0,0.08); overflow-x:auto; }
-.table { width:100%; border-collapse:collapse; }
-.table th { background:#e3f2fd; padding:14px; font-weight:700; color:#1e4da8; border-bottom:2px solid #cfd8dc; }
-.table td { padding:12px; text-align:center; border-bottom:1px solid #eee; }
-.table-row:nth-child(even){background:#f9faff;}
-.table-row:hover{background:#f1f7ff;transition:0.3s;}
-.vehicle-img { width:60px; height:40px; object-fit:cover; border-radius:8px; border:1px solid #ccc; }
-
-.status-active, .status-maintain, .status-stop { display:flex; align-items:center; justify-content:center; gap:6px; padding:4px 12px; border-radius:10px; font-weight:600; }
-.status-active { color:#0b8b23; background:#d7f7dd; }
-.status-maintain { color:#f57c00; background:#fff4e5; }
-.status-stop { color:#b60000; background:#ffd7d7; }
-
-.action-btns { display:flex; flex-direction:row; gap:6px; justify-content:center; align-items:center; }
-.action-btns button { width:80px; padding:6px 0; border:none; border-radius:8px; cursor:pointer; color:white; font-size:14px; }
-.btn-view { background:#42a5f5; } .btn-view:hover { background:#1e88e5; }
-.btn-edit { background:#ffa726; } .btn-edit:hover { background:#fb8c00; }
-.btn-delete { background:#e53935; } .btn-delete:hover { background:#c62828; }
-
-.modal { position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.45); display:flex; justify-content:center; align-items:center; }
-.modal-content { background:white; border-radius:20px; box-shadow:0 8px 30px rgba(0,0,0,0.2); animation:fadeIn 0.25s ease-out; padding:25px; position:relative; }
-.modal-two-columns { display:flex; gap:20px; width:600px; }
-.modal-column { flex:1; display:flex; flex-direction:column; gap:12px; }
-textarea.input { min-height:120px; resize:none; }
-.modal-buttons { text-align:right; margin-top:10px; }
-.btn-save { padding:8px 18px; background:#43a047; color:white; border-radius:12px; cursor:pointer; }
-.btn-cancel { padding:8px 18px; margin-left:6px; background:#e0e0e0; color:#333; border-radius:12px; cursor:pointer; }
-.btn-cancel:hover { background:#c0c0c0; }
-.detail-img { width:100%; max-width:250px; border-radius:15px; border:1px solid #ccc; }
-
-@media(max-width:700px){ .modal-two-columns{ flex-direction:column; width:90%; } }
-@media(max-width:500px){ .action-btns button { width:60px; font-size:12px; } }
-@keyframes fadeIn{ from{opacity:0;transform:translateY(-15px);} to{opacity:1;transform:translateY(0);} }
-</style>

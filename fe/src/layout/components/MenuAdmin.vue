@@ -54,6 +54,12 @@
                                         Tour</a>
                                 </li>
                             </router-link>
+                            <router-link to="/admin/danh-muc-tour">
+                                <li> <a class="dropdown-item" href="/admin/danh-muc-tour"><i
+                                            class="bx bx-right-arrow-alt"></i>Danh Mục
+                                        Tour</a>
+                                </li>
+                            </router-link>
                         </ul>
                     </li>
 
@@ -76,7 +82,7 @@
                         </div>
                         <div class="menu-title">Quản Lý Liên Hệ</div>
                     </a>
-                    
+
                     <a class="nav-link" href="">
                         <div class="parent-icon" href=""><i class="fa-solid fa-chart-column"></i>
                         </div>

@@ -6,14 +6,10 @@ const routes = [
   //     component: ()=>import('../layout/wrapper/index.vue')
   // },
 
-      // ============= Admin ==================
+  // ============= Admin ==================
   {
     path: "/admin",
     component: () => import("../components/Admin/TrangChu/index.vue"),
-  },
-  {
-    path: "/admin/quan-ly-nguoi-dung",
-    component: () => import("../components/Admin/QLNguoiDung/index.vue"),
   },
   {
     path: "/admin/them-tour",
@@ -54,7 +50,18 @@ const routes = [
   },
   {
     path: "/admin/thong-ke/khach-hang-dang-ky",
-    component: () => import("../components/Admin/ThongKe/TKKhachHangDangKy/index.vue"),
+    component: () =>
+      import("../components/Admin/ThongKe/TKKhachHangDangKy/index.vue"),
+  },
+  {
+    path: "/admin/nhan-vien",
+    component: () => import("../components/Admin/NhanVien/index.vue"),
+    // beforeEnter: checkAdmin,
+  },
+  {
+    path: "/admin/khach-hang",
+    component: () => import("../components/Admin/KhachHang/index.vue"),
+    // beforeEnter: checkAdmin,
   },
 
   //Staff
@@ -87,7 +94,8 @@ const routes = [
   },
   {
     path: "/chi-tiet-bai-viet/:id_bai_viet",
-    component: () => import("../components/Customer/ChiTietBV/ChiTietBaiViet.vue"),
+    component: () =>
+      import("../components/Customer/ChiTietBV/ChiTietBaiViet.vue"),
     meta: { layout: "customer" },
     props: true,
   },
@@ -119,7 +127,8 @@ const routes = [
   },
   {
     path: "/chi-tiet-tour/:id_tour",
-    component: () => import("../components/Customer/ChiTietTour/ChiTietTour.vue"),
+    component: () =>
+      import("../components/Customer/ChiTietTour/ChiTietTour.vue"),
     meta: { layout: "customer" },
     props: true,
   },

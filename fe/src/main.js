@@ -5,10 +5,6 @@ import Default from './layout/wrapper/index.vue'
 import Staff from './layout/wrapper/staff.vue'
 import Customer from './layout/wrapper/customer.vue'
 
-
-import 'bootstrap/dist/css/bootstrap.min.css';
-import 'bootstrap';
-
 const app = createApp(App)
 
 app.use(router)

@@ -6,7 +6,6 @@ use App\Models\NguoiDung;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
-
 Route::get('/admin/danh-muc-tour/get-data', [DanhMucController::class, 'getData']);
 Route::post('admin/danh-muc-tour/add-data', [DanhMucController::class, 'addData']);
 Route::post('admin/danh-muc-tour/update', [DanhMucController::class, 'update']);

@@ -71,6 +71,12 @@
                                         Tour</a>
                                 </li>
                             </router-link>
+                            <router-link to="/admin/danh-muc-tour">
+                                <li> <a class="dropdown-item" href="/admin/danh-muc-tour"><i
+                                            class="bx bx-right-arrow-alt"></i>Danh Mục
+                                        Tour</a>
+                                </li>
+                            </router-link>
                         </ul>
                     </li>
 
@@ -199,6 +205,18 @@
 
 					</ul>
 				</li>
+                    <a class="nav-link" href="/admin/quan-ly-lien-he">
+                        <div class="parent-icon" href="/admin/quan-ly-lien-he"><i
+                                class="fa-solid fa-square-envelope"></i>
+                        </div>
+                        <div class="menu-title">Quản Lý Liên Hệ</div>
+                    </a>
+
+                    <a class="nav-link" href="">
+                        <div class="parent-icon" href=""><i class="fa-solid fa-chart-column"></i>
+                        </div>
+                        <div class="menu-title">Thống Kê </div>
+                    </a>
 
                 </ul>
             </nav>

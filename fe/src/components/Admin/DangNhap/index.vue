@@ -1,4 +1,4 @@
-<template>
+<!-- <template>
 
     <div class="position-relative">
         <img src="../../../assets/images/homecustomer/Poster4.png"
@@ -9,14 +9,16 @@
                     <h2 class="text-center"><b>Đăng nhập</b></h2>
 
                     <!-- Thông tin nhập vào -->
-                    <label style="font-size: 17px;" class="mb-2 ms-3 mt-3">Tên đăng nhập, email,...</label>
-                    <input type="text" class="form-control mt-1" style="border-radius: 90px; width: 465px;">
+                    <label style="font-size: 17px;" class="mb-2 ms-3 mt-3">Nhập email</label>
+                    <input v-model="thong_tin_dang_nhap.email" type="text" class="form-control mt-1"
+                        style="border-radius: 90px; width: 465px;">
                     <label style="font-size: 17px;" class="mb-2 ms-3 mt-3">Nhập mật khẩu</label>
-                    <input type="password" class="form-control mt-1" style="border-radius: 90px; width: 465px;">
+                    <input v-model="thong_tin_dang_nhap.mat_khau_hash" @keydown.enter="dangNhap()" type="password"
+                        class="form-control mt-1" style="border-radius: 90px; width: 465px;">
 
                     <!-- Nút -->
                     <div class="d-grid gap-2 mt-4 mb-4">
-                        <button class="btn btn-lg" type="button"
+                        <button @click="dangNhap()" class="btn btn-lg" type="button"
                             style="background-color: #3b5998; border-radius: 100px; color: #ffffff;"
                             onmouseover="this.style.backgroundColor='#5c76ab'"
                             onmouseout="this.style.backgroundColor='#3b5998'">
@@ -55,7 +57,26 @@
 </template>
 
 <script>
+import axios from 'axios'
 export default {
-
+    data() {
+        return {
+            thong_tin_dang_nhap: {}
+        }
+    },
+    methods: {
+        dangNhap() {
+            axios.post('http://127.0.0.1:8000/api/admin/dang-nhap', this.thong_tin_dang_nhap)
+                .then((res) => {
+                    if (res.data.status) {
+                        this.$toast.success(res.data.message);
+                        localStorage.setItem('auth_token', res.data.token)
+                        this.$router.push('/admin')
+                    } else {
+                        this.$toast.error(res.data.message);
+                    }
+                });
+        }
+    },
 }
-</script>
+</script> -->

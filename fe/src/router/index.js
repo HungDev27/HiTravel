@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory } from "vue-router"; // cài vue-router: npm install vue-router@next --save
-
+import checkToken from "./checkToken";
 const routes = [
   // {
   //     path : '/',
@@ -10,31 +10,38 @@ const routes = [
   {
     path: "/admin",
     component: () => import("../components/Admin/TrangChu/index.vue"),
+    beforeEnter: checkToken,
   },
   {
     path: "/admin/them-tour",
     component: () => import("../components/Admin/QLTour/ThemTour/index.vue"),
+    beforeEnter: checkToken,
   },
   {
     path: "/admin/danh-sach-tour",
     component: () =>
       import("../components/Admin/QLTour/DanhSachTour/index.vue"),
+    beforeEnter: checkToken,
   },
   {
     path: "/admin/quan-ly-booking",
     component: () => import("../components/Admin/QLBooking/index.vue"),
+    beforeEnter: checkToken,
   },
   {
     path: "/admin/phan-quyen",
     component: () => import("../components/Admin/PhanQuyen/index.vue"),
+    beforeEnter: checkToken,
   },
   {
     path: "/admin/bai-viet",
     component: () => import("../components/Admin/BaiViet/index.vue"),
+    beforeEnter: checkToken,
   },
   {
     path: "/admin/binh-luan",
     component: () => import("../components/Admin/BinhLuan/index.vue"),
+    beforeEnter: checkToken,
   },
   {
     path: "/admin/dang-nhap",
@@ -44,25 +51,28 @@ const routes = [
   {
     path: "/admin/phuong-tien",
     component: () => import("../components/Admin/PhuongTien/index.vue"),
+    beforeEnter: checkToken,
   },
   {
     path: "/admin/voucher",
     component: () => import("../components/Admin/Voucher/index.vue"),
+    beforeEnter: checkToken,
   },
   {
     path: "/admin/thong-ke/khach-hang-dang-ky",
     component: () =>
       import("../components/Admin/ThongKe/TKKhachHangDangKy/index.vue"),
+    beforeEnter: checkToken,
   },
   {
     path: "/admin/nhan-vien",
     component: () => import("../components/Admin/NhanVien/index.vue"),
-    // beforeEnter: checkAdmin,
+    beforeEnter: checkToken,
   },
   {
     path: "/admin/khach-hang",
     component: () => import("../components/Admin/KhachHang/index.vue"),
-    // beforeEnter: checkAdmin,
+    beforeEnter: checkToken,
   },
 
   //Staff
@@ -77,6 +87,7 @@ const routes = [
     path: "/",
     component: () => import("../components/Customer/TrangChu/TrangChu.vue"),
     meta: { layout: "customer" },
+    beforeEnter: checkToken, // them guard
   },
   {
     path: "/lien-he",
@@ -159,7 +170,8 @@ const routes = [
   {
     path: "/dang-nhap",
     component: () => import("../components/Customer/DangNhap/index.vue"),
-    meta: { layout: "customer" },
+    //meta: { layout: "customer" },
+    meta: { layout: "blank" },
   },
   {
     path: "/quen-mat-khau",

@@ -87,7 +87,7 @@ const routes = [
     path: "/",
     component: () => import("../components/Customer/TrangChu/TrangChu.vue"),
     meta: { layout: "customer" },
-    beforeEnter: checkToken, // them guard
+    //beforeEnter: checkToken, // them guard
   },
   {
     path: "/lien-he",

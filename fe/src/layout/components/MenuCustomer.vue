@@ -9,8 +9,7 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent1">
-                    <ul class="navbar-nav me-auto mb-2 mb-lg-0"></ul>
-                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
                         <!-- Trang Chủ -->
                         <li class="nav-item">
                             <router-link to="/" class="nav-link text-light fs-6"><b>Trang Chủ</b></router-link>

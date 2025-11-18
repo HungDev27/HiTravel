@@ -6,6 +6,11 @@ import Staff from "./layout/wrapper/staff.vue";
 import Customer from "./layout/wrapper/customer.vue";
 import Toaster from "@meforma/vue-toaster";
 
+// Nhi import Bootstrap CSS va JS
+import 'bootstrap/dist/css/bootstrap.min.css'
+import 'bootstrap/dist/js/bootstrap.bundle.min.js'
+
+
 const app = createApp(App);
 
 app.use(router);

@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\NguoiDung;
+use App\Mail\MasterMail;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Validation\ValidationException;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Str;
+
 
 
 class NguoiDungController
@@ -28,6 +30,25 @@ class NguoiDungController
             ], 401);
         }
 
+        // Kiểm tra trạng thái tài khoản
+        if ($user->trang_thai !== 'active') {
+
+            // Tạo lại hash_active mới để gửi mail kích hoạt
+            $key = Str::uuid();
+            $user->update(['hash_active' => $key]);
+
+            // Gửi mail kích hoạt
+            $tieu_de = "Kích hoạt tài khoản";
+            $view = "kichHoatTK";
+            $noi_dung['ho_ten'] = $user->ho_ten;
+            $noi_dung['link'] = "http://localhost:5173/kich-hoat/" . $key;
+            Mail::to($user->email)->send(new MasterMail($tieu_de, $view, $noi_dung));
+
+            return response()->json([
+                'status' => false,
+                'message' => 'Tài khoản chưa được kích hoạt. Chúng tôi đã gửi lại email kích hoạt, vui lòng kiểm tra hộp thư của bạn.'
+            ], 403);
+        }
 
         // Tạo token Sanctum
         $token = $user->createToken('auth_token')->plainTextToken;
@@ -62,7 +83,7 @@ class NguoiDungController
             'status' => true,
             'user' => [
                 'id' => $user->id,
-                'ho_ten' => $user->ho_va_ten,
+                'ho_ten' => $user->ho_ten,
                 'id_chuc_vu' => $user->id_chuc_vu,
                 'email' => $user->email
             ]
@@ -71,11 +92,11 @@ class NguoiDungController
 
 
 
-   // Đăng ký người dùng
+    // Đăng ký người dùng
     public function register(Request $request)
     {
 
-
+        $key = Str::uuid();
         $user = NguoiDung::create([
             'ho_ten' => $request->ho_ten,
             'email'    => $request->email,
@@ -83,8 +104,17 @@ class NguoiDungController
             'cccd' => $request->cccd,
             'so_dien_thoai' => $request->so_dien_thoai,
             'ngay_sinh' => $request->ngay_sinh,
-            'id_chuc_vu' => 3
+            'id_chuc_vu' => 3,
+            'trang_thai' => 'inactive',
+            'hash_active'   => $key,
+
         ]);
+
+        $tieu_de = "Kích hoạt tài khoản";
+        $view = "kichHoatTK";
+        $noi_dung['ho_ten'] = $user->ho_ten;
+        $noi_dung['link'] = "http://localhost:5173/kich-hoat/" . $key;
+        Mail::to($request->email)->send(new MasterMail($tieu_de, $view, $noi_dung));
 
         return response()->json([
             'status' => true,
@@ -92,7 +122,18 @@ class NguoiDungController
             'data' => $user
         ]);
     }
-
+    // kích hoạt người dùng
+    public function kichHoat(Request $request)
+    {
+        $user = NguoiDung::where('hash_active', $request->hash_active)->update([
+            'trang_thai' => 'active',
+            'hash_active' => null
+        ]);
+        return response()->json([
+            'status'    =>  1,
+            'message'   =>  'Đã kích hoạt tài khoản thành công'
+        ]);
+    }
 
     // Logout
     public function logout(Request $request)

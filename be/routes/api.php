@@ -29,3 +29,4 @@ Route::post('/admin/phuong-tien/delete', [PhuongTienController::class, 'destroy'
 Route::post('/admin/phuong-tien/chang-status', [PhuongTienController::class, 'changeStatus']);
 
 Route::post('/dang-ky', [NguoiDungController::class, 'register']);
+Route::post('/kich-hoat', [NguoiDungController::class, 'kichHoat']);

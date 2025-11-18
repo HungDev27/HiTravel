@@ -19,6 +19,9 @@ class NguoiDung extends Authenticatable
         'cccd',
         'id_chuc_vu',
         'trang_thai',
+        'avatar',
+        'hash_reset',
+        'hash_active',
     ];
 
     public function chucVu()

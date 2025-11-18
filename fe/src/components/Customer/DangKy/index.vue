@@ -82,18 +82,18 @@
 
             <!-- Nút -->
             <div class="d-grid gap-2 mt-3">
-                <button class="btn btn-lg" type="button" v-if="!isLoading" @click="dangKyTaiKhoan()"
+                <button class="btn btn-lg" type="button" @click="dangKyTaiKhoan()"
                     style="background-color: #f1f2d9; border-radius: 100px; color: #21857f;"
                     onmouseover="this.style.backgroundColor='#ffffff'"
                     onmouseout="this.style.backgroundColor='#f1f2d9'">
                     <b>Đăng ký</b>
                 </button>
-                <button class="btn btn-lg" type="button" v-if="isLoading"
+                <!-- <button class="btn btn-lg" type="button" v-if="isLoading"
                     style="background-color: #f1f2d9; border-radius: 100px; color: #21857f;"
                     onmouseover="this.style.backgroundColor='#ffffff'"
                     onmouseout="this.style.backgroundColor='#f1f2d9'">
                     <b>Đang xử lý...</b>
-                </button>
+                </button> -->
             </div>
 
             <!-- Đã có acc -->
@@ -106,11 +106,12 @@
 </template>
 
 <script>
+import axios from 'axios'
 export default {
     data() {
         return {
             form_dang_ky: {},
-            isLoading: false
+            // isLoading: false
         }
     },
     mounted() {
@@ -125,21 +126,22 @@ export default {
                 return; // dừng hàm không gửi request
             }
 
-            this.isLoading = true;
+            //this.isLoading = true;
 
             axios.post('http://127.0.0.1:8000/api/dang-ky', this.form_dang_ky)
                 .then((res) => {
                     if (res.data.status) {
                         this.$toast.success(res.data.message);
-                        this.$router.replace("/");
+                        //this.$router.replace("/");
+                        this.$toast.success("Đăng ký thành công! Vui lòng kiểm tra email để kích hoạt tài khoản.");
                     } else {
                         this.$toast.error('Đăng ký tài khoản thất bại');
                     }
                     this.isLoading = false;
                 })
                 .catch(() => {
-                    // LỖI SERVER HOẶC API
-                    this.$toast.error("Lỗi kết nối tới server API");
+                    this.$toast.error("Lỗi kết nối tới server.");
+                    this.isLoading = false;
                 });
         }
     },

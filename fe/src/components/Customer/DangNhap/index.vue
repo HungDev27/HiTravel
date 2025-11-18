@@ -92,6 +92,11 @@ export default {
 
             return;
           }
+          // Trường hợp backend trả status false (sai thông tin hoặc inactive)
+          if (!res.data.status) {
+            this.$toast.error(res.data.message); // Hiển thị message từ backend
+            return; // dừng hàm, không redirect
+          }
 
           // LƯU TOKEN VÀ USER
           localStorage.setItem("auth_token", res.data.token);
@@ -111,9 +116,12 @@ export default {
             this.$router.replace("/");
           }
         })
-        .catch(() => {
-          // LỖI SERVER HOẶC API
-          this.$toast.error("Lỗi kết nối tới server API");
+        .catch((err) => {
+          if (err.response && err.response.data && err.response.data.message) {
+            this.$toast.error(err.response.data.message); // hiển thị message từ backend
+          } else {
+            this.$toast.error("Lỗi kết nối tới server API");
+          }
         });
     }
   },

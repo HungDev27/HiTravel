@@ -168,6 +168,13 @@ const routes = [
     meta: { layout: "customer" },
   },
   {
+    path: "/kich-hoat/:hash_active",
+    component: () => import("../components/Customer//KichHoat/index.vue"),
+    meta: { layout: "blank" },
+    props: true,
+  },
+
+  {
     path: "/dang-nhap",
     component: () => import("../components/Customer/DangNhap/index.vue"),
     //meta: { layout: "customer" },

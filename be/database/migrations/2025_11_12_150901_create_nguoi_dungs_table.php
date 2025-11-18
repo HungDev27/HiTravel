@@ -12,6 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('nguoi_dungs', function (Blueprint $table) {
+            
             $table->id();
             $table->string('ho_ten');
             $table->string('password');
@@ -19,9 +20,14 @@ return new class extends Migration
             $table->string('so_dien_thoai')->nullable();
             $table->date('ngay_sinh')->nullable();
             $table->string('cccd')->unique();
-            $table->unsignedBigInteger('id_chuc_vu');
-            $table->enum('trang_thai', ['active', 'inactive', 'banned'])->default('active');
+            $table->unsignedBigInteger('id_chuc_vu'); // khóa ngoại
+            $table->enum('trang_thai', ['active', 'inactive', 'banned'])->default('inactive');
+            $table->string('avatar')->nullable();
+            $table->string('hash_reset')->nullable(); // để reset mật khẩu
+            $table->string('hash_active')->nullable(); // để kích hoạt email
             $table->timestamps();
+
+            // Khóa ngoại
             $table->foreign('id_chuc_vu')->references('id')->on('chuc_vus')->onDelete('cascade');
         });
     }

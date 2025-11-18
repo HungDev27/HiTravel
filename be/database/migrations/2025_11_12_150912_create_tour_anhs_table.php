@@ -16,7 +16,6 @@ return new class extends Migration
             $table->unsignedBigInteger('id_tour');
             $table->string('url');
             $table->string('mo_ta')->nullable();
-            $table->dateTime('uploaded_at')->nullable();
             $table->timestamps();
 
             $table->foreign('id_tour')->references('id')->on('tour_du_liches')->onDelete('cascade');

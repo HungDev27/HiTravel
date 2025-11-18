@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class TourAnh extends Model
 {
     protected $table = 'tour_anhs';
-    protected $fillable = ['id_tour', 'url', 'mo_ta', 'uploaded_at'];
+    protected $fillable = ['id_tour', 'url', 'mo_ta'];
 
     public function tour()
     {

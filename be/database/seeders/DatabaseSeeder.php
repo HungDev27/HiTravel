@@ -14,23 +14,32 @@ class DatabaseSeeder extends Seeder
     public function run()
 {
     $this->call([
-        ChucVuSeeder::class,
-        DanhMucSeeder::class,
-        DanhMucBaiVietSeeder::class,
-        PhuongTienSeeder::class,
-        NguoiDungSeeder::class,
-        TourDuLichSeeder::class,
-        TourAnhSeeder::class,
-        MaGiamGiaSeeder::class,
-        DatTourSeeder::class,
-        ThanhToanSeeder::class,
-        LichSuKhuyenMaiSeeder::class,
-        LichTrinhSeeder::class,
-        DanhGiaSeeder::class,
-        ChatbotLogSeeder::class,
-        ThongTinLienHeSeeder::class,
-        BaiVietSeeder::class,
-        TourPhuongTienSeeder::class,
-    ]);
+            // 1. Bảng độc lập
+            ChucVuSeeder::class,
+            DanhMucSeeder::class,
+            DanhMucBaiVietSeeder::class,
+
+            // 2. Bảng chính
+            PhuongTienSeeder::class,
+            NguoiDungSeeder::class,
+
+            // 3. Bảng TOUR
+            TourDuLichSeeder::class,
+            TourAnhSeeder::class,
+            TourPhuongTienSeeder::class,   // PHẢI ĐỂ Ở ĐÂY!!!
+
+            // 4. Bảng giao dịch & phụ
+            MaGiamGiaSeeder::class,
+            LichTrinhSeeder::class,
+            DatTourSeeder::class,
+            ThanhToanSeeder::class,
+            LichSuKhuyenMaiSeeder::class,
+            DanhGiaSeeder::class,
+
+            // 5. Thông tin thêm
+            BaiVietSeeder::class,
+            ChatbotLogSeeder::class,
+            ThongTinLienHeSeeder::class,
+        ]);
 }
 }

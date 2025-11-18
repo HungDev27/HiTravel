@@ -122,6 +122,7 @@ class NguoiDungController
             'data' => $user
         ]);
     }
+
     // kích hoạt người dùng
     public function kichHoat(Request $request)
     {
@@ -135,19 +136,47 @@ class NguoiDungController
         ]);
     }
 
-    // Logout
-    public function logout(Request $request)
+    // thông tin người dùng
+    public function thongTinNguoiDung()
     {
-        $request->user()->currentAccessToken()->delete();
+        $user = Auth::guard('sanctum')->user();
+
+        if ($user) {
+            return response()->json([
+                'status' => 1,
+                'data' => $user
+            ]);
+        }
 
         return response()->json([
-            'message' => 'Đăng xuất thành công'
-        ]);
+            'status' => 0,
+            'message' => "Token không hợp lệ"
+        ], 401);
+    }
+
+   
+
+    // Logout chung cho tất cả user/admin
+    public function dangXuat(Request $request)
+    {
+        $user = $request->user();
+
+        if ($user && $user->currentAccessToken()) {
+            $user->currentAccessToken()->delete();
+            return response()->json([
+                'status' => true,
+                'message' => 'Đăng xuất thành công'
+            ]);
+        }
+
+        return response()->json(['status' => false, 'message' => 'Token không hợp lệ'], 401);
     }
 
     // Lấy thông tin người dùng đang đăng nhập
-    public function profile(Request $request)
-    {
-        return response()->json($request->user());
-    }
+    // public function profile(Request $request)
+    // {
+    //     return response()->json($request->user());
+    // }
+
+
 }

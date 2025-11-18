@@ -30,3 +30,8 @@ Route::post('/admin/phuong-tien/chang-status', [PhuongTienController::class, 'ch
 
 Route::post('/dang-ky', [NguoiDungController::class, 'register']);
 Route::post('/kich-hoat', [NguoiDungController::class, 'kichHoat']);
+Route::get('/thong-tin', [NguoiDungController::class, 'thongTinNguoiDung']);
+//Route::post('/dang-xuat', [NguoiDungController::class, 'dangXuat']);
+Route::middleware('auth:sanctum')->post('/dang-xuat', [NguoiDungController::class, 'dangXuat']);
+
+

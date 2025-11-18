@@ -13,7 +13,7 @@
           <input v-model="thong_tin_dang_nhap.email" type="text" class="form-control mt-1"
             style="border-radius: 90px; width: 465px;">
           <label style="font-size: 17px;" class="mb-2 ms-3 mt-3">Nhập mật khẩu</label>
-          <input v-model="thong_tin_dang_nhap.mat_khau_hash" @keydown.enter="dangNhap()" type="password"
+          <input v-model="thong_tin_dang_nhap.password" @keydown.enter="dangNhap()" type="password"
             class="form-control mt-1" style="border-radius: 90px; width: 465px;">
 
           <!-- Quan trang đăng ký -->
@@ -65,7 +65,7 @@ import axios from 'axios'
 export default {
   data() {
     return {
-      thong_tin_dang_nhap: {}// email, mat_khau_hash
+      thong_tin_dang_nhap: {}
     }
   },
   mounted() {
@@ -108,7 +108,7 @@ export default {
           } else if (role == 2) {
             this.$router.replace("/staff");
           } else {
-            this.$router.replace("/customer");
+            this.$router.replace("/");
           }
         })
         .catch(() => {

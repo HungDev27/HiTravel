@@ -11,14 +11,14 @@ class NguoiDung extends Authenticatable
     use HasApiTokens, Notifiable;
     protected $table = 'nguoi_dungs';
     protected $fillable = [
-        'ten_dang_nhap',
-        'mat_khau_hash',
+        'ho_ten',
+        'password',
         'email',
         'so_dien_thoai',
-        'ho_va_ten',
+        'ngay_sinh',
+        'cccd',
         'id_chuc_vu',
         'trang_thai',
-        'remember_token'
     ];
 
     public function chucVu()

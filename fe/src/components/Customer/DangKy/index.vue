@@ -26,30 +26,30 @@
             <div class="row mt-3">
                 <div class="col-lg-6">
                     <label style="color: #f1f2d9; font-size: 17px;" class="mb-2 ms-3"><b>Tên</b></label>
-                    <input type="text" class="text-white form-control"
+                    <input v-model="form_dang_ky.ho_ten" type="text" class="text-white form-control"
                         style="background: rgba(255, 255, 255, 0.1); border-radius: 100px;">
                 </div>
                 <div class="col-lg-6">
                     <label style="color: #f1f2d9; font-size: 17px;" class="mb-2 ms-3"><b>Email</b></label>
-                    <input type="email" class="text-white form-control"
+                    <input v-model="form_dang_ky.email" type="email" class="text-white form-control"
                         style="background: rgba(255, 255, 255, 0.1); border-radius: 100px;">
                 </div>
             </div>
 
             <div class="row mt-3">
                 <div class="col-lg-4">
-                    <label style="color: #f1f2d9; font-size: 17px;" class="mb-2 ms-3"><b>Số điện thoại</b></label>
-                    <input type="number" class="text-white form-control"
+                    <label style="color: #f1f2d9; font-size: 17px;" class="mb-2 ms-3"><b>CCCD</b></label>
+                    <input v-model="form_dang_ky.cccd" type="text" class="text-white form-control"
                         style="background: rgba(255, 255, 255, 0.1); border-radius: 100px;">
                 </div>
                 <div class="col-lg-4">
-                    <label style="color: #f1f2d9; font-size: 17px;" class="mb-2 ms-3"><b>CCCD</b></label>
-                    <input type="number" class="text-white form-control"
+                    <label style="color: #f1f2d9; font-size: 17px;" class="mb-2 ms-3"><b>Số điện thoại</b></label>
+                    <input v-model="form_dang_ky.so_dien_thoai" type="text" class="text-white form-control"
                         style="background: rgba(255, 255, 255, 0.1); border-radius: 100px;">
                 </div>
                 <div class="col-lg-4">
                     <label style="color: #f1f2d9; font-size: 17px;" class="mb-2 ms-3"><b>Ngày sinh</b></label>
-                    <input type="date" class="text-white form-control"
+                    <input v-model="form_dang_ky.ngay_sinh" type="date" class="text-white form-control"
                         style="background: rgba(255, 255, 255, 0.1); border-radius: 100px;">
                 </div>
 
@@ -58,12 +58,12 @@
             <div class="row mt-3">
                 <div class="col-lg-6">
                     <label style="color: #f1f2d9; font-size: 17px;" class="mb-2 ms-3"><b>Password</b></label>
-                    <input type="password" class="text-white form-control"
+                    <input v-model="form_dang_ky.password" type="password" class="text-white form-control"
                         style="background: rgba(255, 255, 255, 0.1); border-radius: 100px;">
                 </div>
                 <div class="col-lg-6">
                     <label style="color: #f1f2d9; font-size: 17px;" class="mb-2 ms-3"><b>Nhập lại Password</b></label>
-                    <input type="password" class="text-white form-control"
+                    <input v-model="form_dang_ky.re_password" type="password" class="text-white form-control"
                         style="background: rgba(255, 255, 255, 0.1); border-radius: 100px;">
                 </div>
             </div>
@@ -82,26 +82,66 @@
 
             <!-- Nút -->
             <div class="d-grid gap-2 mt-3">
-                <button class="btn btn-lg" type="button"
+                <button class="btn btn-lg" type="button" v-if="!isLoading" @click="dangKyTaiKhoan()"
                     style="background-color: #f1f2d9; border-radius: 100px; color: #21857f;"
                     onmouseover="this.style.backgroundColor='#ffffff'"
                     onmouseout="this.style.backgroundColor='#f1f2d9'">
                     <b>Đăng ký</b>
                 </button>
+                <button class="btn btn-lg" type="button" v-if="isLoading"
+                    style="background-color: #f1f2d9; border-radius: 100px; color: #21857f;"
+                    onmouseover="this.style.backgroundColor='#ffffff'"
+                    onmouseout="this.style.backgroundColor='#f1f2d9'">
+                    <b>Đang xử lý...</b>
+                </button>
             </div>
 
             <!-- Đã có acc -->
-             <div class="text-center mt-3">
+            <div class="text-center mt-3">
                 <span class="text-white">Đã có tài khoản: </span>
-                <a href="/dang-nhap"
-                        style="color: #f1f2d9; text-decoration: underline;"><b><u>Đăng nhập</u></b></a>
-             </div>
+                <a href="/dang-nhap" style="color: #f1f2d9; text-decoration: underline;"><b><u>Đăng nhập</u></b></a>
+            </div>
         </div>
     </div>
 </template>
 
 <script>
 export default {
+    data() {
+        return {
+            form_dang_ky: {},
+            isLoading: false
+        }
+    },
+    mounted() {
 
+
+    },
+    methods: {
+        dangKyTaiKhoan() {
+            // 1. Check password có trùng nhau không
+            if (this.form_dang_ky.password !== this.form_dang_ky.re_password) {
+                this.$toast.error("Mật khẩu và nhập lại mật khẩu không khớp!");
+                return; // dừng hàm không gửi request
+            }
+
+            this.isLoading = true;
+
+            axios.post('http://127.0.0.1:8000/api/dang-ky', this.form_dang_ky)
+                .then((res) => {
+                    if (res.data.status) {
+                        this.$toast.success(res.data.message);
+                        this.$router.replace("/");
+                    } else {
+                        this.$toast.error('Đăng ký tài khoản thất bại');
+                    }
+                    this.isLoading = false;
+                })
+                .catch(() => {
+                    // LỖI SERVER HOẶC API
+                    this.$toast.error("Lỗi kết nối tới server API");
+                });
+        }
+    },
 }
 </script>

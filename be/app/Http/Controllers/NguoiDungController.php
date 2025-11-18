@@ -16,9 +16,9 @@ class NguoiDungController
     {
 
 
-        // Tìm user theo email và mat_khau_hash
+        // Tìm user theo email và password
         $user = NguoiDung::where('email', $request->email)
-            ->where('mat_khau_hash', $request->mat_khau_hash)
+            ->where('password', $request->password)
             ->first();
 
         if (!$user) {
@@ -38,7 +38,7 @@ class NguoiDungController
             'token' => $token,
             'user' => [
                 'id' => $user->id,
-                'ho_va_ten' => $user->ho_va_ten,
+                'ho_ten' => $user->ho_ten,
                 'id_chuc_vu' => $user->id_chuc_vu,
                 'email' => $user->email
             ]
@@ -62,7 +62,7 @@ class NguoiDungController
             'status' => true,
             'user' => [
                 'id' => $user->id,
-                'ho_va_ten' => $user->ho_va_ten,
+                'ho_ten' => $user->ho_va_ten,
                 'id_chuc_vu' => $user->id_chuc_vu,
                 'email' => $user->email
             ]
@@ -71,29 +71,28 @@ class NguoiDungController
 
 
 
-    // Đăng ký người dùng
-    // public function register(Request $request)
-    // {
+   // Đăng ký người dùng
+    public function register(Request $request)
+    {
 
 
-    //     $nguoiDung = NguoiDung::create([
-    //         'ten_dang_nhap' => $request->ten_dang_nhap,
-    //         'email' => $request->email,
-    //         'mat_khau_hash' => Hash::make($request->mat_khau),
-    //         'ho_va_ten' => $request->ho_va_ten,
-    //         'so_dien_thoai' => $request->so_dien_thoai,
-    //         'id_chuc_vu' => $request->id_chuc_vu,
-    //         'trang_thai' => 'active'
-    //     ]);
+        $user = NguoiDung::create([
+            'ho_ten' => $request->ho_ten,
+            'email'    => $request->email,
+            'password' => $request->password,
+            'cccd' => $request->cccd,
+            'so_dien_thoai' => $request->so_dien_thoai,
+            'ngay_sinh' => $request->ngay_sinh,
+            'id_chuc_vu' => 3
+        ]);
 
-    //     $token = $nguoiDung->createToken('auth_token')->plainTextToken;
+        return response()->json([
+            'status' => true,
+            'message' => 'Đăng ký thành công!',
+            'data' => $user
+        ]);
+    }
 
-    //     return response()->json([
-    //         'access_token' => $token,
-    //         'token_type' => 'Bearer',
-    //         'user' => $nguoiDung
-    //     ], 201);
-    // }
 
     // Logout
     public function logout(Request $request)

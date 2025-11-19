@@ -22,7 +22,7 @@ return new class extends Migration
             $table->string('cccd')->unique();
             $table->unsignedBigInteger('id_chuc_vu'); // khóa ngoại
             $table->enum('trang_thai', ['active', 'inactive', 'banned'])->default('inactive');
-            $table->string('avatar')->nullable();
+            $table->string('avatar');
             $table->string('hash_reset')->nullable(); // để reset mật khẩu
             $table->string('hash_active')->nullable(); // để kích hoạt email
             $table->timestamps();

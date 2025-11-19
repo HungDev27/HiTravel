@@ -8,7 +8,7 @@
                     style="font-family: Arial, sans-serif; background: #fff; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); padding: 20px;">
                     <div
                         style="background: #1976d2; color: #fff; margin: -20px -20px 20px -20px; padding: 12px; border-top-left-radius: 8px; border-top-right-radius: 8px; font-size: 16px; text-align: center;">
-                        THÊM XE BUÝT MỚI
+                        THÊM PHƯƠNG TIỆN MỚI
                     </div>
 
                     <input type="text" placeholder="Tên phương tiện"
@@ -117,10 +117,13 @@
 
                 <!-- Body -->
                 <div class="modal-body">
+                    <p><strong>Tên phương tiện:</strong> Xe buýt</p>
                     <p><strong>Biển số:</strong> 51B-123.45</p>
-                    <p><strong>Loại xe:</strong> Xe buýt mini</p>
                     <p><strong>Sức chứa:</strong> 30 chỗ</p>
-                    <p><strong>Trạng thái:</strong> <span class="badge text-bg-danger mt-3">Bảo trì</span></p>
+                    <p><strong>Số lượng xe lưu thông:</strong> 10</p>
+                    <p><strong>Ngày đi:</strong> 12/11/2025</p>
+                    <p><strong>Ngày về:</strong> 12/12/2025</p>
+                    <p><strong>Trạng thái:</strong> <span class="badge text-bg-danger">Bảo trì</span></p>
                     <p><strong>Ghi chú:</strong></p>
                     <textarea rows="4" class="form-control mb-3"
                         style="width: 100%; height: 80px;;padding: 8px; font-size: 14px; box-sizing: border-box;">Chuyến xe phục vụ tuyến số 8, khởi hành mỗi 15 phút từ 6:00 đến 18:00 hàng ngày.</textarea>

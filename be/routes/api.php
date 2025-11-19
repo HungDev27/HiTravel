@@ -3,6 +3,7 @@
 use App\Http\Controllers\DanhMucController;
 use App\Http\Controllers\NguoiDungController;
 use App\Http\Controllers\PhuongTienController;
+use App\Http\Controllers\TourPhuongTienController;
 use App\Models\NguoiDung;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -27,6 +28,12 @@ Route::post('/admin/phuong-tien/add-data', [PhuongTienController::class, 'addDat
 Route::post('/admin/phuong-tien/update', [PhuongTienController::class, 'upDate']);
 Route::post('/admin/phuong-tien/delete', [PhuongTienController::class, 'destroy']);
 Route::post('/admin/phuong-tien/chang-status', [PhuongTienController::class, 'changeStatus']);
+//Tour Phuong Tien
+Route::get('/admin/tour-pt/get-data', [TourPhuongTienController::class, 'getData']);
+Route::post('/admin/tour-pt/add-data', [TourPhuongTienController::class, 'addData']);
+Route::post('/admin/tour-pt/update', [TourPhuongTienController::class, 'upDate']);
+Route::post('/admin/tour-pt/delete', [TourPhuongTienController::class, 'destroy']);
+
 
 Route::post('/dang-ky', [NguoiDungController::class, 'register']);
 Route::post('/kich-hoat', [NguoiDungController::class, 'kichHoat']);

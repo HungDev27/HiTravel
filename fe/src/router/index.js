@@ -51,7 +51,7 @@ const routes = [
   {
     path: "/admin/phuong-tien",
     component: () => import("../components/Admin/PhuongTien/index.vue"),
-    beforeEnter: checkToken,
+    //beforeEnter: checkToken,
   },
   {
     path: "/admin/voucher",

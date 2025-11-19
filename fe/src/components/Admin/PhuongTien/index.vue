@@ -11,27 +11,27 @@
                         THÊM PHƯƠNG TIỆN MỚI
                     </div>
 
-                    <input type="text" placeholder="Tên phương tiện"
+                    <input v-model="create_phuongtien.ten_phuong_tien" type="text" placeholder="Tên phương tiện"
                         style="width: 100%; padding: 8px; margin-bottom: 10px; border: none; border-bottom: 1px solid #ccc; outline: none; font-size: 14px; box-sizing: border-box;" />
 
-                    <input type="text" placeholder="Biển số xe"
+                    <input v-model="create_phuongtien.bien_so" type="text" placeholder="Biển số xe"
                         style="width: 100%; padding: 8px; margin-bottom: 10px; border: none; border-bottom: 1px solid #ccc; outline: none; font-size: 14px; box-sizing: border-box;" />
 
-                    <input type="number" placeholder="Sức chứa"
+                    <input v-model="create_phuongtien.suc_chua" type="number" placeholder="Sức chứa"
                         style="width: 100%; padding: 8px; margin-bottom: 10px; border: none; border-bottom: 1px solid #ccc; outline: none; font-size: 14px; box-sizing: border-box;" />
 
-                    <input type="number" placeholder="Số lượng xe lưu thông"
+                    <input v-model="create_phuongtien.so_luong" type="number" placeholder="Số lượng xe lưu thông"
                         style="width: 100%; padding: 8px; margin-bottom: 20px; border: none; border-bottom: 1px solid #ccc; outline: none; font-size: 14px; box-sizing: border-box;" />
 
                     <label><b>Ngày đi</b></label>
-                    <input type="date"
+                    <input type="date" v-model="create_phuongtien.ngay_di" 
                         style="width: 100%; padding: 8px; margin-bottom: 20px; border: none; border-bottom: 1px solid #ccc; outline: none; font-size: 14px; box-sizing: border-box;" />
 
                     <label><b>Ngày về</b></label>
-                    <input type="date"
+                    <input type="date" v-model="create_phuongtien.ngay_ve"
                         style="width: 100%; padding: 8px; margin-bottom: 20px; border: none; border-bottom: 1px solid #ccc; outline: none; font-size: 14px; box-sizing: border-box;" />
 
-                    <select class="form-select mb-3" aria-label="Default select example">
+                    <select class="form-select mb-3" aria-label="Default select example" v-model="create_phuongtien.trang_thai">
                         <option selected disabled>Chọn trạng thái của xe</option>
                         <option value="0">Sẵn sàng</option>
                         <option value="1">Đang sử dụng</option>
@@ -41,7 +41,7 @@
                     <textarea placeholder="Ghi chú..." rows="4" class="form-control mb-3"
                         style="width: 100%; height: 80px;;padding: 8px; font-size: 14px; box-sizing: border-box;"></textarea>
 
-                    <button
+                    <button v-on:click="themPhuongTien()"
                         style="width: 100%; background-color: #1976d2; color: white; padding: 10px; border: none; border-radius: 4px; font-size: 14px; cursor: pointer;">
                         LƯU THÔNG TIN
                     </button>
@@ -248,7 +248,103 @@
 </template>
 
 <script>
+import axios from 'axios';
 export default {
+    data() {
+        return {
+            phuongTiens: [],
+            list_phuongtiens: [],
+            create_phuongtien: {
+                trang_thai: 1,
+            },
+            edit_phuongtien: {},
+            delete_phuongtien: {},
+        };
+    },
+    mounted() {
+        this.getPhuongTien();
+    },
+    methods: {
+        getPhuongTien() {
+            axios.get('http://127.0.0.1:8000/admin/phuong-tien/get-data')
+                .then((res) => {
+                    this.phuongTiens = res.data;
+                })
+                .catch(error => {
+                    console.error('Lỗi khi lấy dữ liệu phương tiện:', error);
+                });
+        },
+        themPhuongTien() {
+            axios.post('http://127.0.0.1:8000/admin/phuong-tien/add-data', this.create_phuongtien)
+                .then((res) => {
+                    if (res.data.status) {
+                        this.$toast.success('Thêm phương tiện thành công!');
+                        this.create_phuongtien = {};
+                        this.getPhuongTien();
 
-};
+                    } else {
+                        this.$toast.error('Thêm phương tiện thất bại!');
+                    }
+                })
+
+        },
+        capNhatPhuongTien() {
+            axios.post('http://127.0.0.1:8000/admin/phuong-tien/update', this.edit_phuongtien)
+                .then((res) => {
+                    if (res.data.status) {
+                        this.$toast.success('Cập nhật phương tiện thành công!');
+                        this.edit_phuongtien = {};
+                        this.getPhuongTien();
+
+                    } else {
+                        this.$toast.error('Cập nhật phương tiện thất bại!');
+                    }
+                })
+            },
+        xoaPhuongTien() {
+            axios.post('http://127.0.0.1:8000/admin/phuong-tien/delete', this.delete_phuongtien)
+                .then((res) => {
+                    if (res.data.status) {
+                        this.$toast.success('Xoá phương tiện thành công!');
+                        this.delete_phuongtien = {};
+                        this.getPhuongTien();
+
+                    } else {
+                        this.$toast.error('Xoá phương tiện thất bại!');
+                    }
+                })
+            },
+            doiTrangThai(trangthai) {
+                axios.post('http://127.0.0.1:8000/admin/phuong-tien/chang-status',trangthai)
+                .then((res)=>{
+                    if(res.data.status){
+                        this.$toast.success(res.data.message);
+                        this.getPhuongTien();
+                    }else{
+                        this.$toast.error('Đổi trạng thái thất bại!');
+                    }
+                })
+                
+                }
+            },
+            getTourPhuongTien() {
+                if(this.create_phuongtien.id_phuong_tien){
+                     axios.get('http://127.0.0.1:8000/admin/tour-pt/get-data/'+this.create_phuongtien.id_phuong_tien)
+                     .then((res) => {
+                         this.list_phuongtiens = res.data.data;
+                     })
+                }
+                
+            },
+            getTPTedit() {
+                if(this.edit_phuongtien.id_phuong_tien){
+                     axios.get('http://127.0.0.1:8000/admin/tour-pt/get-data/'+this.edit_phuongtien.id_phuong_tien)
+                     .then((res) => {
+                         this.list_phuongtiens = res.data.data;
+                     })
+                }
+                
+            }
+
+    };
 </script>

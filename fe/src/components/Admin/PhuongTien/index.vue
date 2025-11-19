@@ -24,14 +24,15 @@
                         style="width: 100%; padding: 8px; margin-bottom: 20px; border: none; border-bottom: 1px solid #ccc; outline: none; font-size: 14px; box-sizing: border-box;" />
 
                     <label><b>Ngày đi</b></label>
-                    <input type="date" v-model="create_phuongtien.ngay_di" 
+                    <input type="date" v-model="create_phuongtien.ngay_di"
                         style="width: 100%; padding: 8px; margin-bottom: 20px; border: none; border-bottom: 1px solid #ccc; outline: none; font-size: 14px; box-sizing: border-box;" />
 
                     <label><b>Ngày về</b></label>
                     <input type="date" v-model="create_phuongtien.ngay_ve"
                         style="width: 100%; padding: 8px; margin-bottom: 20px; border: none; border-bottom: 1px solid #ccc; outline: none; font-size: 14px; box-sizing: border-box;" />
 
-                    <select class="form-select mb-3" aria-label="Default select example" v-model="create_phuongtien.trang_thai">
+                    <select class="form-select mb-3" aria-label="Default select example"
+                        v-model="create_phuongtien.trang_thai">
                         <option selected disabled>Chọn trạng thái của xe</option>
                         <option value="0">Sẵn sàng</option>
                         <option value="1">Đang sử dụng</option>
@@ -51,54 +52,98 @@
             <div class="col-lg-9">
                 <!-- card của phương tiện -->
                 <div class="row">
-                    <div class="col-lg-6 col-md-6 mb-4">
-                        <div class="card-group" role="group">
-                            <img src="https://cmu-cdn.vinfast.vn/2023/11/42712f26-busvf.jpg"
-                                style="height: 170px; width: 200px;" class="img-fluid rounded-start">
-                            <div class="card" style="height: 170px;">
-                                <div class="card-body" style="width: 270px;">
-                                    <div class="row">
-                                        <div class="d-flex justify-content-between">
+                    <template v-for="(value, index) in phuongTiens" :key="index">
+                        <div class="col-lg-6 col-md-12 mb-4">
+                            <div class="card h-100"
+                                style="border: none; border-radius: 16px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); overflow: hidden;">
+                                <div class="row g-0 h-100">
 
-                                            <!-- Thông tin trong card -->
-                                            <div>
-                                                <h5>Xe buýt</h5>
-                                                <p class="card-text">
-                                                    <!-- Thuộc tính của phương tiện -->
-                                                    <span><b>Biển số: </b>36B-12345</span>
-                                                    <br>
-                                                    <span><b>Sức chứa: </b>30</span>
-                                                    <br>
+                                    <img src="../../../assets/images/homecustomer/bus.png" alt="Hình ảnh xe"
+                                        style="width: auto; height: 130px; object-fit: cover; background-color: #f1f3f5;">
 
-                                                    <!-- Tình trạng của phương tiện -->
-                                                    <span class="badge text-bg-danger mt-3">Bảo trì</span>
-                                                    <!-- <span class="badge text-bg-warning">Đang sử dụng</span>
-                                                    <span class="badge text-bg-success">Sẵn sàng</span> -->
-                                                </p>
+                                    <div class="col-md-8">
+                                        <div class="card-body d-flex flex-column" style="padding: 16px; height: 100%;">
+
+                                            <div class="d-flex justify-content-between align-items-start mb-2">
+                                                <h5 style="font-weight: 700; color: #0d6efd; margin: 0;">Xe buýt công
+                                                    cộng</h5>
+                                                <span class="badge"
+                                                    style="background-color: #ffe5e5; color: #dc3545; border: 1px solid rgba(220, 53, 69, 0.25); border-radius: 50px; padding: 6px 12px;">
+                                                    <i class="bi bi-wrench-adjustable me-1"></i> Bảo trì
+                                                </span>
                                             </div>
-                                            <div class="text-end">
-                                                <!-- Các nút button -->
-                                                <button
-                                                    style="border-radius: 100px; width: 85px; height: 30px; line-height: 0px;"
-                                                    class="mt-2 btn btn-outline-success" data-bs-toggle="modal"
-                                                    data-bs-target="#chitietModal">Chi tiết</button>
-                                                <br>
-                                                <button
-                                                    style="border-radius: 100px; width: 80px; height: 30px; line-height: 0px;"
-                                                    class="mt-2 btn btn-outline-primary" data-bs-toggle="modal"
-                                                    data-bs-target="#suaModal">Sửa</button>
-                                                <br>
-                                                <button
-                                                    style="border-radius: 100px; width: 80px; height: 30px; line-height: 0px;"
-                                                    class="mt-2 btn btn-outline-danger" data-bs-toggle="modal"
-                                                    data-bs-target="#xoaModal">Xóa</button>
+
+                                            <div class="row g-2 mt-1">
+                                                <div class="col-4">
+                                                    <div
+                                                        style="background-color: #f8f9fa; padding: 8px 12px; border-radius: 8px; display: flex; align-items: center;">
+                                                        <i class="bi bi-postcard text-secondary"
+                                                            style="font-size: 1.2rem; margin-right: 8px;"></i>
+                                                        <div>
+                                                            <small style="display: block; font-size: 0.7rem; color: #6c757d; line-height: 1;">Biển
+                                                                số</small>
+                                                            <span style="font-weight: 600; font-size: 0.9rem; color: #212529;">36B-12345</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-4">
+                                                    <div
+                                                        style="background-color: #f8f9fa; padding: 8px 12px; border-radius: 8px; display: flex; align-items: center;">
+                                                        <i class="bi bi-people text-secondary"
+                                                            style="font-size: 1.2rem; margin-right: 8px;"></i>
+                                                        <div>
+                                                            <small
+                                                                style="display: block; font-size: 0.7rem; color: #6c757d; line-height: 1;">Sức
+                                                                chứa</small>
+                                                            <span
+                                                                style="font-weight: 600; font-size: 0.9rem; color: #212529;">30
+                                                                chỗ</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-4">
+                                                    <div
+                                                        style="background-color: #f8f9fa; padding: 8px 12px; border-radius: 8px; display: flex; align-items: center;">
+                                                        <i class="bi bi-people text-secondary"
+                                                            style="font-size: 1.2rem; margin-right: 8px;"></i>
+                                                        <div>
+                                                            <small
+                                                                style="display: block; font-size: 0.7rem; color: #6c757d; line-height: 1;">Số lượng lưu thông</small>
+                                                            <span
+                                                                style="font-weight: 600; font-size: 0.9rem; color: #212529;">30</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
+
+                                            <div class="mt-auto d-flex justify-content-end"
+                                                style="border-top: 1px solid #f0f0f0; padding-top: 12px; gap: 8px;">
+
+                                                <button type="button" class="btn btn-sm" data-bs-toggle="modal"
+                                                    data-bs-target="#chitietModal"
+                                                    style="background-color: #e7f1ff; color: #0d6efd; border: none; border-radius: 50px; padding: 6px 16px; font-weight: 500;">
+                                                    <i class="bi bi-info-circle me-1"></i> Chi tiết
+                                                </button>
+
+                                                <button type="button" class="btn btn-sm" data-bs-toggle="modal"
+                                                    data-bs-target="#suaModal"
+                                                    style="background-color: #fff3cd; color: #856404; border: none; border-radius: 50%; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center;">
+                                                    <i class="fa-regular fa-pen-to-square"></i>
+                                                </button>
+
+                                                <button type="button" class="btn btn-sm" data-bs-toggle="modal"
+                                                    data-bs-target="#xoaModal"
+                                                    style="background-color: #f8d7da; color: #842029; border: none; border-radius: 50%; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center;">
+                                                    <i class="fa-regular fa-square-minus"></i>
+                                                </button>
+                                            </div>
+
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </template>
                 </div>
             </div>
         </div>
@@ -126,7 +171,8 @@
                     <p><strong>Trạng thái:</strong> <span class="badge text-bg-danger">Bảo trì</span></p>
                     <p><strong>Ghi chú:</strong></p>
                     <textarea rows="4" class="form-control mb-3"
-                        style="width: 100%; height: 80px;;padding: 8px; font-size: 14px; box-sizing: border-box;">Chuyến xe phục vụ tuyến số 8, khởi hành mỗi 15 phút từ 6:00 đến 18:00 hàng ngày.</textarea>
+                        style="width: 100%; height: 80px;;padding: 8px; font-size: 14px; box-sizing: border-box;">Chuyến xe
+                    phục vụ tuyến số 8, khởi hành mỗi 15 phút từ 6:00 đến 18:00 hàng ngày.</textarea>
                 </div>
 
                 <!-- Footer -->
@@ -263,19 +309,21 @@ export default {
     },
     mounted() {
         this.getPhuongTien();
+        this.getTourPhuongTien();
+        this.getTPTedit();
     },
     methods: {
         getPhuongTien() {
-            axios.get('http://127.0.0.1:8000/admin/phuong-tien/get-data')
+            axios.get('http://127.0.0.1:8000/api/admin/phuong-tien/get-data')
                 .then((res) => {
-                    this.phuongTiens = res.data;
+                    this.phuongTiens = res.data.data;
                 })
                 .catch(error => {
                     console.error('Lỗi khi lấy dữ liệu phương tiện:', error);
                 });
         },
         themPhuongTien() {
-            axios.post('http://127.0.0.1:8000/admin/phuong-tien/add-data', this.create_phuongtien)
+            axios.post('http://127.0.0.1:8000/api/admin/phuong-tien/add-data', this.create_phuongtien)
                 .then((res) => {
                     if (res.data.status) {
                         this.$toast.success('Thêm phương tiện thành công!');
@@ -289,7 +337,7 @@ export default {
 
         },
         capNhatPhuongTien() {
-            axios.post('http://127.0.0.1:8000/admin/phuong-tien/update', this.edit_phuongtien)
+            axios.post('http://127.0.0.1:8000/api/admin/phuong-tien/update', this.edit_phuongtien)
                 .then((res) => {
                     if (res.data.status) {
                         this.$toast.success('Cập nhật phương tiện thành công!');
@@ -300,9 +348,9 @@ export default {
                         this.$toast.error('Cập nhật phương tiện thất bại!');
                     }
                 })
-            },
+        },
         xoaPhuongTien() {
-            axios.post('http://127.0.0.1:8000/admin/phuong-tien/delete', this.delete_phuongtien)
+            axios.post('http://127.0.0.1:8000/api/admin/phuong-tien/delete', this.delete_phuongtien)
                 .then((res) => {
                     if (res.data.status) {
                         this.$toast.success('Xoá phương tiện thành công!');
@@ -313,38 +361,38 @@ export default {
                         this.$toast.error('Xoá phương tiện thất bại!');
                     }
                 })
-            },
-            doiTrangThai(trangthai) {
-                axios.post('http://127.0.0.1:8000/admin/phuong-tien/chang-status',trangthai)
-                .then((res)=>{
-                    if(res.data.status){
+        },
+        doiTrangThai(trangthai) {
+            axios.post('http://127.0.0.1:8000/api/admin/phuong-tien/chang-status', trangthai)
+                .then((res) => {
+                    if (res.data.status) {
                         this.$toast.success(res.data.message);
                         this.getPhuongTien();
-                    }else{
+                    } else {
                         this.$toast.error('Đổi trạng thái thất bại!');
                     }
                 })
-                
-                }
-            },
-            getTourPhuongTien() {
-                if(this.create_phuongtien.id_phuong_tien){
-                     axios.get('http://127.0.0.1:8000/admin/tour-pt/get-data/'+this.create_phuongtien.id_phuong_tien)
-                     .then((res) => {
-                         this.list_phuongtiens = res.data.data;
-                     })
-                }
-                
-            },
-            getTPTedit() {
-                if(this.edit_phuongtien.id_phuong_tien){
-                     axios.get('http://127.0.0.1:8000/admin/tour-pt/get-data/'+this.edit_phuongtien.id_phuong_tien)
-                     .then((res) => {
-                         this.list_phuongtiens = res.data.data;
-                     })
-                }
-                
-            }
 
-    };
+        }
+    },
+    getTourPhuongTien() {
+        if (this.create_phuongtien.id_phuong_tien) {
+            axios.get('http://127.0.0.1:8000/api/admin/tour-pt/get-data/' + this.create_phuongtien.id_phuong_tien)
+                .then((res) => {
+                    this.list_phuongtiens = res.data.data;
+                })
+        }
+
+    },
+    getTPTedit() {
+        if (this.edit_phuongtien.id_phuong_tien) {
+            axios.get('http://127.0.0.1:8000/api/admin/tour-pt/get-data/' + this.edit_phuongtien.id_phuong_tien)
+                .then((res) => {
+                    this.list_phuongtiens = res.data.data;
+                })
+        }
+
+    }
+
+};
 </script>

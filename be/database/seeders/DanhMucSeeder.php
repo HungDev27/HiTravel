@@ -14,8 +14,9 @@ class DanhMucSeeder extends Seeder
     public function run(): void
     {
         DanhMuc::insert([
-            ['ten_danh_muc' => 'Du lịch biển', 'mo_ta' => 'Tour du lịch biển hấp dẫn'],
-            ['ten_danh_muc' => 'Du lịch núi', 'mo_ta' => 'Tour leo núi, trekking'],
+            ['ten_danh_muc' => 'Tour Miền Bắc', 'mo_ta' => 'Các tour du lịch khu vực miền Bắc'],
+            ['ten_danh_muc' => 'Tour Miền Trung', 'mo_ta' => 'Các tour du lịch khu vực miền Trung'],
+            ['ten_danh_muc' => 'Tour Miền Nam', 'mo_ta' => 'Các tour du lịch khu vực miền Nam'],
         ]);
     }
 }

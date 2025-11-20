@@ -1,175 +1,231 @@
 <template>
     <div class="container mt-2">
-        <div class="card radius-10 border-top border-0 border-3 border-primary">
-            <div class="card-body">
-                <!-- Header -->
-                <div class="d-flex justify-content-between align-items-center">
-                    <h4>Thêm Tour</h4>
-                    <div class="input-group" style="max-width: 300px;">
-                        <input type="text" class="form-control" placeholder="Tìm kiếm ?" />
-                        <button class="btn btn-primary">Search</button>
-                    </div>
-                </div>
-                <hr />
-                <p>Thêm thông tin chi tiết để tạo một tour mới và bắt đầu thu hút khách hàng!</p>
+        <div class="card p-4">
 
-                <div class="d-flex justify-content-center ">
-                    <div class="text-center me-5">
-                        <span class="badge rounded-circle bg-primary p-3 fs-3"><b>1</b></span>
-                        <p class="mt-2 mb-0">Bước 1:Nhập thông tin</p>
-                    </div>
+            <h2 class="text-center mb-3"><b>Thêm Tour Du Lịch</b></h2>
+            <hr />
 
-                    <div class="text-center ">
-                        <span class="badge rounded-circle bg-primary p-3 fs-3">2</span>
-                        <p class="mt-2 mb-0">Bước 2:Thêm hình ảnh</p>
-                    </div>
+            <!-- ============ BƯỚC 1: THÔNG TIN TOUR ============ -->
+            <h5>Bước 1: Nhập thông tin tour</h5>
+            <div class="row mt-2">
 
-                    <div class="text-center ms-5">
-                        <span class="badge rounded-circle bg-primary p-3 fs-3">3</span>
-                        <p class="mt-2 mb-0">Bước 3:Lộ trình</p>
-                    </div>
+                <div class="col-md-6 mb-3">
+                    <label>Tên tour *</label>
+                    <input class="form-control" v-model="form.ten_tour" />
                 </div>
 
-
-                <div class="mt-2">
-                    <h5>Bước 1: Nhập thông tin</h5>
-                    <form>
-                        <div class="mb-3">
-                            <label class="form-label">Tên Tour *</label>
-                            <input type="text" class="form-control" />
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">Khu vực *</label>
-                            <select class="form-select">
-                                <option value=" Miền Bắc">Miền Bắc</option>
-                                <option value="Miền Trung">Miền Trung</option>
-                                <option value="Miền Nam">Miền Nam</option>
-                            </select>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">Xuất Phát *</label>
-                            <input type="text" class="form-control" />
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6 mb-3">
-                                <label class="form-label">Số lượng *</label>
-                                <input type="number" class="form-control" />
-                            </div>
-                            <div class="col-md-6 mb-3">
-                                <label class="form-label">Giá *</label>
-                                <input type="number" class="form-control" />
-                            </div>
-                            <div class="col-md-6 mb-3">
-                                <label class="form-label">Ngày khởi hành *</label>
-                                <input type="date" class="form-control" />
-                            </div>
-                            <div class="col-md-6 mb-3">
-                                <label class="form-label">Ngày kết thúc *</label>
-                                <input type="date" class="form-control" />
-                            </div>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">Mô tả *</label>
-                            <textarea class="form-control" rows="5"></textarea>
-                        </div>
-                    </form>
+                <div class="col-md-6 mb-3">
+                    <label>Danh mục tour *</label>
+                    <select class="form-select" v-model="form.id_danh_muc">
+                        <option disabled value="">-- Chọn danh mục --</option>
+                        <option v-for="(value, index) in danhMuc" :key="index" :value="value.id">
+                            {{ value.ten_danh_muc }}
+                        </option>
+                    </select>
                 </div>
 
-
-
-                <hr>
-                <div class="mt-4">
-                    <h5>Bước 2: Thêm hình ảnh</h5>
-                    <input type="file" class="form-control mb-3" />
-                    <div class="row g-3">
-                        <div class="col-6 col-md-2">
-                            <div class="card">
-                                <img src="" alt="">
-                                <!-- <div class="card-body p-2 text-center">
-                                    <button type="button" class="btn btn-sm btn-outline-danger">
-                                        Remove file
-                                    </button>
-                                </div> -->
-                            </div>
-                        </div>
-                    </div>
+                <div class="col-md-6 mb-3">
+                    <label>Giá người lớn *</label>
+                    <input type="number" class="form-control" v-model="form.gia_nguoi_lon" />
                 </div>
 
-
-
-                <hr>
-                <div>
-                    <h5>Bước 3: Nhập lộ trình</h5>
-                    <div class="mb-3">
-                        <!-- <button class="btn btn-success btn-sm mb-2" @click.prevent="addTimeline">
-                            Thêm Timeline
-                        </button> -->
-                        <div class="mb-3">
-                            <label class="form-label">Ngày 1</label>
-                            <input type="text" class="form-control mb-2" placeholder="Tên hành trình" />
-                            <textarea class="form-control" rows="4" placeholder="Chi tiết lịch trình..."></textarea>
-                        </div>
-                    </div>
+                <div class="col-md-6 mb-3">
+                    <label>Giá trẻ em *</label>
+                    <input type="number" class="form-control" v-model="form.gia_tre_em" />
                 </div>
 
+                <div class="col-md-6 mb-3">
+                    <label>Ngày đi *</label>
+                    <input type="date" class="form-control" v-model="form.ngay_di" />
+                </div>
 
-                <!-- Nút điều hướng -->
-                <!-- <div class="d-flex justify-content-end mt-4">
-                    <button class="btn btn-secondary me-2" v-if="currentStep > 1" @click="prevStep">
-                        Quay lại
-                    </button>
-                    <button class="btn btn-primary" v-if="currentStep < steps.length" @click="nextStep">
-                        Tiếp theo
-                    </button>
-                    <button class="btn btn-success" v-if="currentStep === steps.length">
-                        Hoàn thành
-                    </button>
-                </div> -->
-                <button class="btn btn-success me">
-                    Hoàn thành
-                </button>
+                <div class="col-md-6 mb-3">
+                    <label>Ngày về *</label>
+                    <input type="date" class="form-control" v-model="form.ngay_ve" />
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label>Giờ đi *</label>
+                    <input type="time" class="form-control" v-model="form.gio_di" />
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label>Giờ về *</label>
+                    <input type="time" class="form-control" v-model="form.gio_ve" />
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label>Điểm xuất phát *</label>
+                    <input class="form-control" v-model="form.dia_diem" />
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label>Số chỗ *</label>
+                    <input type="number" class="form-control" v-model="form.so_cho" />
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label>Trạng thái *</label>
+                    <select class="form-select" v-model="form.trang_thai">
+                        <option value="hoat_dong">Hoạt động</option>
+                        <option value="tam_dung">Tạm đóng</option>
+                    </select>
+                </div>
+                
+
+                <div class="col-12 mb-3">
+                    <label>Mô tả *</label>
+                    <textarea class="form-control" rows="4" v-model="form.mo_ta"></textarea>
+                </div>
             </div>
+
+            <hr />
+
+            <!-- ============ BƯỚC 2: URL ẢNH TOUR ============ -->
+            <h5>Bước 2: Thêm URL hình ảnh</h5>
+
+            <div class="input-group mb-3">
+                <input type="text" class="form-control" placeholder="Nhập URL ảnh" v-model="newAnhUrl" />
+                <button class="btn btn-primary" @click="themAnhUrl">Thêm ảnh</button>
+            </div>
+
+            <div class="row g-2">
+                <div class="col-3" v-for="(img, index) in form.anh" :key="index">
+                    <div class="border p-1 position-relative">
+                        <img :src="img" class="w-100" style="height:120px;object-fit:cover" />
+                        <button class="btn btn-danger btn-sm position-absolute top-0 end-0"
+                            @click="xoaAnh(index)">X</button>
+                    </div>
+                </div>
+            </div>
+
+            <hr />
+
+            <!-- ============ BƯỚC 3: LỊCH TRÌNH ============ -->
+            <h5>Bước 3: Nhập lịch trình tour</h5>
+            <button class="btn btn-primary btn-sm mb-3" @click="themNgayLichTrinh">
+                + Thêm ngày
+            </button>
+
+            <div class="border rounded p-3 mb-3" v-for="(value, index) in form.lich_trinh" :key="index">
+                <label>Ngày {{ index + 1 }}</label>
+                <input class="form-control mb-2" placeholder="Tiêu đề ngày" v-model="value.tieu_de" />
+                <textarea class="form-control mb-2" rows="3" placeholder="Nội dung chi tiết..."
+                    v-model="value.noi_dung"></textarea>
+                <button class="btn btn-danger btn-sm" @click="xoaNgayLichTrinh(index)">Xóa ngày</button>
+            </div>
+
+            <hr />
+
+            <!-- SUBMIT -->
+            <button class="btn btn-success" @click="themTour()">Thêm Tour</button>
+
         </div>
     </div>
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
     data() {
-        // return {
-        //     currentStep: 1,
-        //     steps: ["Bước 1: Nhập thông tin", "Bước 2: Thêm hình ảnh", "Bước 3: Lộ trình"],
-        //     form: {
-        //         diemDen: "",
-        //         khuVuc: "",
-        //         soLuong: "",
-        //         gia: "",          // gộp thành 1 giá
-        //         ngayKhoiHanh: "",
-        //         ngayKetThuc: "",
-        //         moTa: "",
-        //         timeline: [],
-        //         images: []        // giữ file ảnh
-        //     },
-        //     previewImages: [],
-        // };
+        return {
+            form: {
+                ten_tour: "",
+                id_danh_muc: "",
+                mo_ta: "",
+                gia_nguoi_lon: "",
+                gia_tre_em: "",
+                ngay_di: "",
+                ngay_ve: "",
+                gio_di: "",
+                gio_ve: "",
+                dia_diem: "",
+                so_cho: "",
+                trang_thai: "Hoạt động",
+                anh: [], // array URL ảnh
+                lich_trinh: []
+            },
+            newAnhUrl: "", // input thêm URL ảnh
+            danhMuc: []
+        };
+    },
+    mounted() {
+        this.getListDanhMuc();
     },
     methods: {
-        // nextStep() {
-        //     if (this.currentStep < this.steps.length) this.currentStep++;
-        // },
-        // prevStep() {
-        //     if (this.currentStep > 1) this.currentStep--;
-        // },
+        getListDanhMuc() {
+            axios.get("http://127.0.0.1:8000/api/admin/danh-muc-tour/get-data")
+                .then(res => {
+                    this.danhMuc = res.data.data;
+                });
+        },
 
-        // removeImage(index) {
-        //     this.previewImages.splice(index, 1);
-        //     this.form.images.splice(index, 1);
-        // },
-        // addTimeline() {
-        //     this.form.timeline.push({ title: "", content: "" });
-        // },
-    },
+        themAnhUrl() {
+            if (this.newAnhUrl.trim() !== "") {
+                this.form.anh.push(this.newAnhUrl.trim());
+                this.newAnhUrl = "";
+            }
+        },
+
+        xoaAnh(index) {
+            this.form.anh.splice(index, 1);
+        },
+
+        themNgayLichTrinh() {
+            this.form.lich_trinh.push({ tieu_de: "", noi_dung: "" });
+        },
+
+        xoaNgayLichTrinh(index) {
+            this.form.lich_trinh.splice(index, 1);
+        },
+
+        themTour() {
+            // Tạo payload JSON
+            const user = JSON.parse(localStorage.getItem("auth_user"));
+            console.log("User đang login:", user);
+            if (!user || user.id_chuc_vu !== 1) {
+                this.$toast.error("Bạn không có quyền thêm tour");
+                return;
+            }
+            const payload = {
+                ...this.form
+            };
+
+            axios.post("http://127.0.0.1:8000/api/admin/them-tour", payload, {
+                headers: {
+                    Authorization: "Bearer " + localStorage.getItem("auth_token")
+                }
+            })
+                .then(res => {
+                    this.$toast.success("Thêm tour thành công!");
+                    // Reset form
+                    this.form = {
+                        ten_tour: "",
+                        id_danh_muc: "",
+                        mo_ta: "",
+                        gia_nguoi_lon: "",
+                        gia_tre_em: "",
+                        ngay_di: "",
+                        ngay_ve: "",
+                        gio_di: "",
+                        gio_ve: "",
+                        dia_diem: "",
+                        so_cho: "",
+                        trang_thai: "Hoạt động",
+                        anh: [],
+                        lich_trinh: []
+                    };
+                })
+                .catch(err => {
+                    console.error(err.response?.data || err);
+                    this.$toast.error("Có lỗi xảy ra!");
+                });
+        }
+    }
 };
 </script>
 
-<style></style>
+<style scoped>
+/* Bạn có thể thêm style nếu muốn */
+</style>

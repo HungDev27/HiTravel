@@ -8,8 +8,8 @@ class TourDuLich extends Model
 {
     protected $table = 'tour_du_liches';
     protected $fillable = [
+        'ma_tour',
         'ten_tour',
-        'id_loai_tour',
         'mo_ta',
         'id_danh_muc',
         'gia_nguoi_lon',
@@ -22,7 +22,7 @@ class TourDuLich extends Model
         'tao_boi',
         'so_cho',
         'so_cho_con',
-        'trang_thai'
+        'trang_thai',
     ];
 
     public function tourAnhs()

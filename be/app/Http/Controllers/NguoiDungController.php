@@ -154,7 +154,7 @@ class NguoiDungController
         ], 401);
     }
 
-   
+
 
     // Logout chung cho tất cả user/admin
     public function dangXuat(Request $request)

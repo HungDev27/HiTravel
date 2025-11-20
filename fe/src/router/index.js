@@ -74,6 +74,11 @@ const routes = [
     component: () => import("../components/Admin/KhachHang/index.vue"),
     beforeEnter: checkToken,
   },
+  {
+    path: "/admin/danh-muc-tour",
+    component: () => import("../components/Admin/QLTour/DanhMucTour/index.vue"),
+    beforeEnter: checkToken,
+  },
 
   //Staff
   // {

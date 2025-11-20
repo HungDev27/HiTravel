@@ -21,6 +21,20 @@ class TourPhuongTienController extends Controller
         ]);
     }
 
+    public function getByPhuongTien($id)
+    {
+        $data = TourPhuongTien::where('id_phuong_tien', $id)
+            ->with('tour')       // join sang bảng tour
+            ->get();
+
+        return response()->json([
+            'status' => true,
+            'data' => $data
+        ]);
+    }
+
+
+
 
     public function addData(Request $request)
     {

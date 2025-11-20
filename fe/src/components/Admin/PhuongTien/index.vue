@@ -14,6 +14,11 @@
                     <input v-model="create_phuongtien.ten_phuong_tien" type="text" placeholder="Tên phương tiện"
                         style="width: 100%; padding: 8px; margin-bottom: 10px; border: none; border-bottom: 1px solid #ccc; outline: none; font-size: 14px; box-sizing: border-box;" />
 
+                    <!-- <select v-model="create_phuongtien.id_tour" class="form-select">
+                        <option v-for="tour in tours" :value="tour.id">{{ tour.ten_tour }}</option>
+                    </select> -->
+                    <!-- Chưa code BE của tour -->
+
                     <input v-model="create_phuongtien.bien_so" type="text" placeholder="Biển số xe"
                         style="width: 100%; padding: 8px; margin-bottom: 10px; border: none; border-bottom: 1px solid #ccc; outline: none; font-size: 14px; box-sizing: border-box;" />
 
@@ -24,11 +29,11 @@
                         style="width: 100%; padding: 8px; margin-bottom: 20px; border: none; border-bottom: 1px solid #ccc; outline: none; font-size: 14px; box-sizing: border-box;" />
 
                     <label><b>Ngày đi</b></label>
-                    <input type="date" v-model="create_phuongtien.ngay_di"
+                    <input type="date" v-model="create_phuongtien.ngay_bat_dau"
                         style="width: 100%; padding: 8px; margin-bottom: 20px; border: none; border-bottom: 1px solid #ccc; outline: none; font-size: 14px; box-sizing: border-box;" />
 
                     <label><b>Ngày về</b></label>
-                    <input type="date" v-model="create_phuongtien.ngay_ve"
+                    <input type="date" v-model="create_phuongtien.ngay_ket_thuc"
                         style="width: 100%; padding: 8px; margin-bottom: 20px; border: none; border-bottom: 1px solid #ccc; outline: none; font-size: 14px; box-sizing: border-box;" />
 
                     <select class="form-select mb-3" aria-label="Default select example"
@@ -39,7 +44,8 @@
                         <option value="2">Bảo trì</option>
                     </select>
 
-                    <textarea placeholder="Ghi chú..." rows="4" class="form-control mb-3"
+                    <textarea v-model="create_phuongtien.ghi_chu" placeholder="Ghi chú..." rows="4"
+                        class="form-control mb-3"
                         style="width: 100%; height: 80px;;padding: 8px; font-size: 14px; box-sizing: border-box;"></textarea>
 
                     <button v-on:click="themPhuongTien()"
@@ -50,92 +56,109 @@
 
             </div>
             <div class="col-lg-9">
-                <!-- card của phương tiện -->
                 <div class="row">
                     <template v-for="(value, index) in phuongTiens" :key="index">
                         <div class="col-lg-6 col-md-12 mb-4">
-                            <div class="card h-100"
-                                style="border: none; border-radius: 16px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); overflow: hidden;">
+
+                            <div class="card h-100 border-0 shadow"
+                                style="border-radius: 20px; overflow: hidden; background: #fff;">
                                 <div class="row g-0 h-100">
 
-                                    <img src="../../../assets/images/homecustomer/bus.png" alt="Hình ảnh xe"
-                                        style="width: auto; height: 130px; object-fit: cover; background-color: #f1f3f5;">
+                                    <div class="col-md-5 p-3">
+                                        <div class="d-flex align-items-center justify-content-center h-100"
+                                            style="background-color: #e1e7f3; border-radius: 16px; min-height: 140px; overflow: hidden;">
+                                            <img src="../../../assets/images/homecustomer/bus.png" alt="Xe"
+                                                style="width: 100%; height: 100%; object-fit: contain; padding: 5px;">
+                                        </div>
+                                    </div>
 
-                                    <div class="col-md-8">
-                                        <div class="card-body d-flex flex-column" style="padding: 16px; height: 100%;">
+                                    <div class="col-md-7">
+                                        <div class="card-body d-flex flex-column py-3 pe-3 ps-0 h-100">
 
-                                            <div class="d-flex justify-content-between align-items-start mb-2">
-                                                <h5 style="font-weight: 700; color: #0d6efd; margin: 0;">Xe buýt công
-                                                    cộng</h5>
-                                                <span class="badge"
-                                                    style="background-color: #ffe5e5; color: #dc3545; border: 1px solid rgba(220, 53, 69, 0.25); border-radius: 50px; padding: 6px 12px;">
-                                                    <i class="bi bi-wrench-adjustable me-1"></i> Bảo trì
-                                                </span>
+                                            <div class="d-flex justify-content-between align-items-start mb-3">
+                                                <h5 class="fw-bold text-primary mb-0"
+                                                    style="font-size: 1.1rem; line-height: 1.4;">
+                                                    {{ value.ten_phuong_tien }}
+                                                </h5>
+
+                                                <div @click="doiTrangThai(value)"
+                                                    style="cursor: pointer; flex-shrink: 0;">
+                                                    <span v-if="value.trang_thai == 2"
+                                                        class="badge rounded-pill bg-danger text-white px-3 py-2 d-flex align-items-center"
+                                                        style="font-weight: 600; font-size: 0.85rem; box-shadow: 0 4px 8px rgba(220,53,69,0.3);">
+                                                        <i class="fa-solid fa-gear me-2"></i> Bảo trì
+                                                    </span>
+
+                                                    <span v-if="value.trang_thai == 1"
+                                                        class="badge rounded-pill bg-success text-white px-3 py-2 d-flex align-items-center"
+                                                        style="font-weight: 600; font-size: 0.85rem; box-shadow: 0 4px 8px rgba(25,135,84,0.3);">
+                                                        <i class="fa-solid fa-circle-check me-2"></i> Sẵn sàng
+                                                    </span>
+
+                                                    <span v-if="value.trang_thai == 0"
+                                                        class="badge rounded-pill bg-primary text-white px-3 py-2 d-flex align-items-center"
+                                                        style="font-weight: 600; font-size: 0.85rem; box-shadow: 0 4px 8px rgba(13,110,253,0.3);">
+                                                        <i class="fa-solid fa-circle-play me-2"></i> Đang dùng
+                                                    </span>
+                                                </div>
                                             </div>
 
-                                            <div class="row g-2 mt-1">
-                                                <div class="col-4">
-                                                    <div
-                                                        style="background-color: #f8f9fa; padding: 8px 12px; border-radius: 8px; display: flex; align-items: center;">
-                                                        <i class="bi bi-postcard text-secondary"
-                                                            style="font-size: 1.2rem; margin-right: 8px;"></i>
-                                                        <div>
-                                                            <small style="display: block; font-size: 0.7rem; color: #6c757d; line-height: 1;">Biển
+                                            <div class="row g-2 mb-3">
+                                                <div class="col-6">
+                                                    <div class="p-2 d-flex flex-column justify-content-center border"
+                                                        style="background-color: #dbe4ef; border-radius: 12px; height: 100%; border-color: #dbe4ef !important;">
+                                                        <div class="d-flex align-items-center text-secondary mb-1">
+                                                            <i class="fa-solid fa-id-card me-2"
+                                                                style="font-size: 12px;"></i>
+                                                            <small style="font-size: 11px; font-weight: 500;">Biển
                                                                 số</small>
-                                                            <span style="font-weight: 600; font-size: 0.9rem; color: #212529;">36B-12345</span>
                                                         </div>
+                                                        <span class="fw-bold text-dark ps-1" style="font-size: 13px;">
+                                                            {{ value.bien_so }}
+                                                        </span>
                                                     </div>
                                                 </div>
-                                                <div class="col-4">
-                                                    <div
-                                                        style="background-color: #f8f9fa; padding: 8px 12px; border-radius: 8px; display: flex; align-items: center;">
-                                                        <i class="bi bi-people text-secondary"
-                                                            style="font-size: 1.2rem; margin-right: 8px;"></i>
-                                                        <div>
-                                                            <small
-                                                                style="display: block; font-size: 0.7rem; color: #6c757d; line-height: 1;">Sức
+                                                <div class="col-6">
+                                                    <div class="p-2 d-flex flex-column justify-content-center border"
+                                                        style="background-color: #dbe4ef; border-radius: 12px; height: 100%; border-color: #dbe4ef !important;">
+                                                        <div class="d-flex align-items-center text-secondary mb-1">
+                                                            <i class="fa-solid fa-users me-2"
+                                                                style="font-size: 12px;"></i>
+                                                            <small style="font-size: 11px; font-weight: 500;">Sức
                                                                 chứa</small>
-                                                            <span
-                                                                style="font-weight: 600; font-size: 0.9rem; color: #212529;">30
-                                                                chỗ</span>
                                                         </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-4">
-                                                    <div
-                                                        style="background-color: #f8f9fa; padding: 8px 12px; border-radius: 8px; display: flex; align-items: center;">
-                                                        <i class="bi bi-people text-secondary"
-                                                            style="font-size: 1.2rem; margin-right: 8px;"></i>
-                                                        <div>
-                                                            <small
-                                                                style="display: block; font-size: 0.7rem; color: #6c757d; line-height: 1;">Số lượng lưu thông</small>
-                                                            <span
-                                                                style="font-weight: 600; font-size: 0.9rem; color: #212529;">30</span>
-                                                        </div>
+                                                        <span class="fw-bold text-dark ps-1" style="font-size: 13px;">
+                                                            {{ value.suc_chua }} chỗ
+                                                        </span>
                                                     </div>
                                                 </div>
                                             </div>
 
-                                            <div class="mt-auto d-flex justify-content-end"
-                                                style="border-top: 1px solid #f0f0f0; padding-top: 12px; gap: 8px;">
+                                            <div class="mt-auto pt-3 border-top d-flex align-items-center gap-2"
+                                                style="border-color: #e0e0e0 !important;">
 
-                                                <button type="button" class="btn btn-sm" data-bs-toggle="modal"
-                                                    data-bs-target="#chitietModal"
-                                                    style="background-color: #e7f1ff; color: #0d6efd; border: none; border-radius: 50px; padding: 6px 16px; font-weight: 500;">
-                                                    <i class="bi bi-info-circle me-1"></i> Chi tiết
+                                                <button @click="openDetail(value)" type="button"
+                                                    class="btn btn-sm btn-outline-primary" data-bs-toggle="modal"
+                                                    data-bs-target="#chitietModal" style="border-radius: 50px;">
+                                                    <i class="fa-solid fa-circle-info me-0"></i> <span class="mb-1">Chi
+                                                        tiết</span>
                                                 </button>
 
-                                                <button type="button" class="btn btn-sm" data-bs-toggle="modal"
-                                                    data-bs-target="#suaModal"
-                                                    style="background-color: #fff3cd; color: #856404; border: none; border-radius: 50%; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center;">
-                                                    <i class="fa-regular fa-pen-to-square"></i>
+
+                                                <button @click="openEdit(value)" type="button"
+                                                    class="btn btn-sm btn-outline-warning rounded-circle d-flex align-items-center justify-content-center"
+                                                    data-bs-toggle="modal" data-bs-target="#suaModal"
+                                                    style="width: 38px; height: 38px; border-width: 2px; padding: 0;">
+                                                    <i class="fa-solid fa-pen ms-1" style="font-size: 15px;"></i>
                                                 </button>
 
-                                                <button type="button" class="btn btn-sm" data-bs-toggle="modal"
-                                                    data-bs-target="#xoaModal"
-                                                    style="background-color: #f8d7da; color: #842029; border: none; border-radius: 50%; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center;">
-                                                    <i class="fa-regular fa-square-minus"></i>
+                                                <button type="button" @click="delete_phuongtien = value"
+                                                    class="btn btn-sm btn-outline-danger rounded-circle d-flex align-items-center justify-content-center"
+                                                    data-bs-toggle="modal" data-bs-target="#xoaModal"
+                                                    style="width: 38px; height: 38px; border-width: 2px; padding: 0;">
+                                                    <i class="fa-solid fa-minus ms-1" style="font-size: 15px;"></i>
                                                 </button>
+
                                             </div>
 
                                         </div>
@@ -150,34 +173,107 @@
     </div>
 
     <!-- Modal Chi tiết phương tiện -->
-    <div class="modal fade" id="chitietModal" tabindex="-1" aria-labelledby="chitietModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
+    <div class="modal fade" id="chitietModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content border-0 shadow-lg" style="border-radius: 16px; overflow: hidden;">
 
-                <!-- Header -->
-                <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="chitietModalLabel">Chi Tiết Xe Buýt</h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <div class="modal-header border-0 pb-0 d-flex flex-column align-items-center pt-4">
+                    <div class="bg-primary bg-opacity-10 text-primary rounded-circle d-flex align-items-center justify-content-center mb-3"
+                        style="width: 60px; height: 60px;">
+                        <i class="fa-solid fa-bus" style="font-size: 24px;"></i>
+                    </div>
+                    <h5 class="modal-title fw-bold text-uppercase" style="letter-spacing: 1px;">
+                        {{ currentPhuongTien.ten_phuong_tien }}
+                    </h5>
+                    <p class="text-muted small mb-2">Thông tin chi tiết xe</p>
                 </div>
 
-                <!-- Body -->
-                <div class="modal-body">
-                    <p><strong>Tên phương tiện:</strong> Xe buýt</p>
-                    <p><strong>Biển số:</strong> 51B-123.45</p>
-                    <p><strong>Sức chứa:</strong> 30 chỗ</p>
-                    <p><strong>Số lượng xe lưu thông:</strong> 10</p>
-                    <p><strong>Ngày đi:</strong> 12/11/2025</p>
-                    <p><strong>Ngày về:</strong> 12/12/2025</p>
-                    <p><strong>Trạng thái:</strong> <span class="badge text-bg-danger">Bảo trì</span></p>
-                    <p><strong>Ghi chú:</strong></p>
-                    <textarea rows="4" class="form-control mb-3"
-                        style="width: 100%; height: 80px;;padding: 8px; font-size: 14px; box-sizing: border-box;">Chuyến xe
-                    phục vụ tuyến số 8, khởi hành mỗi 15 phút từ 6:00 đến 18:00 hàng ngày.</textarea>
+                <div class="modal-body px-4 pt-2 pb-4">
+
+                    <div class="row g-3 mb-3">
+                        <div class="col-6">
+                            <div class="p-3 bg-light rounded-3 h-100 border border-light">
+                                <small class="text-muted d-block mb-1"><i class="fa-solid fa-id-card me-1"></i> Biển
+                                    số</small>
+                                <span class="fw-bold text-dark">{{ currentPhuongTien.bien_so }}</span>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="p-3 bg-light rounded-3 h-100 border border-light">
+                                <small class="text-muted d-block mb-1"><i class="fa-solid fa-users me-1"></i> Sức
+                                    chứa</small>
+                                <span class="fw-bold text-dark">{{ currentPhuongTien.suc_chua }} chỗ</span>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="p-3 bg-light rounded-3 h-100 border border-light">
+                                <small class="text-muted d-block mb-1"><i class="fa-solid fa-layer-group me-1"></i> Số
+                                    lượng</small>
+                                <span class="fw-bold text-dark">{{ currentPhuongTien.tours?.[0]?.so_luong || "N/A" }}
+                                    xe</span>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div
+                                class="p-3 bg-light rounded-3 h-100 border border-light d-flex flex-column justify-content-center">
+                                <small class="text-muted d-block mb-1"><i class="fa-solid fa-info-circle me-1"></i>
+                                    Trạng
+                                    thái</small>
+                                <div>
+                                    <span v-if="currentPhuongTien.trang_thai == 2"
+                                        class="badge bg-danger bg-opacity-10 text-danger rounded-pill px-2">
+                                        <i class="fa-solid fa-gear me-1"></i> Bảo trì
+                                    </span>
+                                    <span v-if="currentPhuongTien.trang_thai == 1"
+                                        class="badge bg-success bg-opacity-10 text-success rounded-pill px-2">
+                                        <i class="fa-solid fa-circle-check me-1"></i> Sẵn sàng
+                                    </span>
+                                    <span v-if="currentPhuongTien.trang_thai == 0"
+                                        class="badge bg-primary bg-opacity-10 text-primary rounded-pill px-2">
+                                        <i class="fa-solid fa-circle-play me-1"></i> Đang dùng
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="p-3 border rounded-3 mb-3 bg-white">
+                        <div class="d-flex align-items-center justify-content-between">
+                            <div class="text-center">
+                                <small class="text-muted d-block mb-1">Ngày đi</small>
+                                <div class="fw-bold text-primary">
+                                    <i class="fa-regular fa-calendar-minus me-1"></i>
+                                    {{ currentPhuongTien.tours?.[0]?.ngay_bat_dau || "--" }}
+                                </div>
+                            </div>
+                            <div class="text-muted px-2"><i class="fa-solid fa-arrow-right"></i></div>
+                            <div class="text-center">
+                                <small class="text-muted d-block mb-1">Ngày về</small>
+                                <div class="fw-bold text-success">
+                                    <i class="fa-regular fa-calendar-check me-1"></i>
+                                    {{ currentPhuongTien.tours?.[0]?.ngay_ket_thuc || "--" }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mb-2">
+                        <label class="form-label fw-bold text-secondary small text-uppercase">
+                            <i class="fa-regular fa-note-sticky me-1"></i> Ghi chú
+                        </label>
+                        <div class="p-3 bg-light rounded-3 text-secondary fst-italic border border-light"
+                            style="min-height: 80px; font-size: 0.95rem;">
+                            {{ currentPhuongTien.tours?.[0]?.ghi_chu || "Không có ghi chú" }}
+                        </div>
+                    </div>
+
                 </div>
 
-                <!-- Footer -->
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                <div class="modal-footer border-0 pt-0 px-4 pb-4">
+                    <button type="button" class="btn btn-secondary w-100 rounded-pill fw-bold py-2"
+                        data-bs-dismiss="modal">
+                        Đóng lại
+                    </button>
                 </div>
 
             </div>
@@ -200,43 +296,50 @@
                 <div class="modal-body">
                     <form id="formSuaXe">
                         <div class="mb-3">
-                            <input type="text" class="form-control" placeholder="Tên phương tiện" name="ten_xe">
+                            <input v-model="edit_phuongtien.ten_phuong_tien" type="text" class="form-control"
+                                placeholder="Tên phương tiện" name="ten_xe">
                         </div>
 
                         <div class="mb-3">
-                            <input type="text" class="form-control" placeholder="Biển số xe" name="bien_so">
+                            <input v-model="edit_phuongtien.bien_so" type="text" class="form-control"
+                                placeholder="Biển số xe" name="bien_so">
                         </div>
 
                         <div class="mb-3">
-                            <input type="number" class="form-control" placeholder="Sức chứa" name="suc_chua">
+                            <input v-model="edit_phuongtien.suc_chua" type="number" class="form-control"
+                                placeholder="Sức chứa" name="suc_chua">
                         </div>
 
                         <div class="mb-3">
-                            <input type="number" class="form-control" placeholder="Số lượng xe lưu thông"
-                                name="so_luong">
+                            <input v-model="edit_phuongtien.tours.so_luong" type="number" class="form-control"
+                                placeholder="Số lượng xe lưu thông" name="so_luong">
                         </div>
 
                         <div class="mb-3">
                             <label class="form-label">Ngày đi</label>
-                            <input type="date" class="form-control" name="ngay_di">
+                            <input v-model="edit_phuongtien.tours.ngay_bat_dau" type="date" class="form-control"
+                                name="ngay_di">
                         </div>
 
                         <div class="mb-3">
                             <label class="form-label">Ngày về</label>
-                            <input type="date" class="form-control" name="ngay_ve">
+                            <input v-model="edit_phuongtien.tours.ngay_ket_thuc" type="date" class="form-control"
+                                name="ngay_ve">
                         </div>
 
                         <div class="mb-3">
-                            <select class="form-select mb-3" aria-label="Default select example">
+                            <select v-model="edit_phuongtien.trang_thai" class="form-select mb-3"
+                                aria-label="Default select example">
                                 <option selected disabled>Chọn trạng thái của xe</option>
-                                <option value="0">Sẵn sàng</option>
-                                <option value="1">Đang sử dụng</option>
+                                <option value="1">Sẵn sàng</option>
+                                <option value="0">Đang sử dụng</option>
                                 <option value="2">Bảo trì</option>
                             </select>
                         </div>
 
                         <div class="mb-3">
-                            <textarea class="form-control" name="ghi_chu" rows="3" placeholder="Ghi chú..."></textarea>
+                            <textarea v-model="edit_phuongtien.tours.ghi_chu" class="form-control" name="ghi_chu"
+                                rows="3" placeholder="Ghi chú..."></textarea>
                         </div>
 
                     </form>
@@ -245,19 +348,20 @@
                 <!-- Footer -->
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
-                    <button type="submit" form="formSuaXe" class="btn btn-primary">Sửa thông tin</button>
+                    <button type="submit" form="formSuaXe" class="btn btn-primary" data-bs-dismiss="modal">Sửa thông
+                        tin</button>
                 </div>
 
             </div>
         </div>
     </div>
 
-    <!-- Modal Xác Nhận Xoá Đẹp Mắt -->
+    <!-- Modal xoá -->
     <div class="modal fade" id="xoaModal" tabindex="-1" aria-labelledby="xoaModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content border-0 shadow">
 
-                <!-- Header đỏ đậm -->
+                <!-- Header -->
                 <div class="modal-header bg-danger text-white border-0">
                     <h5 class="modal-title" id="xoaModalLabel">
                         <i class="bi bi-exclamation-triangle-fill me-2"></i> Xác nhận xoá
@@ -266,7 +370,7 @@
                         aria-label="Đóng"></button>
                 </div>
 
-                <!-- Body có biểu tượng cảnh báo -->
+                <!-- Body -->
                 <div class="modal-body text-center p-4">
 
                     <div style="font-size: 48px; color: #dc3545;">
@@ -278,10 +382,11 @@
 
                 </div>
 
-                <!-- Footer hành động -->
+                <!-- Footer -->
                 <div class="modal-footer justify-content-center border-0 pb-4">
                     <button type="button" class="btn btn-secondary px-4" data-bs-dismiss="modal">Hủy</button>
-                    <button type="button" class="btn btn-danger px-4" id="btnXacNhanXoa">Xoá</button>
+                    <button type="button" class="btn btn-danger px-4" @click="xoaPhuongTien()"
+                        data-bs-dismiss="modal">Xoá</button>
                 </div>
 
             </div>
@@ -301,16 +406,32 @@ export default {
             phuongTiens: [],
             list_phuongtiens: [],
             create_phuongtien: {
+                // id_tour: "", => chưa code BE của tour
+                ten_phuong_tien: "",
+                bien_so: "",
+                suc_chua: "",
+                so_luong: "",
+                ngay_bat_dau: "",
+                ngay_ket_thuc: "",
                 trang_thai: 1,
+                ghi_chu: "",
             },
-            edit_phuongtien: {},
+            edit_phuongtien: {
+                tours: {
+                    so_luong: "",
+                    ngay_bat_dau: "",
+                    ngay_ket_thuc: "",
+                    ghi_chu: "",
+                }
+            },
+
             delete_phuongtien: {},
+            currentPhuongTien: {},
         };
     },
     mounted() {
         this.getPhuongTien();
-        this.getTourPhuongTien();
-        this.getTPTedit();
+        this.openDetail
     },
     methods: {
         getPhuongTien() {
@@ -325,16 +446,43 @@ export default {
         themPhuongTien() {
             axios.post('http://127.0.0.1:8000/api/admin/phuong-tien/add-data', this.create_phuongtien)
                 .then((res) => {
-                    if (res.data.status) {
-                        this.$toast.success('Thêm phương tiện thành công!');
-                        this.create_phuongtien = {};
-                        this.getPhuongTien();
 
-                    } else {
-                        this.$toast.error('Thêm phương tiện thất bại!');
+                    if (!res.data.status) {
+                        this.$toast.error("Thêm phương tiện thất bại!");
+                        return;
                     }
-                })
 
+                    let idPT = res.data.data.id; //LÚC NÀY MỚI CÓ ID
+
+                    return axios.post('http://127.0.0.1:8000/api/admin/tour-pt/add-data', {
+                        id_tour: this.create_phuongtien.id_tour ?? null, // tránh undefined
+                        id_phuong_tien: idPT,
+                        so_luong: this.create_phuongtien.so_luong,
+                        ngay_bat_dau: this.create_phuongtien.ngay_bat_dau,
+                        ngay_ket_thuc: this.create_phuongtien.ngay_ket_thuc,
+                        ghi_chu: this.create_phuongtien.ghi_chu
+                    });
+                })
+                .then(() => {
+                    this.$toast.success("Thêm phương tiện thành công!");
+                    this.getPhuongTien();
+
+                    // reset
+                    this.create_phuongtien = {
+                        ten_phuong_tien: "",
+                        bien_so: "",
+                        suc_chua: "",
+                        so_luong: "",
+                        ngay_bat_dau: "",
+                        ngay_ket_thuc: "",
+                        trang_thai: 1,
+                        ghi_chu: "",
+                    };
+                })
+                .catch((err) => {
+                    console.log(err);
+                    this.$toast.error("Lỗi kết nối API!");
+                });
         },
         capNhatPhuongTien() {
             axios.post('http://127.0.0.1:8000/api/admin/phuong-tien/update', this.edit_phuongtien)
@@ -350,18 +498,22 @@ export default {
                 })
         },
         xoaPhuongTien() {
-            axios.post('http://127.0.0.1:8000/api/admin/phuong-tien/delete', this.delete_phuongtien)
+            axios.post('http://127.0.0.1:8000/api/admin/phuong-tien/delete', {
+                id: this.delete_phuongtien.id
+            })
                 .then((res) => {
                     if (res.data.status) {
-                        this.$toast.success('Xoá phương tiện thành công!');
-                        this.delete_phuongtien = {};
+                        this.$toast.success('Xoá thành công!');
                         this.getPhuongTien();
-
                     } else {
-                        this.$toast.error('Xoá phương tiện thất bại!');
+                        this.$toast.error('Xoá thất bại!');
                     }
                 })
-        },
+                .catch(() => {
+                    this.$toast.error("Lỗi kết nối API!");
+                });
+        }
+        ,
         doiTrangThai(trangthai) {
             axios.post('http://127.0.0.1:8000/api/admin/phuong-tien/chang-status', trangthai)
                 .then((res) => {
@@ -372,27 +524,41 @@ export default {
                         this.$toast.error('Đổi trạng thái thất bại!');
                     }
                 })
+        },
+        openDetail(pt) {
+            this.currentPhuongTien = pt;
 
-        }
-    },
-    getTourPhuongTien() {
-        if (this.create_phuongtien.id_phuong_tien) {
-            axios.get('http://127.0.0.1:8000/api/admin/tour-pt/get-data/' + this.create_phuongtien.id_phuong_tien)
+            axios.get(`http://127.0.0.1:8000/api/admin/tour-pt/get-by-pt/${pt.id}`)
                 .then((res) => {
-                    this.list_phuongtiens = res.data.data;
-                })
+                    this.currentPhuongTien.tours = res.data.data;
+                });
+        },
+        openEdit(pt) {
+            this.edit_phuongtien = {
+                ...pt,
+                tours: {
+                    so_luong: "",
+                    ngay_bat_dau: "",
+                    ngay_ket_thuc: "",
+                    ghi_chu: "",
+                }
+            };
+
+            axios
+                .get(`http://127.0.0.1:8000/api/admin/tour-pt/get-by-pt/${pt.id}`)
+                .then((res) => {
+                    if (res.data.data.length > 0) {
+                        this.edit_phuongtien.tours = res.data.data[0];
+                    }
+                });
         }
+
+
+
+
 
     },
-    getTPTedit() {
-        if (this.edit_phuongtien.id_phuong_tien) {
-            axios.get('http://127.0.0.1:8000/api/admin/tour-pt/get-data/' + this.edit_phuongtien.id_phuong_tien)
-                .then((res) => {
-                    this.list_phuongtiens = res.data.data;
-                })
-        }
 
-    }
 
 };
 </script>

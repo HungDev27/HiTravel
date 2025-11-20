@@ -33,7 +33,7 @@ Route::get('/admin/tour-pt/get-data', [TourPhuongTienController::class, 'getData
 Route::post('/admin/tour-pt/add-data', [TourPhuongTienController::class, 'addData']);
 Route::post('/admin/tour-pt/update', [TourPhuongTienController::class, 'upDate']);
 Route::post('/admin/tour-pt/delete', [TourPhuongTienController::class, 'destroy']);
-
+Route::get('/admin/tour-pt/get-by-pt/{id}', [TourPhuongTienController::class, 'getByPhuongTien']);
 
 Route::post('/dang-ky', [NguoiDungController::class, 'register']);
 Route::post('/kich-hoat', [NguoiDungController::class, 'kichHoat']);

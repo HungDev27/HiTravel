@@ -18,12 +18,10 @@ return new class extends Migration
             $table->text('noi_dung');
             $table->string('hinh_anh', 500)->nullable();
             $table->string('tag', 255)->nullable();
-            $table->unsignedBigInteger('id_tac_gia');
             $table->unsignedBigInteger('id_danh_muc');
             $table->enum('tinh_trang', ['nhap', 'xuat_ban'])->default('nhap');
             $table->timestamps();
 
-            $table->foreign('id_tac_gia')->references('id')->on('nguoi_dungs')->onDelete('cascade');
             $table->foreign('id_danh_muc')->references('id')->on('danh_muc_bai_viets')->onDelete('cascade');
         });
     }

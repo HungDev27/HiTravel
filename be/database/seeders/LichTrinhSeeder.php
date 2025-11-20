@@ -3,14 +3,11 @@
 namespace Database\Seeders;
 
 use App\Models\LichTrinh;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Carbon\Carbon;
 
 class LichTrinhSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
     public function run()
     {
         LichTrinh::insert([

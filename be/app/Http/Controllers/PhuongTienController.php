@@ -22,18 +22,21 @@ class PhuongTienController extends Controller
 
     public function addData(Request $request)
     {
-        PhuongTien::create([
+        $pt = PhuongTien::create([
             'ten_phuong_tien' => $request->ten_phuong_tien,
             'mo_ta' => $request->mo_ta,
             'bien_so' => $request->bien_so,
             'suc_chua' => $request->suc_chua,
             'trang_thai' => $request->trang_thai,
         ]);
+
         return response()->json([
             'status' => true,
             'message' => 'Thêm phương tiện thành công',
+            'data' => $pt  // TRẢ VỀ PHƯƠNG TIỆN VỪA TẠO
         ]);
     }
+
 
 
     public function upDate(Request $request)
@@ -52,23 +55,37 @@ class PhuongTienController extends Controller
     }
 
 
-    public function destroy(PhuongTien $request)
+    public function destroy(Request $request)
     {
-        PhuongTien::where('id', $request->id)->delete();
+        $pt = PhuongTien::find($request->id);
+
+        if (!$pt) {
+            return response()->json([
+                'status' => false,
+                'message' => 'Không tìm thấy phương tiện'
+            ]);
+        }
+
+        $pt->delete();
+
         return response()->json([
             'status' => true,
-            'message' => 'Xóa phương tiện thành công',
+            'message' => 'Xóa phương tiện thành công'
         ]);
     }
-    
+
+
     public function changeStatus(Request $request)
     {
-        $phuongtien = PhuongTien::where('id', $request->id)->first();
-        $phuongtien->trang_thai = !$request->trang_thai;
+        $phuongtien = PhuongTien::find($request->id);
+
+        $phuongtien->trang_thai = ($phuongtien->trang_thai + 1) % 3;
+
         $phuongtien->save();
+
         return response()->json([
             'status' => true,
-            'message' => 'Thay đổi trạng thái phương tiện thành công',
+            'message' => 'Thay đổi trạng thái thành công!',
         ]);
     }
 }

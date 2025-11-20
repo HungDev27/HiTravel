@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('mo_ta')->nullable();
             $table->string('bien_so');
             $table->integer('suc_chua');
-            $table->string('trang_thai');
+            $table->tinyInteger('trang_thai')->default(0); // 0: dang_dung, 1: san_sang, 2: bao_tri
             $table->timestamps();
         });
     }

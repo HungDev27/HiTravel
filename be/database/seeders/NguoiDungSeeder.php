@@ -16,13 +16,13 @@ class NguoiDungSeeder extends Seeder
     {
         NguoiDung::insert([
             [
-                'ho_ten' => 'Customer Four',
+                'ho_ten' => 'admin',
                 'password' => '123456',
-                'email' => 'customer4@test.com',
+                'email' => 'admin@gmail.com',
                 'so_dien_thoai' => '0123456786',
                 'ngay_sinh' => '1998-06-06',
                 'cccd' => '123456789006',
-                'id_chuc_vu' => 3,
+                'id_chuc_vu' => 1,
                 'trang_thai' => 'active',
                 'avatar' => 'https://ik.imagekit.io/tvlk/blog/2022/02/dia-diem-du-lich-viet-nam-cover.jpeg',
                 'hash_reset' => null,
@@ -55,9 +55,9 @@ class NguoiDungSeeder extends Seeder
                 'hash_active' => null,
             ],
             [
-                'ho_ten' => 'Customer Seven',
+                'ho_ten' => 'HEHE',
                 'password' => '123456',
-                'email' => 'customer7@test.com',
+                'email' => 'hehe@gmail.com',
                 'so_dien_thoai' => '0123456789',
                 'ngay_sinh' => '2001-09-09',
                 'cccd' => '123456789009',

@@ -42,7 +42,7 @@ Route::get('/admin/tour-pt/get-by-pt/{id}', [TourPhuongTienController::class, 'g
 Route::middleware('auth:sanctum')->get('/check-token', [NguoiDungController::class, 'checkToken']);
 // Login chung cho tất cả role
 Route::post('/dang-nhap', [NguoiDungController::class, 'dangNhap']);
-Route::post('/dang-ky', [NguoiDungController::class, 'register']);
+Route::post('/dang-ky', [NguoiDungController::class, 'danhKy']);
 Route::post('/kich-hoat', [NguoiDungController::class, 'kichHoat']);
 Route::get('/thong-tin', [NguoiDungController::class, 'thongTinNguoiDung']);
 //Route::post('/dang-xuat', [NguoiDungController::class, 'dangXuat']);
@@ -50,3 +50,7 @@ Route::middleware('auth:sanctum')->post('/dang-xuat', [NguoiDungController::clas
 
 //thêm tour
 Route::middleware('auth:sanctum')->post('/admin/them-tour', [TourDuLichController::class, 'themTour']);
+Route::middleware('auth:sanctum')->get('/admin/tour/get-data', [TourDuLichController::class, 'danhSachTour']);
+Route::middleware('auth:sanctum')->get('admin/tour/{id}', [TourDuLichController::class, 'chiTietTour']);
+Route::middleware('auth:sanctum')->post('/update/{id}', [TourDuLichController::class, 'capNhatTour']);
+Route::middleware('auth:sanctum')->post('/delete/{id}', [TourDuLichController::class, 'xoaTour']);

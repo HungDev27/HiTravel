@@ -25,10 +25,7 @@ class TourDuLich extends Model
         'trang_thai',
     ];
 
-    public function tourAnhs()
-    {
-        return $this->hasMany(TourAnh::class, 'id_tour');
-    }
+
 
     public function lichTrinhs()
     {
@@ -43,5 +40,24 @@ class TourDuLich extends Model
     public function phuongTiens()
     {
         return $this->belongsToMany(PhuongTien::class, 'tour_phuong_tiens', 'id_tour', 'id_phuong_tien');
+    }
+
+    // === 3 quan hệ BE đang gọi trong API ===
+
+    // Quan hệ tới bảng danh mục tour
+    public function danhMuc()
+    {
+        return $this->belongsTo(DanhMuc::class, 'id_danh_muc');
+    }
+
+    // Quan hệ người tạo (user)
+    public function nguoiDung()
+    {
+        return $this->belongsTo(NguoiDung::class, 'tao_boi');
+    }
+
+    public function anh()
+    {
+        return $this->hasMany(TourAnh::class, 'id_tour');
     }
 }

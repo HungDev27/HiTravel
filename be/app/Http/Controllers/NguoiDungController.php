@@ -93,7 +93,7 @@ class NguoiDungController
 
 
     // Đăng ký người dùng
-    public function register(Request $request)
+    public function danhKy(Request $request)
     {
 
         $key = Str::uuid();

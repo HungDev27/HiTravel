@@ -126,6 +126,7 @@ const routes = [
     path: "/tour-bac",
     component: () => import("../components/Customer/Tour/TourBac.vue"),
     meta: { layout: "customer" },
+    //beforeEnter: checkToken,
   },
   {
     path: "/tour-nam",
@@ -182,8 +183,8 @@ const routes = [
   {
     path: "/dang-nhap",
     component: () => import("../components/Customer/DangNhap/index.vue"),
-    //meta: { layout: "customer" },
-    meta: { layout: "blank" },
+    meta: { layout: "customer" },
+    //meta: { layout: "blank" },
   },
   {
     path: "/quen-mat-khau",

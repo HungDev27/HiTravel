@@ -31,7 +31,7 @@
                 <table class="table table-bordered table-hover">
                     <thead class="text-center align-middle">
                         <tr class="bg-primary text-light">
-                            <th class="text-nowrap">#</th>
+                            <th class="text-nowrap">ID</th>
                             <th class="text-nowrap">Tên Danh Mục Tour</th>
                             <th class="text-nowrap">Mô Tả</th>
                             <th class="text-nowrap">Hành Động</th>
@@ -40,7 +40,7 @@
 
                     <tbody>
                         <tr v-for="(item, index) in list_danh_muc" :key="index">
-                            <td class="text-center align-middle">{{ index + 1 }}</td>
+                            <td class="text-center align-middle">{{ item.id }}</td>
                             <td class="align-middle">{{ item.ten_danh_muc }}</td>
                             <td class="align-middle">{{ item.mo_ta }}</td>
 
@@ -259,4 +259,4 @@ export default {
 
 <style>
 /* Thêm CSS nếu cần */
-</style>
+</style>   

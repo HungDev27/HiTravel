@@ -176,8 +176,65 @@ class TourDuLichController
     }
 
 
+    // public function capNhatTour(Request $request, $id)
+    // {
+
+    //     $user = $request->user();
+
+    //     if (!$user) {
+    //         return response()->json([
+    //             'status' => 0,
+    //             'message' => 'Token không hợp lệ hoặc đã hết hạn!'
+    //         ], 401);
+    //     }
+
+    //     $tour = TourDuLich::with([
+    //         'danhMuc:id,ten_danh_muc',
+    //         'nguoiDung:id,ho_ten,email',
+    //         'anh:id,id_tour,url',
+    //         'lichTrinhs:id,id_tour,tieu_de,noi_dung,ngay_lich_trinh'
+    //     ])->find($id);
+
+    //     if (!$tour) {
+    //         return response()->json([
+    //             "status" => 0,
+    //             "message" => "Tour không tồn tại!"
+    //         ], 404);
+    //     }
+
+    //     $tour->update([
+    //         'ma_tour'       => $request->ma_tour,
+    //         'ten_tour'      => $request->ten_tour,
+    //         'mo_ta'         => $request->mo_ta,
+    //         'id_danh_muc'   => $request->id_danh_muc,
+    //         'gia_nguoi_lon' => $request->gia_nguoi_lon,
+    //         'gia_tre_em'    => $request->gia_tre_em,
+    //         'ngay_di'       => $request->ngay_di,
+    //         'ngay_ve'       => $request->ngay_ve,
+    //         'gio_di'        => $request->gio_di,
+    //         'gio_ve'        => $request->gio_ve,
+    //         'dia_diem'      => $request->dia_diem,
+    //         'so_cho'        => $request->so_cho,
+    //         'so_cho_con'    => $request->so_cho_con,
+    //         'trang_thai'    => $request->trang_thai,
+    //     ]);
+
+    //     return response()->json([
+    //         "status" => 1,
+    //         "message" => "Cập nhật tour thành công!"
+    //     ]);
+    // }
     public function capNhatTour(Request $request, $id)
     {
+        $user = $request->user();
+
+        if (!$user) {
+            return response()->json([
+                'status' => 0,
+                'message' => 'Token không hợp lệ hoặc đã hết hạn!'
+            ], 401);
+        }
+
         $tour = TourDuLich::find($id);
 
         if (!$tour) {
@@ -186,6 +243,8 @@ class TourDuLichController
                 "message" => "Tour không tồn tại!"
             ], 404);
         }
+
+        //  CẬP NHẬT DỮ LIỆU TOUR
 
         $tour->update([
             'ma_tour'       => $request->ma_tour,
@@ -201,7 +260,7 @@ class TourDuLichController
             'dia_diem'      => $request->dia_diem,
             'so_cho'        => $request->so_cho,
             'so_cho_con'    => $request->so_cho_con,
-            'trang_thai'    => $request->trang_thai,
+            'trang_thai'    => $request->trang_thai
         ]);
 
         return response()->json([
@@ -210,8 +269,18 @@ class TourDuLichController
         ]);
     }
 
-    public function xoaTour($id)
+
+    public function xoaTour(Request $request, $id)
     {
+
+        $user = $request->user();
+
+        if (!$user) {
+            return response()->json([
+                'status' => 0,
+                'message' => 'Token không hợp lệ hoặc đã hết hạn!'
+            ], 401);
+        }
         $tour = TourDuLich::find($id);
 
         if (!$tour) {

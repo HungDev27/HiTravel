@@ -51,6 +51,6 @@ Route::middleware('auth:sanctum')->post('/dang-xuat', [NguoiDungController::clas
 //thêm tour
 Route::middleware('auth:sanctum')->post('/admin/them-tour', [TourDuLichController::class, 'themTour']);
 Route::middleware('auth:sanctum')->get('/admin/tour/get-data', [TourDuLichController::class, 'danhSachTour']);
-Route::middleware('auth:sanctum')->get('admin/tour/{id}', [TourDuLichController::class, 'chiTietTour']);
-Route::middleware('auth:sanctum')->post('/update/{id}', [TourDuLichController::class, 'capNhatTour']);
-Route::middleware('auth:sanctum')->post('/delete/{id}', [TourDuLichController::class, 'xoaTour']);
+Route::middleware('auth:sanctum')->get('/admin/tour/{id}', [TourDuLichController::class, 'chiTietTour']);
+Route::middleware('auth:sanctum')->post('/admin/tour/update/{id}', [TourDuLichController::class, 'capNhatTour']);
+Route::middleware('auth:sanctum')->delete('/admin/tour/delete/{id}', [TourDuLichController::class, 'xoaTour']);

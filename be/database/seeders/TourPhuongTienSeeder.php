@@ -1,6 +1,7 @@
 <?php
 
 namespace Database\Seeders;
+
 use Illuminate\Support\Facades\DB;
 use App\Models\TourPhuongTien;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;

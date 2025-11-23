@@ -1,456 +1,411 @@
 <template>
-  <div class="d-flex justify-content-between">
+  <div class="container-fluid p-0">
+    <div class="d-flex flex-wrap justify-content-between align-items-center gap-3 mb-4">
 
-    <!-- Tổng voucher -->
-    <div>Hiển thị <b style="color: #ff6a00;">{{ list_voucher.length }}</b> mã giảm trong hệ thống</div>
-
-    <!-- Tìm kiếm -->
-    <div class="d-flex gap-3">
-      <div class="shadow-sm d-flex align-items-center px-3"
-        style="border: 2px dashed #ff6a00 ; border-radius: 50px; height: 45px; width: 300px;">
-        <i class="bi bi-search text-muted me-2"></i>
-        <input type="text" v-model="tim_kiem.noi_dung" v-on:keyup.enter="timKiem()" placeholder="Tìm mã giảm giá..."
-          style="border: none; outline: none; width: 100%; font-size: 14px;">
+      <!-- Tính tổng -->
+      <div class="text-nowrap">Hiển thị <b style="color: #ff6a00;">{{ list_voucher.length }}</b> mã giảm trong hệ thống
       </div>
 
-      <!-- Nút tìm mã -->
-      <button class="btn shadow" @click="timKiem()"
-        style="background-color: #ff6a00; color: white; border-radius: 50px; padding: 0 25px; font-weight: 600; height: 45px;">
-        <i class="bi bi-plus-lg me-2"></i>Tìm Mã
+      <!-- Tìm kiếm -->
+      <div class="d-flex flex-wrap gap-2 flex-grow-1 justify-content-end align-items-center">
+        <div class="shadow-sm d-flex align-items-center px-3 bg-white"
+          style="border: 2px dashed #ff6a00; border-radius: 50px; height: 45px; flex-basis: 300px; flex-grow: 1; max-width: 400px;">
+          <i class="bi bi-search text-muted me-2"></i>
+          <input type="text" v-model="tim_kiem.noi_dung" v-on:keyup.enter="timKiem()" placeholder="Tìm mã giảm giá..."
+            style="border: none; outline: none; box-shadow: none; width: 100%; font-size: 14px;">
+        </div>
+
+        <!-- Nút tìm kiếm -->
+        <button class="btn shadow text-white fw-bold text-nowrap" @click="timKiem()"
+          style="background-color: #ff6a00; border-radius: 50px; padding: 0 25px; height: 45px;">
+          <i class="bi bi-plus-lg me-2"></i>Tìm Mã
+        </button>
+
+        <!-- Nút thêm mới -->
+        <button data-bs-toggle="modal" data-bs-target="#themmoiModal" style="border-radius: 50px; background-color: #007bff; color: white; padding: 10px 20px; font-weight: bold; font-size: 14px; 
+            border: none; display: inline-flex; align-items: center; gap: 8px; cursor: pointer; box-shadow: 0 4px 12px rgba(0, 123, 255, 0.4);
+            transition: all 0.3s ease;" onmouseover="this.style.transform='scale(1.05)'"
+          onmouseout="this.style.transform='scale(1)'">
+          <i class="fa-solid fa-plus text-white"></i> Thêm mới
+        </button>
+      </div>
+
+    </div>
+
+    <!-- Sắp xếp và lọc -->
+    <div class="d-flex flex-wrap align-items-center justify-content-start mb-3 mt-3 gap-2">
+      <span class="text-secondary me-2" style="font-size: 14px;">Sắp xếp theo:</span>
+
+      <select v-model="sortFieldTemp" class="form-select w-auto shadow-sm" style="border-radius: 20px;">
+        <option value="phan_tram_giam">Phần trăm giảm</option>
+        <option value="so_luong">Số lượng</option>
+      </select>
+
+      <select v-model="sortOrderTemp" class="form-select w-auto shadow-sm" style="border-radius: 20px;">
+        <option value="asc">Tăng dần</option>
+        <option value="desc">Giảm dần</option>
+      </select>
+
+      <!-- Nút lọc -->
+      <button class="btn btn-warning text-dark fw-bold shadow-sm" @click="locVoucher" style="border-radius: 20px;">
+        <b>Lọc</b>
       </button>
     </div>
 
-    <!-- Thêm Voucher -->
-    <button data-bs-toggle="modal" data-bs-target="#themmoiModal" style="border-radius: 50px; background-color: #007bff; color: white; padding: 10px 20px; font-weight: bold; font-size: 14px; 
-            border: none; display: inline-flex; align-items: center; gap: 8px; cursor: pointer; box-shadow: 0 4px 12px rgba(0, 123, 255, 0.4);
-            transition: all 0.3s ease;" onmouseover="this.style.transform='scale(1.05)'"
-      onmouseout="this.style.transform='scale(1)'">
-      <i class="fa-solid fa-plus text-white"></i> Thêm mới
-    </button>
+    <div class="row g-3">
+      <div class="col-12 col-md-6 col-lg-4" v-for="(value, index) in sortedVoucher" :key="index">
 
-  </div>
+        <div class="card border-0 shadow-sm h-100 overflow-hidden" style="transition: transform 0.2s;"
+          onmouseover="this.style.transform='translateY(-5px)'" onmouseout="this.style.transform='translateY(0)'">
 
-  <!-- Tăng giảm -->
-  <div class="d-flex align-items-center justify-content-start mb-3 mt-3">
-    <span class="text-secondary me-2" style="font-size: 14px;">Sắp xếp theo:</span>
+          <div class="d-flex h-100">
+            <div
+              class="d-flex flex-column align-items-center justify-content-center text-center text-white p-2 flex-shrink-0"
+              style="background-color: firebrick; width: 110px;">
 
+              <!-- Phần trăm giảm -->
+              <div
+                class="d-flex align-items-center justify-content-center bg-white text-danger fw-bold rounded-circle mb-2"
+                style="width: 50px; height: 50px; font-size: 14px; color: crimson;">
+                {{ value.phan_tram_giam }}%
+              </div>
 
-    <select v-model="sortFieldTemp" class="d-flex align-items-center justify-content-start mb-3 mt-3 me-3">
-      <option value="phan_tram_giam">Phần trăm giảm</option>
-      <option value="so_luong">Số lượng</option>
-    </select>
-
-    <select v-model="sortOrderTemp" class="d-flex align-items-center justify-content-start mb-3 mt-3">
-      <option value="asc">Tăng dần</option>
-      <option value="desc">Giảm dần</option>
-    </select>
-
-
-    <button class="btn btn-warning ms-2 text-dark" @click="locVoucher">
-      <b>Lọc</b>
-    </button>
-  </div>
-
-  <!-- DANH SÁCH VOUCHER -->
-  <div class="row">
-    <div class="col-lg-4" v-for="(value, index) in sortedVoucher" :key="index">
-      <div class="card position-relative overflow-hidden" style="border: none;">
-
-        <!-- Số lượng -->
-        <div
-          style="position:absolute; top:0; right:15px; background:#ffe9e9; color:#ee4d2d; padding:2px 8px; font-weight:bold; font-size:12px;">
-          x {{ value.so_luong }}
-        </div>
-
-        <div class="row">
-
-          <div class="col-lg-4 text-center" style="background-color: firebrick;">
-            <!-- phần trăm giảm -->
-            <div class="mx-auto mt-3 d-flex align-items-center justify-content-center"
-              style="width:60px; height:60px; border-radius:50%; background:beige; color:crimson; font-weight:800;">
-              {{ value.phan_tram_giam }}%
+              <!-- Mã voucher -->
+              <div class="fw-bold text-break w-100 px-1" style="font-size: 12px; letter-spacing: 1px; color: beige;">
+                {{ value.ma }}
+              </div>
             </div>
 
-            <!-- mã -->
-            <div class="mx-auto mb-3 mt-2" style="font-weight:700; color:beige; letter-spacing:1px; font-size:12px;">
-              {{ value.ma }}
-            </div>
-          </div>
+            <div class="flex-grow-1 position-relative d-flex flex-column bg-white">
 
-          <div class="col-lg-8 mt-2">
-            <div class="card-body">
-              <div class="d-flex justify-content-between">
+              <!-- Số lượng -->
+              <div class="position-absolute top-0 end-0 px-2 py-1 fw-bold"
+                style="background: #fc8181; color: #dc2626; font-size: 11px; border-bottom-left-radius: 8px;">
+                x {{ value.so_luong }}
+              </div>
 
-                <div>
-                  <!-- mô tả -->
-                  <div style="font-size:14px; font-weight:600;">
-                    {{ value.mo_ta }}
-                  </div>
+              <!-- Mô tả -->
+              <div class="card-body p-2 d-flex flex-column h-100">
+                <div class="fw-bold text-dark mb-2 mt-3 pe-4"
+                  style="font-size: 14px; line-height: 1.4; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;">
+                  {{ value.mo_ta }}
+                </div>
 
-                  <!-- ngày hết hạn -->
-                  <div class="d-flex flex-row">
-                    <div class="p-2" style="font-size:13px; color:#777;">
-                      <i class="fa-regular fa-clock me-1"></i>
-                      HSD: {{ value.hieu_luc_den }}
+                <!-- Hạn sử dụng -->
+                <div class="mt-auto">
+                  <div class="d-flex justify-content-between align-items-end">
+                    <div class="text-muted small" style="font-size: 13px;">
+                      <i class="fa-regular fa-clock me-1"></i>HSD: {{ value.hieu_luc_den }}
                     </div>
 
-                    <div class="p-2 text-primary fa-xs" style="margin-top:9px;" data-bs-toggle="modal"
+                    <!-- Chi tiết -->
+                    <div class="text-primary small fw-bold" style="cursor: pointer;" data-bs-toggle="modal"
                       data-bs-target="#chitietModal" @click="openDetail(value)">
                       <u>Chi tiết</u>
                     </div>
                   </div>
-                </div>
 
-                <!-- nút xóa & sửa -->
-                <div class="ms-1 mt-3">
-                  <i class="fa-solid fa-trash-can text-danger" data-bs-toggle="modal" data-bs-target="#xoaModal"
-                    @click="xacNhanXoa(value)">
-                  </i>
-                  <i class="fa-solid fa-pencil text-primary" data-bs-toggle="modal" data-bs-target="#suaModal"
-                    @click="openEdit(value)">
-                  </i>
-                </div>
-
-              </div>
-            </div>
-          </div>
-
-        </div>
-      </div>
-    </div>
-  </div>
-
-
-
-  <!-- Modal Thêm Mới -->
-  <div class="modal fade" id="themmoiModal" tabindex="-1" aria-labelledby="themmoiModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-      <div class="modal-content">
-
-        <div class="modal-header text-white" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
-          <h1 class="modal-title fs-5">Thêm mới Voucher</h1>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-
-        <div class="modal-body">
-
-          <div class="row ms-2 me-2 mb-3">
-
-            <!-- Mã Voucher -->
-            <div class="col-lg-6 col-md-6">
-              <label class="form-label fw-bold text-secondary">Mã Voucher <span class="text-danger">*</span></label>
-              <input type="text" class="form-control" placeholder="VD: SUMMER2025" v-model="create_voucher.ma"
-                style="text-transform: uppercase;">
-              <div class="form-text text-muted small">Mã code duy nhất để khách hàng nhập.</div>
-            </div>
-
-            <!-- Phần trăm giảm -->
-            <div class="col-lg-6 col-md-6">
-              <label class="form-label fw-bold text-secondary">Phần trăm giảm (%) <span
-                  class="text-danger">*</span></label>
-              <div class="input-group">
-                <input type="number" class="form-control" min="1" max="100" placeholder="VD: 10"
-                  v-model="create_voucher.phan_tram_giam">
-                <span class="input-group-text bg-light">%</span>
-              </div>
-            </div>
-          </div>
-
-          <div class="row ms-2 me-2 mb-3">
-
-            <!-- Số lượng -->
-            <div class="col-lg-6 col-md-6">
-              <label class="form-label fw-bold text-secondary">Số lượng phát hành <span
-                  class="text-danger">*</span></label>
-              <input type="number" class="form-control" min="1" placeholder="VD: 100" v-model="create_voucher.so_luong">
-            </div>
-
-            <!-- Trạng thái -->
-            <div class="col-lg-6 col-md-6">
-              <label class="form-label fw-bold text-secondary">Trạng thái</label>
-              <select class="form-select" v-model="create_voucher.trang_thai">
-                <option value="1" selected>Còn hiệu lực</option>
-                <option value="0">Hết hiệu lực</option>
-              </select>
-            </div>
-          </div>
-
-          <div class="row ms-2 me-2 mb-3">
-
-            <!-- Ngày bắt đầu -->
-            <div class="col-lg-6 col-md-6">
-              <label class="form-label fw-bold text-secondary">Hiệu lực từ ngày <span
-                  class="text-danger">*</span></label>
-              <input type="date" class="form-control" v-model="create_voucher.hieu_luc_tu">
-            </div>
-
-            <!-- Ngày kết thúc -->
-            <div class="col-lg-6 col-md-6">
-              <label class="form-label fw-bold text-secondary">Hiệu lực đến ngày <span
-                  class="text-danger">*</span></label>
-              <input type="date" class="form-control" v-model="create_voucher.hieu_luc_den">
-            </div>
-          </div>
-
-          <div class="row ms-2 me-2">
-
-            <!-- Mô tả -->
-            <label class="form-label fw-bold text-secondary">Mô tả chi tiết</label>
-            <textarea class="form-control" placeholder="Mô tả voucher..." v-model="create_voucher.mo_ta"></textarea>
-
-          </div>
-
-        </div>
-
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
-          <button type="button" class="btn btn-primary" @click="themVoucher"
-            style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
-            Lưu
-          </button>
-        </div>
-
-      </div>
-    </div>
-  </div>
-
-
-  <!-- Modal Xoá-->
-  <div class="modal fade" id="xoaModal" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-      <div class="modal-content border-0 shadow-lg" style="border-radius: 16px; overflow: hidden;">
-
-        <div class="modal-body p-4 text-center">
-
-          <div class="mx-auto mb-4 d-flex align-items-center justify-content-center"
-            style="width: 80px; height: 80px; background-color: #fee2e2; border-radius: 50%; color: #dc2626;">
-            <i class="fa-regular fa-trash-can fa-2x fa-shake"></i>
-          </div>
-
-          <!-- Tin nhắn xác nhân -->
-          <h4 class="fw-bold mb-2" style="color: #333;">Xác nhận xóa Voucher?</h4>
-          <p class="text-muted mb-4">
-            Bạn có chắc chắn muốn xóa mã giảm giá
-
-            <!-- Đổi tên vch -->
-            <span class="fw-bold text-danger px-2 py-1 rounded"
-              style="background-color: #fff5f5; border: 1px dashed #fc8181;">{{ del_voucher.ma }}</span>
-            không?<br>
-
-            <span class="small">Hành động này không thể hoàn tác.</span>
-          </p>
-
-          <div class="d-flex gap-2 justify-content-center">
-            <button type="button" class="btn btn-light fw-bold flex-fill py-2" data-bs-dismiss="modal"
-              style="color: #555;">
-              Hủy bỏ
-            </button>
-
-            <button type="button" class="btn text-white fw-bold flex-fill py-2 shadow-sm"
-              style="background: linear-gradient(135deg, #ff416c 0%, #ff4b2b 100%); border: none;" @click="xoaVoucher"
-              data-bs-dismiss="modal">
-
-              <i class="fa-solid fa-trash me-2"></i>Xóa ngay
-            </button>
-
-
-          </div>
-
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Modal Sửa -->
-  <div class="modal fade" id="suaModal" tabindex="-1">
-    <div class="modal-dialog modal-lg">
-      <div class="modal-content">
-
-        <div class="modal-header">
-          <h1 class="modal-title fs-5">Cập nhật Voucher</h1>
-          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-        </div>
-
-        <div class="modal-body">
-
-          <div class="row ms-2 me-2 mb-3">
-
-            <!-- Mã voucher -->
-            <div class="col-lg-6">
-              <label class="form-label fw-bold text-secondary">Mã Voucher *</label>
-              <input type="text" class="form-control" v-model="edit_voucher.ma" style="text-transform: uppercase;">
-            </div>
-
-            <!-- % giảm -->
-            <div class="col-lg-6">
-              <label class="form-label fw-bold text-secondary">Phần trăm giảm *</label>
-              <div class="input-group">
-                <input type="number" class="form-control" v-model="edit_voucher.phan_tram_giam">
-                <span class="input-group-text">%</span>
-              </div>
-            </div>
-          </div>
-
-          <div class="row ms-2 me-2 mb-3">
-
-            <!-- Số lượng -->
-            <div class="col-lg-6">
-              <label class="form-label fw-bold text-secondary">Số lượng *</label>
-              <input type="number" class="form-control" v-model="edit_voucher.so_luong">
-            </div>
-
-            <!-- Trạng thái -->
-            <!-- chưa xong -->
-            <div class="col-lg-6">
-              <label class="form-label fw-bold text-secondary">Trạng thái</label>
-              <select class="form-select" v-model="edit_voucher.trang_thai">
-                <option value="con_hieu_luc">Còn hiệu lực</option>
-                <option value="het_hieu_luc">Hết hiệu lực</option>
-              </select>
-            </div>
-          </div>
-
-          <div class="row ms-2 me-2 mb-3">
-
-            <!-- Ngày bắt đầu -->
-            <div class="col-lg-6">
-              <label class="form-label fw-bold text-secondary">Ngày bắt đầu *</label>
-              <input type="date" class="form-control" v-model="edit_voucher.hieu_luc_tu">
-            </div>
-
-            <!-- Ngày kết thúc -->
-            <div class="col-lg-6">
-              <label class="form-label fw-bold text-secondary">Ngày kết thúc *</label>
-              <input type="date" class="form-control" v-model="edit_voucher.hieu_luc_den">
-            </div>
-          </div>
-
-          <!-- Mô tả -->
-          <div class="row ms-2 me-2">
-            <label class="form-label fw-bold text-secondary">Mô tả</label>
-            <textarea class="form-control" v-model="edit_voucher.mo_ta"></textarea>
-          </div>
-
-        </div>
-
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
-          <button type="button" class="btn btn-primary" data-bs-dismiss="modal" @click="capNhatVoucher">Lưu</button>
-        </div>
-
-      </div>
-    </div>
-  </div>
-
-
-  <!-- Modal Xem-->
-  <div class="modal fade" id="chitietModal" tabindex="-1" aria-labelledby="chitietModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-      <div class="modal-content border-0 shadow-lg" style="border-radius: 16px; overflow: hidden;">
-
-        <div class="modal-header text-white border-0"
-          style="background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);">
-          <h5 class="modal-title fw-bold" id="chitietModalLabel">
-            <i class="fa-solid fa-circle-info me-2"></i>Chi tiết Voucher
-          </h5>
-          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-
-        <div class="modal-body p-0">
-
-          <!-- Khúc ni copy lại voucher -->
-          <div class="bg-light p-4 d-flex justify-content-center align-items-center border-bottom">
-            <div class="card position-relative overflow-hidden"
-              style="border: none; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));">
-
-              <!-- Số lượng -->
-              <div
-                style="position: absolute; top: 0; right: 15px; background: #ffe9e9; color: #ee4d2d; padding: 2px 8px; font-weight: bold; font-size: 12px; border-bottom-left-radius: 4px; border-bottom-right-radius: 4px; z-index: 10; border: 1px solid #fcc; border-top: none;">
-                {{ current_voucher.so_luong }}
-              </div>
-
-              <div class="row">
-
-                <div class="col-lg-4 text-center" style="background-color: firebrick;">
-                  <!-- phần trăm giảm -->
-                  <div class="mx-auto mt-3 d-flex align-items-center justify-content-center"
-                    style="width: 60px; height: 60px; border-radius: 50%; background: beige; color: crimson; font-weight: 800; font-size: 18px;">
-                    {{ current_voucher.phan_tram_giam }}
+                  <!-- Nút xóa và sửa -->
+                  <div class="d-flex justify-content-end gap-3 mt-3">
+                    <i class="fa-solid fa-trash-can text-danger" style="cursor: pointer; transition: opacity 0.2s;"
+                      onmouseover="this.style.opacity='0.6'" onmouseout="this.style.opacity='1'" data-bs-toggle="modal"
+                      data-bs-target="#xoaModal" @click="xacNhanXoa(value)">
+                    </i>
+                    <i class="fa-solid fa-pencil text-primary" style="cursor: pointer; transition: opacity 0.2s;"
+                      onmouseover="this.style.opacity='0.6'" onmouseout="this.style.opacity='1'" data-bs-toggle="modal"
+                      data-bs-target="#suaModal" @click="openEdit(value)">
+                    </i>
                   </div>
-                  <!-- mã -->
-                  <div class="mx-auto mb-3 mt-2"
-                    style="font-weight: 700; color: beige; letter-spacing: 1px; margin-bottom: 5px; font-size: 12px;">
-                    {{ current_voucher.ma }}<i class="fa-regular fa-copy ms-2"></i></div>
                 </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
 
-                <div class="col-lg-8 mt-2">
-                  <div class="card-body">
-                    <div class="d-flex justify-content-between">
+    <!-- Modal Thêm mới Voucher -->
+    <div class="modal fade" id="themmoiModal" tabindex="-1" aria-labelledby="themmoiModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
 
-                      <div>
-                        <!-- mô tả -->
-                        <div style="font-size: 14px; font-weight: 600;">{{ current_voucher.mo_ta }}</div>
-                        <!-- ngày hết hạn -->
-                        <div class="d-flex flex-row">
-                          <div class="p-2" style="font-size: 13px; color: #777;"><i
-                              class="fa-regular fa-clock me-1"></i>HSD:
-                            {{ current_voucher.hieu_luc_den }}</div>
-                        </div>
+          <div class="modal-header text-white" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+            <h1 class="modal-title fs-5">Thêm mới Voucher</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+
+          <div class="modal-body">
+            <div class="row g-3 mb-3 ms-1 me-1">
+
+              <div class="col-12 col-md-6">
+                <label class="form-label fw-bold text-secondary">Mã Voucher <span class="text-danger">*</span></label>
+                <input type="text" class="form-control" placeholder="VD: SUMMER2025" v-model="create_voucher.ma"
+                  style="text-transform: uppercase;">
+                <div class="form-text text-muted small">Mã code duy nhất để khách hàng nhập.</div>
+              </div>
+
+              <div class="col-12 col-md-6">
+                <label class="form-label fw-bold text-secondary">Phần trăm giảm (%) <span
+                    class="text-danger">*</span></label>
+                <div class="input-group">
+                  <input type="number" class="form-control" min="1" max="100" placeholder="VD: 10"
+                    v-model="create_voucher.phan_tram_giam">
+                  <span class="input-group-text bg-light">%</span>
+                </div>
+              </div>
+
+              <div class="col-12 col-md-6">
+                <label class="form-label fw-bold text-secondary">Số lượng phát hành <span
+                    class="text-danger">*</span></label>
+                <input type="number" class="form-control" min="1" placeholder="VD: 100"
+                  v-model="create_voucher.so_luong">
+              </div>
+
+              <div class="col-12 col-md-6">
+                <label class="form-label fw-bold text-secondary">Trạng thái</label>
+                <select class="form-select" v-model="create_voucher.trang_thai">
+                  <option value="1" selected>Còn hiệu lực</option>
+                  <option value="0">Hết hiệu lực</option>
+                </select>
+              </div>
+
+              <div class="col-12 col-md-6">
+                <label class="form-label fw-bold text-secondary">Hiệu lực từ ngày <span
+                    class="text-danger">*</span></label>
+                <input type="date" class="form-control" v-model="create_voucher.hieu_luc_tu">
+              </div>
+
+              <div class="col-12 col-md-6">
+                <label class="form-label fw-bold text-secondary">Hiệu lực đến ngày <span
+                    class="text-danger">*</span></label>
+                <input type="date" class="form-control" v-model="create_voucher.hieu_luc_den">
+              </div>
+
+              <div class="col-12">
+                <label class="form-label fw-bold text-secondary">Mô tả chi tiết</label>
+                <textarea class="form-control" placeholder="Mô tả voucher..." v-model="create_voucher.mo_ta"></textarea>
+              </div>
+
+            </div>
+          </div>
+
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+            <button type="button" class="btn btn-primary" @click="themVoucher" data-bs-dismiss="modal"
+              style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+              Lưu
+            </button>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal Xóa Voucher -->
+    <div class="modal fade" id="xoaModal" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content border-0 shadow-lg" style="border-radius: 16px; overflow: hidden;">
+
+          <div class="modal-body p-4 text-center">
+
+            <div class="mx-auto mb-4 d-flex align-items-center justify-content-center"
+              style="width: 80px; height: 80px; background-color: #fee2e2; border-radius: 50%; color: #dc2626;">
+              <i class="fa-regular fa-trash-can fa-2x fa-shake"></i>
+            </div>
+
+            <h4 class="fw-bold mb-2" style="color: #333;">Xác nhận xóa Voucher?</h4>
+            <p class="text-muted mb-4">
+              Bạn có chắc chắn muốn xóa mã giảm giá
+
+              <span class="fw-bold text-danger px-2 py-1 rounded"
+                style="background-color: #fff5f5; border: 1px dashed #fc8181;">{{ del_voucher.ma }}</span>
+              không?<br>
+
+              <span class="small">Hành động này không thể hoàn tác.</span>
+            </p>
+
+            <div class="d-flex gap-2 justify-content-center">
+              <button type="button" class="btn btn-light fw-bold flex-fill py-2" data-bs-dismiss="modal"
+                style="color: #555;">
+                Hủy bỏ
+              </button>
+
+              <button type="button" class="btn text-white fw-bold flex-fill py-2 shadow-sm"
+                style="background: linear-gradient(135deg, #ff416c 0%, #ff4b2b 100%); border: none;" @click="xoaVoucher"
+                data-bs-dismiss="modal">
+
+                <i class="fa-solid fa-trash me-2"></i>Xóa ngay
+              </button>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal Sửa Voucher -->
+    <div class="modal fade" id="suaModal" tabindex="-1">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+
+          <div class="modal-header">
+            <h1 class="modal-title fs-5">Cập nhật Voucher</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+          </div>
+
+          <div class="modal-body">
+
+            <div class="row g-3 mb-3 ms-1 me-1">
+
+              <div class="col-12 col-md-6">
+                <label class="form-label fw-bold text-secondary">Mã Voucher *</label>
+                <input type="text" class="form-control" v-model="edit_voucher.ma" style="text-transform: uppercase;">
+              </div>
+
+              <div class="col-12 col-md-6">
+                <label class="form-label fw-bold text-secondary">Phần trăm giảm *</label>
+                <div class="input-group">
+                  <input type="number" class="form-control" v-model="edit_voucher.phan_tram_giam">
+                  <span class="input-group-text">%</span>
+                </div>
+              </div>
+
+              <div class="col-12 col-md-6">
+                <label class="form-label fw-bold text-secondary">Số lượng *</label>
+                <input type="number" class="form-control" v-model="edit_voucher.so_luong">
+              </div>
+
+              <div class="col-12 col-md-6">
+                <label class="form-label fw-bold text-secondary">Trạng thái</label>
+                <select class="form-select" v-model="edit_voucher.trang_thai">
+                  <option value="con_hieu_luc">Còn hiệu lực</option>
+                  <option value="het_hieu_luc">Hết hiệu lực</option>
+                </select>
+              </div>
+
+              <div class="col-12 col-md-6">
+                <label class="form-label fw-bold text-secondary">Ngày bắt đầu *</label>
+                <input type="date" class="form-control" v-model="edit_voucher.hieu_luc_tu">
+              </div>
+
+              <div class="col-12 col-md-6">
+                <label class="form-label fw-bold text-secondary">Ngày kết thúc *</label>
+                <input type="date" class="form-control" v-model="edit_voucher.hieu_luc_den">
+              </div>
+
+              <div class="col-12">
+                <label class="form-label fw-bold text-secondary">Mô tả</label>
+                <textarea class="form-control" v-model="edit_voucher.mo_ta"></textarea>
+              </div>
+
+            </div>
+          </div>
+
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+            <button type="button" class="btn btn-primary" @click="capNhatVoucher">Lưu</button>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal Chi tiết Voucher -->
+    <div class="modal fade" id="chitietModal" tabindex="-1" aria-labelledby="chitietModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content border-0 shadow-lg" style="border-radius: 16px; overflow: hidden;">
+
+          <div class="modal-header text-white border-0"
+            style="background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);">
+            <h5 class="modal-title fw-bold" id="chitietModalLabel">
+              <i class="fa-solid fa-circle-info me-2"></i>Chi tiết Voucher
+            </h5>
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+
+          <div class="modal-body p-0">
+
+            <div class="bg-light p-4 d-flex justify-content-center align-items-center border-bottom">
+
+              <div class="card position-relative overflow-hidden w-100"
+                style="border: none; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1)); max-width: 400px;">
+                <div class="d-flex">
+                  <div
+                    class="d-flex flex-column align-items-center justify-content-center text-center text-white p-2 flex-shrink-0"
+                    style="background-color: firebrick; width: 110px;">
+                    <div
+                      class="d-flex align-items-center justify-content-center bg-white text-danger fw-bold rounded-circle mb-2"
+                      style="width: 60px; height: 60px; font-size: 18px;">
+                      {{ current_voucher.phan_tram_giam }}%
+                    </div>
+                    <div class="fw-bold text-break w-100 px-1" style="font-size: 12px; color: beige;">
+                      {{ current_voucher.ma }} <i class="fa-regular fa-copy ms-1"></i>
+                    </div>
+                  </div>
+                  <div class="flex-grow-1 bg-white position-relative">
+                    <div class="position-absolute top-0 end-0 px-2 py-1 fw-bold"
+                      style="background: #fc8181; color: #dc2626; font-size: 11px; border-bottom-left-radius: 8px;">
+                      x{{ current_voucher.so_luong }}
+                    </div>
+                    <div class="card-body p-3">
+                      <div style="font-size: 14px; font-weight: 600; margin-top: 10px;">{{ current_voucher.mo_ta }}
                       </div>
-
+                      <div class="text-muted small mt-2">
+                        <i class="fa-regular fa-clock me-1"></i>HSD: {{ current_voucher.hieu_luc_den }}
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
 
-          <!-- Mô tả chi tiết hơn -->
-          <div class="p-4">
+            <div class="p-4">
 
-            <div class="row g-3">
-              <div class="col-12 text-center">
-                <div class="p-3 bg-light rounded border h-100">
-                  <div class="text-muted small mb-1"><i class="fa-solid fa-toggle-on me-1"></i>Trạng thái</div>
-                  <div class="fw-bold text-success">
-                    <span v-if="current_voucher.trang_thai === 'het_hieu_luc'"
-                      class="badge bg-danger bg-opacity-10 text-danger border border-danger border-opacity-25 px-2 py-1 rounded-pill">
-                      Hết hiệu lực
-                    </span>
-                    <span v-if="current_voucher.trang_thai === 'con_hieu_luc'"
-                      class="badge bg-success bg-opacity-10 text-success border border-success border-opacity-25 px-2 py-1 rounded-pill">
-                      Còn hiệu lực
-                    </span>
+              <div class="row g-3">
+                <div class="col-12 text-center">
+                  <div class="p-3 bg-light rounded border h-100">
+                    <div class="text-muted small mb-1"><i class="fa-solid fa-toggle-on me-1"></i>Trạng thái</div>
+                    <div class="fw-bold text-success">
+                      <span v-if="current_voucher.trang_thai === 'het_hieu_luc'"
+                        class="badge bg-danger bg-opacity-10 text-danger border border-danger border-opacity-25 px-2 py-1 rounded-pill">
+                        Hết hiệu lực
+                      </span>
+                      <span v-if="current_voucher.trang_thai === 'con_hieu_luc'"
+                        class="badge bg-success bg-opacity-10 text-success border border-success border-opacity-25 px-2 py-1 rounded-pill">
+                        Còn hiệu lực
+                      </span>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-12 text-center">
+                  <div class="p-3 bg-light rounded border">
+                    <div class="text-muted small mb-1"><i class="fa-regular fa-clock me-1"></i>Thời gian hiệu lực</div>
+                    <div class="fw-bold text-primary">{{ current_voucher.hieu_luc_tu }} <span
+                        class="mx-2 text-muted">➔</span> {{
+                          current_voucher.hieu_luc_den }} </div>
+                  </div>
+                </div>
+                <div class="col-12">
+                  <div class="p-3 bg-light rounded border">
+                    <div class="text-muted small mb-1"><i class="fa-solid fa-align-left me-1"></i>Mô tả / Điều kiện
+                    </div>
+                    <textarea class="form-control">{{ current_voucher.mo_ta }}</textarea>
                   </div>
                 </div>
               </div>
-              <div class="col-12 text-center">
-                <div class="p-3 bg-light rounded border">
-                  <div class="text-muted small mb-1"><i class="fa-regular fa-clock me-1"></i>Thời gian hiệu lực</div>
-                  <div class="fw-bold text-dark">{{ current_voucher.hieu_luc_tu }} <span
-                      class="mx-2 text-muted">➔</span> {{
-                        current_voucher.hieu_luc_den }} </div>
-                </div>
-              </div>
-              <div class="col-12">
-                <div class="p-3 bg-light rounded border">
-                  <div class="text-muted small mb-1"><i class="fa-solid fa-align-left me-1"></i>Mô tả / Điều kiện</div>
-                  <textarea class="form-control">{{ current_voucher.mo_ta }}</textarea>
-                </div>
-              </div>
+
             </div>
 
           </div>
 
+          <button type="button" class="btn text-white fw-bold flex-grow-1 shadow-sm"
+            style="background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%); border: none;" data-bs-dismiss="modal"
+            data-bs-toggle="modal" data-bs-target="#suaModal" @click="openEdit(current_voucher)">
+            <i class="fa-solid fa-pen-to-square me-2"></i>Chỉnh sửa
+          </button>
+
+
         </div>
-
-        <button type="button" class="btn text-white fw-bold flex-grow-1 shadow-sm"
-          style="background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%); border: none;" data-bs-dismiss="modal"
-          data-bs-toggle="modal" data-bs-target="#suaModal" @click="openEdit(current_voucher)">
-          <i class="fa-solid fa-pen-to-square me-2"></i>Chỉnh sửa
-        </button>
-
-
       </div>
     </div>
   </div>
@@ -522,13 +477,10 @@ export default {
           return a[f] < b[f] ? 1 : -1;
         });
       }
-
       return result;
     }
 
   },
-
-
 
   methods: {
 
@@ -543,7 +495,6 @@ export default {
       return new Intl.NumberFormat("vi-VN", { style: "currency", currency: "VND" }).format(number);
     },
 
-
     getVoucher() {
       axios
         .get('http://127.0.0.1:8000/api/admin/ma-giam-gia/get-data')
@@ -552,7 +503,6 @@ export default {
         })
         .catch(() => this.$toast.error("Lỗi tải dữ liệu voucher!"));
     },
-
 
     validateVoucher(voucher) {
       const today = new Date().toISOString().split("T")[0];
@@ -631,11 +581,9 @@ export default {
         .catch(() => this.$toast.error("API lỗi khi thêm voucher!"));
     },
 
-
     openEdit(voucher) {
       this.edit_voucher = { ...voucher };
     },
-
 
     capNhatVoucher() {
       if (!this.validateVoucher(this.edit_voucher)) return;
@@ -652,9 +600,6 @@ export default {
         })
         .catch(() => this.$toast.error("API lỗi khi cập nhật!"));
     },
-
-
-
 
     xacNhanXoa(voucher) {
       this.del_voucher = voucher;

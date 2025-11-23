@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\MaGiamGia;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class MaGiamGiaController
@@ -10,56 +11,89 @@ class MaGiamGiaController
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function getData()
     {
-        //
+        $data = MaGiamGia::all();
+        return response()->json([
+            'status' => true,
+            'message' => 'Lấy dữ liệu thành công',
+            'data' => $data
+        ]);
     }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    public function addData(Request $request)
     {
-        //
+        $mg = MaGiamGia::create([
+            'ma'  => $request->ma,
+            'mo_ta' => $request->mo_ta,
+            'phan_tram_giam' => $request->phan_tram_giam,
+            'so_luong' => $request->so_luong,
+            'hieu_luc_tu' => $request->hieu_luc_tu,
+            'hieu_luc_den' => $request->hieu_luc_den,
+            'tao_boi' => $request->tao_boi,
+            'trang_thai' => $request->trang_thai,
+        ]);
+
+        return response()->json([
+            'status' => true,
+            'message' => 'Thêm mã giảm giá thành công',
+
+        ]);
     }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
+    public function update(Request $request)
     {
-        //
+        MaGiamGia::where('id', $request->id)->update([
+            'ma' => $request->ma,
+            'mo_ta' => $request->mo_ta,
+            'phan_tram_giam' => $request->phan_tram_giam,
+            'so_luong' => $request->so_luong,
+            'hieu_luc_tu' => $request->hieu_luc_tu,
+            'hieu_luc_den' => $request->hieu_luc_den,
+            'tao_boi' => $request->tao_boi,
+            'trang_thai' => $request->trang_thai,
+        ]);
+        return response()->json([
+            'status' => true,
+            'message' => 'Cập nhật mã giảm giá thành công',
+        ]);
     }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(MaGiamGia $maGiamGia)
+    public function destroy(Request $request)
     {
-        //
+        MaGiamGia::where('id', $request->id)->delete();
+        return response()->json([
+            'status' => true,
+            'message' => 'Xóa mã giảm giá thành công',
+        ]);
     }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(MaGiamGia $maGiamGia)
+    public function changeStatus(Request $request)
     {
-        //
+        $maGiamGia = MaGiamGia::where('id',$request->id)->first();
+        $maGiamGia->trang_thai = !$request->trang_thai;
+        $maGiamGia->save();
+        return response()->json([
+            'status' => true,
+            'message' => 'Cập nhật trạng thái mã giảm giá thành công',
+        ]);
     }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, MaGiamGia $maGiamGia)
+    public function findmaGiamGia(Request $request)
     {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(MaGiamGia $maGiamGia)
-    {
-        //
+        $now= Carbon::now();
+        $data = MaGiamGia::where('ma', $request->ma)
+            ->where('trang_thai', 1)
+            ->where('so_luong', '>', 0)
+            ->whereDate('hieu_luc_tu', '<=', $now)
+            ->whereDate('hieu_luc_den', '>=', $now)
+            ->first();
+        if ($data) {
+            return response()->json([
+                'status' => true,
+                'message' => 'Áp dụng mã giảm giá thành công',
+                'data' => $data
+            ]);
+        } else {
+            return response()->json([
+                'status' => false,
+                'message' => 'Mã giảm giá không hợp lệ hoặc đã hết hạn',
+            ]);
+        }
     }
 }

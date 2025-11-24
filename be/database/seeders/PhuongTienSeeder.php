@@ -32,6 +32,20 @@ class PhuongTienSeeder extends Seeder
                 'suc_chua' => 9,
                 'trang_thai' => 2,
             ],
+            [
+                'ten_phuong_tien' => 'Xe buýt nhỏ',
+                'mo_ta' => 'Xe buýt 16 chỗ mini',
+                'bien_so' => '43C-11111',
+                'suc_chua' => 16,
+                'trang_thai' => 0,
+            ],
+            [
+                'ten_phuong_tien' => 'Xe điện',
+                'mo_ta' => 'Xe điện 4 chỗ phục vụ khu du lịch',
+                'bien_so' => '43D-22222',
+                'suc_chua' => 4,
+                'trang_thai' => 1,
+            ],
         ]);
     }
 }

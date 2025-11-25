@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\DanhMucController;
+use App\Http\Controllers\MaGiamGiaController;
 use App\Http\Controllers\NguoiDungController;
 use App\Http\Controllers\PhuongTienController;
 use App\Http\Controllers\TourDuLichController;
@@ -35,6 +36,18 @@ Route::post('/admin/tour-pt/add-data', [TourPhuongTienController::class, 'addDat
 Route::post('/admin/tour-pt/update', [TourPhuongTienController::class, 'upDate']);
 Route::post('/admin/tour-pt/delete', [TourPhuongTienController::class, 'destroy']);
 Route::get('/admin/tour-pt/get-by-pt/{id}', [TourPhuongTienController::class, 'getByPhuongTien']);
+
+
+//Voucher
+Route::get('/admin/ma-giam-gia/get-data', [MaGiamGiaController::class, 'getData']);
+Route::post('/admin/ma-giam-gia/add-data', [MaGiamGiaController::class, 'addData']);
+Route::post('/admin/ma-giam-gia/update', [MaGiamGiaController::class, 'update']);
+Route::post('/admin/ma-giam-gia/delete', [MaGiamGiaController::class, 'destroy']);
+Route::post('/admin/ma-giam-gia/change-status', [MaGiamGiaController::class, 'changeStatus']);
+Route::post('/admin/ma-giam-gia/tim-kiem', [MaGiamGiaController::class, 'findmaGiamGia']);
+
+//Tour Du Lich
+Route::get('/admin/tour/get-data', [TourDuLichController::class, 'getData']);
 
 
 // Tài khoản người dùng

@@ -9,6 +9,14 @@ use Illuminate\Http\Request;
 
 class TourDuLichController
 {
+    public function getData()
+{
+    return response()->json([
+        'status' => true,
+        'data' => TourDuLich::select('id','ten_tour')->get()
+    ]);
+}
+
     public function themTour(Request $request)
     {
         // 1. Kiểm tra token admin

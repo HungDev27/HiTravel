@@ -1,6 +1,7 @@
 <?php
 
 namespace Database\Seeders;
+
 use Illuminate\Support\Facades\DB;
 use App\Models\TourPhuongTien;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -42,6 +43,16 @@ class TourPhuongTienSeeder extends Seeder
                 'ngay_ket_thuc' => '2025-03-15',
                 'ghi_chu' => 'Limousine VIP cho tour Sapa',
             ],
+            [
+                'id_tour' => 2,
+                'id_phuong_tien' => 1,
+                'so_luong' => 2,
+                'ngay_bat_dau' => '2025-04-20',
+                'ngay_ket_thuc' => '2025-04-25',
+                'ghi_chu' => 'Phục vụ tour Nha Trang 5N4Đ',
+            ],
+            
+
         ]);
     }
 }

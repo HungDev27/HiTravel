@@ -72,7 +72,7 @@ export default {
     // Nếu đã có token thì redirect luôn
     const token = localStorage.getItem('auth_token');
     if (token) {
-      const user = JSON.parse(localStorage.getItem("auth_user") || "{}");
+      //const user = JSON.parse(localStorage.getItem("auth_user") || "{}");
       const role = user.id_chuc_vu;
       if (role == 1) this.$router.replace("/admin");
       else if (role == 2) this.$router.replace("/staff");
@@ -100,7 +100,7 @@ export default {
 
           // LƯU TOKEN VÀ USER
           localStorage.setItem("auth_token", res.data.token);
-          localStorage.setItem("auth_user", JSON.stringify(res.data.user));
+          //localStorage.setItem("auth_user", JSON.stringify(res.data.user));
 
           this.$toast.success("Đăng nhập thành công");
 

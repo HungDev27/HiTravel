@@ -5,6 +5,7 @@ use App\Http\Controllers\NguoiDungController;
 use App\Http\Controllers\PhuongTienController;
 use App\Http\Controllers\TourDuLichController;
 use App\Http\Controllers\TourPhuongTienController;
+use App\Http\Controllers\TrangChuController;
 use App\Models\NguoiDung;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -54,3 +55,10 @@ Route::middleware('auth:sanctum')->get('/admin/tour/get-data', [TourDuLichContro
 Route::middleware('auth:sanctum')->get('/admin/tour/{id}', [TourDuLichController::class, 'chiTietTour']);
 Route::middleware('auth:sanctum')->post('/admin/tour/update/{id}', [TourDuLichController::class, 'capNhatTour']);
 Route::middleware('auth:sanctum')->delete('/admin/tour/delete/{id}', [TourDuLichController::class, 'xoaTour']);
+
+
+
+//trang chủ admin
+Route::middleware('auth:sanctum')->get('/admin/dashboard', [TrangChuController::class, 'tongDuLieu']);
+Route::middleware('auth:sanctum')->get('/admin/doanh-thu-ngay', [TrangChuController::class, 'doanhThuTheoNgay']);
+Route::middleware('auth:sanctum')->get('/admin/thong-ke-doanh-thu', [TrangChuController::class, 'thongKeDoanhThuTheoThang']);

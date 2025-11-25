@@ -21,10 +21,10 @@ export default function (to, from, next) {
     .then((res) => {
       if (res.data.status) {
         // Cập nhật user mới nhất
-        if (res.data.user) {
-          localStorage.setItem("auth_user", JSON.stringify(res.data.user));
+        // if (res.data.user) {
+        //   localStorage.setItem("auth_user", JSON.stringify(res.data.user));
           
-        }
+        // }
 
         // Phân quyền route
         const role = res.data.user.id_chuc_vu;

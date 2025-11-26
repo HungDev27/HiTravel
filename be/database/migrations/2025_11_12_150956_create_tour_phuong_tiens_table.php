@@ -13,26 +13,22 @@ return new class extends Migration
 
             $table->unsignedBigInteger('id_tour');
             $table->unsignedBigInteger('id_phuong_tien');
-
-            $table->integer('so_luong')->default(1);
-            $table->date('ngay_bat_dau')->nullable();
-            $table->date('ngay_ket_thuc')->nullable();
+            
+            // Chỉ giữ lại ghi chú (ví dụ: "Xe chở khách VIP", "Xe chở hành lý")
             $table->string('ghi_chu')->nullable();
 
             $table->timestamps();
 
-            // Thêm ràng buộc khóa ngoại
+            // Khóa ngoại
             $table->foreign('id_tour')
-                  ->references('id')
-                  ->on('tour_du_liches')
+                  ->references('id')->on('tour_du_liches')
                   ->onDelete('cascade');
 
             $table->foreign('id_phuong_tien')
-                  ->references('id')
-                  ->on('phuong_tiens')
+                  ->references('id')->on('phuong_tiens')
                   ->onDelete('cascade');
 
-            // Để tránh trùng cặp tour – phương tiện
+            // Ràng buộc: Một xe không thể được thêm 2 lần vào cùng 1 tour
             $table->unique(['id_tour', 'id_phuong_tien']);
         });
     }

@@ -16,20 +16,17 @@ class PhuongTien extends Model
         'trang_thai',
     ];
 
-    // Quan hệ với tour_phuong_tien
+    // Quan hệ nhiều-nhiều với Tour thông qua bảng trung gian
     public function tours()
     {
         return $this->belongsToMany(
             TourDuLich::class,
             'tour_phuong_tiens',
-            'id_phuong_tien',   // foreign key ở bảng pivot
-            'id_tour'           // related key ở bảng pivot
+            'id_phuong_tien',   // Khóa ngoại của model hiện tại trong bảng pivot
+            'id_tour'           // Khóa ngoại của model kia trong bảng pivot
         )
         ->withPivot([
-            'so_luong',
-            'ngay_bat_dau',
-            'ngay_ket_thuc',
-            'ghi_chu',
+            'ghi_chu',          // Chỉ lấy thêm ghi chú
             'created_at',
             'updated_at'
         ]);

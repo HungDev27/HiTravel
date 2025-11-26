@@ -21,54 +21,35 @@
                         </option>
                     </select>
 
-
                     <label><b>Biển số xe</b></label>
                     <input type="text" v-model="create_phuongtien.bien_so" @blur="validateBienSo"
-                        placeholder="Ví dụ: 43A-12345" style="width:100%; padding:8px; margin-bottom:5px;
-           border:none; border-bottom:1px solid #ccc; 
-           outline:none; font-size:14px;" />
+                        placeholder="Ví dụ: 43A-12345"
+                        style="width:100%; padding:8px; margin-bottom:5px; border:none; border-bottom:1px solid #ccc; outline:none; font-size:14px;" />
 
-                    <!-- Hiển thị lỗi -->
                     <p v-if="error_bienso" style="color:red; font-size:13px; margin-top:3px;">
                         {{ error_bienso }}
                     </p>
 
-
-                    <input v-model="create_phuongtien.suc_chua" type="number" placeholder="Sức chứa"
+                    <input v-model="create_phuongtien.suc_chua" type="number" placeholder="Sức chứa (số ghế)"
                         style="width: 100%; padding: 8px; margin-bottom: 10px; border: none; border-bottom: 1px solid #ccc; outline: none; font-size: 14px; box-sizing: border-box;" />
-
-                    <input v-model="create_phuongtien.so_luong" type="number" placeholder="Số lượng xe lưu thông"
-                        style="width: 100%; padding: 8px; margin-bottom: 20px; border: none; border-bottom: 1px solid #ccc; outline: none; font-size: 14px; box-sizing: border-box;" />
-
-                    <label><b>Ngày đi</b></label>
-                    <input type="date" v-model="create_phuongtien.ngay_bat_dau" :min="today" @change="validateNgay()"
-                        class="form-control" />
-
-
-                    <label><b>Ngày về</b></label>
-                    <input type="date" v-model="create_phuongtien.ngay_ket_thuc"
-                        :min="create_phuongtien.ngay_bat_dau || today" @change="validateNgay()" class="form-control" />
-
-
 
                     <select class="form-select mb-3" aria-label="Default select example"
                         v-model="create_phuongtien.trang_thai">
                         <option selected disabled>Chọn trạng thái của xe</option>
-                        <option value="0">Sẵn sàng</option>
-                        <option value="1">Đang sử dụng</option>
+                        <option value="1">Sẵn sàng</option>
+                        <option value="0">Đang sử dụng</option>
                         <option value="2">Bảo trì</option>
                     </select>
 
-                    <textarea v-model="create_phuongtien.ghi_chu" placeholder="Ghi chú..." rows="4"
-                        class="form-control mb-3"
-                        style="width: 100%; height: 80px;;padding: 8px; font-size: 14px; box-sizing: border-box;"></textarea>
+                    <textarea v-model="create_phuongtien.ghi_chu"
+                        placeholder="Ghi chú phân công (Ví dụ: Xe đón khách VIP)..." rows="4" class="form-control mb-3"
+                        style="width: 100%; height: 80px; padding: 8px; font-size: 14px; box-sizing: border-box;"></textarea>
 
                     <button v-on:click="themPhuongTien()"
                         style="width: 100%; background-color: #1976d2; color: white; padding: 10px; border: none; border-radius: 4px; font-size: 14px; cursor: pointer;">
                         LƯU THÔNG TIN
                     </button>
                 </div>
-
             </div>
             <div class="col-lg-9">
                 <div class="row">
@@ -82,8 +63,8 @@
                                     <div class="col-md-5 p-3">
                                         <div class="d-flex align-items-center justify-content-center h-100"
                                             style="background-color: #e1e7f3; border-radius: 16px; min-height: 140px; overflow: hidden;">
-                                            <img src="../../../assets/images/homecustomer/bus.png" alt="Xe"
-                                                style="width: 100%; height: 100%; object-fit: contain; padding: 5px;">
+                                            <img :src="layHinhAnhXe(value.ten_phuong_tien)" alt="Xe"
+        style="width: 100%; height: 100%; object-fit: cover;">
                                         </div>
                                     </div>
 
@@ -91,8 +72,9 @@
                                         <div class="card-body d-flex flex-column py-3 pe-3 ps-0 h-100">
 
                                             <div class="d-flex justify-content-between align-items-start mb-3">
-                                                <h5 class="fw-bold text-primary mb-0 text-nowrap me-2"
-                                                    style="font-size: 1.1rem; line-height: 1.4;">
+                                                <h5 class="fw-bold text-primary mb-0 me-2" style="font-size: 1.1rem; line-height: 1.4; 
+                                                        display: -webkit-box; -webkit-line-clamp: 2; 
+                                                        -webkit-box-orient: vertical; overflow: hidden;">
                                                     {{ value.ten_phuong_tien }}
                                                 </h5>
 
@@ -103,13 +85,11 @@
                                                         style="font-weight: 600; font-size: 0.85rem; box-shadow: 0 4px 8px rgba(220,53,69,0.3);">
                                                         <i class="fa-solid fa-gear me-2"></i> Bảo trì
                                                     </span>
-
                                                     <span v-if="value.trang_thai == 1"
                                                         class="badge rounded-pill bg-success text-white px-3 py-2 d-flex align-items-center"
                                                         style="font-weight: 600; font-size: 0.85rem; box-shadow: 0 4px 8px rgba(25,135,84,0.3);">
                                                         <i class="fa-solid fa-circle-check me-2"></i> Sẵn sàng
                                                     </span>
-
                                                     <span v-if="value.trang_thai == 0"
                                                         class="badge rounded-pill bg-primary text-white px-3 py-2 d-flex align-items-center"
                                                         style="font-weight: 600; font-size: 0.85rem; box-shadow: 0 4px 8px rgba(13,110,253,0.3);">
@@ -128,7 +108,8 @@
                                                             <small style="font-size: 11px; font-weight: 500;">Biển
                                                                 số</small>
                                                         </div>
-                                                        <span class="fw-bold text-dark ps-1" style="font-size: 13px;">
+                                                        <span class="fw-bold text-dark ps-1 text-break"
+                                                            style="font-size: 13px;">
                                                             {{ value.bien_so }}
                                                         </span>
                                                     </div>
@@ -159,7 +140,6 @@
                                                         tiết</span>
                                                 </button>
 
-
                                                 <button @click="openEdit(value)" type="button"
                                                     class="btn btn-sm btn-outline-warning rounded-circle d-flex align-items-center justify-content-center"
                                                     data-bs-toggle="modal" data-bs-target="#suaModal"
@@ -173,7 +153,6 @@
                                                     style="width: 38px; height: 38px; border-width: 2px; padding: 0;">
                                                     <i class="fa-solid fa-minus ms-1" style="font-size: 15px;"></i>
                                                 </button>
-
                                             </div>
 
                                         </div>
@@ -220,20 +199,12 @@
                                 <span class="fw-bold text-dark">{{ currentPhuongTien.suc_chua }} chỗ</span>
                             </div>
                         </div>
-                        <div class="col-6">
-                            <div class="p-3 bg-light rounded-3 h-100 border border-light">
-                                <small class="text-muted d-block mb-1"><i class="fa-solid fa-layer-group me-1"></i> Số
-                                    lượng</small>
-                                <span class="fw-bold text-dark">{{ currentPhuongTien.tours?.[0]?.so_luong || "N/A" }}
-                                    xe</span>
-                            </div>
-                        </div>
-                        <div class="col-6">
+
+                        <div class="col-12">
                             <div
-                                class="p-3 bg-light rounded-3 h-100 border border-light d-flex flex-column justify-content-center">
+                                class="p-3 bg-light rounded-3 h-100 border border-light d-flex flex-column justify-content-center align-items-center">
                                 <small class="text-muted d-block mb-1"><i class="fa-solid fa-info-circle me-1"></i>
-                                    Trạng
-                                    thái</small>
+                                    Trạng thái hiện tại</small>
                                 <div>
                                     <span v-if="currentPhuongTien.trang_thai == 2"
                                         class="badge bg-danger bg-opacity-10 text-danger rounded-pill px-2">
@@ -254,10 +225,10 @@
 
                     <div class="p-3 border rounded-3 mb-3 bg-white">
                         <div class="text-center">
-                            <small class="text-muted d-block mb-1">Tên tour du lịch</small>
+                            <small class="text-muted d-block mb-1">Đang chạy Tour</small>
                             <div class="fw-bold text-danger">
                                 <i class="fa-solid fa-route me-1"></i>
-                                {{ currentPhuongTien.tours?.[0]?.tour?.ten_tour || "Không có" }}
+                                {{ currentPhuongTien.tours?.[0]?.tour?.ten_tour || "Chưa được phân công" }}
                             </div>
                         </div>
                     </div>
@@ -265,18 +236,18 @@
                     <div class="p-3 border rounded-3 mb-3 bg-white">
                         <div class="d-flex align-items-center justify-content-between">
                             <div class="text-center">
-                                <small class="text-muted d-block mb-1">Ngày đi</small>
+                                <small class="text-muted d-block mb-1">Ngày đi (Theo Tour)</small>
                                 <div class="fw-bold text-primary">
                                     <i class="fa-regular fa-calendar-minus me-1"></i>
-                                    {{ currentPhuongTien.tours?.[0]?.ngay_bat_dau || "--" }}
+                                    {{ currentPhuongTien.tours?.[0]?.tour?.ngay_di || "--" }}
                                 </div>
                             </div>
                             <div class="text-muted px-2"><i class="fa-solid fa-arrow-right"></i></div>
                             <div class="text-center">
-                                <small class="text-muted d-block mb-1">Ngày về</small>
+                                <small class="text-muted d-block mb-1">Ngày về (Theo Tour)</small>
                                 <div class="fw-bold text-success">
                                     <i class="fa-regular fa-calendar-check me-1"></i>
-                                    {{ currentPhuongTien.tours?.[0]?.ngay_ket_thuc || "--" }}
+                                    {{ currentPhuongTien.tours?.[0]?.tour?.ngay_ve || "--" }}
                                 </div>
                             </div>
                         </div>
@@ -284,7 +255,7 @@
 
                     <div class="mb-2">
                         <label class="form-label fw-bold text-secondary small text-uppercase">
-                            <i class="fa-regular fa-note-sticky me-1"></i> Ghi chú
+                            <i class="fa-regular fa-note-sticky me-1"></i> Ghi chú phân công
                         </label>
                         <div class="p-3 bg-light rounded-3 text-secondary fst-italic border border-light"
                             style="min-height: 80px; font-size: 0.95rem;">
@@ -310,23 +281,24 @@
         <div class="modal-dialog">
             <div class="modal-content">
 
-                <!-- Header -->
                 <div class="modal-header bg-primary text-white">
-                    <h5 class="modal-title">Sửa Thông Tin Xe Buýt</h5>
+                    <h5 class="modal-title">Sửa Thông Tin Xe & Phân Công</h5>
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
                 </div>
 
-                <!-- Body -->
                 <div class="modal-body">
                     <form id="formSuaXe" @submit.prevent="capNhatPhuongTien">
 
-                        <!-- TOUR -->
+                        <label class="mb-1 text-muted small">Phân công Tour</label>
                         <select v-model="edit_phuongtien.id_tour" class="form-select mb-3">
                             <option value="" disabled>-- Chọn tour --</option>
                             <option v-for="tour in tours" :key="tour.id" :value="tour.id">
                                 {{ tour.ten_tour }}
                             </option>
                         </select>
+
+                        <hr class="my-3">
+                        <label class="mb-2 text-muted small fw-bold">Thông tin xe</label>
 
                         <div class="mb-3">
                             <input v-model="edit_phuongtien.ten_phuong_tien" type="text" class="form-control"
@@ -344,21 +316,6 @@
                         </div>
 
                         <div class="mb-3">
-                            <input v-model="edit_phuongtien.tours.so_luong" type="number" class="form-control"
-                                placeholder="Số lượng xe">
-                        </div>
-
-                        <div class="mb-3">
-                            <label>Ngày đi</label>
-                            <input v-model="edit_phuongtien.tours.ngay_bat_dau" type="date" class="form-control">
-                        </div>
-
-                        <div class="mb-3">
-                            <label>Ngày về</label>
-                            <input v-model="edit_phuongtien.tours.ngay_ket_thuc" type="date" class="form-control">
-                        </div>
-
-                        <div class="mb-3">
                             <select v-model="edit_phuongtien.trang_thai" class="form-select">
                                 <option value="" disabled>Chọn trạng thái xe</option>
                                 <option value="1">Sẵn sàng</option>
@@ -368,14 +325,14 @@
                         </div>
 
                         <div class="mb-3">
+                            <label class="mb-1 text-muted small">Ghi chú phân công</label>
                             <textarea v-model="edit_phuongtien.tours.ghi_chu" class="form-control" rows="3"
-                                placeholder="Ghi chú..."></textarea>
+                                placeholder="Ghi chú nhiệm vụ của xe này trong tour..."></textarea>
                         </div>
 
                     </form>
                 </div>
 
-                <!-- Footer -->
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
                     <button type="submit" form="formSuaXe" class="btn btn-primary" data-bs-dismiss="modal">
@@ -409,8 +366,10 @@
                         <i class="bi bi-trash-fill"></i>
                     </div>
 
-                    <p class="mt-3 fs-5 fw-semibold text-dark">Bạn có chắc chắn muốn xoá {{ delete_phuongtien.ten_phuong_tien }}?</p>
-                    <p class="text-secondary" id="thongTinXeCanXoa">Biển số: <span class="fw-bold">{{ delete_phuongtien.bien_so }}</span></p>
+                    <p class="mt-3 fs-5 fw-semibold text-dark">Bạn có chắc chắn muốn xoá {{
+                        delete_phuongtien.ten_phuong_tien }}?</p>
+                    <p class="text-secondary" id="thongTinXeCanXoa">Biển số: <span class="fw-bold">{{
+                        delete_phuongtien.bien_so }}</span></p>
 
                 </div>
 
@@ -432,65 +391,118 @@
 
 <script>
 import axios from 'axios';
+
 export default {
     data() {
         return {
             phuongTiens: [],
             tours: [],
-            list_phuongtiens: [],
-            error_bien_so: "",
-            today: new Date().toISOString().split('T')[0],
+            error_bienso: "",
+
             create_phuongtien: {
                 ten_phuong_tien: "",
                 id_tour: "",
                 bien_so: "",
                 suc_chua: "",
-                so_luong: "",
-                ngay_bat_dau: "",
-                ngay_ket_thuc: "",
                 trang_thai: 1,
                 ghi_chu: "",
             },
+
             edit_phuongtien: {
                 id_tour: "",
                 ten_phuong_tien: "",
                 bien_so: "",
                 suc_chua: "",
                 trang_thai: "",
-                tours: {
-                    so_luong: "",
-                    ngay_bat_dau: "",
-                    ngay_ket_thuc: "",
+                tours: { // Object chứa thông tin phân công
+                    id: "",
                     ghi_chu: "",
                 }
             },
 
             delete_phuongtien: {},
-            currentPhuongTien: {},
+            currentPhuongTien: {}, // Dùng cho modal chi tiết
         };
     },
 
     mounted() {
         this.getPhuongTien();
-        this.openDetail(this.edit_phuongtien);
         this.getListTour();
     },
+
     methods: {
+        layHinhAnhXe(ten_xe) {
+        if (!ten_xe) return 'https://cdn-icons-png.flaticon.com/512/3202/3202926.png'; // Ảnh mặc định
+
+        let ten = ten_xe.toLowerCase();
+
+        // 1. Nếu là Limousine
+        if (ten.includes('limousine')) {
+            return 'https://i.pinimg.com/1200x/d1/fa/79/d1fa79dab3c2108a2c9af27858dab473.jpg'; 
+        }
+        
+        // 2. Nếu là Giường nằm
+        if (ten.includes('giường') || ten.includes('thaco')) {
+            return 'https://i.pinimg.com/1200x/9b/0e/13/9b0e1307546d85026acc141657804f57.jpg';
+        }
+
+        // 3. Nếu là xe 16 chỗ (Ford Transit)
+        if (ten.includes('16 chỗ') || ten.includes('transit')) {
+            return 'https://i.pinimg.com/736x/9f/2d/40/9f2d40d52f71a01d96c89f1e79c812fd.jpg';
+        }
+
+        // 4. Nếu là xe 7 chỗ (Innova/Fortuner)
+        if (ten.includes('7 chỗ') || ten.includes('innova') || ten.includes('ô tô')) {
+            return 'https://i.pinimg.com/736x/4e/f2/ee/4ef2ee4e5078e2117093176bf7b4b792.jpg';
+        }
+
+        // 5. Xe điện
+        if (ten.includes('điện')) {
+            return 'https://i.pinimg.com/1200x/2f/31/36/2f31367faa060516483190a6b034e357.jpg';
+        }
+
+        // 6. Xe bus
+        if (ten.includes('bus')) {
+            return 'https://i.pinimg.com/736x/65/67/da/6567da2df1f5a45695f118751786b777.jpg';
+        }
+
+        // 7. Xe máy
+        if (ten.includes('máy')) {
+            return 'https://i.pinimg.com/736x/1b/d9/0e/1bd90e087c4d5cdde65a45a2175c7bd8.jpg';
+        }
+
+        // Mặc định
+        return 'https://cdn-icons-png.flaticon.com/512/3202/3202926.png';
+    },
         getPhuongTien() {
             axios.get('http://127.0.0.1:8000/api/admin/phuong-tien/get-data')
                 .then((res) => {
                     this.phuongTiens = res.data.data;
                 })
                 .catch(error => {
-                    console.error('Lỗi khi lấy dữ liệu phương tiện:', error);
+                    console.error('Lỗi lấy phương tiện:', error);
                 });
         },
+
+        getListTour() {
+            axios.get('http://127.0.0.1:8000/api/admin/tour/get-data', {
+                headers: {
+                    Authorization: 'Bearer ' + localStorage.getItem("auth_token")
+                }
+            })
+                .then((res) => {
+                    this.tours = res.data.data;
+                })
+                .catch(error => {
+                    console.error('Lỗi khi lấy danh sách tour:', error);
+                    if (error.response) {
+                        console.log("Chi tiết lỗi:", error.response.data);
+                    }
+                });
+        },
+
         themPhuongTien() {
-
-            if (!this.validateForm()) {
-                return;
-            }
-
+            if (!this.validateForm()) { return; }
             axios.post('http://127.0.0.1:8000/api/admin/phuong-tien/add-data', this.create_phuongtien)
                 .then((res) => {
                     if (!res.data.status) {
@@ -499,71 +511,85 @@ export default {
                     }
 
                     let idPT = res.data.data.id;
-
                     return axios.post('http://127.0.0.1:8000/api/admin/tour-pt/add-data', {
                         id_tour: this.create_phuongtien.id_tour,
                         id_phuong_tien: idPT,
-                        so_luong: this.create_phuongtien.so_luong,
-                        ngay_bat_dau: this.create_phuongtien.ngay_bat_dau,
-                        ngay_ket_thuc: this.create_phuongtien.ngay_ket_thuc,
                         ghi_chu: this.create_phuongtien.ghi_chu,
                     });
                 })
                 .then(() => {
-                    this.$toast.success("Thêm phương tiện thành công!");
+                    this.$toast.success("Thêm và phân công xe thành công!");
                     this.getPhuongTien();
-
                     this.create_phuongtien = {
                         ten_phuong_tien: "",
                         id_tour: "",
                         bien_so: "",
                         suc_chua: "",
-                        so_luong: "",
-                        ngay_bat_dau: "",
-                        ngay_ket_thuc: "",
                         trang_thai: 1,
                         ghi_chu: "",
                     };
+                    this.error_bienso = "";
                 })
-                .catch(() => {
-                    this.$toast.error("Lỗi kết nối API!");
+                .catch((err) => {
+                    console.error(err);
+                    this.$toast.error("Có lỗi xảy ra! Có thể biển số đã tồn tại.");
                 });
         },
 
-
-
         capNhatPhuongTien() {
-
-            //  Cập nhật bảng phuong_tien
             axios.post('http://127.0.0.1:8000/api/admin/phuong-tien/update', this.edit_phuongtien)
                 .then((res) => {
-                    if (!res.data.status) {
-                        throw "Lỗi cập nhật phương tiện";
-                    }
+                    if (!res.data.status) throw "Lỗi cập nhật phương tiện";
 
-                    // Cập nhật bảng tour_phuong_tien
-                    return axios.post('http://127.0.0.1:8000/api/admin/tour-pt/update', {
-                        id: this.edit_phuongtien.tours.id,
-                        id_tour: this.edit_phuongtien.id_tour,
-                        id_phuong_tien: this.edit_phuongtien.id,
-                        so_luong: this.edit_phuongtien.tours.so_luong,
-                        ngay_bat_dau: this.edit_phuongtien.tours.ngay_bat_dau,
-                        ngay_ket_thuc: this.edit_phuongtien.tours.ngay_ket_thuc,
-                        ghi_chu: this.edit_phuongtien.tours.ghi_chu,
-                    });
+                    if (this.edit_phuongtien.tours && this.edit_phuongtien.tours.id) {
+                        return axios.post('http://127.0.0.1:8000/api/admin/tour-pt/update', {
+                            id: this.edit_phuongtien.tours.id, // ID dòng phân công
+                            id_tour: this.edit_phuongtien.id_tour,
+                            id_phuong_tien: this.edit_phuongtien.id,
+                            ghi_chu: this.edit_phuongtien.tours.ghi_chu,
+                        });
+                    }
                 })
                 .then(() => {
                     this.$toast.success("Cập nhật thành công!");
                     this.getPhuongTien();
-
-                    // ⭐ Tự cập nhật modal chi tiết
-                    this.openDetail(this.edit_phuongtien);
                 })
                 .catch(() => {
                     this.$toast.error("Lỗi cập nhật!");
                 });
         },
 
+        openEdit(pt) {
+            this.edit_phuongtien = {
+                ...pt,
+                id_tour: "",
+                tours: {
+                    id: "",
+                    ghi_chu: "",
+                }
+            };
+
+            axios.get(`http://127.0.0.1:8000/api/admin/tour-pt/get-by-pt/${pt.id}`)
+                .then((res) => {
+                    if (res.data.data.length > 0) {
+                        let t = res.data.data[0];
+                        this.edit_phuongtien.tours = t; // Gán object phân công
+                        this.edit_phuongtien.id_tour = t.id_tour; // Gán ID để hiển thị select box
+                    }
+                });
+        },
+
+        openDetail(pt) {
+            this.currentPhuongTien = pt;
+            axios.get(`http://127.0.0.1:8000/api/admin/tour-pt/get-by-pt/${pt.id}`)
+                .then((res) => {
+                    this.currentPhuongTien = {
+                        ...pt,
+                        tours: res.data.data // Gán mảng kết quả vào thuộc tính tours
+                    };
+                })
+                .catch(err => console.log("Xe này chưa có tour", err));
+        },
 
         xoaPhuongTien() {
             axios.post('http://127.0.0.1:8000/api/admin/phuong-tien/delete', {
@@ -577,163 +603,54 @@ export default {
                         this.$toast.error('Xoá thất bại!');
                     }
                 })
-                .catch(() => {
-                    this.$toast.error("Lỗi kết nối API!");
-                });
-        }
-        ,
-        doiTrangThai(trangthai) {
-            axios.post('http://127.0.0.1:8000/api/admin/phuong-tien/chang-status', trangthai)
+                .catch(() => this.$toast.error("Lỗi kết nối API!"));
+        },
+
+        doiTrangThai(pt) {
+            axios.post('http://127.0.0.1:8000/api/admin/phuong-tien/chang-status', { id: pt.id })
                 .then((res) => {
                     if (res.data.status) {
-                        this.$toast.success(res.data.message);
+                        this.$toast.success("Đã đổi trạng thái!");
                         this.getPhuongTien();
-                    } else {
-                        this.$toast.error('Đổi trạng thái thất bại!');
-                    }
-                })
-        },
-        openDetail(pt) {
-            this.currentPhuongTien = pt;
-
-            axios.get(`http://127.0.0.1:8000/api/admin/tour-pt/get-by-pt/${pt.id}`)
-                .then((res) => {
-                    this.currentPhuongTien.tours = res.data.data;
-                });
-        },
-        openEdit(pt) {
-            this.edit_phuongtien = {
-                ...pt,
-                id_tour: "", // sẽ set sau
-                tours: {
-                    id: "",
-                    so_luong: "",
-                    ngay_bat_dau: "",
-                    ngay_ket_thuc: "",
-                    ghi_chu: "",
-                }
-            };
-
-            axios.get(`http://127.0.0.1:8000/api/admin/tour-pt/get-by-pt/${pt.id}`)
-                .then((res) => {
-                    if (res.data.data.length > 0) {
-                        let t = res.data.data[0];
-                        this.edit_phuongtien.tours = t;
-                        this.edit_phuongtien.id_tour = t.id_tour;
                     }
                 });
         },
 
-        getListTour() {
-            axios.get('http://127.0.0.1:8000/api/admin/tour/get-data')
-                .then((res) => {
-                    this.tours = res.data.data;
-                })
-                .catch(error => {
-                    console.error('Lỗi khi lấy danh sách tour:', error);
-                });
-        },
         validateBienSo() {
             const bienSo = this.create_phuongtien.bien_so.toUpperCase().trim();
+            // Regex cơ bản cho biển số xe ô tô VN (VD: 43A-123.45 hoặc 43A-12345)
+            // Cho phép có dấu chấm hoặc không
+            const regex = /^[0-9]{2}[A-Z]-[0-9]{3}(\.)?[0-9]{2}$|^[0-9]{2}[A-Z]-[0-9]{4,5}$/;
 
-            const regex = /^[0-9]{2}[A-Z]-[0-9]{5}$/;
-
-            if (!regex.test(bienSo)) {
-                this.error_bienso = "❌ Biển số không đúng chuẩn! Ví dụ: 43A-12345";
-                this.$toast.error("Biển số không đúng chuẩn! Ví dụ hợp lệ: 43A-12345");
+            if (bienSo && !regex.test(bienSo)) {
+                this.error_bienso = "Biển số không đúng định dạng (VD: 43A-12345)";
                 return false;
             }
-
             this.error_bienso = "";
             return true;
         },
 
-
-        validateNgay() {
-            let batDau = this.create_phuongtien.ngay_bat_dau;
-            let ketThuc = this.create_phuongtien.ngay_ket_thuc;
-
-            if (!batDau || !ketThuc) {
-                this.$toast.error("❌ Vui lòng chọn đủ ngày đi và ngày về!");
-                return false;
-            }
-
-            if (ketThuc < batDau) {
-                this.$toast.error("❌ Ngày về không được nhỏ hơn ngày đi!");
-                return false;
-            }
-
-            return true;
-        },
         validateForm() {
-
-            // Tên phương tiện
             if (!this.create_phuongtien.ten_phuong_tien.trim()) {
                 this.$toast.error("Tên phương tiện không được để trống!");
                 return false;
             }
-
-            // Tour
             if (!this.create_phuongtien.id_tour) {
-                this.$toast.error("Vui lòng chọn tour!");
+                this.$toast.error("Vui lòng chọn tour để phân công!");
+                return false;
+            }
+            // Gọi hàm validate biển số
+            if (this.create_phuongtien.bien_so && !this.validateBienSo()) {
+                this.$toast.error("Biển số xe không hợp lệ!");
                 return false;
             }
 
-            // Biển số
-            if (!this.validateBienSo()) {
-                return false;
-            }
-
-            // Sức chứa
             if (!this.create_phuongtien.suc_chua || this.create_phuongtien.suc_chua <= 0) {
                 this.$toast.error("Sức chứa phải lớn hơn 0!");
                 return false;
             }
-
-            // Số lượng xe
-            if (!this.create_phuongtien.so_luong || this.create_phuongtien.so_luong <= 0) {
-                this.$toast.error("Số lượng xe phải lớn hơn 0!");
-                return false;
-            }
-
-            // Ngày đi
-            if (!this.create_phuongtien.ngay_bat_dau) {
-                this.$toast.error("Vui lòng chọn ngày đi!");
-                return false;
-            }
-
-            // Ngày về
-            if (!this.create_phuongtien.ngay_ket_thuc) {
-                this.$toast.error("Vui lòng chọn ngày về!");
-                return false;
-            }
-
-            // Ngày về ≥ ngày đi
-            if (this.create_phuongtien.ngay_ket_thuc < this.create_phuongtien.ngay_bat_dau) {
-                this.$toast.error("Ngày về không được nhỏ hơn ngày đi!");
-                return false;
-            }
-
-            // Trạng thái
-            if (this.create_phuongtien.trang_thai === "") {
-                this.$toast.error("Vui lòng chọn trạng thái của xe!");
-                return false;
-            }
-
             return true;
         }
-
-
-
-
-
-
-
-
-
-
-    },
-
-
+    }
 };
 </script>

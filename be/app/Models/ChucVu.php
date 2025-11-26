@@ -7,7 +7,13 @@ use Illuminate\Database\Eloquent\Model;
 class ChucVu extends Model
 {
     protected $table = 'chuc_vus';
-    protected $fillable = ['ten_chuc_vu', 'mo_ta'];
+
+    protected $fillable = [
+        'ten_chuc_vu',
+        'slug_chuc_vu',
+        'tinh_trang', // Giá trị: 1 (Hoạt động), 0 (Tạm Dừng)
+        'mo_ta',
+    ];
 
     public function nguoiDungs()
     {

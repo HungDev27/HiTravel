@@ -11,14 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('chuc_vus', function (Blueprint $table) {
+        Schema::create('chuc_nangs', function (Blueprint $table) {
             $table->id();
-            
-            $table->string('ten_chuc_vu');
-            $table->string('slug_chuc_vu')->unique();
-            // Quy ước: 1 là Hoạt động, 0 là Tạm dừng
-            $table->tinyInteger('tinh_trang')->default(1);
-            $table->string('mo_ta')->nullable();
+            $table->string('ten_chuc_nang');
             $table->timestamps();
         });
     }
@@ -28,6 +23,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('chuc_vus');
+        Schema::dropIfExists('chuc_nangs');
     }
 };

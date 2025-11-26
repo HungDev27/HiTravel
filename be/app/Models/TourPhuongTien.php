@@ -11,9 +11,6 @@ class TourPhuongTien extends Model
     protected $fillable = [
         'id_tour',
         'id_phuong_tien',
-        'so_luong',
-        'ngay_bat_dau',
-        'ngay_ket_thuc',
         'ghi_chu',
     ];
 

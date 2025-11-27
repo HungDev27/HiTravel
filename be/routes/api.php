@@ -1,10 +1,8 @@
 <?php
 
 use App\Http\Controllers\DanhMucController;
-<<<<<<< HEAD
+
 use App\Http\Controllers\DatTourController;
-=======
->>>>>>> 7211610294d2f1ebb7522727a330818c1fced52d
 use App\Http\Controllers\MaGiamGiaController;
 use App\Http\Controllers\NguoiDungController;
 use App\Http\Controllers\PhuongTienController;

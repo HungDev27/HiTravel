@@ -1,7 +1,10 @@
 <?php
 
 use App\Http\Controllers\DanhMucController;
+<<<<<<< HEAD
 use App\Http\Controllers\DatTourController;
+=======
+>>>>>>> 7211610294d2f1ebb7522727a330818c1fced52d
 use App\Http\Controllers\MaGiamGiaController;
 use App\Http\Controllers\NguoiDungController;
 use App\Http\Controllers\PhuongTienController;
@@ -50,11 +53,13 @@ Route::post('/admin/ma-giam-gia/tim-kiem', [MaGiamGiaController::class, 'findmaG
 Route::get('/admin/tour/get-data', [TourDuLichController::class, 'getData']);
 
 
+
 //QL Booking Tour
 Route::get('/admin/dat-tour/get-data', [DatTourController::class, 'getData']);
 Route::post('/admin/dat-tour/delete', [DatTourController::class, 'destroy']);
 Route::post('/admin/dat-tour/change-status', [DatTourController::class, 'changeStatus']);
 Route::post('/admin/dat-tour/loc-thong-tin', [DatTourController::class, 'locThongTin']);
+
 
 // Tài khoản người dùng
 

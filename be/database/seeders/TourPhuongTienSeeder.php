@@ -4,55 +4,58 @@ namespace Database\Seeders;
 
 use Illuminate\Support\Facades\DB;
 use App\Models\TourPhuongTien;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class TourPhuongTienSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
     public function run()
     {
         DB::statement('SET FOREIGN_KEY_CHECKS = 0;');
         DB::table('tour_phuong_tiens')->truncate();
         DB::statement('SET FOREIGN_KEY_CHECKS = 1;');
 
+        // Giả sử:
+        // Tour 1 (Đà Nẵng): Dùng 1 xe 7 chỗ (ID 1) và 1 xe Giường nằm (ID 2)
+        // Tour 2 (Sapa): Dùng 1 xe Limousine (ID 3)
+        // Tour 3 (Nha Trang): Dùng lại xe 7 chỗ (ID 1) - (Xe 1 chạy xong tour 1 rồi chạy tour 3)
+
         TourPhuongTien::insert([
             [
                 'id_tour' => 1,
-                'id_phuong_tien' => 1,
-                'so_luong' => 2,
-                'ngay_bat_dau' => '2025-02-01',
-                'ngay_ket_thuc' => '2025-02-05',
-                'ghi_chu' => 'Phục vụ tour Đà Nẵng 4N3Đ',
+                'id_phuong_tien' => 1, // Xe 43A-123.45
+                'ghi_chu' => 'Xe dẫn đoàn, chở hướng dẫn viên',
+                'created_at' => now(),
+                'updated_at' => now(),
             ],
             [
                 'id_tour' => 1,
-                'id_phuong_tien' => 2,
-                'so_luong' => 1,
-                'ngay_bat_dau' => '2025-02-01',
-                'ngay_ket_thuc' => '2025-02-05',
-                'ghi_chu' => 'Xe giường nằm hỗ trợ di chuyển đêm',
+                'id_phuong_tien' => 2, // Xe 43B-567.89
+                'ghi_chu' => 'Xe chở khách chính',
+                'created_at' => now(),
+                'updated_at' => now(),
             ],
             [
                 'id_tour' => 2,
-                'id_phuong_tien' => 3,
-                'so_luong' => 3,
-                'ngay_bat_dau' => '2025-03-10',
-                'ngay_ket_thuc' => '2025-03-15',
-                'ghi_chu' => 'Limousine VIP cho tour Sapa',
+                'id_phuong_tien' => 3, // Xe Limousine
+                'ghi_chu' => 'Phục vụ khách VIP',
+                'created_at' => now(),
+                'updated_at' => now(),
             ],
             [
-                'id_tour' => 2,
-                'id_phuong_tien' => 1,
-                'so_luong' => 2,
-                'ngay_bat_dau' => '2025-04-20',
-                'ngay_ket_thuc' => '2025-04-25',
-                'ghi_chu' => 'Phục vụ tour Nha Trang 5N4Đ',
+                'id_tour' => 2, // Tour 2 dùng thêm 1 xe 16 chỗ
+                'id_phuong_tien' => 4, // Xe 16 chỗ
+                'ghi_chu' => 'Xe chở hành lý và staff',
+                'created_at' => now(),
+                'updated_at' => now(),
             ],
-            
-
+            // Ví dụ về việc tái sử dụng xe cho tour khác (khác thời gian)
+            [
+                'id_tour' => 1, // Giả sử có tour ID 1
+                'id_phuong_tien' => 5, // Xe 43A-123.45 quay lại phục vụ tour này
+                'ghi_chu' => 'Xe đón tiễn sân bay',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
         ]);
     }
 }

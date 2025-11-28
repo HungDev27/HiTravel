@@ -29,44 +29,59 @@
 
                         <!-- Mức giá -->
                         <label class="text-secondary mt-3 mb-1" style="font-size: 17px;">Mức giá</label>
-                        <input type="range" class="form-range" min="0" max="50000000" v-model="rangeValue" id="range4">
-                        <output class="text-primary"><b>{{ formatVND(rangeValue) }}</b></output>
+                        <input type="range" class="form-range" min="0" max="50000000" step="500000"
+                            v-model.number="filter.maxPrice">
+                        <output class="text-primary"><b>{{ formatVND(filter.maxPrice) }}</b></output>
+
 
                         <!-- Điểm đến -->
                         <div><label class="text-secondary mt-4" style="font-size: 17px;">Điểm đến</label></div>
-                        <select class="form-select mt-1" aria-label="Default select example">
-                            <option selected>-- Chọn nơi bạn muốn đến --</option>
-                            <option>Phú Quốc</option>
-                            <option>Huế</option>
-                            <option>Hà Nội</option>
-                            <option>Hồ Chí Minh</option>
-                            <option>Đà Nẵng</option>
-                            <option>Hải Phòng</option>
+                        <select class="form-select mt-1" v-model="filter.location">
+                            <option value="">-- Chọn nơi bạn muốn đến --</option>
+                            <option v-for="(loc, index) in locations" :key="index" :value="loc">
+                                {{ loc }}
+                            </option>
                         </select>
+
 
                         <!-- Ngày khởi hành -->
                         <div><label class="text-secondary mt-4" style="font-size: 17px;">Ngày khởi hành</label></div>
-                        <input type="date" class="form-control mt-1">
+                        <div class="d-flex gap-2">
+                            <input type="date" class="form-control mt-1" v-model="filter.startDate">
+                        </div>
+
+                        <!-- Ngày kết thúc -->
+                        <div><label class="text-secondary mt-4" style="font-size: 17px;">Ngày kết thúc</label></div>
+                        <div class="d-flex gap-2">
+                            <input type="date" class="form-control mt-1" v-model="filter.endDate">
+                        </div>
+
 
                         <!-- Loại Tour -->
-                        <div><label class="text-secondary mt-4" style="font-size: 17px;">Loại Tour</label></div>
-                        <div class="mt-1"
-                            style="border: 1px solid #ccc; border-radius: 8px; padding: 10px; width: 275px; height: 100px; overflow-y: auto;">
-                            <div>
-                                <input class="me-2" type="checkbox" id="sunworld" name="loai_tour" value="Sunworld">
-                                <label for="mienbac">Miền Bắc</label>
-                            </div>
+                        <label class="text-secondary mt-4 fw-bold" style="font-size: 17px;">Loại Tour</label>
+                        <div class="mt-2 d-flex flex-wrap gap-2">
+                            <button v-for="danhMuc in danhMucs" :key="danhMuc.id" type="button"
+                                class="btn d-flex align-items-center shadow-sm" :class="{
+                                    'bg-white text-secondary border': !selectedDanhMucIds.includes(danhMuc.id),
+                                    'bg-primary text-white border-primary shadow': selectedDanhMucIds.includes(danhMuc.id)
+                                }" @click="toggleDanhMuc(danhMuc.id)" style="
+                                        border-radius: 50px; 
+                                        font-size: 12px; 
+                                        padding: 8px 18px; 
+                                        font-weight: 600; 
+                                        transition: all 0.3s ease;
+                                        border-color: #e9ecef; /* Màu viền xám nhẹ khi chưa chọn */
+                                    "
+                                onmouseover="if(!this.classList.contains('bg-primary')) { this.style.borderColor = '#0d6efd'; this.style.color = '#0d6efd'; }"
+                                onmouseout="if(!this.classList.contains('bg-primary')) { this.style.borderColor = '#e9ecef'; this.style.color = '#6c757d'; }">
+                                <i v-if="selectedDanhMucIds.includes(danhMuc.id)" class="fa-solid fa-check me-2"
+                                    style="font-size: 11px;"></i>
 
-                            <div>
-                                <input class="me-2" type="checkbox" id="hanoi" name="loai_tour" value="Hà Nội">
-                                <label for="mientrung">Miền Trung</label>
-                            </div>
-
-                            <div>
-                                <input class="me-2" type="checkbox" id="dalat" name="loai_tour" value="Đà Lạt">
-                                <label for="miennam">Miền Nam</label>
-                            </div>
+                                {{ danhMuc.ten_danh_muc }}
+                            </button>
                         </div>
+
+
 
                         <!-- Số lượng hành khách -->
                         <div><label class="text-secondary mt-4" style="font-size: 17px;"><i
@@ -74,19 +89,24 @@
                         <div class="mt-2"
                             style="display: flex; align-items: center; border: 1px solid #ddd; border-radius: 6px; width: 275px; height: 40px; justify-content: space-between;">
                             <label class="ms-2" for="nguoiLon" style="color: gray;">Hành khách:</label>
-                            <input id="nguoiLon" type="number" value="0" min="1"
+                            <input id="nguoiLon" type="number" min="1" v-model.number="filter.passengerCount"
                                 style="color: dodgerblue;border: none; width: 50px; text-align: center; font-weight: bold; font-size: 16px; outline: none;" />
+
                         </div>
 
                         <!-- button -->
                         <div class="d-flex justify-content-center mt-3">
-                            <button class="btn btn-outline-primary me-5" style="border-radius: 100px;">Chọn lại</button>
-                            <button class="btn btn-primary" style="border-radius: 100px;">Lọc ngay</button>
+                            <button class="btn btn-outline-primary w-100" style="border-radius: 100px;"
+                                @click.prevent="resetFilters">
+                                Chọn lại
+                            </button>
+
                         </div>
 
                     </div>
                 </div>
             </div>
+
             <div class="col-lg-9">
                 <!-- Tiêu đề trang -->
                 <h3 class="text-primary">Tour</h3>
@@ -107,55 +127,46 @@
                             <div class="row row-cols-lg-2 row-cols-xl-auto g-2">
                                 <div class="col">
                                     <div class="position-relative text-primary">
-                                        <input type="text" class="form-control ps-5" placeholder="Tìm kiếm Tour...">
+                                        <input v-model="searchText" type="text" class="form-control ps-5"
+                                            placeholder="Tìm kiếm Tour...">
                                         <span class="position-absolute top-50 product-show translate-middle-y"><i
                                                 class="bx bx-search"></i></span>
                                     </div>
 
                                 </div>
                                 <div class="col text-primary">
-                                    <button class="btn btn-primary me-3">Tìm kiếm</button>
                                     <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
                                         <button type="button" class="btn btn-white">Sắp xếp </button>
                                         <div class="btn-group" role="group">
                                             <button id="btnGroupDrop1" type="button"
                                                 class="btn btn-white dropdown-toggle dropdown-toggle-nocaret px-1"
                                                 data-bs-toggle="dropdown" aria-expanded="false">
-                                                <i class='bx bx-chevron-down'></i>
                                             </button>
+                                            <!-- Dropdown sắp xếp -->
                                             <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                                                <li><a class="dropdown-item text-primary" href="#">Giá tăng dần<i
-                                                            class="fa-solid fa-arrow-up-wide-short ms-2 text-warning"></i></a>
+                                                <li>
+                                                    <a class="dropdown-item text-primary" href="#"
+                                                        @click.prevent="sortOrder = 'asc'">
+                                                        Giá tăng dần <i
+                                                            class="fa-solid fa-arrow-up-wide-short ms-2 text-warning"></i>
+                                                    </a>
                                                 </li>
-                                                <li><a class="dropdown-item text-primary" href="#">Giá giảm dần<i
-                                                            class="fa-solid fa-arrow-down-wide-short ms-2 text-warning"></i></a>
+                                                <li>
+                                                    <a class="dropdown-item text-primary" href="#"
+                                                        @click.prevent="sortOrder = 'desc'">
+                                                        Giá giảm dần <i
+                                                            class="fa-solid fa-arrow-down-wide-short ms-2 text-warning"></i>
+                                                    </a>
                                                 </li>
                                             </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col text-primary">
-                                    <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
-                                        <button type="button" class="btn btn-white">Loại Tour</button>
-                                        <div class="btn-group" role="group">
-                                            <button id="btnGroupDrop1" type="button"
-                                                class="btn btn-white dropdown-toggle dropdown-toggle-nocaret px-1"
-                                                data-bs-toggle="dropdown" aria-expanded="false">
-                                                <i class='bx bxs-category'></i>
-                                            </button>
-                                            <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
-                                                <li><a class="dropdown-item text-primary" href="#">Khuyến mãi hot<i
-                                                            class="fa-solid fa-tags ms-2 text-danger"></i></a></li>
-                                                <li><a class="dropdown-item text-primary" href="#">Tour yêu thích<i
-                                                            class="fa-solid fa-heart ms-2"
-                                                            style="color: #ff0000;"></i></a></li>
-                                            </ul>
+
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col" style="padding-left: 25%; padding-top: 1%;">
                                     <div style="font-size: 17px;">Chúng tôi tìm thấy<b class="text-primary ms-2 me-2"
-                                            style="font-size: 20px;">12 Tour</b>chương trình tour cho quý khách</div>
+                                            style="font-size: 20px;">{{ totalTours }} Tour</b>chương trình tour cho quý
+                                        khách</div>
                                 </div>
                             </div>
                         </form>
@@ -166,66 +177,88 @@
                 <div class="row mt-5">
                     <div class="col-12 mb-3">
 
-                        <template v-for="(value, index) in listTour" :key="index">
-                            <div class="card-group"
-                                style=" transition: 0.4s; box-shadow: 0 2px 4px rgba(0,0,0,0.1); border-radius: 8px;"
-                                onmouseover="this.style.transform='scale(1.05)'; this.style.boxShadow='0 12px 20px rgba(0,0,0,0.2)';"
-                                onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 2px 4px rgba(0,0,0,0.1)';">
-                                <div class="position-relative">
-                                    <img :src="value.url"
-                                        style="height: 280px; width: 320px; border-top-left-radius: 20px; border-bottom-left-radius: 20px;">
-                                    <div class="position-absolute top-0 start-0">
-                                        <button class="btn btn-primary d-flex align-items-center justify-content-center"
-                                            style="height: 30px;border-top-left-radius: 20px; border-bottom-right-radius: 10px; font-size: 15px;">Giảm
-                                            {{ value.phan_tram_giam }}%</button>
-                                    </div>
-                                </div>
-                                <div class="card" style="height: 280px;">
-                                    <div class="card-body rounded-end ms-3">
-                                        <h4><b>{{ value.ten_tour }}</b></h4>
-                                        <div class="d-flex justify-content-between">
-                                            <p class="mt-4 mb-2 text-black" style="font-size: 17px;">
-                                                <img src="../../../assets/images/homecustomer/seat.png" class="me-2">
-                                                Số chỗ: <span class="badge text-bg-secondary">{{
-                                                    value.so_cho }}</span>
-                                            </p>
-                                            <span class="mt-4 text-black" style="font-size: 17px;"><i
-                                                    class="fa-solid fa-map-location-dot me-2"></i>Khởi hành:
-                                                <b class="text-primary">{{ value.dia_diem }}</b></span>
-                                        </div>
-                                        <div class="d-flex justify-content-between">
-                                            <span class="mb-2 text-black" style="font-size: 17px;">
-                                                <img src="../../../assets/images/homecustomer/seat(1).png" class="me-2">
-                                                Số chỗ còn lại: <span class="badge text-bg-primary">{{
-                                                    value.so_cho_con }}</span></span>
-                                            <span class="text-black mb-1" style="font-size: 17px;">
-                                                <img src="../../../assets/images/homecustomer/airplane.png" class="me-2">
-                                                Phương tiện:
-                                                {{ value.ten_phuong_tien }}</span>
+                        <template v-for="(value, index) in paginatedTours" :key="index">
+                            <div class="col-12 mb-4">
+                                <div class="card border-0 shadow-sm hover-scale overflow-hidden h-100"
+                                    style="border-radius: 12px; transition: all 0.3s ease;"
+                                    onmouseover="this.style.transform='scale(1.05)'; this.style.boxShadow='0 12px 20px rgba(0,0,0,0.2)';"
+                                    onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 2px 4px rgba(0,0,0,0.1)';">
+
+                                    <div class="row g-0 h-100">
+
+                                        <div class="col-md-4 position-relative">
+                                            <div style="height: 250px; overflow: hidden;">
+                                                <img :src="value.anh" class="img-fluid w-100"
+                                                    style="object-fit: cover; height: 100%; width: 100%; border-radius: 12px 0 0 12px;">
+
+                                                <span
+                                                    class="position-absolute bottom-0 start-0 bg-white px-2 py-1 m-2 rounded shadow-sm text-primary fw-bold"
+                                                    style="font-size: 12px;">
+                                                    <i class="fa-solid fa-location-dot me-1"></i> {{ value.dia_diem }}
+                                                </span>
+
+                                                <span
+                                                    class="position-absolute top-0 start-0 bg-warning text-white px-2 py-1 m-2 rounded fw-bold shadow-sm"
+                                                    style="font-size: 11px;">
+                                                    DEAL SỐC
+                                                </span>
+                                            </div>
                                         </div>
 
-                                        <div class="d-flex justify-content-between" style="font-size: 17px;">
-                                            <p class="mt-2 text-black">Đánh giá:
-                                                <!-- Sao vàng -->
-                                                <i v-for="n in value.diem" :key="'star-' + n"
-                                                    class="fa-solid fa-star text-warning me-1"></i>
-                                                <!-- Sao trống -->
-                                                <i v-for="n in (5 - value.diem)" :key="'empty-' + n"
-                                                    class="fa-regular fa-star me-1" style="color: #FFD43B;"></i>
-                                            </p>
-                                            <span class="text-black text-end" style="font-size: 17px;">Giá:
-                                                    <div class="text-danger mt-2 mb-2" style="font-size: 25px;">
-                                                        <b>{{ formatVND(value.gia) }}</b>
-                                                    </div></span>
+                                        <div class="col-md-8">
+                                            <div class="card-body d-flex flex-column h-100 p-3">
 
+                                                <h5 class="card-title fw-bold text-dark mb-1" style="font-size: 18px;">
+                                                    {{ value.ten_tour }}
+                                                </h5>
+
+                                                <div class="d-flex gap-3 text-secondary mb-2" style="font-size: 13px;">
+                                                    <span><i class="fa-regular fa-clock me-1"></i> {{
+                                                        formatDate(value.ngay_di) }} → {{ formatDate(value.ngay_ve)
+                                                        }}</span>
+                                                    <span><i class="fa-solid fa-chair me-1"></i> Còn <span
+                                                            class="text-danger fw-bold">{{ value.so_cho_con
+                                                            }} chỗ</span></span>
+                                                </div>
+
+                                                <div class="d-flex gap-3 text-secondary"
+                                                    style="font-size: 13px; display: flex; align-items: center;">
+                                                    <span><i class="fa-solid fa-car-on fa-lg me-2"></i>Phương tiện:
+                                                        <span class="text-primary fw-bold">{{ value.phuong_tien[0]
+                                                            || 'Chưa rõ' }}</span></span>
+                                                </div>
+
+                                                <div
+                                                    class="mt-auto d-flex justify-content-between align-items-end border-top pt-3">
+
+                                                    <div>
+                                                        <div class="d-flex align-items-center gap-2 mb-1">
+                                                            <small class="text-muted">Người lớn:</small>
+                                                            <span class="text-danger fw-bold fs-5">{{
+                                                                formatVND(value.gia_nguoi_lon) }}</span>
+                                                        </div>
+                                                        <div class="d-flex align-items-center gap-2">
+                                                            <small class="text-muted">Trẻ em:</small>
+                                                            <span class="text-primary fw-bold">{{
+                                                                formatVND(value.gia_tre_em) }}</span>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="d-flex gap-2">
+                                                        <router-link :to="`/chi-tiet-tour/${value.id}`">
+                                                            <button class="btn btn-outline-warning fw-bold btn-sm">Xem
+                                                                chi tiết</button>
+                                                        </router-link>
+                                                        <button class="btn btn-primary btn-sm"><i
+                                                                class="fa-solid fa-cart-shopping"></i> Đặt
+                                                            ngay</button>
+                                                    </div>
+
+                                                </div>
+
+                                            </div>
                                         </div>
-                                        <div class="d-flex justify-content-between mt-2">
-                                            <router-link :to="`/chi-tiet-tour/${value.id}`">
-                                                <button class="btn btn-outline-warning">Xem chi tiết</button>
-                                            </router-link>
-                                            <button class="btn btn-outline-primary">Đặt ngay<i
-                                                    class="fa-solid fa-cart-shopping ms-2"></i></button>
-                                        </div>
+
                                     </div>
                                 </div>
                             </div>
@@ -263,19 +296,27 @@
                     </div>
                 </div>
 
-                <!-- Pagination -->
                 <div class="d-flex justify-content-center mt-3 mb-5">
-                    <!-- Nút Previous -->
-                    <button class="btn page-btn rounded-circle btn-outline-primary me-2">&lt;</button>
+                    <!-- Previous -->
+                    <button class="btn page-btn rounded-circle btn-outline-primary me-2" :disabled="currentPage === 1"
+                        @click="goToPage(currentPage - 1)">
+                        &lt;
+                    </button>
 
-                    <!-- Các số trang -->
-                    <button class="btn page-btn rounded-circle btn-outline-primary me-2 active">1</button>
-                    <button class="btn page-btn rounded-circle btn-outline-primary me-2">2</button>
-                    <button class="btn page-btn rounded-circle btn-outline-primary me-2">3</button>
+                    <!-- Page Numbers -->
+                    <button v-for="page in totalPages" :key="page"
+                        class="btn page-btn rounded-circle btn-outline-primary me-2"
+                        :class="{ 'active': currentPage === page }" @click="goToPage(page)">
+                        {{ page }}
+                    </button>
 
-                    <!-- Nút Next -->
-                    <button class="btn page-btn rounded-circle btn-outline-primary me-2">&gt;</button>
+                    <!-- Next -->
+                    <button class="btn page-btn rounded-circle btn-outline-primary me-2"
+                        :disabled="currentPage === totalPages" @click="goToPage(currentPage + 1)">
+                        &gt;
+                    </button>
                 </div>
+
 
             </div>
         </div>
@@ -283,20 +324,106 @@
 </template>
 
 <script>
+import axios from 'axios';
 export default {
     data() {
         return {
-            rangeValue: 50000000,
-            listTour: [
-                { id: 1, ten_tour: "Tour Hà Nội - Ninh Bình 3N2Đ", url: "https://sodulich.ninhbinh.gov.vn/uploads/images/32.jpg", gia: 3500000, diem: 5, ten_phuong_tien: "Máy bay", dia_diem: "Hà Nội, Ninh Bình", so_cho: 40, so_cho_con: 25, trang_thai: 1, phan_tram_giam: 100 },
-                { id: 2, ten_tour: "Tour Đà Nẵng - Hội An 4N3Đ", url: "https://dulichvn.org.vn/nhaptin/uploads/images/2023/Thang4/0604Hoi-An1.jpg", gia: 5200000, diem: 4, ten_phuong_tien: "Máy bay", dia_diem: "Đà Nẵng, Hội An", so_cho: 35, so_cho_con: 15, trang_thai: 0, phan_tram_giam: 50 },
-                { id: 3, ten_tour: "Tour Sa Pa - Fansipan 3N2Đ", url: "https://mia.vn/media/uploads/blog-du-lich/dien-dao-truoc-ve-dep-hung-vi-cua-fansipan-noc-nha-dong-duong-1624924043.jpg", gia: 4500000, diem: 5, ten_phuong_tien: "Máy bay", dia_diem: "Sa Pa, Lào Cai", so_cho: 30, so_cho_con: 12, trang_thai: 1, phan_tram_giam: 20 },
-                { id: 4, ten_tour: "Tour Phú Quốc 4N3Đ", url: "https://bcp.cdnchinhphu.vn/334894974524682240/2025/6/23/phu-quoc-17506756503251936667562.jpg", gia: 6900000, diem: 4, ten_phuong_tien: "Máy bay", dia_diem: "Phú Quốc, Kiên Giang", so_cho: 50, so_cho_con: 30, trang_thai: 1, phan_tram_giam: 10 },
-                { id: 5, ten_tour: "Tour Huế - Động Phong Nha 5N4Đ", url: "https://husta.vn/wp-content/uploads/2023/11/Hue-9357c48e.jpg", gia: 7800000, diem: 4, ten_phuong_tien: "Máy bay", dia_diem: "Huế, Quảng Bình", so_cho: 40, so_cho_con: 18, trang_thai: 1, phan_tram_giam: 40 },
-                { id: 6, ten_tour: "Tour Miền Tây Sông Nước 3N2Đ", url: "https://baoduyentourist.com/uploads/tin-tuc/2025_05/du-lich-mien-tay-tet-4.jpg", gia: 3200000, diem: 5, ten_phuong_tien: "Máy bay", dia_diem: "Cần Thơ, An Giang", so_cho: 25, so_cho_con: 10, trang_thai: 0, phan_tram_giam: 30 }
-            ]
-
+            filter: {
+                maxPrice: 50000000,   // Mức giá tối đa mặc định
+                location: "",      // <--- ĐIỂM ĐẾN ĐANG CHỌN
+                startDate: "",
+                endDate: "",
+                passengerCount: 1
+            },
+            locations: [],
+            searchText: '',
+            sortOrder: '',
+            selectedTourType: '',
+            allTours: [],
+            currentPage: 1,
+            perPage: 6,
+            selectedDanhMucIds: [], // chứa các id_danh_muc được tick
+            danhMucs: [],
         };
+    },
+
+    mounted() {
+        this.getDanhSachTour();
+        this.getDanhMuc();
+    },
+    computed: {
+        filteredTours() {
+            return this.allTours
+                //* Lọc theo TÊN TOUR
+                .filter(tour =>
+                    tour.ten_tour.toLowerCase().includes(this.searchText.toLowerCase())
+                )
+                //* Lọc theo GIÁ
+                .filter(tour =>
+                    tour.gia_nguoi_lon <= this.filter.maxPrice
+                )
+                //* Lọc theo ĐIỂM ĐẾN
+                .filter(tour => {
+                    if (!this.filter.location) return true;   // nếu chưa chọn -> bỏ qua
+                    return tour.dia_diem.toLowerCase() === this.filter.location.toLowerCase();
+                })
+                //* Lọc theo THỜI GIAN
+                .filter(tour => {
+                    if (!this.filter.startDate && !this.filter.endDate) return true;
+
+                    const tourDate = new Date(tour.ngay_di);
+                    const start = this.filter.startDate ? new Date(this.filter.startDate) : null;
+                    const end = this.filter.endDate ? new Date(this.filter.endDate) : null;
+
+                    if (start && end) {
+                        return tourDate >= start && tourDate <= end;
+                    } else if (start) {
+                        return tourDate >= start;
+                    } else if (end) {
+                        return tourDate <= end;
+                    }
+
+                    return true;
+                })
+                // * Lọc theo LOẠI TOUR
+                .filter(tour => {
+                    if (this.selectedDanhMucIds.length === 0) return true;
+
+                    // Kiểm tra xem tour có trường id_danh_muc không, nếu không có thì bỏ qua (tránh lỗi)
+                    if (!tour.id_danh_muc) return false;
+
+                    // Ép kiểu tour.id_danh_muc về Number trước khi kiểm tra
+                    return this.selectedDanhMucIds.includes(Number(tour.id_danh_muc));
+                })
+                // * Lọc theo HÀNH KHÁCH
+                .filter(tour => {
+                    // Nếu chưa chọn thì không lọc theo hành khách
+                    if (!this.filter.passengerCount) return true;
+
+                    // Nếu còn đủ chỗ thì giữ lại
+                    return tour.so_cho_con >= this.filter.passengerCount;
+                })
+        },
+        sortedTours() {
+            const sorted = [...this.filteredTours];
+            if (this.sortOrder === 'asc') {
+                sorted.sort((a, b) => a.gia_nguoi_lon - b.gia_nguoi_lon);
+            } else if (this.sortOrder === 'desc') {
+                sorted.sort((a, b) => b.gia_nguoi_lon - a.gia_nguoi_lon);
+            }
+            return sorted;
+        },
+        paginatedTours() {
+            const start = (this.currentPage - 1) * this.perPage;
+            return this.sortedTours.slice(start, start + this.perPage);
+        },
+        totalTours() {
+            return this.sortedTours.length;
+        },
+        totalPages() {
+            return Math.ceil(this.sortedTours.length / this.perPage);
+        }
+
     },
     methods: {
         formatVND(number) {
@@ -304,8 +431,77 @@ export default {
         },
         formatDate(date) {
             return new Date(date).toLocaleDateString('vi-VI');
+        },
+        getDanhSachTour() {
+            axios.get("http://127.0.0.1:8000/api/customer/tour/get-data")
+                .then(res => {
+                    this.allTours = res.data.data.filter(tour => tour.so_cho_con > 0);
+                    console.log("Dữ liệu 1 tour mẫu:", this.allTours[0]);
+                    console.log("ID Danh mục của tour mẫu:", this.allTours[0].id_danh_muc, typeof (this.allTours[0].id_danh_muc));
+                    // Lấy danh sách điểm đến UNIQUE
+                    const diaDiems = this.allTours.map(t => t.dia_diem);
+                    this.locations = [...new Set(diaDiems)];
+                })
+                .catch(err => {
+                    if (err.response?.status === 401) {
+                        alert("Token hết hạn hoặc không hợp lệ. Vui lòng đăng nhập lại!");
+                    }
+                });
+        },
+        goToPage(page) {
+            if (page >= 1 && page <= this.totalPages) {
+                this.currentPage = page;
+            }
+        },
+        getDanhMuc() {
+            axios.get("http://127.0.0.1:8000/api/admin/danh-muc-tour/get-data")
+                .then(res => {
+                    this.danhMucs = res.data.data;
+                    console.log("Danh mục nhận được:", this.danhMucs); // kiểm tra cấu trúc
+                })
+                .catch(err => {
+                    console.error("Lỗi khi lấy danh mục", err);
+                });
+        },
+        toggleDanhMuc(id) {
+            const index = this.selectedDanhMucIds.indexOf(id);
+            if (index > -1) {
+                this.selectedDanhMucIds.splice(index, 1); // Bỏ chọn
+            } else {
+                this.selectedDanhMucIds.push(id); // Chọn thêm
+            }
+        },
+        resetFilters() {
+            this.filter = {
+                maxPrice: 50000000,
+                location: "",
+                startDate: "",
+                endDate: "",
+                passengerCount: 1
+            };
+            this.searchText = "";
+            this.selectedDanhMucIds = [];
+            this.sortOrder = "";
+            this.currentPage = 1;
+        }
+
+
+    },
+    watch: {
+        searchText() {
+            this.currentPage = 1;
+        },
+        selectedTourType() {
+            this.currentPage = 1;
+        },
+        sortOrder() {
+            this.currentPage = 1;
+        },
+        "filter.location"() {
+            this.currentPage = 1;
         }
     }
+
 }
 </script>
 

@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('danh_muc_bai_viets', function (Blueprint $table) {
             $table->id();
             $table->string('ten_danh_muc');
-            $table->string('mo_ta')->nullable();
+            $table->string('mo_ta', 500)->nullable();
             $table->timestamps();
         });
     }

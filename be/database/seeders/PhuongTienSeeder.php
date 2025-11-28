@@ -10,7 +10,6 @@ class PhuongTienSeeder extends Seeder
 {
     public function run(): void
     {
-        // Xóa dữ liệu cũ để tránh trùng lặp khi seed lại
         DB::statement('SET FOREIGN_KEY_CHECKS = 0;');
         DB::table('phuong_tiens')->truncate();
         DB::statement('SET FOREIGN_KEY_CHECKS = 1;');
@@ -57,7 +56,25 @@ class PhuongTienSeeder extends Seeder
                 'mo_ta' => 'Di chuyển trong resort',
                 'bien_so' => '43D-222.22',
                 'suc_chua' => 4,
-                'trang_thai' => 2, // Bảo trì
+                'trang_thai' => 2, // Đang bảo trì
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'ten_phuong_tien' => 'Xe 45 chỗ cao cấp',
+                'mo_ta' => 'Có máy lạnh, ghế bật ngả, tủ lạnh mini',
+                'bien_so' => '43E-333.33',
+                'suc_chua' => 45,
+                'trang_thai' => 1,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'ten_phuong_tien' => 'Xe du lịch phổ thông',
+                'mo_ta' => 'Phục vụ tour đông người, chi phí thấp',
+                'bien_so' => '43F-444.44',
+                'suc_chua' => 35,
+                'trang_thai' => 1,
                 'created_at' => now(),
                 'updated_at' => now(),
             ],

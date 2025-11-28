@@ -16,6 +16,7 @@ class DanhMucController
             'data' => $data
         ]);
     }
+    
 
     public function addData(Request $request)
     {

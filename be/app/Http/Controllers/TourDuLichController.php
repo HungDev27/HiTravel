@@ -10,12 +10,12 @@ use Illuminate\Http\Request;
 class TourDuLichController
 {
     public function getData()
-{
-    return response()->json([
-        'status' => true,
-        'data' => TourDuLich::select('id','ten_tour')->get()
-    ]);
-}
+    {
+        return response()->json([
+            'status' => true,
+            'data' => TourDuLich::select('id', 'ten_tour')->get()
+        ]);
+    }
 
     public function themTour(Request $request)
     {
@@ -313,6 +313,50 @@ class TourDuLichController
         return response()->json([
             "status" => 1,
             "message" => "Xoá tour thành công!"
+        ]);
+    }
+
+    //lấy danh sách tour bên KHÁCH HÀNG
+    public function getlistCustomer(Request $request)
+    {
+        $data = TourDuLich::with([
+            'danhMuc:id,ten_danh_muc',
+            'nguoiDung:id,ho_ten',
+            'phuongTiens:id,ten_phuong_tien',
+            'anh' => function ($q) {
+                $q->select('id', 'id_tour', 'url')->limit(1); // Lấy ảnh đầu tiên làm ảnh đại diện
+            }
+        ])
+            ->orderBy('id', 'desc')
+            ->get();
+
+        $result = $data->map(function ($item) {
+            return [
+                "id"            => $item->id,
+                "ma_tour"       => $item->ma_tour,
+                "ten_tour"      => $item->ten_tour,
+                "mo_ta"         => $item->mo_ta,
+                "id_danh_muc"   => $item->id_danh_muc,
+                "danh_muc"      => $item->danhMuc->ten_danh_muc ?? null,
+                "nguoi_tao"     => $item->nguoiDung->ho_ten ?? null,
+                "gia_nguoi_lon" => $item->gia_nguoi_lon,
+                "gia_tre_em"    => $item->gia_tre_em,
+                "ngay_di"       => $item->ngay_di,
+                "ngay_ve"       => $item->ngay_ve,
+                "dia_diem"      => $item->dia_diem,
+                "so_cho"        => $item->so_cho,
+                "so_cho_con"    => $item->so_cho_con,
+                "trang_thai"    => $item->trang_thai,
+                //"anh"           => $item->anh->first()->url ?? null,
+                "anh" => optional($item->anh->first())->url,
+                "phuong_tien" => $item->phuongTiens->pluck('ten_phuong_tien')->toArray(),
+            ];
+        });
+
+        return response()->json([
+            "status" => 1,
+            "message" => "Load dữ liệu thành công!",
+            "data" => $result
         ]);
     }
 }

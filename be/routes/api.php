@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\DanhMucController;
+use App\Http\Controllers\HomeCustomerController;
 use App\Http\Controllers\MaGiamGiaController;
 use App\Http\Controllers\NguoiDungController;
 use App\Http\Controllers\PhuongTienController;
@@ -46,9 +47,6 @@ Route::post('/admin/ma-giam-gia/delete', [MaGiamGiaController::class, 'destroy']
 Route::post('/admin/ma-giam-gia/change-status', [MaGiamGiaController::class, 'changeStatus']);
 Route::post('/admin/ma-giam-gia/tim-kiem', [MaGiamGiaController::class, 'findmaGiamGia']);
 
-//Tour Du Lich
-Route::get('/admin/tour/get-data', [TourDuLichController::class, 'getData']);
-
 
 // Tài khoản người dùng
 
@@ -75,3 +73,14 @@ Route::middleware('auth:sanctum')->delete('/admin/tour/delete/{id}', [TourDuLich
 Route::middleware('auth:sanctum')->get('/admin/dashboard', [TrangChuController::class, 'tongDuLieu']);
 Route::middleware('auth:sanctum')->get('/admin/doanh-thu-ngay', [TrangChuController::class, 'doanhThuTheoNgay']);
 Route::middleware('auth:sanctum')->get('/admin/thong-ke-doanh-thu', [TrangChuController::class, 'thongKeDoanhThuTheoThang']);
+
+
+// =========================================================
+// ======================= CLIENT ==========================
+// =========================================================
+
+// TRANG CHU
+Route::get('/home-page', [HomeCustomerController::class, 'homepageData']);
+
+// Tour Du Lịch
+Route::get('/customer/tour/get-data', [TourDuLichController::class, 'getlistCustomer']);

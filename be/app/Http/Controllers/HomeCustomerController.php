@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\BaiViet;
+use App\Models\DanhGia;
 use App\Models\TourDuLich;
 use Illuminate\Http\Request;
 
@@ -24,5 +25,16 @@ class HomeCustomerController
             'data_tour' => $data_tour,
             'data_bv' => $data_bv
         ]);
+    }
+
+    public function getDanhGia()
+    {
+        $danhgias = DanhGia::with('nguoiDung:id,ten,avatar')
+            ->where('diem', 5)
+            ->orderBy('created_at', 'desc')
+            ->take(10)
+            ->get();
+
+        return response()->json($danhgias);
     }
 }

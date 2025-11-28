@@ -33,50 +33,70 @@
             </button>
         </div>
 
-        <div class="position-absolute top-100 start-50 translate-middle">
+        <div class="position-absolute top-100 start-50 translate-middle w-50">
 
-            <!-- FORM TÌM TOUR -->
-            <div class="bg-white mb-5"
-                style="padding: 1rem; border: 1px solid #0099ff; border-radius: 1rem; display: flex;">
+            <!-- KHUNG TÌM KIẾM CHÍNH (Đã thu gọn) -->
+            <div class="bg-white d-flex align-items-center py-2 px-3 rounded-pill shadow-sm"
+                style="box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);">
 
-                <input type="text" placeholder="Bạn muốn đi đâu?" class="me-2"
-                    style="flex: 1; min-width: 180px; padding: 0.7rem 1rem; border: 1px solid #ccc; border-radius: 0.7rem; font-size: 1rem;">
+                <!-- 1. BẠN MUỐN ĐI ĐÂU -->
+                <div class="flex-grow-1 px-3">
+                    <label style="font-weight: 700; font-size: 1.2rem; color: #000; margin-bottom: 0; display: block;">
+                        <i class="fa-solid fa-location-dot me-1 text-secondary"></i>
+                        Bạn muốn đi đâu? <span style="color: red;">*</span>
+                    </label>
+                    <input type="text" v-model="searchText"
+                        style="border: none; outline: none; width: 100%; color: #6c757d; font-size: 1.2rem; padding: 0; background: transparent;"
+                        placeholder="Tìm điểm đến...">
+                    <p v-if="errors.diaDiem" class="text-danger mt-1" style="font-size: 0.9rem;">
+                        {{ errors.diaDiem }}
+                    </p>
 
-                <div class="me-2" style="background-color: #f0f7ff; padding: 0.6rem; border-radius: 1rem;">
-                    <img src="../../../assets/images/homecustomer/map.png" style="width: 20px;">
                 </div>
 
-                <select class="me-2"
-                    style="flex: 1; min-width: 150px; padding: 0.7rem 1rem; border: 1px solid #ccc; border-radius: 0.7rem; font-size: 1rem;">
-                    <option>Chọn điểm đi</option>
-                    <option>Hà Nội</option>
-                    <option>Đà Nẵng</option>
-                    <option>TP. Hồ Chí Minh</option>
-                </select>
+                <!-- Đường kẻ dọc ngăn cách (Thu thấp xuống) -->
+                <div class="d-none d-md-block"
+                    style="width: 1px; height: 25px; background-color: #e0e0e0; margin: 0 5px;"></div>
 
-                <div class="me-2" style="background-color: #f0f7ff; padding: 0.6rem; border-radius: 1rem;">
-                    <img src="../../../assets/images/homecustomer/map.png" style="width: 20px;">
+                <!-- 2. NGÀY ĐI -->
+                <div class="px-3" style="min-width: 160px;">
+                    <label style="font-weight: 700; font-size: 1.2rem; color: #000; margin-bottom: 0; display: block;">
+                        <i class="fa-regular fa-calendar me-1 text-secondary"></i>
+                        Ngày đi
+                    </label>
+                    <input type="text" onfocus="(this.type='date')" onblur="(this.type='text')" v-model="ngayDi"
+                        style="border: none; outline: none; width: 100%; color: #6c757d; font-size: 1rem; padding: 0; background: transparent;"
+                        placeholder="Chọn ngày" value="30/11/2025">
                 </div>
 
-                <select class="me-2"
-                    style="flex: 1; min-width: 150px; padding: 0.7rem 1rem; border: 1px solid #ccc; border-radius: 0.7rem; font-size: 1rem;">
-                    <option>Chọn điểm đến</option>
-                    <option>Huế</option>
-                    <option>Đà Lạt</option>
-                    <option>Phú Quốc</option>
-                </select>
+                <!-- Đường kẻ dọc ngăn cách -->
+                <div class="d-none d-md-block"
+                    style="width: 1px; height: 25px; background-color: #e0e0e0; margin: 0 5px;"></div>
 
-                <div class="me-2" style="background-color: #f0f7ff; padding: 0.6rem; border-radius: 1rem;">
-                    <img src="../../../assets/images/homecustomer/map.png" style="width: 20px;">
+                <!-- 3. NGÂN SÁCH -->
+                <div class="px-3" style="min-width: 150px;">
+                    <label style="font-weight: 700; font-size: 1.2rem; color: #000; margin-bottom: 0; display: block;">
+                        <i class="fa-solid fa-wallet me-1 text-secondary"></i>
+                        Ngân sách
+                    </label>
+                    <select class="form-select border-0 p-0" v-model="nganSach"
+                        style="border: none; outline: none; width: 100%; color: #6c757d; font-size: 1rem; padding: 0; background: transparent; background-image: none; box-shadow: none;">
+                        <option value="" disabled selected>Mức giá</option>
+                        <option value="1">&lt; 5 triệu</option>
+                        <option value="2">5 - 10 triệu</option>
+                        <option value="3">&gt; 10 triệu</option>
+                    </select>
                 </div>
 
-                <input type="date" class="me-2"
-                    style="flex: 1; min-width: 150px; padding: 0.7rem 1rem; border: 1px solid #ccc; border-radius: 0.7rem; font-size: 1rem;">
-
-                <button class="me-2"
-                    style="background-color: #0099ff; color: white; border: none; border-radius: 0.7rem; padding: 0.7rem 1.5rem; font-size: 1rem; cursor: pointer;">
-                    Tìm kiếm
-                </button>
+                <!-- 4. NÚT TÌM KIẾM (Nhỏ lại) -->
+                <div class="ps-2">
+                    <button class="shadow-sm border-0" @click="submitSearch"
+                        style="width: 40px; height: 40px; border-radius: 50%; background-color: #0099ff; color: white; display: flex; align-items: center; justify-content: center; transition: all 0.3s;"
+                        onmouseover="this.style.backgroundColor='#0077cc'; this.style.transform='scale(1.1)'"
+                        onmouseout="this.style.backgroundColor='#0099ff'; this.style.transform='scale(1)'">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                    </button>
+                </div>
 
             </div>
         </div>
@@ -174,7 +194,7 @@
                 </div>
             </div>
 
-            <div class="row" style="padding: 6rem 1rem;">
+            <div class="row mt-5">
                 <!-- Hiểu hơn về chúng tôi -->
                 <div class="col-lg-6 text-start">
                     <h4 class="text-primary"><b>Hiểu hơn về chúng tôi</b></h4>
@@ -262,7 +282,7 @@
             </div>
 
             <!-- Hot Deal -->
-            <div class="d-flex justify-content-between mt-0" style="padding: 1rem 1rem;">
+            <div class="d-flex justify-content-between" style="padding: 1rem 1rem;">
                 <h3 style="font-family: 'Arial Black', Impact, sans-serif; letter-spacing: 1px;">HOT DEAL</h3>
                 <router-link to="/tour-all">
                     <div class="text-success" style="font-size: 13px; border-radius: 1rem; transition:0.4s;"
@@ -348,7 +368,7 @@
     <div class="container">
 
         <!-- Điểm đến yêu thích -->
-        <div class="row mt-5">
+        <div class="row">
             <!-- Tiêu đề -->
             <div class="text-center mb-3">
                 <h2 style="font-family: 'Palatino Linotype', 'Book Antiqua', Palatino, serif; letter-spacing: 1px;"
@@ -363,31 +383,28 @@
         <div class="row mt-3">
             <template v-for="(value, index) in listDiaDiem" :key="index">
                 <div class="col-lg-3">
-                    <div class="position-relative">
-                        <img :src="value.hinh_anh"
-                            style="border-radius: 10%;height: 310px; width: 310px; transition:0.4s;"
-                            onmouseover="this.style.transform='translateY(-10px)';"
-                            onmouseout="this.style.transform='translateY(0)';">
-                        <div class="position-absolute bottom-0 start-50 translate-middle-x">
-                            <div class="text-center text-white ms-3 mb-5 fa-xl">
-                                <b>{{ value.dia_diem }}</b>
+                    <router-link :to="{ path: '/tour-all', query: { location: value.dia_diem } }"
+                        style="text-decoration: none;">
+                        <div class="position-relative">
+                            <img :src="value.hinh_anh"
+                                style="border-radius: 10%;height: 310px; width: 310px; transition:0.4s;"
+                                onmouseover="this.style.transform='translateY(-10px)';"
+                                onmouseout="this.style.transform='translateY(0)';">
+                            <div class="position-absolute bottom-0 start-50 translate-middle-x">
+                                <div class="text-center text-white ms-3 mb-5 fa-xl">
+
+                                    <b class="text-white">{{ value.dia_diem }}</b>
+
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    </router-link>
                 </div>
             </template>
         </div>
 
-        <div class="row mt-4 mb-5">
-            <span class="text-success text-center" style="transition:0.4s; font-size: 100%;"
-                onmouseover="this.style.transform='scale(1.05)';" onmouseout="this.style.transform='scale(1)';"><u>Xem
-                    thêm
-                    tỉnh thành →</u></span>
-        </div>
-
-
         <!-- TRẢI NGHIỆM SẮC XUÂN VIỆT NAM -->
-        <div class="position-relative text-center">
+        <div class="position-relative text-center mt-5">
             <img src="../../../assets/images/homecustomer/nui.jpg" style="width: 1290px; height: 400px;">
             <div class="position-absolute top-50 translate-middle" style="margin-left: 32rem;">
                 <div class="row">
@@ -465,6 +482,7 @@
                                 <p>
                                     <img :src="value.avatar" class="rounded-circle" style="height: 80px; width: 80px;">
                                 </p>
+
                             </div>
 
                         </div>
@@ -521,13 +539,22 @@ export default {
                 { id: 1, dia_diem: "Hà Nội", hinh_anh: "https://vietmytravel.com/wp-content/uploads/2019/04/vietmytravel_du-l%E1%BB%8Bch-h%C3%A0-n%E1%BB%99i.jpg" },
                 { id: 2, dia_diem: "Ninh Bình", hinh_anh: "https://i.pinimg.com/1200x/e0/12/65/e01265f9116c51d9f2a0bddc628f5510.jpg" },
                 { id: 3, dia_diem: "Đà Nẵng", hinh_anh: "https://i.pinimg.com/1200x/b1/b6/2e/b1b62ebf11a34189ae0ee007550a30e2.jpg" },
-                { id: 4, dia_diem: "Sapa", hinh_anh: "https://i.pinimg.com/1200x/30/d4/38/30d4381118c455f270cd53dd38ec675e.jpg" }
+                { id: 4, dia_diem: "Cần Thơ", hinh_anh: "https://cdn.nhandan.vn/images/d233c8299c7755bbf317d96e7a85fcf76f122b8bec1cf47c6fed69884ee6e90197a1a52235ea7b286c8b22ded92e7550648fb2c5e9c154b96547b2ea607cb2cf/can_tho_1-1629939987931.jpg" }
             ],
-            listBaiViet: []
+            listBaiViet: [],
+            diaDiem: "",
+            ngayDi: "",
+            nganSach: "", // Ví dụ: 1 = <5tr, 2 = 5–10tr, 3 = >10tr
+            searchText: "",
+            errors: {
+                diaDiem: "",
+            }
+
         }
     },
     mounted() {
         this.loadData();
+        this.getDanhGia();
     },
     methods: {
         formatVND(number) {
@@ -542,13 +569,44 @@ export default {
                     this.listTour = res.data.data_tour.map(tour => {
                         return {
                             ...tour,
-                            url: tour.anh ? tour.anh.url : 'default.jpg'
+                            url: (tour.anh && tour.anh.length > 0) ? tour.anh[0].url : 'default.jpg'
                         }
                     });
                     this.listBaiViet = res.data.data_bv;
                 })
-        }
+        },
+        submitSearch() {
+            this.errors.diaDiem = ""; // reset lỗi
 
+            if (!this.searchText.trim()) {
+                this.errors.diaDiem = "Vui lòng nhập điểm đến!";
+                return;
+            }
+
+            const query = {
+                location: this.searchText.trim(),
+            };
+
+            if (this.ngayDi) query.startDate = this.ngayDi;
+            if (this.nganSach === "1") query.maxPrice = 5000000;
+            else if (this.nganSach === "2") query.maxPrice = 10000000;
+            else if (this.nganSach === "3") query.maxPrice = 50000000;
+
+            this.$router.push({ path: "/tour-all", query });
+        },
+        getDanhGia() {
+            axios.get("http://127.0.0.1:8000/api/danh-gia")
+                .then(res => {
+                    this.danhGiaList = res.data.map(item => {
+                        return {
+                            diem: item.diem,
+                            binh_luan: item.binh_luan,
+                            avatar: item.nguoi_dung?.avatar ?? "https://i.pinimg.com/736x/57/7c/c8/577cc844392618013ce82797abd4169e.jpg"
+                        }
+                    });
+                });
+
+        }
     }
 }
 </script>

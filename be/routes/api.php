@@ -81,6 +81,8 @@ Route::middleware('auth:sanctum')->get('/admin/thong-ke-doanh-thu', [TrangChuCon
 
 // TRANG CHU
 Route::get('/home-page', [HomeCustomerController::class, 'homepageData']);
+Route::get('/danh-gia', [HomeCustomerController::class, 'getDanhGia']);
+
 
 // Tour Du Lịch
 Route::get('/customer/tour/get-data', [TourDuLichController::class, 'getlistCustomer']);

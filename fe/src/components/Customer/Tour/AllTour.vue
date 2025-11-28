@@ -350,6 +350,16 @@ export default {
     mounted() {
         this.getDanhSachTour();
         this.getDanhMuc();
+
+        // LẤY GIÁ TRỊ tìm kiếm TỪ QUERY URL
+        const q = this.$route.query;
+
+        if (q.location) {
+            this.searchText = q.location;       // Để hiển thị chữ lên ô Input "Tìm kiếm Tour..."
+        }
+
+        if (q.startDate) this.filter.startDate = q.startDate;
+        if (q.maxPrice) this.filter.maxPrice = parseInt(q.maxPrice);
     },
     computed: {
         filteredTours() {
@@ -484,8 +494,6 @@ export default {
             this.sortOrder = "";
             this.currentPage = 1;
         }
-
-
     },
     watch: {
         searchText() {

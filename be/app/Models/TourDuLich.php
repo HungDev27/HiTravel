@@ -58,6 +58,6 @@ class TourDuLich extends Model
 
     public function anh()
     {
-        return $this->hasMany(TourAnh::class, 'id_tour');
+        return $this->hasMany(TourAnh::class, 'id_tour')->orderBy('id');
     }
 }

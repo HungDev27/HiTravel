@@ -33,50 +33,70 @@
             </button>
         </div>
 
-        <div class="position-absolute top-100 start-50 translate-middle">
+        <div class="position-absolute top-100 start-50 translate-middle w-50">
 
-            <!-- FORM TÌM TOUR -->
-            <div class="bg-white mb-5"
-                style="padding: 1rem; border: 1px solid #0099ff; border-radius: 1rem; display: flex;">
+            <!-- KHUNG TÌM KIẾM CHÍNH (Đã thu gọn) -->
+            <div class="bg-white d-flex align-items-center py-2 px-3 rounded-pill shadow-sm"
+                style="box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);">
 
-                <input type="text" placeholder="Bạn muốn đi đâu?" class="me-2"
-                    style="flex: 1; min-width: 180px; padding: 0.7rem 1rem; border: 1px solid #ccc; border-radius: 0.7rem; font-size: 1rem;">
+                <!-- 1. BẠN MUỐN ĐI ĐÂU -->
+                <div class="flex-grow-1 px-3">
+                    <label style="font-weight: 700; font-size: 1.2rem; color: #000; margin-bottom: 0; display: block;">
+                        <i class="fa-solid fa-location-dot me-1 text-secondary"></i>
+                        Bạn muốn đi đâu? <span style="color: red;">*</span>
+                    </label>
+                    <input type="text" v-model="searchText"
+                        style="border: none; outline: none; width: 100%; color: #6c757d; font-size: 1.2rem; padding: 0; background: transparent;"
+                        placeholder="Tìm điểm đến...">
+                    <p v-if="errors.diaDiem" class="text-danger mt-1" style="font-size: 0.9rem;">
+                        {{ errors.diaDiem }}
+                    </p>
 
-                <div class="me-2" style="background-color: #f0f7ff; padding: 0.6rem; border-radius: 1rem;">
-                    <img src="../../../assets/images/homecustomer/map.png" style="width: 20px;">
                 </div>
 
-                <select class="me-2"
-                    style="flex: 1; min-width: 150px; padding: 0.7rem 1rem; border: 1px solid #ccc; border-radius: 0.7rem; font-size: 1rem;">
-                    <option>Chọn điểm đi</option>
-                    <option>Hà Nội</option>
-                    <option>Đà Nẵng</option>
-                    <option>TP. Hồ Chí Minh</option>
-                </select>
+                <!-- Đường kẻ dọc ngăn cách (Thu thấp xuống) -->
+                <div class="d-none d-md-block"
+                    style="width: 1px; height: 25px; background-color: #e0e0e0; margin: 0 5px;"></div>
 
-                <div class="me-2" style="background-color: #f0f7ff; padding: 0.6rem; border-radius: 1rem;">
-                    <img src="../../../assets/images/homecustomer/map.png" style="width: 20px;">
+                <!-- 2. NGÀY ĐI -->
+                <div class="px-3" style="min-width: 160px;">
+                    <label style="font-weight: 700; font-size: 1.2rem; color: #000; margin-bottom: 0; display: block;">
+                        <i class="fa-regular fa-calendar me-1 text-secondary"></i>
+                        Ngày đi
+                    </label>
+                    <input type="text" onfocus="(this.type='date')" onblur="(this.type='text')" v-model="ngayDi"
+                        style="border: none; outline: none; width: 100%; color: #6c757d; font-size: 1rem; padding: 0; background: transparent;"
+                        placeholder="Chọn ngày" value="30/11/2025">
                 </div>
 
-                <select class="me-2"
-                    style="flex: 1; min-width: 150px; padding: 0.7rem 1rem; border: 1px solid #ccc; border-radius: 0.7rem; font-size: 1rem;">
-                    <option>Chọn điểm đến</option>
-                    <option>Huế</option>
-                    <option>Đà Lạt</option>
-                    <option>Phú Quốc</option>
-                </select>
+                <!-- Đường kẻ dọc ngăn cách -->
+                <div class="d-none d-md-block"
+                    style="width: 1px; height: 25px; background-color: #e0e0e0; margin: 0 5px;"></div>
 
-                <div class="me-2" style="background-color: #f0f7ff; padding: 0.6rem; border-radius: 1rem;">
-                    <img src="../../../assets/images/homecustomer/map.png" style="width: 20px;">
+                <!-- 3. NGÂN SÁCH -->
+                <div class="px-3" style="min-width: 150px;">
+                    <label style="font-weight: 700; font-size: 1.2rem; color: #000; margin-bottom: 0; display: block;">
+                        <i class="fa-solid fa-wallet me-1 text-secondary"></i>
+                        Ngân sách
+                    </label>
+                    <select class="form-select border-0 p-0" v-model="nganSach"
+                        style="border: none; outline: none; width: 100%; color: #6c757d; font-size: 1rem; padding: 0; background: transparent; background-image: none; box-shadow: none;">
+                        <option value="" disabled selected>Mức giá</option>
+                        <option value="1">&lt; 5 triệu</option>
+                        <option value="2">5 - 10 triệu</option>
+                        <option value="3">&gt; 10 triệu</option>
+                    </select>
                 </div>
 
-                <input type="date" class="me-2"
-                    style="flex: 1; min-width: 150px; padding: 0.7rem 1rem; border: 1px solid #ccc; border-radius: 0.7rem; font-size: 1rem;">
-
-                <button class="me-2"
-                    style="background-color: #0099ff; color: white; border: none; border-radius: 0.7rem; padding: 0.7rem 1.5rem; font-size: 1rem; cursor: pointer;">
-                    Tìm kiếm
-                </button>
+                <!-- 4. NÚT TÌM KIẾM (Nhỏ lại) -->
+                <div class="ps-2">
+                    <button class="shadow-sm border-0" @click="submitSearch"
+                        style="width: 40px; height: 40px; border-radius: 50%; background-color: #0099ff; color: white; display: flex; align-items: center; justify-content: center; transition: all 0.3s;"
+                        onmouseover="this.style.backgroundColor='#0077cc'; this.style.transform='scale(1.1)'"
+                        onmouseout="this.style.backgroundColor='#0099ff'; this.style.transform='scale(1)'">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                    </button>
+                </div>
 
             </div>
         </div>
@@ -174,7 +194,7 @@
                 </div>
             </div>
 
-            <div class="row" style="padding: 6rem 1rem;">
+            <div class="row mt-5">
                 <!-- Hiểu hơn về chúng tôi -->
                 <div class="col-lg-6 text-start">
                     <h4 class="text-primary"><b>Hiểu hơn về chúng tôi</b></h4>
@@ -223,18 +243,42 @@
                         onmouseover="this.style.transform='scale(1.05)';" onmouseout="this.style.transform='scale(1)';">
                 </div>
 
-                <div style="text-align: center; margin-top: 2rem;">
-                    <button onclick="return false;"
-                        onmouseover="const s=this.querySelector('span'); s.style.width='100%'; s.style.opacity='1'; this.style.color='white';"
-                        onmouseout="const s=this.querySelector('span'); s.style.width='0'; s.style.opacity='0'; this.style.color='#e56b2f';"
-                        style="position: relative; display: inline-block; padding: 0.8rem 1.5rem; border: 2px solid #e56b2f; background: transparent;
-                                color: #e56b2f; font-weight: bold; font-size: 15px; cursor: pointer; overflow: hidden; z-index: 1;">
-                        Tìm hiểu thêm →
-                        <span
-                            style="position: absolute; top: 0; left: 0; height: 100%; width: 0; opacity: 0; background: #e56b2f; z-index: -1; transition: width 0.4s, opacity 0.2s;">
-                        </span>
-                    </button>
-                </div>
+                <router-link to="/gioi-thieu" style="text-decoration: none;">
+                    <div style="text-align: center; margin-top: 2rem;">
+
+                        <div onmouseover="this.style.color='white'; this.querySelector('.bg-slide').style.width='100%'; this.querySelector('.bg-slide').style.opacity='1';"
+                            onmouseout="this.style.color='#e56b2f'; this.querySelector('.bg-slide').style.width='0'; this.querySelector('.bg-slide').style.opacity='0';"
+                            style="
+                                    position: relative; 
+                                    display: inline-block; 
+                                    padding: 0.8rem 1.5rem; 
+                                    border: 2px solid #e56b2f; 
+                                    background: transparent;
+                                    color: #e56b2f; 
+                                    font-weight: bold; 
+                                    font-size: 15px; 
+                                    cursor: pointer; 
+                                    overflow: hidden; 
+                                    transition: color 0.3s; 
+                                    /* Quan trọng: display inline-block để bọc vừa nội dung */
+                                ">
+                            <span style="position: relative; z-index: 2;">Tìm hiểu thêm →</span>
+
+                            <span class="bg-slide" style="
+                                position: absolute; 
+                                top: 0; 
+                                left: 0; 
+                                height: 100%; 
+                                width: 0; 
+                                opacity: 0; 
+                                background-color: #e56b2f; 
+                                z-index: 1; 
+                                transition: width 0.4s, opacity 0.2s;">
+                            </span>
+                        </div>
+
+                    </div>
+                </router-link>
             </div>
 
             <!-- Hot Deal -->
@@ -281,19 +325,23 @@
                                                 {{ formatDate(value.ngay_di) }} → {{ formatDate(value.ngay_ve) }}
                                             </span>
                                         </div>
-
-                                        <!-- Phương tiện -->
-                                        <div class="text-secondary mt-2">
-                                            <i class="fa-solid fa-car me-3"></i>
-                                            <i class="fa-solid fa-bus-simple"></i>
-                                        </div>
                                     </div>
 
                                     <div>
                                         <!-- Giá -->
-                                        <h4 style="color: darkorange;" class="text-start mt-2">
-                                            {{ formatVND(value.gia) }}
-                                        </h4>
+                                        <div class="d-flex align-items-baseline text-darkorange">
+                                            <span class="text-secondary me-1" style="font-size: 13px;">Người lớn:</span>
+                                            <h5 class="mb-0 fw-bold" style="color: darkorange;">
+                                                {{ formatVND(value.gia_nguoi_lon) }}
+                                            </h5>
+                                        </div>
+
+                                        <div class="d-flex align-items-baseline text-secondary mt-1 mb-2">
+                                            <span class="me-1" style="font-size: 12px;">Trẻ em:</span>
+                                            <span class="fw-semibold" style="font-size: 14px;">
+                                                {{ formatVND(value.gia_tre_em) }}
+                                            </span>
+                                        </div>
 
                                         <!-- Nút xem chi tiết -->
                                         <router-link :to="`/chi-tiet-tour/${value.id}`">
@@ -320,7 +368,7 @@
     <div class="container">
 
         <!-- Điểm đến yêu thích -->
-        <div class="row mt-5">
+        <div class="row">
             <!-- Tiêu đề -->
             <div class="text-center mb-3">
                 <h2 style="font-family: 'Palatino Linotype', 'Book Antiqua', Palatino, serif; letter-spacing: 1px;"
@@ -335,31 +383,28 @@
         <div class="row mt-3">
             <template v-for="(value, index) in listDiaDiem" :key="index">
                 <div class="col-lg-3">
-                    <div class="position-relative">
-                        <img :src="value.hinh_anh"
-                            style="border-radius: 10%;height: 310px; width: 310px; transition:0.4s;"
-                            onmouseover="this.style.transform='translateY(-10px)';"
-                            onmouseout="this.style.transform='translateY(0)';">
-                        <div class="position-absolute bottom-0 start-50 translate-middle-x">
-                            <div class="text-center text-white ms-3 mb-5 fa-xl">
-                                <b>{{ value.dia_diem }}</b>
+                    <router-link :to="{ path: '/tour-all', query: { location: value.dia_diem } }"
+                        style="text-decoration: none;">
+                        <div class="position-relative">
+                            <img :src="value.hinh_anh"
+                                style="border-radius: 10%;height: 310px; width: 310px; transition:0.4s;"
+                                onmouseover="this.style.transform='translateY(-10px)';"
+                                onmouseout="this.style.transform='translateY(0)';">
+                            <div class="position-absolute bottom-0 start-50 translate-middle-x">
+                                <div class="text-center text-white ms-3 mb-5 fa-xl">
+
+                                    <b class="text-white">{{ value.dia_diem }}</b>
+
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    </router-link>
                 </div>
             </template>
         </div>
 
-        <div class="row mt-4 mb-5">
-            <span class="text-success text-center" style="transition:0.4s; font-size: 100%;"
-                onmouseover="this.style.transform='scale(1.05)';" onmouseout="this.style.transform='scale(1)';"><u>Xem
-                    thêm
-                    tỉnh thành →</u></span>
-        </div>
-
-
         <!-- TRẢI NGHIỆM SẮC XUÂN VIỆT NAM -->
-        <div class="position-relative text-center">
+        <div class="position-relative text-center mt-5">
             <img src="../../../assets/images/homecustomer/nui.jpg" style="width: 1290px; height: 400px;">
             <div class="position-absolute top-50 translate-middle" style="margin-left: 32rem;">
                 <div class="row">
@@ -435,9 +480,9 @@
                                 <p style="font-size: 1.1rem; font-style: italic;">"{{ value.binh_luan }}"</p>
                                 <p style="margin-top: 1rem; font-weight: bold;">⭐ {{ value.diem }}/5</p>
                                 <p>
-                                    <img src="../../assets/images/homecustomer/avata.jpg" class="rounded-circle"
-                                        style="height: 80px; width: 80px;">
+                                    <img :src="value.avatar" class="rounded-circle" style="height: 80px; width: 80px;">
                                 </p>
+
                             </div>
 
                         </div>
@@ -477,16 +522,12 @@
 
 </template>
 <script>
+import axios from 'axios'
 export default {
 
     data() {
         return {
-            listTour: [
-                { id: 1, ten_tour: "Nha Trang - Vinpearl Land", url: "https://cdn.vntrip.vn/cam-nang/wp-content/uploads/2017/04/vinpearl-nha-trang.jpg", gia: 1800000, ngay_di: "2025-09-24", ngay_ve: "2025-09-27", dia_diem: "Nha Trang" },
-                { id: 2, ten_tour: "Đà Nẵng - Bà Nà Hills", url: "https://i.pinimg.com/1200x/b1/b6/2e/b1b62ebf11a34189ae0ee007550a30e2.jpg", gia: 2500000, ngay_di: "2025-10-10", ngay_ve: "2025-10-12", dia_diem: "Đà Nẵng" },
-                { id: 3, ten_tour: "Phú Quốc - Thiên đường biển", url: "https://dongtayland.vn/wp-content/uploads/2019/03/du-hoc-singapore-jcus-minh-hoa-phu-quoc.jpg", gia: 3200000, ngay_di: "2025-11-05", ngay_ve: "2025-11-09", dia_diem: "Phú Quốc" },
-                { id: 4, ten_tour: "Hà Nội - Vịnh Hạ Long", url: "https://res.klook.com/images/fl_lossy.progressive,q_65/c_fill,w_1200,h_630/w_80,x_15,y_15,g_south_west,l_Klook_water_br_trans_yhcmh3/activities/qmgtdjekctlyucr8itqw/%C4%90%E1%BA%B7t%20tour%20%C4%91i%20V%E1%BB%8Bnh%20H%E1%BA%A1%20Long%20t%E1%BB%AB%20H%C3%A0%20N%E1%BB%99i.jpg", gia: 2800000, ngay_di: "2025-11-20", ngay_ve: "2025-11-22", dia_diem: "Hạ Long" },
-            ],
+            listTour: [],
             danhGiaList: [
                 { id: 1, id_tour: 1, diem: 5, binh_luan: "Chuyến đi Nha Trang thật sự tuyệt vời. Hướng dẫn viên rất nhiệt tình, vui vẻ và luôn tạo không khí thoải mái cho đoàn. Các điểm tham quan được sắp xếp hợp lý, giúp mọi người vừa được trải nghiệm biển đảo, vừa có thời gian nghỉ ngơi chụp ảnh." },
                 { id: 2, id_tour: 1, diem: 4, binh_luan: "Lịch trình được bố trí khá hợp lý, đi từ sáng đến chiều nhưng không quá mệt. Tôi thích nhất là được tham gia các hoạt động trải nghiệm như lặn ngắm san hô và đi thuyền." },
@@ -498,19 +539,22 @@ export default {
                 { id: 1, dia_diem: "Hà Nội", hinh_anh: "https://vietmytravel.com/wp-content/uploads/2019/04/vietmytravel_du-l%E1%BB%8Bch-h%C3%A0-n%E1%BB%99i.jpg" },
                 { id: 2, dia_diem: "Ninh Bình", hinh_anh: "https://i.pinimg.com/1200x/e0/12/65/e01265f9116c51d9f2a0bddc628f5510.jpg" },
                 { id: 3, dia_diem: "Đà Nẵng", hinh_anh: "https://i.pinimg.com/1200x/b1/b6/2e/b1b62ebf11a34189ae0ee007550a30e2.jpg" },
-                { id: 4, dia_diem: "Sapa", hinh_anh: "https://i.pinimg.com/1200x/30/d4/38/30d4381118c455f270cd53dd38ec675e.jpg" }
+                { id: 4, dia_diem: "Cần Thơ", hinh_anh: "https://cdn.nhandan.vn/images/d233c8299c7755bbf317d96e7a85fcf76f122b8bec1cf47c6fed69884ee6e90197a1a52235ea7b286c8b22ded92e7550648fb2c5e9c154b96547b2ea607cb2cf/can_tho_1-1629939987931.jpg" }
             ],
-            listBaiViet: [
-                { id: 1, tieu_de: "Top 5 tour du lịch Việt Nam năm 2025", hinh_anh: "https://statics.vinpearl.com/diem-du-lich-01_1632671030%20(1)_1661249974.jpg", mo_ta_ngan: "Danh sách những tour du lịch hấp dẫn nhất năm 2025 trải dài từ Bắc vào Nam, mang đến cho bạn nhiều lựa chọn độc đáo và chất lượng." },
-                { id: 2, tieu_de: "Trải nghiệm tour biển đảo tuyệt đẹp", hinh_anh: "https://resource.kinhtedothi.vn/2022/05/10/1fcea0e8-8981-4fe2-bea3-7acc01de4d98.jpg", mo_ta_ngan: "Nếu bạn là tín đồ của biển cả thì tour này sẽ đưa bạn đến những bãi cát trắng mịn, làn nước trong xanh cùng nhiều hoạt động vui chơi giải trí." },
-                { id: 3, tieu_de: "Tour khám phá văn hoá, ẩm thực Đà Nẵng", hinh_anh: "https://truongsatour.com/uploads/images/tour-mua-he-da-nang-gia-sieu-re.jpg", mo_ta_ngan: "Một hành trình đặc sắc dành cho những ai yêu thích văn hóa Nhật Bản với trải nghiệm ẩm thực, tham quan đền chùa và các thành phố nổi tiếng." },
-                { id: 4, tieu_de: "Khám phá bí mật thú vị trong tour đến miền Nam", hinh_anh: "https://cdn.tgdd.vn/Files/2022/03/26/1422479/17-diem-du-lich-mien-nam-dep-ly-tuong-nhat-khong-nen-bo-lo-202203261508470331.jpg", mo_ta_ngan: "Tour du lịch đến miền Nam độc đáo, đưa bạn đến những địa điểm quay nổi tiếng trong lịch sử và tận hưởng không khí mới lạ." },
-                { id: 5, tieu_de: "Top 10 hướng dẫn viên nổi bật của công ty", hinh_anh: "https://hethonggiaoduc.edu.vn/uploads/news/imager_1175.jpg", mo_ta_ngan: "Danh sách những hướng dẫn viên được yêu thích nhất, luôn tận tâm và nhiệt huyết để mang đến trải nghiệm đáng nhớ cho khách hàng." },
-                { id: 6, tieu_de: "Làm sao để nhận biết một tour chất lượng?", hinh_anh: "https://tour.dulichvietnam.com.vn/uploads/tour/tmp_1654660048.jpg", mo_ta_ngan: "Bí quyết lựa chọn tour du lịch uy tín thông qua lịch trình rõ ràng, phản hồi khách hàng trước đó và dịch vụ chu đáo từ công ty lữ hành." }
-            ]
-
+            listBaiViet: [],
+            diaDiem: "",
+            ngayDi: "",
+            nganSach: "", // Ví dụ: 1 = <5tr, 2 = 5–10tr, 3 = >10tr
+            searchText: "",
+            errors: {
+                diaDiem: "",
+            }
 
         }
+    },
+    mounted() {
+        this.loadData();
+        this.getDanhGia();
     },
     methods: {
         formatVND(number) {
@@ -518,6 +562,50 @@ export default {
         },
         formatDate(date) {
             return new Date(date).toLocaleDateString('vi-VI');
+        },
+        loadData() {
+            axios.get('http://127.0.0.1:8000/api/home-page')
+                .then((res) => {
+                    this.listTour = res.data.data_tour.map(tour => {
+                        return {
+                            ...tour,
+                            url: (tour.anh && tour.anh.length > 0) ? tour.anh[0].url : 'default.jpg'
+                        }
+                    });
+                    this.listBaiViet = res.data.data_bv;
+                })
+        },
+        submitSearch() {
+            this.errors.diaDiem = ""; // reset lỗi
+
+            if (!this.searchText.trim()) {
+                this.errors.diaDiem = "Vui lòng nhập điểm đến!";
+                return;
+            }
+
+            const query = {
+                location: this.searchText.trim(),
+            };
+
+            if (this.ngayDi) query.startDate = this.ngayDi;
+            if (this.nganSach === "1") query.maxPrice = 5000000;
+            else if (this.nganSach === "2") query.maxPrice = 10000000;
+            else if (this.nganSach === "3") query.maxPrice = 50000000;
+
+            this.$router.push({ path: "/tour-all", query });
+        },
+        getDanhGia() {
+            axios.get("http://127.0.0.1:8000/api/danh-gia")
+                .then(res => {
+                    this.danhGiaList = res.data.map(item => {
+                        return {
+                            diem: item.diem,
+                            binh_luan: item.binh_luan,
+                            avatar: item.nguoi_dung?.avatar ?? "https://i.pinimg.com/736x/57/7c/c8/577cc844392618013ce82797abd4169e.jpg"
+                        }
+                    });
+                });
+
         }
     }
 }

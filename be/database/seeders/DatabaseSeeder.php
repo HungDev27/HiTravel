@@ -40,7 +40,7 @@ class DatabaseSeeder extends Seeder
 
             // 6. THÔNG TIN BỔ SUNG
             // Phụ thuộc DanhMucBaiViet
-            // BaiVietSeeder::class,
+            BaiVietSeeder::class,
             // ChatbotLogSeeder::class,
             // ThongTinLienHeSeeder::class,
         ]);

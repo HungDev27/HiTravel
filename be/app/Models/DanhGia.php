@@ -18,11 +18,16 @@ class DanhGia extends Model
     ];
 
     protected $casts = [
-        'hinh_anh' => 'array', 
+        'hinh_anh' => 'array',
     ];
 
     public function datTour()
     {
         return $this->belongsTo(DatTour::class, 'id_dat_tour');
+    }
+
+    public function nguoiDung()
+    {
+        return $this->belongsTo(NguoiDung::class, 'id_nguoi_dung');
     }
 }

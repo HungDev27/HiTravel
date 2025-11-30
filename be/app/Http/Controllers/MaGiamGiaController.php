@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\MaGiamGia;
+use App\Models\PhanQuyen;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class MaGiamGiaController
 {
@@ -22,6 +24,19 @@ class MaGiamGiaController
     }
     public function addData(Request $request)
     {
+        $id_chuc_nang = 3;
+        $id_chuc_vu   = Auth::guard('sanctum')->user()->id_chuc_vu;
+
+        $check = PhanQuyen::where('id_chuc_vu', $id_chuc_vu)
+                          ->where('id_chuc_nang', $id_chuc_nang)
+                          ->first();
+
+        if (!$check) {
+            return response()->json([
+                'status'    =>  0,
+                'message'   =>  'Bạn không có quyền thực hiện chức năng này!'
+            ]);
+        }
         $mg = MaGiamGia::create([
             'ma'  => $request->ma,
             'mo_ta' => $request->mo_ta,
@@ -41,6 +56,19 @@ class MaGiamGiaController
     }
     public function update(Request $request)
     {
+        $id_chuc_nang = 3;
+        $id_chuc_vu   = Auth::guard('sanctum')->user()->id_chuc_vu;
+
+        $check = PhanQuyen::where('id_chuc_vu', $id_chuc_vu)
+                          ->where('id_chuc_nang', $id_chuc_nang)
+                          ->first();
+
+        if (!$check) {
+            return response()->json([
+                'status'    =>  0,
+                'message'   =>  'Bạn không có quyền thực hiện chức năng này!'
+            ]);
+        }
         MaGiamGia::where('id', $request->id)->update([
             'ma' => $request->ma,
             'mo_ta' => $request->mo_ta,
@@ -58,6 +86,7 @@ class MaGiamGiaController
     }
     public function destroy(Request $request)
     {
+        
         MaGiamGia::where('id', $request->id)->delete();
         return response()->json([
             'status' => true,

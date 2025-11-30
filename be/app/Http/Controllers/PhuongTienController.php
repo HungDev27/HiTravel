@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\PhanQuyen;
 use App\Models\PhuongTien;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 
@@ -22,6 +24,19 @@ class PhuongTienController extends Controller
 
     public function addData(Request $request)
     {
+        $id_chuc_nang = 4;
+        $id_chuc_vu   = Auth::guard('sanctum')->user()->id_chuc_vu;
+
+        $check = PhanQuyen::where('id_chuc_vu', $id_chuc_vu)
+                          ->where('id_chuc_nang', $id_chuc_nang)
+                          ->first();
+
+        if (!$check) {
+            return response()->json([
+                'status'    =>  0,
+                'message'   =>  'Bạn không có quyền thực hiện chức năng này!'
+            ]);
+        }
         $pt = PhuongTien::create([
             'ten_phuong_tien' => $request->ten_phuong_tien,
             'mo_ta' => $request->mo_ta,
@@ -41,6 +56,19 @@ class PhuongTienController extends Controller
 
     public function upDate(Request $request)
     {
+        $id_chuc_nang = 4;
+        $id_chuc_vu   = Auth::guard('sanctum')->user()->id_chuc_vu;
+
+        $check = PhanQuyen::where('id_chuc_vu', $id_chuc_vu)
+                          ->where('id_chuc_nang', $id_chuc_nang)
+                          ->first();
+
+        if (!$check) {
+            return response()->json([
+                'status'    =>  0,
+                'message'   =>  'Bạn không có quyền thực hiện chức năng này!'
+            ]);
+        }
         PhuongTien::where('id', $request->id)->update([
             'ten_phuong_tien' => $request->ten_phuong_tien,
             'mo_ta' => $request->mo_ta,
@@ -57,6 +85,19 @@ class PhuongTienController extends Controller
 
     public function destroy(Request $request)
     {
+        $id_chuc_nang = 4;
+        $id_chuc_vu   = Auth::guard('sanctum')->user()->id_chuc_vu;
+
+        $check = PhanQuyen::where('id_chuc_vu', $id_chuc_vu)
+                          ->where('id_chuc_nang', $id_chuc_nang)
+                          ->first();
+
+        if (!$check) {
+            return response()->json([
+                'status'    =>  0,
+                'message'   =>  'Bạn không có quyền thực hiện chức năng này!'
+            ]);
+        }
         $pt = PhuongTien::find($request->id);
 
         if (!$pt) {
@@ -77,6 +118,19 @@ class PhuongTienController extends Controller
 
     public function changeStatus(Request $request)
     {
+        $id_chuc_nang = 4;
+        $id_chuc_vu   = Auth::guard('sanctum')->user()->id_chuc_vu;
+
+        $check = PhanQuyen::where('id_chuc_vu', $id_chuc_vu)
+                          ->where('id_chuc_nang', $id_chuc_nang)
+                          ->first();
+
+        if (!$check) {
+            return response()->json([
+                'status'    =>  0,
+                'message'   =>  'Bạn không có quyền thực hiện chức năng này!'
+            ]);
+        }
         $phuongtien = PhuongTien::find($request->id);
 
         $phuongtien->trang_thai = ($phuongtien->trang_thai + 1) % 3;

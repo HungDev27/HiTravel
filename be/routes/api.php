@@ -1,10 +1,15 @@
 <?php
 
 use App\Http\Controllers\ChiTietTourController;
+use App\Http\Controllers\ChucNangController;
+use App\Http\Controllers\ChucVuController;
 use App\Http\Controllers\DanhMucController;
+
+use App\Http\Controllers\DatTourController;
 use App\Http\Controllers\HomeCustomerController;
 use App\Http\Controllers\MaGiamGiaController;
 use App\Http\Controllers\NguoiDungController;
+use App\Http\Controllers\PhanQuyenController;
 use App\Http\Controllers\PhuongTienController;
 use App\Http\Controllers\TourDuLichController;
 use App\Http\Controllers\TourPhuongTienController;
@@ -49,6 +54,29 @@ Route::post('/admin/ma-giam-gia/change-status', [MaGiamGiaController::class, 'ch
 Route::post('/admin/ma-giam-gia/tim-kiem', [MaGiamGiaController::class, 'findmaGiamGia']);
 
 
+
+//QL Booking Tour
+Route::get('/admin/dat-tour/get-data', [DatTourController::class, 'getData']);
+Route::post('/admin/dat-tour/delete', [DatTourController::class, 'destroy']);
+Route::post('/admin/dat-tour/change-status', [DatTourController::class, 'changeStatus']);
+Route::post('/admin/dat-tour/loc-thong-tin', [DatTourController::class, 'locThongTin']);
+
+// PHAN QUYEN :
+Route::get('/admin/phan-quyen/chuc-nang/get-data', [ChucNangController::class, 'getData']);
+Route::post('/admin/phan-quyen/chi-tiet-phan-quyen/add-data', [PhanQuyenController::class, 'themPhanQuyen']);
+Route::post('/admin/phan-quyen/chi-tiet-phan-quyen/delete', [PhanQuyenController::class, 'xoaPhanQuyen']);
+Route::post('/admin/phan-quyen/chi-tiet-phan-quyen/get-data', [PhanQuyenController::class, 'getChiTietPhanQuyen']);
+// Chức vụ
+Route::get('/admin/chuc-vu/get-data', [ChucVuController::class, 'getData']);
+Route::post('/admin/chuc-vu/add-data', [ChucVuController::class, 'addData']);
+Route::post('/admin/chuc-vu/update', [ChucVuController::class, 'update']);
+Route::post('/admin/chuc-vu/delete', [ChucVuController::class, 'destroy']);
+Route::post('/admin/chuc-vu/change-status', [ChucVuController::class, 'changeStatus']);
+Route::post('/admin/chuc-vu/tim-kiem', [ChucVuController::class, 'search']);
+
+
+
+
 // Tài khoản người dùng
 
 // Check token (cần auth:sanctum)
@@ -90,3 +118,4 @@ Route::get('/customer/tour/get-data', [TourDuLichController::class, 'getlistCust
 
 // Chi Tiết Tour
 Route::get('/customer/chi-tiet-tour/{id}', [ChiTietTourController::class, 'getDataTour']);
+Route::middleware('auth:sanctum')->get('/admin/top-tour-thang', [TrangChuController::class, 'topTourTheoThang']);

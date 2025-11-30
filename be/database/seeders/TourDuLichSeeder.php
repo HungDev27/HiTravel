@@ -11,7 +11,7 @@ class TourDuLichSeeder extends Seeder
     /**
      * Run the database seeds.
      */
-    public function run(): void
+    public function run()
     {
         // 1. Xóa dữ liệu cũ
         DB::statement('SET FOREIGN_KEY_CHECKS = 0;');

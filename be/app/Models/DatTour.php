@@ -19,7 +19,7 @@ class DatTour extends Model
         return $this->belongsTo(TourDuLich::class, 'id_tour');
     }
 
-    public function thanhToans()
+    public function thanhToan()
     {
         return $this->hasMany(ThanhToan::class, 'id_dat_tour');
     }

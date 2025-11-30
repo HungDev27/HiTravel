@@ -146,57 +146,54 @@ class TrangChuController extends Controller
             ]
         ]);
     }
+    public function topTourTheoThang(Request $request)
+    {
+        $user = $request->user();
+        if (!$user) {
+            return response()->json([
+                'status' => 0,
+                'message' => 'Token không hợp lệ!'
+            ], 401);
+        }
 
-    // public function thongKeDoanhThuTheoThang(Request $request)
-    // {
-    //     $user = $request->user();
-    //     if (!$user) {
-    //         return response()->json([
-    //             'status' => 0,
-    //             'message' => 'Token không hợp lệ!'
-    //         ], 401);
-    //     }
+        $year = date('Y');
+        $month = date('m');
 
-    //     $year = $request->input('year', date('Y'));
+        $raw = DatTour::selectRaw('id_tour, COUNT(*) as so_luot')
+            ->whereYear('ngay_dat', $year)
+            ->whereMonth('ngay_dat', $month)
+            ->whereHas('thanhToan', function ($q) {
+                $q->where(function ($t) {
+                    $t->where('trang_thai', 'success')
+                        ->orWhere('trang_thai', 'thanh_cong');
+                });
+            })
+            ->groupBy('id_tour')
+            ->orderByDesc('so_luot')
+            ->with('tour:id,ten_tour')
+            ->limit(5)
+            ->get();
 
-    //     $raw = ThanhToan::selectRaw('MONTH(thoi_gian_thanh_toan) as thang, SUM(so_tien) as doanh_thu')
-    //         ->whereYear('thoi_gian_thanh_toan', $year)
-    //         ->where(function ($q) {
-    //             $q->where('trang_thai', 'thanh_cong')
-    //                 ->orWhere('trang_thai', 'success');
-    //         })
-    //         ->groupBy('thang')
-    //         ->orderBy('thang')
-    //         ->get();
+        // labels & data cho chart
+        $labels = [];
+        $data = [];
 
-    //     $doanhThu = array_fill(1, 12, 0);
-    //     foreach ($raw as $r) {
-    //         $m = (int) $r->thang;
-    //         $doanhThu[$m] = (float)$r->doanh_thu;
-    //     }
+        foreach ($raw as $item) {
+            $labels[] = $item->tour->ten_tour;
+            $data[] = $item->so_luot;
+        }
 
-    //     // Labels đẹp hơn
-    //     $labels = [];
-    //     for ($i = 1; $i <= 12; $i++) {
-    //         $labels[] = 'Tháng ' . $i;
-    //     }
+        // màu random
+        $colors = [];
+        foreach ($labels as $i) {
+            $colors[] = sprintf("#%06X", mt_rand(0, 0xFFFFFF));
+        }
 
-    //     // Random màu
-    //     $colors = [];
-    //     for ($i = 1; $i <= 12; $i++) {
-    //         $colors[] = sprintf("#%06X", mt_rand(0, 0xFFFFFF));
-    //     }
-
-    //     return response()->json([
-    //         'status' => true,
-    //         'labels' => $labels,
-    //         'datasets' => [
-    //             [
-    //                 'label' => 'Doanh Thu (VND)',
-    //                 'data' => array_values($doanhThu),
-    //                 'backgroundColor' => $colors
-    //             ]
-    //         ]
-    //     ]);
-    // }
+        return response()->json([
+            'status' => true,
+            'labels' => $labels,
+            'data' => $data,
+            'backgroundColor' => $colors,
+        ]);
+    }
 }

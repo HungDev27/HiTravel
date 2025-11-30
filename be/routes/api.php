@@ -86,3 +86,4 @@ Route::get('/danh-gia', [HomeCustomerController::class, 'getDanhGia']);
 
 // Tour Du Lịch
 Route::get('/customer/tour/get-data', [TourDuLichController::class, 'getlistCustomer']);
+Route::middleware('auth:sanctum')->get('/admin/top-tour-thang', [TrangChuController::class, 'topTourTheoThang']);

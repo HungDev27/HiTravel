@@ -36,17 +36,17 @@
         <div class="position-absolute top-100 start-50 translate-middle w-50">
 
             <!-- KHUNG TÌM KIẾM CHÍNH (Đã thu gọn) -->
-            <div class="bg-white d-flex align-items-center py-2 px-3 rounded-pill shadow-sm"
+            <div class="bg-white d-flex align-items-center py-2 px-3 rounded-pill shadow-sm mb-3"
                 style="box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);">
 
                 <!-- 1. BẠN MUỐN ĐI ĐÂU -->
                 <div class="flex-grow-1 px-3">
-                    <label style="font-weight: 700; font-size: 1.2rem; color: #000; margin-bottom: 0; display: block;">
+                    <label style="font-weight: 700; font-size: 1rem; color: #000; margin-bottom: 0; display: block;">
                         <i class="fa-solid fa-location-dot me-1 text-secondary"></i>
                         Bạn muốn đi đâu? <span style="color: red;">*</span>
                     </label>
                     <input type="text" v-model="searchText"
-                        style="border: none; outline: none; width: 100%; color: #6c757d; font-size: 1.2rem; padding: 0; background: transparent;"
+                        style="border: none; outline: none; width: 100%; color: #6c757d; font-size: 1rem; padding: 0; background: transparent;"
                         placeholder="Tìm điểm đến...">
                     <p v-if="errors.diaDiem" class="text-danger mt-1" style="font-size: 0.9rem;">
                         {{ errors.diaDiem }}
@@ -60,7 +60,7 @@
 
                 <!-- 2. NGÀY ĐI -->
                 <div class="px-3" style="min-width: 160px;">
-                    <label style="font-weight: 700; font-size: 1.2rem; color: #000; margin-bottom: 0; display: block;">
+                    <label style="font-weight: 700; font-size: 1rem; color: #000; margin-bottom: 0; display: block;">
                         <i class="fa-regular fa-calendar me-1 text-secondary"></i>
                         Ngày đi
                     </label>
@@ -75,7 +75,7 @@
 
                 <!-- 3. NGÂN SÁCH -->
                 <div class="px-3" style="min-width: 150px;">
-                    <label style="font-weight: 700; font-size: 1.2rem; color: #000; margin-bottom: 0; display: block;">
+                    <label style="font-weight: 700; font-size: 1rem; color: #000; margin-bottom: 0; display: block;">
                         <i class="fa-solid fa-wallet me-1 text-secondary"></i>
                         Ngân sách
                     </label>

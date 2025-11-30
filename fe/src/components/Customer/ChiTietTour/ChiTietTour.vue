@@ -552,9 +552,12 @@
     </div>
 </template>
 <script>
+import axios from 'axios';
 export default {
+    props: ["id_tour"],
     data() {
         return {
+            chi_tiet_tour: {},
             showSchedule: false, // ẩn mặc định
             selectedDate: '',
             allExpanded: false,

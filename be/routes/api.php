@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ChiTietTourController;
 use App\Http\Controllers\DanhMucController;
 use App\Http\Controllers\HomeCustomerController;
 use App\Http\Controllers\MaGiamGiaController;
@@ -86,3 +87,6 @@ Route::get('/danh-gia', [HomeCustomerController::class, 'getDanhGia']);
 
 // Tour Du Lịch
 Route::get('/customer/tour/get-data', [TourDuLichController::class, 'getlistCustomer']);
+
+// Chi Tiết Tour
+Route::get('/customer/chi-tiet-tour/{id}', [ChiTietTourController::class, 'getDataTour']);

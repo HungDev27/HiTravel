@@ -191,6 +191,11 @@ const routes = [
     component: () => import("../components/Customer/QuenMatKhau/index.vue"),
     meta: { layout: "customer" },
   },
+  {
+  path: "/staff",
+  redirect: "/admin", // hoặc "/admin/trang-chu"
+}
+
 ];
 
 const router = createRouter({

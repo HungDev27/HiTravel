@@ -23,14 +23,15 @@
                             <i class="fa-solid fa-search"></i>
                         </span>
                         <input type="text" class="form-control bg-secondary border-0 text-white placeholder-gray"
-                            placeholder="Tìm chức vụ...">
+                            v-model="tim_kiem.noi_dung" @keyup="timKiem()" placeholder="Tìm chức vụ...">
                     </div>
                 </div>
 
                 <!-- Danh sách chức vụ -->
                 <div class="flex-grow-1 overflow-auto px-3" style="scrollbar-width: thin;">
 
-                    <div class="card border-0 mb-3 w-100 toggle-card"
+                    <div class="card border-0 mb-3 w-100 toggle-card" v-for="(value, index) in list_chuc_vu"
+                        :key="index" @click="phanQuyen(value)"
                         onmouseover="this.style.transform='translateY(-3px)'; this.style.boxShadow='0 4px 8px rgba(0,0,0,0.3)'"
                         onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='none'"
                         style="background: #212529; transition: all 0.3s; cursor: pointer;">
@@ -40,26 +41,39 @@
                             <!-- Chữ cái đầu tiên -->
                             <div class="text-white flex-shrink-0 d-flex justify-content-center align-items-center rounded-circle bg-secondary"
                                 style="width: 40px; height: 40px;">
-                                Q
+                                {{ value.ten_chuc_vu.charAt(0).toUpperCase() }}
                             </div>
 
                             <!-- Tên chức vụ -->
                             <div class="d-flex flex-column ms-3 flex-grow-1" style="min-width: 0;">
                                 <div class="d-flex align-items-center">
-                                    <span class="text-white fw-bold text-truncate">Quản trị viên</span>
-                                    <span class="ms-2 badge text-bg-warning fa-2xs">Admin</span>
+                                    <span class="text-white fw-bold text-truncate">{{ value.ten_chuc_vu }}</span>
                                 </div>
 
-                                <div class="d-flex align-items-center mt-1">
-                                    <i class="fa-solid fa-circle" style="color: #00ff33; font-size: 7px;"></i>
-                                    <span class="ms-1" style="color: #00ff33; font-size: 12px;">Hoạt động</span>
+                                <div class="d-flex align-items-center mt-1" @click.stop="doiTrangThai(value)">
+                                    <i class="fa-solid fa-circle"
+                                        :style="{ color: value.tinh_trang == 1 ? '#00ff33' : 'orange', fontSize: '7px' }"></i>
+
+                                    <span class="ms-1"
+                                        :style="{ color: value.tinh_trang == 1 ? '#00ff33' : 'orange', fontSize: '12px' }">
+                                        {{ value.tinh_trang == 1 ? "Hoạt động" : "Tạm dừng" }}
+                                    </span>
                                 </div>
+
                             </div>
 
                             <!-- Nút Sửa xoá -->
                             <div class="d-flex flex-column ms-2 align-items-end">
-                                <i class="fa-solid fa-pen mb-2" style="color: #ffc800; cursor: pointer;"></i>
-                                <i class="fa-regular fa-trash-can" style="color: #ffc800; cursor: pointer;"></i>
+                                <i class="fa-solid fa-pen mb-2" style="color: #ffc800; cursor: pointer;"
+                                    data-bs-toggle="modal" data-bs-target="#updateModal"
+                                    @click.stop="Object.assign(update_chuc_vu, value)">
+                                </i>
+
+                                <i class="fa-regular fa-trash-can" style="color: #ffc800; cursor: pointer;"
+                                    data-bs-toggle="modal" data-bs-target="#delModal"
+                                    @click.stop="Object.assign(delete_chuc_vu, value)">
+                                </i>
+
                             </div>
                         </div>
                     </div>
@@ -78,7 +92,8 @@
 
                 <!-- Tiêu đề Phân Quyền cho và tính tổng -->
                 <div class="d-flex justify-content-between">
-                    <h5 class="mb-0 ms-3 mt-3"><b>Phân Quyền:</b><span class="text-danger ms-2">Admin</span></h5>
+                    <h5 class="mb-0 ms-3 mt-3"><b>Phân Quyền:</b><span class="text-danger ms-2">{{
+                        chon_chuc_vu.ten_chuc_vu }}</span></h5>
                     <div class="d-flex align-items-center mt-3 me-5"
                         style="gap: 8px; font-size: 13px; margin-bottom: 6px;">
                         <div class="d-flex flex-column align-items-center">
@@ -99,25 +114,32 @@
                     <!-- CHỨC NĂNG -->
                     <div class="col-lg-6">
                         <span class="text-secondary fw-bold ms-3">Kho chức năng</span>
-                        <div class="row ms-2 me-2 mt-2 justify-content-center">
 
-                            <!-- Danh sách chức năng -->
-                            <!-- v-for ở đây để lấy chức năng -->
-                            <div class="card d-flex align-items-center justify-content-center"
-                                onmouseover="this.style.backgroundColor='#f8f9fa'; this.style.transform='scale(1.02)'; this.style.boxShadow='0 4px 10px rgba(0, 0, 0, 0.1)'; this.style.cursor='pointer'; this.querySelector('.arrow-icon').style.transform='translateX(5px)'"
-                                onmouseout="this.style.backgroundColor=''; this.style.transform=''; this.style.boxShadow=''; this.querySelector('.arrow-icon').style.transform=''"
-                                style="border-radius: 0%; height: 60px; width: 300px; transition: all 0.3s ease;">
+                        <div class="d-flex flex-column align-items-center mt-3">
 
-                                <div class="d-flex justify-content-start align-items-center">
-                                    <i class="fa-solid fa-layer-group text-primary me-2"></i>
-                                    <span class="fa-lg">Quản lý tài khoản</span>
-                                    <i class="fa-solid fa-circle-arrow-right text-primary fa-2xl ms-3 mb-2 arrow-icon"
-                                        style="margin-top: 12px; transition: transform 0.3s;"></i>
+                            <div class="card shadow-sm border-0" v-for="(cn, i) in list_chuc_nang" :key="i"
+                                @click="capQuyen(cn.id)"
+                                style="height: 60px; width: 300px; transition: all 0.3s ease; cursor: pointer; border-radius: 8px;"
+                                onmouseover="this.style.transform='translateY(-3px)'; this.style.backgroundColor='#f8f9fa'"
+                                onmouseout="this.style.transform='translateY(0)'; this.style.backgroundColor='white'">
+
+                                <div class="d-flex align-items-center justify-content-between h-100 px-4">
+
+                                    <div class="d-flex align-items-center">
+                                        <i class="fa-solid fa-layer-group text-primary me-3"></i>
+                                        <span class="fw-bold text-dark" style="font-size: 1.1rem;">{{ cn.ten_chuc_nang
+                                            }}</span>
+                                    </div>
+
+                                    <i class="fa-solid fa-circle-arrow-right text-primary fa-xl arrow-icon"></i>
                                 </div>
                             </div>
 
+                            <div class="mb-3"></div>
+
                         </div>
                     </div>
+
 
                     <!-- Đang Phân Quyền -->
                     <div class="col-lg-6 col-12">
@@ -125,26 +147,25 @@
                             QUYỀN ĐANG KÍCH HOẠT
                         </div>
 
-                        <div class="card border-0" style="border-top: 4px solid limegreen !important; 
-                            border-radius: 8px; width: 95%;
-                            box-shadow: 0 0 10px rgba(0,0,0,0.05);">
+                        <div v-for="(item, i) in list_phan_quyen" :key="i" class="card border-0 mb-2" style="border-top: 4px solid limegreen !important; border-radius: 8px; width: 95%;
+               box-shadow: 0 0 10px rgba(0,0,0,0.05);">
 
                             <div class="card-body p-3 d-flex align-items-center justify-content-between">
-                                
+
                                 <div class="d-flex align-items-center text-truncate me-3">
                                     <i class="fa-solid fa-circle-check me-2 flex-shrink-0"
                                         style="color: limegreen;"></i>
-                                    <b class="text-truncate">Quản lý tài khoản</b>
+                                    <b class="text-truncate">{{ item.ten_chuc_nang }}</b>
                                 </div>
 
                                 <i class="fa-solid fa-trash-arrow-up fa-lg flex-shrink-0"
-                                    style="color: #ff1f35; cursor: pointer;" onmouseover="this.style.opacity='0.7'"
-                                    onmouseout="this.style.opacity='1'">
+                                    style="color: #ff1f35; cursor: pointer;" @click="xoaQuyen(item)">
                                 </i>
 
                             </div>
                         </div>
                     </div>
+
                 </div>
             </div>
         </div>
@@ -241,7 +262,212 @@
 </template>
 
 <script>
+import axios from 'axios';
 export default {
+    data() {
+        return {
+            list_chuc_nang: [],
+            list_chuc_vu: [],
+            create_chuc_vu: {
+                'tinh_trang': 1,
+            },
+            update_chuc_vu: {},
+            delete_chuc_vu: {},
+            delete_quyen: {},
+            create_phan_quyen: {
+                chuc_nang_id: null,
+            },
+            list_phan_quyen: [],
+            tim_kiem: {
+                noi_dung: ''
+            },
+            chon_chuc_vu: {},
+        }
+    },
+    mounted() {
+        this.layDataChucVu();
+        this.layDataChucNang();
+    },
+    methods: {
+        timKiem() {
+            axios.post('http://127.0.0.1:8000/api/admin/chuc-vu/tim-kiem', this.tim_kiem, {
+                headers: {
+                    Authorization: 'Bearer ' + localStorage.getItem("auth_token")
+                }
+            })
+                .then((res) => {
+                    this.list_chuc_vu = res.data.data;
+                })
+                .catch((res) => {
+                    const list = Object.values(res.response.data.errors);
+                    list.forEach((v, i) => {
+                        this.$toast.error(v[0]);
+                    });
+                });
+        },
+        layDataChucVu() {
+            axios.get('http://127.0.0.1:8000/api/admin/chuc-vu/get-data', {
+                headers: {
+                    Authorization: 'Bearer ' + localStorage.getItem("auth_token")
+                }
+            })
+                .then(response => {
+                    this.list_chuc_vu = response.data.data;
+                })
+                .catch((res) => {
+                    const list = Object.values(res.response.data.errors);
+                    list.forEach((v, i) => {
+                        this.$toast.error(v[0]);
+                    });
+                });
+        },
+        layDataChucNang() {
+            axios.get('http://127.0.0.1:8000/api/admin/phan-quyen/chuc-nang/get-data', {
+                headers: {
+                    Authorization: 'Bearer ' + localStorage.getItem("auth_token")
+                }
+            })
+                .then(response => {
+                    this.list_chuc_nang = response.data.data;
+                })
+                .catch((res) => {
+                    const list = Object.values(res.response.data.errors);
+                    list.forEach((v, i) => {
+                        this.$toast.error(v[0]);
+                    });
+                });
+        },
+        taoChucVu() {
+            axios.post('http://127.0.0.1:8000/api/admin/chuc-vu/add-data', this.create_chuc_vu, {
+                headers: {
+                    Authorization: 'Bearer ' + localStorage.getItem("auth_token")
+                }
+            })
+                .then((res) => {
+                    if (res.data.status) {
+                        this.$toast.success(res.data.message);
+                        this.create_chuc_vu = {};
+                        this.layDataChucVu();
+                    } else {
+                        this.$toast.error(res.data.message);
+                    }
+                })
+                .catch((res) => {
+                    const list = Object.values(res.response.data.errors);
+                    list.forEach((v, i) => {
+                        this.$toast.error(v[0]);
+                    });
+                });
+        },
+        capNhatChucVu() {
+            axios.post('http://127.0.0.1:8000/api/admin/chuc-vu/update', this.update_chuc_vu, {
+                headers: {
+                    Authorization: 'Bearer ' + localStorage.getItem("auth_token")
+                }
+            })
+                .then((res) => {
+                    if (res.data.status) {
+                        this.$toast.success(res.data.message);
+                        this.layDataChucVu();
+                    } else {
+                        this.$toast.error(res.data.message);
+                    }
+                })
+                .catch((res) => {
+                    const list = Object.values(res.response.data.errors);
+                    list.forEach((v, i) => {
+                        this.$toast.error(v[0]);
+                    });
+                });
+        },
+        xoaChucVu() {
+            axios.post('http://127.0.0.1:8000/api/admin/chuc-vu/delete', this.delete_chuc_vu, {
+                headers: {
+                    Authorization: 'Bearer ' + localStorage.getItem("auth_token")
+                }
+            })
+                .then((res) => {
+                    if (res.data.status) {
+                        this.$toast.success(res.data.message);
+                        this.layDataChucVu();
+                    } else {
+                        this.$toast.error(res.data.message);
+                    }
+                })
+                .catch((res) => {
+                    const list = Object.values(res.response.data.errors);
+                    list.forEach((v, i) => {
+                        this.$toast.error(v[0]);
+                    });
+                });
+        },
+        doiTrangThai(payload) {
+            axios.post('http://127.0.0.1:8000/api/admin/chuc-vu/change-status', payload, {
+                headers: {
+                    Authorization: 'Bearer ' + localStorage.getItem("auth_token")
+                }
+            })
+                .then((res) => {
+                    if (res.data.status) {
+                        this.$toast.success(res.data.message);
+                        this.layDataChucVu();
+                    } else {
+                        this.$toast.error(res.data.message);
+                    }
+                })
+                .catch((res) => {
+                    const list = Object.values(res.response.data.errors);
+                    list.forEach((v, i) => {
+                        this.$toast.error(v[0]);
+                    });
+                });
+        },
+        capQuyen(id_chuc_nang) {
+            axios.post('http://127.0.0.1:8000/api/admin/phan-quyen/chi-tiet-phan-quyen/add-data', {
+                id_chuc_vu: this.chon_chuc_vu.id,
+                id_chuc_nang: id_chuc_nang
+            }, {
+                headers: {
+                    Authorization: 'Bearer ' + localStorage.getItem("auth_token")
+                }
+            })
+                .then(res => {
+                    this.$toast.success(res.data.message);
+                    this.phanQuyen(this.chon_chuc_vu);
+                });
+        },
+
+        phanQuyen(value) {
+            this.chon_chuc_vu = value;
+
+            axios.post('http://127.0.0.1:8000/api/admin/phan-quyen/chi-tiet-phan-quyen/get-data', {
+                id_chuc_vu: value.id
+            }, {
+                headers: {
+                    Authorization: 'Bearer ' + localStorage.getItem("auth_token")
+                }
+            })
+                .then((res) => {
+                    this.list_phan_quyen = res.data.data;
+                });
+        },
+
+
+        xoaQuyen(item) {
+            axios.post('http://127.0.0.1:8000/api/admin/phan-quyen/chi-tiet-phan-quyen/delete', {
+                id: item.id
+            }, {
+                headers: {
+                    Authorization: 'Bearer ' + localStorage.getItem("auth_token")
+                }
+            })
+                .then(res => {
+                    this.$toast.success(res.data.message);
+                    this.phanQuyen(this.chon_chuc_vu);
+                });
+        }
+
+    }
 
 }
 </script>

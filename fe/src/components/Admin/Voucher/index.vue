@@ -497,7 +497,11 @@ export default {
 
     getVoucher() {
       axios
-        .get('http://127.0.0.1:8000/api/admin/ma-giam-gia/get-data')
+        .get('http://127.0.0.1:8000/api/admin/ma-giam-gia/get-data', {
+          headers: {
+            Authorization: 'Bearer ' + localStorage.getItem("auth_token")
+          }
+        })
         .then((res) => {
           this.list_voucher = res.data.data;
         })
@@ -556,7 +560,11 @@ export default {
       if (!this.validateVoucher(this.create_voucher)) return;
 
       axios
-        .post('http://127.0.0.1:8000/api/admin/ma-giam-gia/add-data', this.create_voucher)
+        .post('http://127.0.0.1:8000/api/admin/ma-giam-gia/add-data', this.create_voucher, {
+          headers: {
+            Authorization: 'Bearer ' + localStorage.getItem("auth_token")
+          }
+        })
         .then((res) => {
           if (res.data.status) {
             this.$toast.success("Thêm voucher thành công!");
@@ -589,13 +597,17 @@ export default {
       if (!this.validateVoucher(this.edit_voucher)) return;
 
       axios
-        .post("http://127.0.0.1:8000/api/admin/ma-giam-gia/update", this.edit_voucher)
+        .post("http://127.0.0.1:8000/api/admin/ma-giam-gia/update", this.edit_voucher, {
+          headers: {
+            Authorization: 'Bearer ' + localStorage.getItem("auth_token")
+          }
+        })
         .then((res) => {
           if (res.data.status) {
-            this.$toast.success("Cập nhật voucher thành công!");
+            this.$toast.success(res.data.message);
             this.getVoucher();
           } else {
-            this.$toast.error("Cập nhật thất bại!");
+            this.$toast.error(res.data.message);
           }
         })
         .catch(() => this.$toast.error("API lỗi khi cập nhật!"));
@@ -607,13 +619,17 @@ export default {
 
     xoaVoucher() {
       axios
-        .post("http://127.0.0.1:8000/api/admin/ma-giam-gia/delete", { id: this.del_voucher.id })
+        .post("http://127.0.0.1:8000/api/admin/ma-giam-gia/delete", { id: this.del_voucher.id }, {
+          headers: {
+            Authorization: 'Bearer ' + localStorage.getItem("auth_token")
+          }
+        })
         .then((res) => {
           if (res.data.status) {
-            this.$toast.success("Xóa thành công!");
+            this.$toast.success(res.data.message);
             this.getVoucher();
           } else {
-            this.$toast.error("Xóa thất bại!");
+            this.$toast.error(res.data.message);
           }
         })
         .catch(() => this.$toast.error("API lỗi khi xóa!"));

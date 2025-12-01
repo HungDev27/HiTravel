@@ -86,6 +86,19 @@ class MaGiamGiaController
     }
     public function destroy(Request $request)
     {
+        $id_chuc_nang = 3;
+        $id_chuc_vu   = Auth::guard('sanctum')->user()->id_chuc_vu;
+
+        $check = PhanQuyen::where('id_chuc_vu', $id_chuc_vu)
+                          ->where('id_chuc_nang', $id_chuc_nang)
+                          ->first();
+
+        if (!$check) {
+            return response()->json([
+                'status'    =>  0,
+                'message'   =>  'Bạn không có quyền thực hiện chức năng này!'
+            ]);
+        }
         
         MaGiamGia::where('id', $request->id)->delete();
         return response()->json([
@@ -95,6 +108,19 @@ class MaGiamGiaController
     }
     public function changeStatus(Request $request)
     {
+        $id_chuc_nang = 3;
+        $id_chuc_vu   = Auth::guard('sanctum')->user()->id_chuc_vu;
+
+        $check = PhanQuyen::where('id_chuc_vu', $id_chuc_vu)
+                          ->where('id_chuc_nang', $id_chuc_nang)
+                          ->first();
+
+        if (!$check) {
+            return response()->json([
+                'status'    =>  0,
+                'message'   =>  'Bạn không có quyền thực hiện chức năng này!'
+            ]);
+        }
         $maGiamGia = MaGiamGia::where('id',$request->id)->first();
         $maGiamGia->trang_thai = !$request->trang_thai;
         $maGiamGia->save();
@@ -105,6 +131,19 @@ class MaGiamGiaController
     }
     public function findmaGiamGia(Request $request)
     {
+        $id_chuc_nang = 3;
+        $id_chuc_vu   = Auth::guard('sanctum')->user()->id_chuc_vu;
+
+        $check = PhanQuyen::where('id_chuc_vu', $id_chuc_vu)
+                          ->where('id_chuc_nang', $id_chuc_nang)
+                          ->first();
+
+        if (!$check) {
+            return response()->json([
+                'status'    =>  0,
+                'message'   =>  'Bạn không có quyền thực hiện chức năng này!'
+            ]);
+        }
         $now= Carbon::now();
         $data = MaGiamGia::where('ma', $request->ma)
             ->where('trang_thai', 1)

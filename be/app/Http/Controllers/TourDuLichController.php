@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\LichTrinh;
+use App\Models\PhanQuyen;
 use App\Models\TourAnh;
 use App\Models\TourDuLich;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class TourDuLichController
 {
@@ -19,6 +21,20 @@ class TourDuLichController
 
     public function themTour(Request $request)
     {
+
+        $id_chuc_nang = 2;
+        $id_chuc_vu   = Auth::guard('sanctum')->user()->id_chuc_vu;
+
+        $check = PhanQuyen::where('id_chuc_vu', $id_chuc_vu)
+                          ->where('id_chuc_nang', $id_chuc_nang)
+                          ->first();
+
+        if (!$check) {
+            return response()->json([
+                'status'    =>  0,
+                'message'   =>  'Bạn không có quyền thực hiện chức năng này!'
+            ]);
+        }
         // 1. Kiểm tra token admin
         $user = $request->user(); // Nếu dùng sanctum/passport
         if (!$user || $user->id_chuc_vu != 1) {
@@ -131,6 +147,19 @@ class TourDuLichController
 
     public function chiTietTour(Request $request, $id)
     {
+        $id_chuc_nang = 2;
+        $id_chuc_vu   = Auth::guard('sanctum')->user()->id_chuc_vu;
+
+        $check = PhanQuyen::where('id_chuc_vu', $id_chuc_vu)
+                          ->where('id_chuc_nang', $id_chuc_nang)
+                          ->first();
+
+        if (!$check) {
+            return response()->json([
+                'status'    =>  0,
+                'message'   =>  'Bạn không có quyền thực hiện chức năng này!'
+            ]);
+        }
         $user = $request->user();
 
         if (!$user) {
@@ -234,6 +263,19 @@ class TourDuLichController
     // }
     public function capNhatTour(Request $request, $id)
     {
+        $id_chuc_nang = 2;
+        $id_chuc_vu   = Auth::guard('sanctum')->user()->id_chuc_vu;
+
+        $check = PhanQuyen::where('id_chuc_vu', $id_chuc_vu)
+                          ->where('id_chuc_nang', $id_chuc_nang)
+                          ->first();
+
+        if (!$check) {
+            return response()->json([
+                'status'    =>  0,
+                'message'   =>  'Bạn không có quyền thực hiện chức năng này!'
+            ]);
+        }
         $user = $request->user();
 
         if (!$user) {
@@ -280,6 +322,19 @@ class TourDuLichController
 
     public function xoaTour(Request $request, $id)
     {
+        $id_chuc_nang = 2;
+        $id_chuc_vu   = Auth::guard('sanctum')->user()->id_chuc_vu;
+
+        $check = PhanQuyen::where('id_chuc_vu', $id_chuc_vu)
+                          ->where('id_chuc_nang', $id_chuc_nang)
+                          ->first();
+
+        if (!$check) {
+            return response()->json([
+                'status'    =>  0,
+                'message'   =>  'Bạn không có quyền thực hiện chức năng này!'
+            ]);
+        }
 
         $user = $request->user();
 

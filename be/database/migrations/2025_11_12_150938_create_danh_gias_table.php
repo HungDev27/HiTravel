@@ -13,13 +13,20 @@ return new class extends Migration
     {
         Schema::create('danh_gias', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('id_dat_tour');
-            $table->string('hinh_anh', 500)->nullable();
-            $table->integer('diem');
-            $table->text('binh_luan')->nullable();
+
+            $table->unsignedBigInteger('id_tour');
+            $table->unsignedBigInteger('id_nguoi_dung');
+            $table->text('hinh_anh')->nullable();
+            $table->integer('diem'); // Điểm số (1-5 sao)
+            $table->text('binh_luan')->nullable(); // Nội dung khách hàng viết
+            $table->text('phan_hoi')->nullable(); // Nội dung Admin trả lời
+            $table->enum('trang_thai', ['cho_duyet', 'hien_thi', 'an'])->default('cho_duyet'); // Kiểm duyệt
+
             $table->timestamps();
 
-            $table->foreign('id_dat_tour')->references('id')->on('dat_tours')->onDelete('cascade');
+            // Khóa ngoại
+            $table->foreign('id_tour')->references('id')->on('tour_du_liches')->onDelete('cascade');
+            $table->foreign('id_nguoi_dung')->references('id')->on('nguoi_dungs')->onDelete('cascade');
         });
     }
 

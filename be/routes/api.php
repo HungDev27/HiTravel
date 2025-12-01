@@ -1,7 +1,9 @@
 <?php
 
+use App\Http\Controllers\ChiTietTourController;
 use App\Http\Controllers\ChucNangController;
 use App\Http\Controllers\ChucVuController;
+use App\Http\Controllers\DanhGiaController;
 use App\Http\Controllers\DanhMucController;
 
 use App\Http\Controllers\DatTourController;
@@ -111,7 +113,18 @@ Route::middleware('auth:sanctum')->get('/admin/thong-ke-doanh-thu', [TrangChuCon
 Route::get('/home-page', [HomeCustomerController::class, 'homepageData']);
 Route::get('/danh-gia', [HomeCustomerController::class, 'getDanhGia']);
 
+Route::prefix('customer')->group(function () {
 
-// Tour Du Lịch
-Route::get('/customer/tour/get-data', [TourDuLichController::class, 'getlistCustomer']);
-Route::middleware('auth:sanctum')->get('/admin/top-tour-thang', [TrangChuController::class, 'topTourTheoThang']);
+    // Tour Du Lịch
+    Route::get('/tour/get-data', [TourDuLichController::class, 'getlistCustomer']);
+
+    // Chi Tiết Tour
+    Route::post('/chi-tiet-tour/get-data', [ChiTietTourController::class, 'getDataTour']);
+
+    // BINH LUAN
+    Route::middleware('auth:sanctum')->post(
+        '/chi-tiet-tour/binh-luan',
+        [DanhGiaController::class, 'binhLuantour']
+    );
+    Route::get('/chi-tiet-tour/binh-luan/get-data/{id}', [DanhGiaController::class, 'getDataCustomerBinhLuan']);
+});

@@ -64,7 +64,7 @@
                                         <div class="d-flex align-items-center justify-content-center h-100"
                                             style="background-color: #e1e7f3; border-radius: 16px; min-height: 140px; overflow: hidden;">
                                             <img :src="layHinhAnhXe(value.ten_phuong_tien)" alt="Xe"
-        style="width: 100%; height: 100%; object-fit: cover;">
+                                                style="width: 100%; height: 100%; object-fit: cover;">
                                         </div>
                                     </div>
 
@@ -432,50 +432,54 @@ export default {
 
     methods: {
         layHinhAnhXe(ten_xe) {
-        if (!ten_xe) return 'https://cdn-icons-png.flaticon.com/512/3202/3202926.png'; // Ảnh mặc định
+            if (!ten_xe) return 'https://cdn-icons-png.flaticon.com/512/3202/3202926.png'; // Ảnh mặc định
 
-        let ten = ten_xe.toLowerCase();
+            let ten = ten_xe.toLowerCase();
 
-        // 1. Nếu là Limousine
-        if (ten.includes('limousine')) {
-            return 'https://i.pinimg.com/1200x/d1/fa/79/d1fa79dab3c2108a2c9af27858dab473.jpg'; 
-        }
-        
-        // 2. Nếu là Giường nằm
-        if (ten.includes('giường') || ten.includes('thaco')) {
-            return 'https://i.pinimg.com/1200x/9b/0e/13/9b0e1307546d85026acc141657804f57.jpg';
-        }
+            // 1. Nếu là Limousine
+            if (ten.includes('limousine')) {
+                return 'https://i.pinimg.com/1200x/d1/fa/79/d1fa79dab3c2108a2c9af27858dab473.jpg';
+            }
 
-        // 3. Nếu là xe 16 chỗ (Ford Transit)
-        if (ten.includes('16 chỗ') || ten.includes('transit')) {
-            return 'https://i.pinimg.com/736x/9f/2d/40/9f2d40d52f71a01d96c89f1e79c812fd.jpg';
-        }
+            // 2. Nếu là Giường nằm
+            if (ten.includes('giường') || ten.includes('thaco')) {
+                return 'https://i.pinimg.com/1200x/9b/0e/13/9b0e1307546d85026acc141657804f57.jpg';
+            }
 
-        // 4. Nếu là xe 7 chỗ (Innova/Fortuner)
-        if (ten.includes('7 chỗ') || ten.includes('innova') || ten.includes('ô tô')) {
-            return 'https://i.pinimg.com/736x/4e/f2/ee/4ef2ee4e5078e2117093176bf7b4b792.jpg';
-        }
+            // 3. Nếu là xe 16 chỗ (Ford Transit)
+            if (ten.includes('16 chỗ') || ten.includes('transit')) {
+                return 'https://i.pinimg.com/736x/9f/2d/40/9f2d40d52f71a01d96c89f1e79c812fd.jpg';
+            }
 
-        // 5. Xe điện
-        if (ten.includes('điện')) {
-            return 'https://i.pinimg.com/1200x/2f/31/36/2f31367faa060516483190a6b034e357.jpg';
-        }
+            // 4. Nếu là xe 7 chỗ (Innova/Fortuner)
+            if (ten.includes('7 chỗ') || ten.includes('innova') || ten.includes('ô tô')) {
+                return 'https://i.pinimg.com/736x/4e/f2/ee/4ef2ee4e5078e2117093176bf7b4b792.jpg';
+            }
 
-        // 6. Xe bus
-        if (ten.includes('bus')) {
-            return 'https://i.pinimg.com/736x/65/67/da/6567da2df1f5a45695f118751786b777.jpg';
-        }
+            // 5. Xe điện
+            if (ten.includes('điện')) {
+                return 'https://i.pinimg.com/1200x/2f/31/36/2f31367faa060516483190a6b034e357.jpg';
+            }
 
-        // 7. Xe máy
-        if (ten.includes('máy')) {
-            return 'https://i.pinimg.com/736x/1b/d9/0e/1bd90e087c4d5cdde65a45a2175c7bd8.jpg';
-        }
+            // 6. Xe bus
+            if (ten.includes('bus')) {
+                return 'https://i.pinimg.com/736x/65/67/da/6567da2df1f5a45695f118751786b777.jpg';
+            }
 
-        // Mặc định
-        return 'https://cdn-icons-png.flaticon.com/512/3202/3202926.png';
-    },
+            // 7. Xe máy
+            if (ten.includes('máy')) {
+                return 'https://i.pinimg.com/736x/1b/d9/0e/1bd90e087c4d5cdde65a45a2175c7bd8.jpg';
+            }
+
+            // Mặc định
+            return 'https://cdn-icons-png.flaticon.com/512/3202/3202926.png';
+        },
         getPhuongTien() {
-            axios.get('http://127.0.0.1:8000/api/admin/phuong-tien/get-data')
+            axios.get('http://127.0.0.1:8000/api/admin/phuong-tien/get-data', {
+                headers: {
+                    Authorization: 'Bearer ' + localStorage.getItem("auth_token")
+                }
+            })
                 .then((res) => {
                     this.phuongTiens = res.data.data;
                 })
@@ -483,6 +487,7 @@ export default {
                     console.error('Lỗi lấy phương tiện:', error);
                 });
         },
+
 
         getListTour() {
             axios.get('http://127.0.0.1:8000/api/admin/tour/get-data', {
@@ -503,10 +508,15 @@ export default {
 
         themPhuongTien() {
             if (!this.validateForm()) { return; }
-            axios.post('http://127.0.0.1:8000/api/admin/phuong-tien/add-data', this.create_phuongtien)
+            axios.post('http://127.0.0.1:8000/api/admin/phuong-tien/add-data', this.create_phuongtien, {
+                headers: {
+                    Authorization: 'Bearer ' + localStorage.getItem("auth_token")
+                }
+            }
+            )
                 .then((res) => {
                     if (!res.data.status) {
-                        this.$toast.error("Thêm phương tiện thất bại!");
+                        this.$toast.error(res.data.message);
                         return;
                     }
 
@@ -537,9 +547,18 @@ export default {
         },
 
         capNhatPhuongTien() {
-            axios.post('http://127.0.0.1:8000/api/admin/phuong-tien/update', this.edit_phuongtien)
+            axios.post('http://127.0.0.1:8000/api/admin/phuong-tien/update', this.edit_phuongtien,
+                {
+                    headers: {
+                        Authorization: 'Bearer ' + localStorage.getItem("auth_token")
+                    }
+                }
+            )
                 .then((res) => {
-                    if (!res.data.status) throw "Lỗi cập nhật phương tiện";
+                    if (!res.data.status) {
+                        this.$toast.error(res.data.message);
+                        return;
+                    }
 
                     if (this.edit_phuongtien.tours && this.edit_phuongtien.tours.id) {
                         return axios.post('http://127.0.0.1:8000/api/admin/tour-pt/update', {
@@ -593,21 +612,32 @@ export default {
 
         xoaPhuongTien() {
             axios.post('http://127.0.0.1:8000/api/admin/phuong-tien/delete', {
-                id: this.delete_phuongtien.id
-            })
+                id: this.delete_phuongtien.id,
+
+            }, {
+                headers: {
+                    Authorization: 'Bearer ' + localStorage.getItem("auth_token")
+                }
+            },)
                 .then((res) => {
                     if (res.data.status) {
                         this.$toast.success('Xoá thành công!');
                         this.getPhuongTien();
                     } else {
-                        this.$toast.error('Xoá thất bại!');
+                        this.$toast.error(res.data.message);
                     }
                 })
                 .catch(() => this.$toast.error("Lỗi kết nối API!"));
         },
 
         doiTrangThai(pt) {
-            axios.post('http://127.0.0.1:8000/api/admin/phuong-tien/chang-status', { id: pt.id })
+            axios.post('http://127.0.0.1:8000/api/admin/phuong-tien/chang-status', { id: pt.id },
+                {
+                    headers: {
+                        Authorization: 'Bearer ' + localStorage.getItem("auth_token")
+                    }
+                }
+            )
                 .then((res) => {
                     if (res.data.status) {
                         this.$toast.success("Đã đổi trạng thái!");

@@ -102,8 +102,14 @@ Route::middleware('auth:sanctum')->delete('/admin/tour/delete/{id}', [TourDuLich
 Route::middleware('auth:sanctum')->get('/admin/dashboard', [TrangChuController::class, 'tongDuLieu']);
 Route::middleware('auth:sanctum')->get('/admin/doanh-thu-ngay', [TrangChuController::class, 'doanhThuTheoNgay']);
 Route::middleware('auth:sanctum')->get('/admin/thong-ke-doanh-thu', [TrangChuController::class, 'thongKeDoanhThuTheoThang']);
-
-
+Route::middleware('auth:sanctum')->get('/admin/top-tour-thang', [TrangChuController::class, 'topTourTheoThang']);
+//người dùng
+Route::middleware('auth:sanctum')->get('/admin/nguoi-dung', [NguoiDungController::class, 'getNguoiDung']);
+Route::middleware('auth:sanctum')->get('/admin/nguoi-dung/chi-tiet-nguoi-dung', [NguoiDungController::class, 'chiTietNguoiDung']);
+Route::middleware('auth:sanctum')->post('/admin/nguoi-dung/them-nguoi-dung', [NguoiDungController::class, 'themNguoiDung']);
+Route::middleware('auth:sanctum')->post('/admin/nguoi-dung/sua-nguoi-dung', [NguoiDungController::class, 'suaNguoiDung']);
+Route::middleware('auth:sanctum')->post('/admin/nguoi-dung/xoa-nguoi-dung', [NguoiDungController::class, 'xoaNguoiDung']);
+Route::post('/admin/nguoi-dung/tim-kiem', [NguoiDungController::class, 'timKiem']);
 // =========================================================
 // ======================= CLIENT ==========================
 // =========================================================
@@ -118,4 +124,3 @@ Route::get('/customer/tour/get-data', [TourDuLichController::class, 'getlistCust
 
 // Chi Tiết Tour
 Route::get('/customer/chi-tiet-tour/{id}', [ChiTietTourController::class, 'getDataTour']);
-Route::middleware('auth:sanctum')->get('/admin/top-tour-thang', [TrangChuController::class, 'topTourTheoThang']);

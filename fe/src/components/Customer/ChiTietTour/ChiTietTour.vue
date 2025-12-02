@@ -3,13 +3,15 @@
 
         <!-- Tiêu đề -->
         <div class="row" style="margin-inline-end: 200px;">
-            <span style="color: #0066CC; font-size: 33px;"><b>{{ chi_tiet_tour.ten_tour || 'ĐI CHƠI' }}</b></span>
+            <span style="color: #0066CC; font-size: 33px;"><b>{{ chi_tiet_tour.ten_tour || 'Đang tải tour...'
+            }}</b></span>
         </div>
         <div class="mt-2" title="Click để xem đánh giá">
             <a class="nav-link text-black" style="font-size: 17px;" href="#scrollspyHeading6"><span
-                    style="font-size: 13px;" class="badge text-bg-success">10.0</span>
+                    style="font-size: 13px;" class="badge text-bg-success">{{ diemTrungBinh }}</span>
                 <span class="ms-2 text-success"><b>Xem</b>
-                    <span class="ms-2 text-black">2 đánh giá <i class="fa-solid fa-caret-down"></i></span>
+                    <span class="ms-2 text-black">{{ soLuongDanhGia }} đánh giá <i
+                            class="fa-solid fa-caret-down"></i></span>
                 </span></a>
         </div>
 
@@ -18,29 +20,26 @@
 
                 <!-- Hình ảnh -->
                 <div class="position-relative">
-                    <div id="carouselExampleIndicators" class="carousel slide" style="height: 450px; width: 850px;">
+                    <div v-if="anh_carousel.length" id="carouselExampleIndicators" class="carousel slide"
+                        data-bs-ride="carousel" style="width: 100%; max-width: 850px;">
+                        <!-- Indicators -->
                         <div class="carousel-indicators">
-                            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0"
-                                class="active" aria-current="true" aria-label="Slide 1"></button>
-                            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1"
-                                aria-label="Slide 2"></button>
-                            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2"
-                                aria-label="Slide 3"></button>
+                            <button v-for="(img, index) in anh_carousel" :key="'btn-' + index" type="button"
+                                data-bs-target="#carouselExampleIndicators" :data-bs-slide-to="index"
+                                :class="{ active: index === 0 }" :aria-label="'Slide ' + (index + 1)">
+                            </button>
                         </div>
-                        <div class="carousel-inner" style="height: 450px; width: 850px;">
-                            <div class="carousel-item active">
-                                <img src="https://i.pinimg.com/736x/af/4c/0e/af4c0ed2bc3c3a96db69bde76fc22513.jpg"
-                                    class="d-block w-100" alt="...">
-                            </div>
-                            <div class="carousel-item">
-                                <img src="https://i.pinimg.com/1200x/fd/94/a3/fd94a3ac5b23ff04af2dbd57b55701af.jpg"
-                                    class="d-block w-100" alt="...">
-                            </div>
-                            <div class="carousel-item">
-                                <img src="https://i.pinimg.com/736x/93/7a/d0/937ad0232cb7f9e3b68e9b23ada32c7a.jpg"
-                                    class="d-block w-100" alt="...">
+
+                        <!-- Carousel Items -->
+                        <div class="carousel-inner" style="height: 450px;">
+                            <div v-for="(img, index) in anh_carousel" :key="'img-' + index"
+                                :class="['carousel-item', { active: index === 0 }]">
+                                <img :src="img.url" class="d-block w-100" style="height: 450px; object-fit: cover;"
+                                    :alt="img.mo_ta || 'Ảnh tour'">
                             </div>
                         </div>
+
+                        <!-- Controls -->
                         <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators"
                             data-bs-slide="prev">
                             <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -52,6 +51,7 @@
                             <span class="visually-hidden">Next</span>
                         </button>
                     </div>
+
                     <div class="position-absolute top-0 start-0 translate-middle"
                         style="background:#d32f2f; color:white; font-weight:bold; padding:6px 15px; font-size:14px; border-radius:2px; margin-left: 140px; margin-top: 50px;">
                         Giảm 4 Triệu Nhóm 4 | 34.899k/khách
@@ -113,9 +113,9 @@
                                             <div class="pe-3">
                                                 <div class="d-flex justify-content-between">
                                                     <span><b>Ngày đi:</b> {{ formatDate(chi_tiet_tour.ngay_di) }}</span>
-                                                    <div style="margin-left: 130px;" class="text-primary">
-                                                        <i class="fa-solid fa-plane-departure"></i>
-                                                        Máy bay
+                                                    <div style="margin-left: 70px;" class="text-primary">
+                                                        <i class="fa-solid fa-car-rear"></i>
+                                                        {{ chi_tiet_tour.phuong_tiens.map(p => p.ten_phuong_tien).join(', ') }}
                                                     </div>
                                                 </div>
                                                 <div
@@ -145,9 +145,9 @@
                                             <div class="ps-3 border-start">
                                                 <div class="d-flex justify-content-between">
                                                     <span><b>Ngày về:</b> {{ formatDate(chi_tiet_tour.ngay_ve) }}</span>
-                                                    <div style="margin-left: 120px;" class="text-primary">
-                                                        <i class="fa-solid fa-plane-departure"></i>
-                                                        Máy bay
+                                                    <div style="margin-left: 70px;" class="text-primary">
+                                                        <i class="fa-solid fa-car-rear"></i>
+                                                        {{ chi_tiet_tour.phuong_tiens.map(p => p.ten_phuong_tien).join(', ') }}
                                                     </div>
                                                 </div>
                                                 <div
@@ -406,15 +406,17 @@
                                         <!-- ĐIỂM TỔNG -->
                                         <div class="d-flex align-items-center gap-4 mb-3">
                                             <div class="text-center">
-                                                <h2 class="fw-bold text-success mb-0">4.2</h2>
+                                                <h2 class="fw-bold text-success mb-0">{{ diemTrungBinh }}</h2>
                                                 <p class="text-muted small mb-0">/ 5 điểm</p>
+
                                             </div>
 
                                             <div class="flex-grow-1">
                                                 <div class="progress" style="height:10px;">
                                                     <div class="progress-bar bg-success" style="width:84%"></div>
                                                 </div>
-                                                <p class="text-muted small mt-1 mb-0">Dựa trên 567 đánh giá</p>
+                                                <p class="text-muted small mt-1 mb-0">Dựa trên {{ soLuongDanhGia }} đánh
+                                                    giá</p>
                                             </div>
                                         </div>
 
@@ -449,12 +451,18 @@
                                                                 @change="chonAnh">
                                                         </div>
 
-                                                        <!-- Preview ảnh -->
+                                                        <!-- Preview ảnh có nút xóa -->
                                                         <div class="d-flex gap-2 mt-2 flex-wrap">
-                                                            <img v-for="(img, index) in previewAnh" :key="index"
-                                                                :src="img"
-                                                                style="width:80px;height:80px;object-fit:cover;border-radius:5px;border:1px solid #ddd;">
+                                                            <div v-for="(img, index) in previewAnh" :key="index"
+                                                                style="position: relative;">
+                                                                <img :src="img"
+                                                                    style="width:80px;height:80px;object-fit:cover;border-radius:5px;border:1px solid #ddd;">
+                                                                <span @click="xoaAnh(index)"
+                                                                    class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
+                                                                    style="cursor:pointer;">×</span>
+                                                            </div>
                                                         </div>
+
                                                     </div>
                                                 </div>
 
@@ -486,7 +494,10 @@
                                                     <div class="flex-grow-1">
 
                                                         <div class="d-flex justify-content-between align-items-center">
-                                                            <h6 class="fw-bold mb-0">{{ value.ho_ten }}</h6>
+                                                            <h6 class="fw-bold mb-0">{{ value.ho_ten }}
+                                                                <span class="ms-3" style="color: orange;">{{ value.diem
+                                                                    }}<i class="fa-solid fa-star ms-1"></i></span>
+                                                            </h6>
                                                             <small class="text-muted">{{ formatDate(value.created_at)
                                                                 }}</small>
                                                         </div>
@@ -494,10 +505,11 @@
                                                         <p class="mt-2 mb-1 text-secondary">{{ value.binh_luan }}</p>
 
                                                         <!-- Ảnh đính kèm -->
-                                                        <div v-if="value.hinh_anh.length > 0" class="mt-2">
+                                                        <div v-if="Array.isArray(value.hinh_anh) && value.hinh_anh.length > 0"
+                                                            class="mt-2">
                                                             <div class="d-flex flex-wrap gap-2">
                                                                 <img v-for="(img, i) in value.hinh_anh" :key="i"
-                                                                    :src="img"
+                                                                    :src="img" @click="zoomImage = img"
                                                                     style="width:90px;height:90px;object-fit:cover;border:1px solid #ddd;">
                                                             </div>
                                                         </div>
@@ -533,16 +545,15 @@
                         <div class="card-body">
                             <i class="fa-solid fa-ticket me-2"></i>Mã tour: <b>{{ chi_tiet_tour.ma_tour }}</b>
                             <br>
-                            <div class="mt-2"><i class="fa-solid fa-calendar-days me-2"></i>Ngày khởi hành:</div>
-                            <br>
-                            <a href="#scrollspyHeading1">
-                                <!-- Các nút chọn ngày -->
-                                <button v-for="(ngay, index) in ngay_di" :key="index" class="btn"
-                                    :class="selectedDate === ngay ? 'btn-primary' : 'btn-outline-primary'"
-                                    style="margin-right: 8px;" @click="chonNgay(ngay)">
-                                    {{ ngay }}
-                                </button>
-                            </a>
+                            <div class="mt-2"><i class="fa-solid fa-calendar-days me-2"></i>Ngày khởi hành:
+                                <a href="#scrollspyHeading1">
+                                    <!-- Nút chọn ngày -->
+                                    <button class="btn btn-outline-primary ms-2"
+                                        style="border-radius: 100px; font-size: smaller;"><b>{{
+                                            formatDate(chi_tiet_tour.ngay_di)
+                                            }}</b></button>
+                                </a>
+                            </div>
                         </div>
                     </div>
 
@@ -566,23 +577,36 @@
                             <img src="../../../assets/images/homecustomer/car-seat.png" style="margin-right: 5px;">Số
                             chỗ
                             còn: <b class="text-primary">{{ chi_tiet_tour.so_cho_con }}</b>
-                            <button class="btn mt-3 w-100 text-white" style="background-color: crimson;"><b>Đặt
-                                    ngay</b></button>
+                            <router-link :to="`/dat-tour/${id_tour}`" class="btn mt-3 w-100 text-white"
+                                style="background-color: crimson;">
+                                <b>Đặt ngay</b>
+                            </router-link>
+
                         </div>
                     </div>
 
                     <div class="d-flex justify-content-end" v-if="showSchedule">
-                        <button class="btn btn-outline-primary mb-3"><i class="fa-solid fa-envelope-open me-2"></i>Liên
-                            hệ tư
-                            vấn</button>
+                        <router-link :to="`/lien-he`">
+                            <button class="btn btn-outline-primary mb-3"><i
+                                    class="fa-solid fa-envelope-open me-2"></i>Liên
+                                hệ tư
+                                vấn</button>
+                        </router-link>
                     </div>
                 </div>
 
             </div>
-
         </div>
-
     </div>
+
+    <!-- Modal xem ảnh lớn -->
+    <div v-if="zoomImage" class="modal fade show d-block" tabindex="-1" style="background: rgba(0,0,0,0.5);"
+        @click="zoomImage = ''">
+        <div class="modal-dialog modal-dialog-centered" @click.stop>
+            <img :src="zoomImage" class="img-fluid rounded" style="max-height: 80vh; object-fit: contain;">
+        </div>
+    </div>
+
 </template>
 <script>
 import axios from 'axios';
@@ -600,17 +624,21 @@ export default {
             list_binh_luan: [],
             anh_upload: [],
             previewAnh: [],
-
+            zoomImage: "",
+            diemTrungBinh: 0,
+            soLuongDanhGia: 0,
+            anh_carousel: [],
 
             showSchedule: false, // ẩn mặc định
             selectedDate: '',
             allExpanded: false,
-            ngay_di: ['25/9', '29/9', '01/10', '10/10'],
         };
     },
     mounted() {
         this.loadChiTietTour();
         this.dataBinhLuan();
+        this.getDiemTrungBinh();
+
         window.scrollTo({ top: 0, behavior: "smooth" });
     },
     methods: {
@@ -650,10 +678,15 @@ export default {
                 .then((res) => {
                     if (res.data.status) {
                         this.chi_tiet_tour = res.data.data_tour;
+                        this.anh_carousel = res.data.data_tour.anh || [];
                         this.lich_trinh = res.data.data_lich_trinh.map(item => ({
                             ...item,
                             expanded: false
                         }));
+                        this.selectedDate = this.formatDate(this.chi_tiet_tour.ngay_di);
+                        this.showSchedule = true;
+
+
 
                     } else {
                         this.$toast.error(res.data.message);
@@ -679,8 +712,10 @@ export default {
 
             // Thêm nhiều ảnh
             this.anh_upload.forEach((file, index) => {
-                form.append("hinh_anh[]", file);
+                form.append("hinh_anh[" + index + "]", file);
             });
+
+
 
             axios.post("http://127.0.0.1:8000/api/customer/chi-tiet-tour/binh-luan",
                 form,
@@ -709,36 +744,33 @@ export default {
             axios
                 .get("http://127.0.0.1:8000/api/customer/chi-tiet-tour/binh-luan/get-data/" + this.id_tour)
                 .then((res) => {
-
-                    this.list_binh_luan = res.data.data.map(item => {
-                        let images = [];
-
-                        // Nếu cột hinh_anh có dữ liệu JSON -> parse
-                        if (item.hinh_anh) {
-                            try {
-                                images = JSON.parse(item.hinh_anh);
-                            } catch (e) {
-                                images = [];
-                            }
-                        }
-
-                        return {
-                            ...item,
-                            hinh_anh: images
-                        };
-                    });
-
-                    this.noi_dung_binh_luan = "";
-                    this.diem = null;
+                    this.list_binh_luan = res.data.data;
                 });
         },
         chonAnh(event) {
-            this.anh_upload = Array.from(event.target.files);
+            const files = Array.from(event.target.files);
 
-            this.previewAnh = [];
-            this.anh_upload.forEach(file => {
-                this.previewAnh.push(URL.createObjectURL(file));
-            });
+            if (files.length > 5) {
+                this.$toast.error("Chỉ được chọn tối đa 5 ảnh!");
+                return;
+            }
+
+            this.anh_upload = files;
+            this.previewAnh = files.map(file => URL.createObjectURL(file));
+        },
+        xoaAnh(index) {
+            this.previewAnh.splice(index, 1);
+            this.anh_upload.splice(index, 1);
+        },
+        getDiemTrungBinh() {
+            axios
+                .get("http://127.0.0.1:8000/api/customer/chi-tiet-tour/diem-trung-binh/" + this.id_tour)
+                .then((res) => {
+                    if (res.data.status) {
+                        this.diemTrungBinh = res.data.diem_tb;
+                        this.soLuongDanhGia = res.data.so_luong;
+                    }
+                });
         }
 
     }

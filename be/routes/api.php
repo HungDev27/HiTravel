@@ -76,6 +76,13 @@ Route::post('/admin/chuc-vu/change-status', [ChucVuController::class, 'changeSta
 Route::post('/admin/chuc-vu/tim-kiem', [ChucVuController::class, 'search']);
 
 
+// Bình luận
+Route::get('/admin/binh-luan/get-data', [DanhGiaController::class, 'getData']);
+Route::post('/admin/binh-luan/delete', [DanhGiaController::class, 'destroy']);
+Route::post('/admin/binh-luan/change-status', [DanhGiaController::class, 'changeStatus']);
+Route::post('/admin/binh-luan/tim-kiem', [DanhGiaController::class, 'search']);
+
+
 
 
 // Tài khoản người dùng
@@ -127,4 +134,6 @@ Route::prefix('customer')->group(function () {
         [DanhGiaController::class, 'binhLuantour']
     );
     Route::get('/chi-tiet-tour/binh-luan/get-data/{id}', [DanhGiaController::class, 'getDataCustomerBinhLuan']);
+    Route::get('/chi-tiet-tour/diem-trung-binh/{id_tour}', [DanhGiaController::class, 'getDiemTrungBinh']);
+
 });

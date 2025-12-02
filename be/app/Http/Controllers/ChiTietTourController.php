@@ -12,7 +12,7 @@ class ChiTietTourController extends Controller
 {
     public function getDataTour(Request $request)
     {
-        $data_tour = TourDuLich::where('id', $request->id)->first();
+        $data_tour = TourDuLich::with(['anh', 'phuongTiens'])->where('id', $request->id)->first();
 
         // $suat_chieu = SuatChieu::where('id_phim', $request->id)
         //     ->where('tinh_trang', 1) // nếu cần lọc chỉ suất chiếu đang hoạt động

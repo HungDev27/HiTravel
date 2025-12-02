@@ -3,14 +3,15 @@
 
         <!-- Tiêu đề -->
         <div class="row" style="margin-inline-end: 200px;">
-            <span style="color: #0066CC; font-size: 33px;"><b>Tour Nhật Bản 5N5Đ: HCM - Osaka - Kyoto - Tokyo - Thung
-                    Lũng Korankei Mùa Thu</b></span>
+            <span style="color: #0066CC; font-size: 33px;"><b>{{ chi_tiet_tour.ten_tour || 'Đang tải tour...'
+            }}</b></span>
         </div>
         <div class="mt-2" title="Click để xem đánh giá">
             <a class="nav-link text-black" style="font-size: 17px;" href="#scrollspyHeading6"><span
-                    style="font-size: 13px;" class="badge text-bg-success">10.0</span>
+                    style="font-size: 13px;" class="badge text-bg-success">{{ diemTrungBinh }}</span>
                 <span class="ms-2 text-success"><b>Xem</b>
-                    <span class="ms-2 text-black">2 đánh giá <i class="fa-solid fa-caret-down"></i></span>
+                    <span class="ms-2 text-black">{{ soLuongDanhGia }} đánh giá <i
+                            class="fa-solid fa-caret-down"></i></span>
                 </span></a>
         </div>
 
@@ -19,29 +20,26 @@
 
                 <!-- Hình ảnh -->
                 <div class="position-relative">
-                    <div id="carouselExampleIndicators" class="carousel slide" style="height: 450px; width: 850px;">
+                    <div v-if="anh_carousel.length" id="carouselExampleIndicators" class="carousel slide"
+                        data-bs-ride="carousel" style="width: 100%; max-width: 850px;">
+                        <!-- Indicators -->
                         <div class="carousel-indicators">
-                            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0"
-                                class="active" aria-current="true" aria-label="Slide 1"></button>
-                            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1"
-                                aria-label="Slide 2"></button>
-                            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2"
-                                aria-label="Slide 3"></button>
+                            <button v-for="(img, index) in anh_carousel" :key="'btn-' + index" type="button"
+                                data-bs-target="#carouselExampleIndicators" :data-bs-slide-to="index"
+                                :class="{ active: index === 0 }" :aria-label="'Slide ' + (index + 1)">
+                            </button>
                         </div>
-                        <div class="carousel-inner" style="height: 450px; width: 850px;">
-                            <div class="carousel-item active">
-                                <img src="https://i.pinimg.com/736x/af/4c/0e/af4c0ed2bc3c3a96db69bde76fc22513.jpg"
-                                    class="d-block w-100" alt="...">
-                            </div>
-                            <div class="carousel-item">
-                                <img src="https://i.pinimg.com/1200x/fd/94/a3/fd94a3ac5b23ff04af2dbd57b55701af.jpg"
-                                    class="d-block w-100" alt="...">
-                            </div>
-                            <div class="carousel-item">
-                                <img src="https://i.pinimg.com/736x/93/7a/d0/937ad0232cb7f9e3b68e9b23ada32c7a.jpg"
-                                    class="d-block w-100" alt="...">
+
+                        <!-- Carousel Items -->
+                        <div class="carousel-inner" style="height: 450px;">
+                            <div v-for="(img, index) in anh_carousel" :key="'img-' + index"
+                                :class="['carousel-item', { active: index === 0 }]">
+                                <img :src="img.url" class="d-block w-100" style="height: 450px; object-fit: cover;"
+                                    :alt="img.mo_ta || 'Ảnh tour'">
                             </div>
                         </div>
+
+                        <!-- Controls -->
                         <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators"
                             data-bs-slide="prev">
                             <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -53,6 +51,7 @@
                             <span class="visually-hidden">Next</span>
                         </button>
                     </div>
+
                     <div class="position-absolute top-0 start-0 translate-middle"
                         style="background:#d32f2f; color:white; font-weight:bold; padding:6px 15px; font-size:14px; border-radius:2px; margin-left: 140px; margin-top: 50px;">
                         Giảm 4 Triệu Nhóm 4 | 34.899k/khách
@@ -113,19 +112,18 @@
                                         <div class="d-flex">
                                             <div class="pe-3">
                                                 <div class="d-flex justify-content-between">
-                                                    <span>Ngày đi - 10/10/2025</span>
-                                                    <div style="margin-left: 130px;" class="text-primary">
-                                                        <i class="fa-solid fa-plane-departure"></i>
-                                                        Máy bay
+                                                    <span><b>Ngày đi:</b> {{ formatDate(chi_tiet_tour.ngay_di) }}</span>
+                                                    <div style="margin-left: 70px;" class="text-primary">
+                                                        <i class="fa-solid fa-car-rear"></i>
+                                                        {{ chi_tiet_tour.phuong_tiens.map(p => p.ten_phuong_tien).join(', ') }}
                                                     </div>
                                                 </div>
                                                 <div
                                                     style="display: flex; flex-direction: column; align-items: center;">
                                                     <!-- Mốc thời gian -->
                                                     <div
-                                                        style="display: flex; justify-content: space-between; width: 100%; font-weight: bold;">
-                                                        <span>11:35</span>
-                                                        <span>20:40</span>
+                                                        style="display: flex; justify-content: space-between; width: 100%;">
+                                                        <span>{{ formatTime(chi_tiet_tour.gio_di) }}</span>
                                                     </div>
 
                                                     <!-- Thanh ngang -->
@@ -146,19 +144,18 @@
                                             </div>
                                             <div class="ps-3 border-start">
                                                 <div class="d-flex justify-content-between">
-                                                    <span>Ngày về - 10/10/2025</span>
-                                                    <div style="margin-left: 120px;" class="text-primary">
-                                                        <i class="fa-solid fa-plane-departure"></i>
-                                                        Máy bay
+                                                    <span><b>Ngày về:</b> {{ formatDate(chi_tiet_tour.ngay_ve) }}</span>
+                                                    <div style="margin-left: 70px;" class="text-primary">
+                                                        <i class="fa-solid fa-car-rear"></i>
+                                                        {{ chi_tiet_tour.phuong_tiens.map(p => p.ten_phuong_tien).join(', ') }}
                                                     </div>
                                                 </div>
                                                 <div
                                                     style="display: flex; flex-direction: column; align-items: center;">
                                                     <!-- Mốc thời gian -->
                                                     <div
-                                                        style="display: flex; justify-content: space-between; width: 100%; font-weight: bold;">
-                                                        <span>11:35</span>
-                                                        <span>20:40</span>
+                                                        style="display: flex; justify-content: space-between; width: 100%;">
+                                                        <span>{{ formatTime(chi_tiet_tour.gio_ve) }}</span>
                                                     </div>
 
                                                     <!-- Thanh ngang -->
@@ -191,7 +188,8 @@
                                                     <div style="color: #aaa; font-size: 15px;">(Từ 12 tuổi trở lên)
                                                     </div>
                                                 </div>
-                                                <div style="color: red; font-size: 22px; font-weight: bold;">99.000.000đ
+                                                <div style="color: red; font-size: 22px; font-weight: bold;">{{
+                                                    formatVND(chi_tiet_tour.gia_nguoi_lon) }}
                                                 </div>
                                             </div>
 
@@ -205,7 +203,8 @@
                                                     <div style="color: #aaa; font-size: 15px;">(Dưới 12 tuổi trở xuống)
                                                     </div>
                                                 </div>
-                                                <div style="color: red; font-size: 22px; font-weight: bold;">99.000.000đ
+                                                <div style="color: red; font-size: 22px; font-weight: bold;">{{
+                                                    formatVND(chi_tiet_tour.gia_tre_em) }}
                                                 </div>
 
                                             </div>
@@ -222,15 +221,7 @@
                         <div class="card-body">
                             <h3 id="scrollspyHeading2"><b>Tổng quan</b></h3>
                             <div>
-                                - Tận hưởng suối nước nóng Onsen truyền thống.
-                                <br>
-                                - Hái và thưởng thức trái cây tươi tại vườn theo mùa.
-                                <br>
-                                - Thưởng thức bữa bò Kobe cao cấp trứ danh Nhật Bản.
-                                <br>
-                                - Tham quan Chùa Vàng Kinkakuji và chùa cổ Asakusa linh thiêng.
-                                <br>
-                                - Ngắm lá đỏ rực rỡ tại thung lũng Korankei và đường hầm lá phong Momiji Kairo.
+                                {{ chi_tiet_tour.mo_ta }}
                             </div>
                         </div>
                     </div>
@@ -247,8 +238,9 @@
 
                             <!-- Nội dung lịch -->
                             <div class="accordion mt-3" id="accordionExample">
-                                <div v-for="(ngay, index) in chuongTrinhTour" :key="index"
+                                <div v-for="(ngay, index) in lich_trinh" :key="ngay.id"
                                     class="accordion-item shadow-sm rounded mb-3">
+
                                     <h2 class="accordion-header" :id="'heading' + index">
                                         <button class="accordion-button collapsed d-flex align-items-center"
                                             type="button" @click="toggleItem(index)"
@@ -259,11 +251,10 @@
                                                 borderRadius: '10px',
                                                 transition: 'all 0.3s ease'
                                             }">
-                                            <img :src="ngay.image" alt="Ảnh tour"
-                                                style="width: 200px; height: 110px; object-fit: cover; border-radius: 5px; margin-right: 15px;" />
+
                                             <div>
-                                                <div style="font-size: 16px; color: gray;">{{ ngay.title }}</div>
-                                                <div style="font-size: 18px; font-weight: bold;">{{ ngay.subtitle }}
+                                                <div style="font-size: 18px; font-weight: bold;">
+                                                    {{ ngay.thu_tu }}. {{ ngay.tieu_de }}
                                                 </div>
                                             </div>
                                         </button>
@@ -272,12 +263,14 @@
                                     <div :id="'collapse' + index" class="accordion-collapse collapse"
                                         :class="{ show: ngay.expanded }" :aria-labelledby="'heading' + index"
                                         data-bs-parent="#accordionExample">
+
                                         <div class="accordion-body" style="font-size: 16px;">
-                                            <p v-html="ngay.content"></p>
+                                            <p v-html="ngay.noi_dung"></p>
                                         </div>
                                     </div>
                                 </div>
                             </div>
+
 
                         </div>
                     </div>
@@ -395,105 +388,153 @@
                         </div>
                     </div>
 
-                    <!-- Đánh giá -->
-                    <div class="card">
+                    <!-- ĐÁNH GIÁ & BÌNH LUẬN -->
+                    <div class="card mt-4 shadow-sm">
                         <div class="card-body">
-                            <div id="scrollspyHeading6" style="font-size: 17px; color: #0066CC;"><b>Đánh giá khách hàng
-                                    về Tour Nhật Bản 5N5Đ: HCM - Osaka - Kyoto - Tokyo - Thung Lũng Korankei Mùa Thu</b>
-                            </div>
 
-                            <!-- Nội dung -->
+                            <!-- TIÊU ĐỀ -->
+                            <h4 id="scrollspyHeading6" class="fw-bold mb-4" style="color:#0066CC;">
+                                Đánh giá từ khách hàng về Tour {{ chi_tiet_tour.ten_tour }}
+                            </h4>
+
                             <div class="row g-4">
+
+                                <!-- KHỐI ĐÁNH GIÁ TỔNG -->
                                 <div class="col-lg-12">
-                                    <div class="bg-white rounded shadow-sm p-4 h-100">
-                                        <h5 class="fs-5 fw-bold mb-4 border-bottom pb-2">Đánh Giá Tour</h5>
-                                        <div class="row g-4">
-                                            <div class="col-12">
-                                                <div class="d-flex align-items-center gap-3">
-                                                    <div class="text-center">
-                                                        <h3 class="fw-bold text-success mb-0">4.2</h3>
-                                                        <p class="text-muted small mb-0">/5 (NHTravel)</p>
-                                                    </div>
-                                                    <div class="flex-grow-1">
-                                                        <div class="progress" style="height: 8px;">
-                                                            <div class="progress-bar bg-success" role="progressbar"
-                                                                style="width: 84%;" aria-valuenow="84" aria-valuemin="0"
-                                                                aria-valuemax="100"></div>
-                                                        </div>
-                                                        <p class="text-muted small mt-1">Dựa trên 567 đánh giá</p>
-                                                    </div>
+                                    <div class="bg-white rounded p-4 shadow-sm">
+
+                                        <!-- ĐIỂM TỔNG -->
+                                        <div class="d-flex align-items-center gap-4 mb-3">
+                                            <div class="text-center">
+                                                <h2 class="fw-bold text-success mb-0">{{ diemTrungBinh }}</h2>
+                                                <p class="text-muted small mb-0">/ 5 điểm</p>
+
+                                            </div>
+
+                                            <div class="flex-grow-1">
+                                                <div class="progress" style="height:10px;">
+                                                    <div class="progress-bar bg-success" style="width:84%"></div>
                                                 </div>
+                                                <p class="text-muted small mt-1 mb-0">Dựa trên {{ soLuongDanhGia }} đánh
+                                                    giá</p>
                                             </div>
                                         </div>
+
+                                        <!-- FORM ĐÁNH GIÁ -->
                                         <div class="mt-4">
-                                            <div class="row g-3 ">
-                                                <div class="col-auto">
-                                                    <select class="form-select" aria-label="Rating select">
-                                                        <option selected>Chọn điểm số</option>
-                                                        <option value="1">1</option>
-                                                        <option value="2">2</option>
-                                                        <option value="3">3</option>
-                                                        <option value="4">4</option>
-                                                        <option value="5">5</option>
+                                            <div class="row g-3">
+
+                                                <!-- điểm số -->
+                                                <div class="col-md-2">
+                                                    <select v-model="diem" class="form-select"
+                                                        aria-label="Default select example">
+                                                        <option selected>Điểm số</option>
+                                                        <option value="1">1 ⭐</option>
+                                                        <option value="2">2 ⭐⭐</option>
+                                                        <option value="3">3 ⭐⭐⭐</option>
+                                                        <option value="4">4 ⭐⭐⭐⭐</option>
+                                                        <option value="5">5 ⭐⭐⭐⭐⭐</option>
                                                     </select>
                                                 </div>
-                                                <div class="col-auto">
-                                                    <textarea class="form-control" rows="2"
-                                                        placeholder="Viết đánh giá của bạn..."></textarea>
+
+                                                <div class="col-md-10">
+                                                    <div class="d-flex align-items-start gap-3">
+                                                        <img src="https://i.pinimg.com/736x/4b/64/88/4b64889d358844f4dc024d2ecd1ed609.jpg"
+                                                            class="rounded-circle" width="48" height="48">
+
+                                                        <textarea v-model="noi_dung_binh_luan" class="form-control"
+                                                            placeholder="Viết đánh giá của bạn..." rows="2"></textarea>
+
+                                                        <!-- Upload hình ảnh -->
+                                                        <div class="mt-2">
+                                                            <input type="file" multiple accept="image/*"
+                                                                @change="chonAnh">
+                                                        </div>
+
+                                                        <!-- Preview ảnh có nút xóa -->
+                                                        <div class="d-flex gap-2 mt-2 flex-wrap">
+                                                            <div v-for="(img, index) in previewAnh" :key="index"
+                                                                style="position: relative;">
+                                                                <img :src="img"
+                                                                    style="width:80px;height:80px;object-fit:cover;border-radius:5px;border:1px solid #ddd;">
+                                                                <span @click="xoaAnh(index)"
+                                                                    class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
+                                                                    style="cursor:pointer;">×</span>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
                                                 </div>
+
                                             </div>
-                                            <div class="mt-3 text-end">
-                                                <button type="submit" class="btn btn-success px-4 py-2 fw-semibold">Gửi
-                                                    đánh
-                                                    giá</button>
+
+                                            <div class="text-end mt-3">
+                                                <button @click="binhLuan()" class="btn btn-success fw-semibold px-4">Gửi
+                                                    đánh giá</button>
                                             </div>
                                         </div>
+
                                     </div>
                                 </div>
+
+                                <!-- DANH SÁCH BÌNH LUẬN -->
                                 <div class="col-lg-12">
-                                    <div class="bg-white rounded shadow-sm p-4 h-100">
-                                        <h5 class="fs-5 fw-bold mb-4 border-bottom pb-2">Bình Luận</h5>
-                                        <div class="mb-4">
-                                            <div class="row g-3 align-items-center">
-                                                <div class="col-auto">
-                                                    <img src="https://i.pinimg.com/736x/4b/64/88/4b64889d358844f4dc024d2ecd1ed609.jpg"
-                                                        alt="User Avatar" class="rounded-circle" width="45" height="45">
-                                                </div>
-                                                <div class="col">
-                                                    <textarea id="noidung" v-model="noi_dung_binh_luan"
-                                                        class="form-control" rows="1"
-                                                        placeholder="Viết bình luận của bạn..." required></textarea>
-                                                </div>
-                                                <div class="col-auto">
-                                                    <button
-                                                        class="btn btn-danger px-4 py-2 btn-sm fw-semibold">Gửi</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="border-top pt-4">
-                                            <div
-                                                class="mb-3 mt-2 bg-secondary bg-opacity-10 border border-secondary rounded-3 p-3">
+                                    <div class="bg-white rounded p-4 shadow-sm">
+
+                                        <h5 class="fw-bold mb-3 border-bottom pb-2">Bình luận khách hàng</h5>
+
+                                        <template v-for="(value, index) in list_binh_luan" :key="index">
+
+                                            <div class="comment-item mb-3 p-3 rounded border bg-light">
                                                 <div class="d-flex align-items-start gap-3">
-                                                    <img src="https://i.pinimg.com/736x/4b/64/88/4b64889d358844f4dc024d2ecd1ed609.jpg"
-                                                        alt="User Avatar" class="rounded-circle" width="45" height="45">
+
+                                                    <img :src="value.avatar || defaultAvatar" class="rounded-circle"
+                                                        width="48" height="48">
+
                                                     <div class="flex-grow-1">
-                                                        <div
-                                                            class="d-flex justify-content-between align-items-center mb-2">
-                                                            <h6 class="fw-bold mb-0">Ngô Nhi</h6>
-                                                            <small class="text-muted">10/10</small>
+
+                                                        <div class="d-flex justify-content-between align-items-center">
+                                                            <h6 class="fw-bold mb-0">{{ value.ho_ten }}
+                                                                <span class="ms-3" style="color: orange;">{{ value.diem
+                                                                    }}<i class="fa-solid fa-star ms-1"></i></span>
+                                                            </h6>
+                                                            <small class="text-muted">{{ formatDate(value.created_at)
+                                                                }}</small>
                                                         </div>
-                                                        <p class="mb-0 text-secondary">
-                                                            Hay quá
-                                                        </p>
+
+                                                        <p class="mt-2 mb-1 text-secondary">{{ value.binh_luan }}</p>
+
+                                                        <!-- Ảnh đính kèm -->
+                                                        <div v-if="Array.isArray(value.hinh_anh) && value.hinh_anh.length > 0"
+                                                            class="mt-2">
+                                                            <div class="d-flex flex-wrap gap-2">
+                                                                <img v-for="(img, i) in value.hinh_anh" :key="i"
+                                                                    :src="img" @click="zoomImage = img"
+                                                                    style="width:90px;height:90px;object-fit:cover;border:1px solid #ddd;">
+                                                            </div>
+                                                        </div>
+
+                                                        <!-- ADMIN PHẢN HỒI -->
+                                                        <div v-if="value.phan_hoi"
+                                                            class="bg-white border rounded p-2 mt-2"
+                                                            style="margin-left:10px; border-left: 3px solid #0d6efd;">
+                                                            <small class="text-primary fw-bold">Phản hồi từ
+                                                                NHTravel:</small>
+                                                            <div class="text-dark">{{ value.phan_hoi }}</div>
+                                                        </div>
+
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
+                                        </template>
+
                                     </div>
                                 </div>
                             </div>
+
                         </div>
                     </div>
+
                 </div>
             </div>
 
@@ -502,54 +543,70 @@
                 <div style="position: sticky; top: 100px;">
                     <div class="card">
                         <div class="card-body">
-                            <i class="fa-solid fa-ticket me-2"></i>Mã tour: <b>NH123</b>
+                            <i class="fa-solid fa-ticket me-2"></i>Mã tour: <b>{{ chi_tiet_tour.ma_tour }}</b>
                             <br>
-                            <div class="mt-2"><i class="fa-solid fa-calendar-days me-2"></i>Ngày khởi hành:</div>
-                            <br>
-                            <a href="#scrollspyHeading1">
-                                <!-- Các nút chọn ngày -->
-                                <button v-for="(ngay, index) in ngay_di" :key="index" class="btn"
-                                    :class="selectedDate === ngay ? 'btn-primary' : 'btn-outline-primary'"
-                                    style="margin-right: 8px;" @click="chonNgay(ngay)">
-                                    {{ ngay }}
-                                </button>
-                            </a>
+                            <div class="mt-2"><i class="fa-solid fa-calendar-days me-2"></i>Ngày khởi hành:
+                                <a href="#scrollspyHeading1">
+                                    <!-- Nút chọn ngày -->
+                                    <button class="btn btn-outline-primary ms-2"
+                                        style="border-radius: 100px; font-size: smaller;"><b>{{
+                                            formatDate(chi_tiet_tour.ngay_di)
+                                            }}</b></button>
+                                </a>
+                            </div>
                         </div>
                     </div>
 
                     <div class="card" v-if="showSchedule">
                         <div class="card-body">
                             <h5 class="card-title"><b>Giá từ:</b></h5>
-                            <h2 class="text-danger"><b>9500000đ</b><span class="text-black" style="font-size: 22px;"> /
+                            <h2 class="text-danger"><b>{{ formatVND(chi_tiet_tour.gia_nguoi_lon) }}</b><span
+                                    class="text-black" style="font-size: 22px;"> /
                                     Khách</span></h2>
-                            <i class="fa-solid fa-ticket me-2"></i>Mã tour: <b class="text-primary">NH123</b>
+                            <i class="fa-solid fa-ticket me-2"></i>Mã tour: <b class="text-primary">{{
+                                chi_tiet_tour.ma_tour }}</b>
                             <br>
                             <i class="fa-solid fa-map-pin ms-1"
                                 style="margin-right: 13px; margin-top: 10px; margin-block-end: 10px;"></i>Khởi hành: <b
-                                class="text-primary">Hà Nội</b>
+                                class="text-primary">{{ chi_tiet_tour.dia_diem }}</b>
                             <br>
                             <i class="fa-solid fa-calendar-days"
                                 style="margin-right: 13px; margin-block-end: 10px;"></i>Ngày khởi
                             hành: <b class="text-primary">{{ selectedDate }}</b>
                             <br>
-                            <img src="../../../assets/images/homecustomer/car-seat.png" style="margin-right: 5px;">Số chỗ
-                            còn: <b class="text-primary">10</b>
-                            <button class="btn mt-3 w-100 text-white" style="background-color: crimson;"><b>Đặt
-                                    ngay</b></button>
+                            <img src="../../../assets/images/homecustomer/car-seat.png" style="margin-right: 5px;">Số
+                            chỗ
+                            còn: <b class="text-primary">{{ chi_tiet_tour.so_cho_con }}</b>
+                            <router-link :to="`/dat-tour/${id_tour}`" class="btn mt-3 w-100 text-white"
+                                style="background-color: crimson;">
+                                <b>Đặt ngay</b>
+                            </router-link>
+
                         </div>
                     </div>
 
                     <div class="d-flex justify-content-end" v-if="showSchedule">
-                        <button class="btn btn-outline-primary mb-3"><i class="fa-solid fa-envelope-open me-2"></i>Liên hệ tư
-                            vấn</button>
+                        <router-link :to="`/lien-he`">
+                            <button class="btn btn-outline-primary mb-3"><i
+                                    class="fa-solid fa-envelope-open me-2"></i>Liên
+                                hệ tư
+                                vấn</button>
+                        </router-link>
                     </div>
                 </div>
 
             </div>
-
         </div>
-
     </div>
+
+    <!-- Modal xem ảnh lớn -->
+    <div v-if="zoomImage" class="modal fade show d-block" tabindex="-1" style="background: rgba(0,0,0,0.5);"
+        @click="zoomImage = ''">
+        <div class="modal-dialog modal-dialog-centered" @click.stop>
+            <img :src="zoomImage" class="img-fluid rounded" style="max-height: 80vh; object-fit: contain;">
+        </div>
+    </div>
+
 </template>
 <script>
 import axios from 'axios';
@@ -557,33 +614,44 @@ export default {
     props: ["id_tour"],
     data() {
         return {
+
+            id_tour: this.$route.params.id_tour,
             chi_tiet_tour: {},
+            lich_trinh: [],
+
+            noi_dung_binh_luan: "",
+            diem: null,
+            list_binh_luan: [],
+            anh_upload: [],
+            previewAnh: [],
+            zoomImage: "",
+            diemTrungBinh: 0,
+            soLuongDanhGia: 0,
+            anh_carousel: [],
+
             showSchedule: false, // ẩn mặc định
             selectedDate: '',
             allExpanded: false,
-            ngay_di: ['25/9', '29/9', '01/10', '10/10'],
-            chuongTrinhTour: [
-                {
-                    title: 'Đêm 1',
-                    subtitle: 'HCM - Kansai (Nghỉ Đêm Trên Máy Bay)',
-                    image: 'https://i.pinimg.com/736x/fd/94/a3/fd94a3ac5b23ff04af2dbd57b55701af.jpg',
-                    content: 'Quý khách tập trung tại sân bay <b>Tân Sơn Nhất</b>, làm thủ tục chuyến bay <b>VN320 00:10 - 07:00</b> đi Nhật Bản. Quý khách nghỉ đêm trên máy bay.',
-                    expanded: false
-                },
-                {
-                    title: 'Ngày 1',
-                    subtitle: 'Kansai - Kyoto - Osaka',
-                    image: 'https://i.pinimg.com/736x/93/7a/d0/937ad0232cb7f9e3b68e9b23ada32c7a.jpg',
-                    content: 'Đến sân bay Kansai, hướng dẫn viên đón đoàn. Tham quan <b>Chùa Vàng Kinkakuji</b>, phố cổ Gion. Buổi chiều di chuyển đến Osaka, tự do tham quan Dotonbori.',
-                    expanded: false
-                }
-            ],
         };
     },
     mounted() {
+        this.loadChiTietTour();
+        this.dataBinhLuan();
+        this.getDiemTrungBinh();
+
         window.scrollTo({ top: 0, behavior: "smooth" });
     },
     methods: {
+        formatTime(time) {
+            return time.slice(0, 5);
+        },
+        formatDate(date) {
+            const d = new Date(date);
+            return `${d.getDate()}/${d.getMonth() + 1}/${d.getFullYear()}`;
+        },
+        formatVND(number) {
+            return new Intl.NumberFormat("vi-VI", { style: "currency", currency: "VND" }).format(number);
+        },
         chonNgay(ngay) {
             // nếu bấm cùng ngày thì ẩn hiện toggle
             if (this.selectedDate === ngay) {
@@ -594,14 +662,117 @@ export default {
             }
         },
         toggleItem(index) {
-            this.chuongTrinhTour[index].expanded = !this.chuongTrinhTour[index].expanded;
+            this.lich_trinh[index].expanded = !this.lich_trinh[index].expanded;
         },
         toggleAll() {
             this.allExpanded = !this.allExpanded;
-            this.chuongTrinhTour.forEach(item => {
+            this.lich_trinh.forEach(item => {
                 item.expanded = this.allExpanded;
             });
+        },
+        loadChiTietTour() {
+            var payload = {
+                id: this.id_tour
+            }
+            axios.post('http://127.0.0.1:8000/api/customer/chi-tiet-tour/get-data', payload)
+                .then((res) => {
+                    if (res.data.status) {
+                        this.chi_tiet_tour = res.data.data_tour;
+                        this.anh_carousel = res.data.data_tour.anh || [];
+                        this.lich_trinh = res.data.data_lich_trinh.map(item => ({
+                            ...item,
+                            expanded: false
+                        }));
+                        this.selectedDate = this.formatDate(this.chi_tiet_tour.ngay_di);
+                        this.showSchedule = true;
+
+
+
+                    } else {
+                        this.$toast.error(res.data.message);
+                    }
+                });
+        },
+        binhLuan() {
+
+            if (!localStorage.getItem("auth_token")) {
+                this.$toast.error("Bạn chưa đăng nhập!");
+                return;
+            }
+
+            if (!this.diem || !this.noi_dung_binh_luan) {
+                this.$toast.error("Vui lòng nhập điểm & bình luận!");
+                return;
+            }
+
+            let form = new FormData();
+            form.append("id_tour", this.id_tour);
+            form.append("binh_luan", this.noi_dung_binh_luan);
+            form.append("diem", this.diem);
+
+            // Thêm nhiều ảnh
+            this.anh_upload.forEach((file, index) => {
+                form.append("hinh_anh[" + index + "]", file);
+            });
+
+
+
+            axios.post("http://127.0.0.1:8000/api/customer/chi-tiet-tour/binh-luan",
+                form,
+                {
+                    headers: {
+                        Authorization: "Bearer " + localStorage.getItem('auth_token'),
+                        "Content-Type": "multipart/form-data"
+                    }
+                }
+            ).then((res) => {
+                if (res.data.status) {
+                    this.$toast.success("Đã gửi đánh giá!");
+
+                    this.noi_dung_binh_luan = "";
+                    this.diem = null;
+                    this.previewAnh = [];
+                    this.anh_upload = [];
+
+                    this.dataBinhLuan();
+                } else {
+                    this.$toast.error(res.data.message);
+                }
+            });
+        },
+        dataBinhLuan() {
+            axios
+                .get("http://127.0.0.1:8000/api/customer/chi-tiet-tour/binh-luan/get-data/" + this.id_tour)
+                .then((res) => {
+                    this.list_binh_luan = res.data.data;
+                });
+        },
+        chonAnh(event) {
+            const files = Array.from(event.target.files);
+
+            if (files.length > 5) {
+                this.$toast.error("Chỉ được chọn tối đa 5 ảnh!");
+                return;
+            }
+
+            this.anh_upload = files;
+            this.previewAnh = files.map(file => URL.createObjectURL(file));
+        },
+        xoaAnh(index) {
+            this.previewAnh.splice(index, 1);
+            this.anh_upload.splice(index, 1);
+        },
+        getDiemTrungBinh() {
+            axios
+                .get("http://127.0.0.1:8000/api/customer/chi-tiet-tour/diem-trung-binh/" + this.id_tour)
+                .then((res) => {
+                    if (res.data.status) {
+                        this.diemTrungBinh = res.data.diem_tb;
+                        this.soLuongDanhGia = res.data.so_luong;
+                    }
+                });
         }
+
     }
 };
 </script>

@@ -60,4 +60,22 @@ class TourDuLich extends Model
     {
         return $this->hasMany(TourAnh::class, 'id_tour')->orderBy('id');
     }
+
+    // Test thử
+    // public function lichKhoiHanh()
+    // {
+    //     return $this->hasMany(LichKhoiHanh::class, 'id_tour', 'id');
+    // }
+
+    public function danhGia()
+    {
+        return $this->hasManyThrough(
+            DanhGia::class,
+            DatTour::class,
+            'id_tour',       // khóa ngoại trong dat_tour
+            'id_dat_tour',   // khóa ngoại trong danh_gia
+            'id',            // khóa chính của tour
+            'id'             // khóa chính của dat_tour
+        );
+    }
 }

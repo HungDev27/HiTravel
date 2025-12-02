@@ -203,9 +203,9 @@ export default {
         },
         themDanhMuc() {
             axios.post('http://127.0.0.1:8000/api/admin/danh-muc-tour/add-data', this.them_danh_muc_tour, {
-                // headers: {
-                //     Authorization: 'Bearer ' + localStorage.getItem("key_admin")
-                // }
+                headers: {
+                    Authorization: 'Bearer ' + localStorage.getItem("auth_token")
+                }
             })
                 .then(res => {
                     if (res.data.status) {
@@ -219,9 +219,9 @@ export default {
         },
         updateDanhMuc() {
             axios.post('http://127.0.0.1:8000/api/admin/danh-muc-tour/update', this.update_danh_muc, {
-                // headers: {
-                //     Authorization: 'Bearer ' + localStorage.getItem("key_admin")
-                // }
+                headers: {
+                    Authorization: 'Bearer ' + localStorage.getItem("auth_token")
+                }
             })
                 .then((res) => {
                     if (res.data.status) {
@@ -234,9 +234,9 @@ export default {
         },
         xoaDanhMuc() {
             axios.post('http://127.0.0.1:8000/api/admin/danh-muc-tour/delete', this.delete_danh_muc, {
-                // headers: {
-                //     Authorization: 'Bearer ' + localStorage.getItem("key_admin")
-                // }
+                headers: {
+                    Authorization: 'Bearer ' + localStorage.getItem("auth_token")
+                }
             })
                 .then((res) => {
                     if (res.data.status) {

@@ -3,6 +3,7 @@
 use App\Http\Controllers\ChiTietTourController;
 use App\Http\Controllers\ChucNangController;
 use App\Http\Controllers\ChucVuController;
+use App\Http\Controllers\DanhGiaController;
 use App\Http\Controllers\DanhMucController;
 
 use App\Http\Controllers\DatTourController;
@@ -56,7 +57,7 @@ Route::post('/admin/ma-giam-gia/tim-kiem', [MaGiamGiaController::class, 'findmaG
 
 
 //QL Booking Tour
-Route::get('/admin/dat-tour/get-data', [DatTourController::class, 'getData']);
+Route::get('/admin/chi-tiet-dat-tour/get-data', [DatTourController::class, 'getData']);
 Route::post('/admin/dat-tour/delete', [DatTourController::class, 'destroy']);
 Route::post('/admin/dat-tour/change-status', [DatTourController::class, 'changeStatus']);
 Route::post('/admin/dat-tour/loc-thong-tin', [DatTourController::class, 'locThongTin']);
@@ -73,6 +74,13 @@ Route::post('/admin/chuc-vu/update', [ChucVuController::class, 'update']);
 Route::post('/admin/chuc-vu/delete', [ChucVuController::class, 'destroy']);
 Route::post('/admin/chuc-vu/change-status', [ChucVuController::class, 'changeStatus']);
 Route::post('/admin/chuc-vu/tim-kiem', [ChucVuController::class, 'search']);
+
+
+// Bình luận
+Route::get('/admin/binh-luan/get-data', [DanhGiaController::class, 'getData']);
+Route::post('/admin/binh-luan/delete', [DanhGiaController::class, 'destroy']);
+Route::post('/admin/binh-luan/change-status', [DanhGiaController::class, 'changeStatus']);
+Route::post('/admin/binh-luan/tim-kiem', [DanhGiaController::class, 'search']);
 
 
 
@@ -118,9 +126,28 @@ Route::post('/admin/nguoi-dung/tim-kiem', [NguoiDungController::class, 'timKiem'
 Route::get('/home-page', [HomeCustomerController::class, 'homepageData']);
 Route::get('/danh-gia', [HomeCustomerController::class, 'getDanhGia']);
 
+Route::prefix('customer')->group(function () {
 
-// Tour Du Lịch
-Route::get('/customer/tour/get-data', [TourDuLichController::class, 'getlistCustomer']);
+    // Tour Du Lịch
+    Route::get('/tour/get-data', [TourDuLichController::class, 'getlistCustomer']);
 
-// Chi Tiết Tour
-Route::get('/customer/chi-tiet-tour/{id}', [ChiTietTourController::class, 'getDataTour']);
+    // Chi Tiết Tour
+    Route::post('/chi-tiet-tour/get-data', [ChiTietTourController::class, 'getDataTour']);
+
+    // Đặt Tour
+    Route::post('/chi-tiet-dat-tour/get-data', [DatTourController::class, 'getDatTour']);
+    Route::post('/dat-tour/tinh-tien', [DatTourController::class, 'tinhTien']);
+    Route::post('/dat-tour/dat', [DatTourController::class, 'store']);
+
+    // Voucher
+    Route::get('/voucher/list', [MaGiamGiaController::class, 'getVoucher']);
+
+    // BINH LUAN
+    Route::middleware('auth:sanctum')->post(
+        '/chi-tiet-tour/binh-luan',
+        [DanhGiaController::class, 'binhLuantour']
+    );
+    Route::get('/chi-tiet-tour/binh-luan/get-data/{id}', [DanhGiaController::class, 'getDataCustomerBinhLuan']);
+    Route::get('/chi-tiet-tour/diem-trung-binh/{id_tour}', [DanhGiaController::class, 'getDiemTrungBinh']);
+
+});

@@ -343,11 +343,19 @@
                                             </span>
                                         </div>
 
-                                        <!-- Nút xem chi tiết -->
-                                        <router-link :to="`/chi-tiet-tour/${value.id}`">
-                                            <button class="btn text-white" style="background-color: darkorange;">Xem chi
-                                                tiết</button>
-                                        </router-link>
+                                        <div class="d-flex justify-content-between" style="align-items: center;">
+                                            <!-- Nút xem chi tiết -->
+                                            <router-link :to="`/chi-tiet-tour/${value.id}`">
+                                                <span class="text-primary"><u>Xem chi
+                                                        tiết</u></span>
+                                            </router-link>
+                                            <!-- Nút xem chi tiết -->
+                                            <router-link :to="`/dat-tour/${value.id}`">
+                                                <button class="btn text-white" style="background-color: darkorange;"><i
+                                                        class="fa-brands fa-opencart me-2"></i>Đặt tour</button>
+                                            </router-link>
+                                        </div>
+
                                     </div>
                                 </div>
 

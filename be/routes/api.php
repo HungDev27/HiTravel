@@ -57,7 +57,7 @@ Route::post('/admin/ma-giam-gia/tim-kiem', [MaGiamGiaController::class, 'findmaG
 
 
 //QL Booking Tour
-Route::get('/admin/dat-tour/get-data', [DatTourController::class, 'getData']);
+Route::get('/admin/chi-tiet-dat-tour/get-data', [DatTourController::class, 'getData']);
 Route::post('/admin/dat-tour/delete', [DatTourController::class, 'destroy']);
 Route::post('/admin/dat-tour/change-status', [DatTourController::class, 'changeStatus']);
 Route::post('/admin/dat-tour/loc-thong-tin', [DatTourController::class, 'locThongTin']);
@@ -127,6 +127,14 @@ Route::prefix('customer')->group(function () {
 
     // Chi Tiết Tour
     Route::post('/chi-tiet-tour/get-data', [ChiTietTourController::class, 'getDataTour']);
+
+    // Đặt Tour
+    Route::post('/chi-tiet-dat-tour/get-data', [DatTourController::class, 'getDatTour']);
+    Route::post('/dat-tour/tinh-tien', [DatTourController::class, 'tinhTien']);
+    Route::post('/dat-tour/dat', [DatTourController::class, 'store']);
+
+    // Voucher
+    Route::get('/voucher/list', [MaGiamGiaController::class, 'getVoucher']);
 
     // BINH LUAN
     Route::middleware('auth:sanctum')->post(

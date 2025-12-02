@@ -76,6 +76,13 @@ Route::post('/admin/chuc-vu/change-status', [ChucVuController::class, 'changeSta
 Route::post('/admin/chuc-vu/tim-kiem', [ChucVuController::class, 'search']);
 
 
+// Bình luận
+Route::get('/admin/binh-luan/get-data', [DanhGiaController::class, 'getData']);
+Route::post('/admin/binh-luan/delete', [DanhGiaController::class, 'destroy']);
+Route::post('/admin/binh-luan/tim-kiem', [DanhGiaController::class, 'search']);
+Route::post('/admin/binh-luan/phan-hoi', [DanhGiaController::class, 'phanHoi']);
+
+
 
 
 // Tài khoản người dùng

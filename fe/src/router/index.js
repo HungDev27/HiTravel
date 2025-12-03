@@ -65,13 +65,8 @@ const routes = [
     beforeEnter: checkToken,
   },
   {
-    path: "/admin/nhan-vien",
-    component: () => import("../components/Admin/NhanVien/index.vue"),
-    beforeEnter: checkToken,
-  },
-  {
-    path: "/admin/khach-hang",
-    component: () => import("../components/Admin/KhachHang/index.vue"),
+    path: "/admin/nguoi-dung",
+    component: () => import("../components/Admin/NguoiDung/index.vue"),
     beforeEnter: checkToken,
   },
   {

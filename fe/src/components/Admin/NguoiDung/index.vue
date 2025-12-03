@@ -27,11 +27,12 @@
         </div>
         <div class="row mt-3">
             <div class="col-lg-5">
-                <div
-                    style="display: flex; align-items: center; border: 1px solid #ccc; border-radius: 8px; padding: 6px 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); background: white; width: 500px; margin-top: 15px;">
-                    <i class="fa fa-search" style="color: #aaa; font-size: 16px;"></i>
-                    <input type="text" placeholder="Search by Name, Email..."
-                        style="border: none; outline: none; margin-left: 8px; font-size: 14px; flex: 1;" />
+                <!-- Search -->
+                <div class="input-group mb-3">
+                    <input v-model="tim_kiem.tim_nguoi_dung" type="text" class="form-control"
+                        placeholder="Search by Name, Email..." aria-describedby="basic-addon2" v-on:keyup="timKiem()">
+                    <button @click="timKiem()" class="btn btn-primary input-group-text"
+                        id="basic-addon2">Search</button>
                 </div>
             </div>
             <div class="col-lg-2">
@@ -67,6 +68,7 @@
             <table class="table">
                 <thead class="table-info">
                     <tr>
+                        <th>#</th>
                         <th>Thông tin người dùng</th>
                         <th>Số điện thoại</th>
                         <th>Chức vụ</th>
@@ -75,44 +77,75 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
+                    <tr v-for="(value, index) in list_nguoi_dung" :key="value.id">
+                        <td>{{ index + 1 }}</td>
+
+                        <!-- Avatar + Tên + Email -->
                         <td class="align-middle" style="display: flex; align-items: center; gap: 10px;">
-                            <img src="https://i.pravatar.cc/40?img=1"
+                            <img :src="value.avatar ?? 'https://i.pravatar.cc/40'"
                                 style="width: 40px; height: 40px; border-radius: 50%;" />
+
                             <div>
-                                <div><strong>Nhi Xinh</strong></div>
-                                <div style="font-size: 13px; color: gray;">anna.nguyen@example.com</div>
+                                <div><strong>{{ value.ho_ten }}</strong></div>
+                                <div style="font-size: 13px; color: gray;">{{ value.email }}</div>
                             </div>
                         </td>
-                        <td class="align-middle">0369636310</td>
-                        <td class="align-middle"><span class="badge" style="background: #dc3545; color: white;">Nhân
-                                viên</span></td>
+
+                        <!-- Số điện thoại -->
+                        <td class="align-middle">{{ value.so_dien_thoai }}</td>
+
+                        <!-- Chức vụ -->
                         <td class="align-middle">
+                            <span class="badge bg-primary" v-if="value.chuc_vu">
+                                {{ value.chuc_vu.ten_chuc_vu }}
+                            </span>
+                        </td>
+
+                        <!-- Trạng thái -->
+                        <td class="align-middle">
+
                             <!-- Hoạt động -->
-                            <div class="d-flex justify-content-start" style="align-items: center;">
-                                <i class="fa-solid fa-chart-simple text-success me-2 fa-xs"></i><span
-                                    class="text-success">Hoạt động</span>
+                            <div v-if="value.trang_thai === 'active'" class="d-flex justify-content-start"
+                                style="align-items: center;">
+                                <i class="fa-solid fa-chart-simple text-success me-2 fa-xs"></i>
+                                <span class="text-success">Hoạt động</span>
                             </div>
-                            <!-- <div class="d-flex justify-content-start" style="align-items: center;">
-                                <i class="fa-solid fa-chart-simple text-warning me-2 fa-xs"></i><span
-                                    style="color: darkorange;">Không hoạt động</span>
+
+                            <!-- Không hoạt động -->
+                            <div v-else-if="value.trang_thai === 'inactive'" class="d-flex justify-content-start"
+                                style="align-items: center;">
+                                <i class="fa-solid fa-chart-simple text-warning me-2 fa-xs"></i>
+                                <span style="color: darkorange;">Không hoạt động</span>
                             </div>
-                            <div class="d-flex justify-content-start" style="align-items: center;">
-                                <i class="fa-solid fa-chart-simple text-danger me-2 fa-xs"></i><span class="text-danger">Bị khoá</span>
-                            </div> -->
+
+                            <!-- Bị khóa -->
+                            <div v-else-if="value.trang_thai === 'banned'" class="d-flex justify-content-start"
+                                style="align-items: center;">
+                                <i class="fa-solid fa-chart-simple text-danger me-2 fa-xs"></i>
+                                <span class="text-danger">Bị khoá</span>
+                            </div>
 
                         </td>
+
+                        <!-- Hành động -->
                         <td class="align-middle">
-                            <button data-bs-toggle="modal" data-bs-target="#capnhatModal" class="btn me-2"
-                                style="background-color: #ccc; border-radius: 100px;"><i class="fa-solid fa-pencil ms-1"
-                                    style="cursor: pointer; color: #666;"></i></button>
-                            <button data-bs-toggle="modal" data-bs-target="#xoaModal" class="btn me-2"
-                                style="background-color: #ccc; border-radius: 100px;"><i
-                                    class="fa-regular fa-trash-can ms-1"
-                                    style="cursor: pointer; color: #666;"></i></button>
-                            <button data-bs-toggle="modal" data-bs-target="#chitietModal" class="btn"
-                                style="background-color: #ccc; border-radius: 100px;"><i class="fa fa-ellipsis-v ms-1"
-                                    style="cursor: pointer; color: #666;"></i></button>
+                            <button v-on:click="Object.assign(sua_nguoi_dung, value)" data-bs-toggle="modal"
+                                data-bs-target="#capnhatModal" class="btn me-2"
+                                style="background-color: #ccc; border-radius: 100px;">
+                                <i class="fa-solid fa-pencil ms-1" style="cursor: pointer; color: #666;"></i>
+                            </button>
+
+                            <button v-on:click="Object.assign(xoa_nguoi_dung, value)" data-bs-toggle="modal"
+                                data-bs-target="#xoaModal" class="btn me-2"
+                                style="background-color: #ccc; border-radius: 100px;">
+                                <i class="fa-regular fa-trash-can ms-1" style="cursor: pointer; color: #666;"></i>
+                            </button>
+
+                            <button v-on:click="Object.assign(chi_tiet_nguoi_dung, value)" data-bs-toggle="modal"
+                                data-bs-target="#chitietModal" class="btn"
+                                style="background-color: #ccc; border-radius: 100px;">
+                                <i class="fa fa-ellipsis-v ms-1" style="cursor: pointer; color: #666;"></i>
+                            </button>
                         </td>
                     </tr>
                 </tbody>
@@ -122,7 +155,7 @@
 
     <!-- Modal Thêm mới -->
     <div class="modal fade" id="themmoiModal" tabindex="-1" aria-labelledby="themmoiModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
                     <h1 class="modal-title fs-5" id="themmoiModalLabel">Thêm mới người dùng</h1>
@@ -134,48 +167,52 @@
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-md-6">
-                                    <label for="email" class="form-label">Email <span
-                                            class="text-danger">*</span></label>
-                                    <input type="email" class="form-control" id="email" name="email" required
+                                    <label class="form-label">Email <span class="text-danger">*</span></label>
+                                    <input type="email" class="form-control" v-model="them_nguoi_dung.email"
                                         placeholder="vidu@email.com">
                                 </div>
                                 <div class="col-md-6">
-                                    <label for="password" class="form-label">Mật khẩu <span
-                                            class="text-danger">*</span></label>
-                                    <input type="password" class="form-control" id="password" name="password" required>
+                                    <label class="form-label">Mật khẩu <span class="text-danger">*</span></label>
+                                    <input type="password" class="form-control" v-model="them_nguoi_dung.password">
                                 </div>
                             </div>
                             <small class="text-muted"><i>Email này sẽ dùng để đăng nhập.</i></small>
                             <div class="row mt-3">
                                 <div class="col-md-6 mb-3">
-                                    <label for="id_chuc_vu" class="form-label">Chức vụ <span
-                                            class="text-danger">*</span></label>
-                                    <select class="form-select" id="id_chuc_vu" name="id_chuc_vu" required>
-                                        <option value="" selected disabled>-- Chọn chức vụ --</option>
-                                        <option value="1">Nhân Viên</option>
-                                        <option value="2">Khách hàng</option>
+                                    <label class="form-label">Chức vụ <span class="text-danger">*</span></label>
+                                    <select class="form-select" v-model="them_nguoi_dung.id_chuc_vu" required>
+                                        <option value="" disabled>-- Chọn chức vụ --</option>
+                                        <option v-for="cv in list_chuc_vu" :key="cv.id" :value="cv.id">
+                                            {{ cv.ten_chuc_vu }}
+                                        </option>
                                     </select>
                                 </div>
                                 <div class="col-md-6 mb-3">
                                     <label class="form-label">Trạng thái</label>
                                     <div>
                                         <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="radio" name="trang_thai" id="active"
-                                                value="active" checked>
-                                            <label class="form-check-label" for="active">Hoạt động</label>
+                                            <input class="form-check-input" type="radio"
+                                                v-model="them_nguoi_dung.trang_thai" value="active">
+                                            <label class="form-check-label">Hoạt động</label>
                                         </div>
                                         <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="radio" name="trang_thai" id="inactive"
-                                                value="inactive">
-                                            <label class="form-check-label" for="inactive">Không hoạt động</label>
+                                            <input class="form-check-input" type="radio"
+                                                v-model="them_nguoi_dung.trang_thai" value="inactive">
+                                            <label class="form-check-label">Không hoạt động</label>
                                         </div>
                                         <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="radio" name="trang_thai" id="banned"
-                                                value="banned">
-                                            <label class="form-check-label" for="banned">Bị khoá</label>
+                                            <input class="form-check-input" type="radio"
+                                                v-model="them_nguoi_dung.trang_thai" value="banned">
+                                            <label class="form-check-label">Bị khoá</label>
                                         </div>
                                     </div>
                                 </div>
+                            </div>
+
+                            <div class="mt-3">
+                                <label class="form-label">Avatar URL</label>
+                                <input type="text" class="form-control" v-model="them_nguoi_dung.avatar"
+                                    placeholder="https://i.pravatar.cc/150?img=1">
                             </div>
                         </div>
                     </div>
@@ -185,31 +222,33 @@
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-md-6 mb-3">
-                                    <label for="ho_ten" class="form-label">Họ và tên</label>
-                                    <input type="text" class="form-control" id="ho_ten" name="ho_ten"
+                                    <label class="form-label">Họ và tên</label>
+                                    <input type="text" class="form-control" v-model="them_nguoi_dung.ho_ten"
                                         placeholder="Nguyễn Văn A">
                                 </div>
                                 <div class="col-md-6 mb-3">
-                                    <label for="so_dien_thoai" class="form-label">Số điện thoại</label>
-                                    <input type="text" class="form-control" id="so_dien_thoai" name="so_dien_thoai">
+                                    <label class="form-label">Số điện thoại</label>
+                                    <input type="text" class="form-control" v-model="them_nguoi_dung.so_dien_thoai">
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-md-6 mb-3">
-                                    <label for="ngay_sinh" class="form-label">Ngày sinh</label>
-                                    <input type="date" class="form-control" id="ngay_sinh" name="ngay_sinh">
+                                    <label class="form-label">Ngày sinh</label>
+                                    <input type="date" class="form-control" v-model="them_nguoi_dung.ngay_sinh">
                                 </div>
                                 <div class="col-md-6 mb-3">
-                                    <label for="cccd" class="form-label">Căn cước công dân (CCCD)</label>
-                                    <input type="text" class="form-control" id="cccd" name="cccd">
+                                    <label class="form-label">Căn cước công dân (CCCD)</label>
+                                    <input type="text" class="form-control" v-model="them_nguoi_dung.cccd">
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
-                    <button type="button" class="btn btn-primary">Tạo mới</button>
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal" @click="themNguoiDung()">Tạo
+                        mới</button>
                 </div>
             </div>
         </div>
@@ -217,7 +256,7 @@
 
     <!-- Modal Cập nhật -->
     <div class="modal fade" id="capnhatModal" tabindex="-1" aria-labelledby="capnhatModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
                     <h1 class="modal-title fs-5" id="capnhatModalLabel">Cập nhật người dùng</h1>
@@ -229,48 +268,52 @@
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-md-6">
-                                    <label for="email" class="form-label">Email <span
-                                            class="text-danger">*</span></label>
-                                    <input type="email" class="form-control" id="email" name="email" required
+                                    <label class="form-label">Email <span class="text-danger">*</span></label>
+                                    <input type="email" class="form-control" v-model="sua_nguoi_dung.email"
                                         placeholder="vidu@email.com">
                                 </div>
                                 <div class="col-md-6">
-                                    <label for="password" class="form-label">Mật khẩu <span
-                                            class="text-danger">*</span></label>
-                                    <input type="password" class="form-control" id="password" name="password" required>
+                                    <label class="form-label">Mật khẩu <span class="text-danger">*</span></label>
+                                    <input type="password" class="form-control" v-model="sua_nguoi_dung.password">
                                 </div>
                             </div>
                             <small class="text-muted"><i>Email này sẽ dùng để đăng nhập.</i></small>
                             <div class="row mt-3">
                                 <div class="col-md-6 mb-3">
-                                    <label for="id_chuc_vu" class="form-label">Chức vụ <span
-                                            class="text-danger">*</span></label>
-                                    <select class="form-select" id="id_chuc_vu" name="id_chuc_vu" required>
-                                        <option value="" selected disabled>-- Chọn chức vụ --</option>
-                                        <option value="1">Nhân Viên</option>
-                                        <option value="2">Khách hàng</option>
+                                    <label class="form-label">Chức vụ <span class="text-danger">*</span></label>
+                                    <select class="form-select" v-model="sua_nguoi_dung.id_chuc_vu" required>
+                                        <option value="">-- Chọn chức vụ --</option>
+                                        <option v-for="cv in list_chuc_vu" :key="cv.id" :value="cv.id">
+                                            {{ cv.ten_chuc_vu }}
+                                        </option>
                                     </select>
                                 </div>
                                 <div class="col-md-6 mb-3">
                                     <label class="form-label">Trạng thái</label>
                                     <div>
                                         <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="radio" name="trang_thai" id="active"
-                                                value="active" checked>
-                                            <label class="form-check-label" for="active">Hoạt động</label>
+                                            <input class="form-check-input" type="radio"
+                                                v-model="sua_nguoi_dung.trang_thai" value="active">
+                                            <label class="form-check-label">Hoạt động</label>
                                         </div>
                                         <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="radio" name="trang_thai" id="inactive"
-                                                value="inactive">
-                                            <label class="form-check-label" for="inactive">Không hoạt động</label>
+                                            <input class="form-check-input" type="radio"
+                                                v-model="sua_nguoi_dung.trang_thai" value="inactive">
+                                            <label class="form-check-label">Không hoạt động</label>
                                         </div>
                                         <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="radio" name="trang_thai" id="banned"
-                                                value="banned">
-                                            <label class="form-check-label" for="banned">Bị khoá</label>
+                                            <input class="form-check-input" type="radio"
+                                                v-model="sua_nguoi_dung.trang_thai" value="banned">
+                                            <label class="form-check-label">Bị khoá</label>
                                         </div>
                                     </div>
                                 </div>
+                            </div>
+
+                            <div class="mt-3">
+                                <label class="form-label">Avatar URL</label>
+                                <input type="text" class="form-control" v-model="sua_nguoi_dung.avatar"
+                                    placeholder="https://i.pravatar.cc/150?img=1">
                             </div>
                         </div>
                     </div>
@@ -280,23 +323,23 @@
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-md-6 mb-3">
-                                    <label for="ho_ten" class="form-label">Họ và tên</label>
-                                    <input type="text" class="form-control" id="ho_ten" name="ho_ten"
+                                    <label class="form-label">Họ và tên</label>
+                                    <input type="text" class="form-control" v-model="sua_nguoi_dung.ho_ten"
                                         placeholder="Nguyễn Văn A">
                                 </div>
                                 <div class="col-md-6 mb-3">
-                                    <label for="so_dien_thoai" class="form-label">Số điện thoại</label>
-                                    <input type="text" class="form-control" id="so_dien_thoai" name="so_dien_thoai">
+                                    <label class="form-label">Số điện thoại</label>
+                                    <input type="text" class="form-control" v-model="sua_nguoi_dung.so_dien_thoai">
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-md-6 mb-3">
-                                    <label for="ngay_sinh" class="form-label">Ngày sinh</label>
-                                    <input type="date" class="form-control" id="ngay_sinh" name="ngay_sinh">
+                                    <label class="form-label">Ngày sinh</label>
+                                    <input type="date" class="form-control" v-model="sua_nguoi_dung.ngay_sinh">
                                 </div>
                                 <div class="col-md-6 mb-3">
-                                    <label for="cccd" class="form-label">Căn cước công dân (CCCD)</label>
-                                    <input type="text" class="form-control" id="cccd" name="cccd">
+                                    <label class="form-label">Căn cước công dân (CCCD)</label>
+                                    <input type="text" class="form-control" v-model="sua_nguoi_dung.cccd">
                                 </div>
                             </div>
                         </div>
@@ -304,7 +347,8 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
-                    <button type="button" class="btn btn-success">Lưu</button>
+                    <button type="button" class="btn btn-success" data-bs-dismiss="modal" @click="suaNguoiDung()">Cập
+                        Nhập</button>
                 </div>
             </div>
         </div>
@@ -332,7 +376,8 @@
                     <h4 class="fw-bold text-dark mb-2">Xác nhận xóa?</h4>
 
                     <p class="text-muted mb-0">
-                        Bạn có chắc chắn muốn xóa người dùng <strong id="deleteUserName" class="text-dark">...</strong>
+                        Bạn có chắc chắn muốn xóa người dùng <strong id="deleteUserName" class="text-dark">{{
+                            xoa_nguoi_dung.ho_ten }}</strong>
                         không?
                         <br>
                         <span class="small">Hành động này không thể hoàn tác.</span>
@@ -341,7 +386,8 @@
 
                 <div class="modal-footer justify-content-center border-top-0 pt-0 pb-4">
                     <button type="button" class="btn btn-light px-4 me-2" data-bs-dismiss="modal">Hủy bỏ</button>
-                    <button type="button" class="btn btn-danger px-4" id="confirmDeleteBtn">Xóa bỏ</button>
+                    <button type="button" class="btn btn-danger px-4" id="confirmDeleteBtn" data-bs-dismiss="modal"
+                        v-on:click="xoaNguoiDung()">Xóa bỏ</button>
                 </div>
 
             </div>
@@ -366,25 +412,28 @@
                         <div class="position-absolute top-100 start-50 translate-middle">
                             <div class="rounded-circle border border-4 border-white shadow bg-white d-flex justify-content-center align-items-center overflow-hidden"
                                 style="width: 110px; height: 110px;">
-                                <img src="https://i.pinimg.com/736x/5d/93/74/5d9374bab4c5bdd28b5216043f3a0570.jpg"
+                                <img :src="chi_tiet_nguoi_dung.avatar ?? 'https://i.pravatar.cc/40'"
                                     alt="Ảnh đại diện người dùng" class="w-100 h-100 object-fit-cover">
                             </div>
                         </div>
                     </div>
 
                     <div class="text-center mb-4 px-4" style="margin-top: 60px;">
-                        <h3 class="fw-bold mb-1" id="detail_ho_ten">Nguyễn Văn A</h3>
+                        <h3 class="fw-bold mb-1" id="detail_ho_ten">{{ chi_tiet_nguoi_dung.ho_ten }}</h3>
 
                         <div class="mt-2">
-                            <span class="badge bg-success rounded-pill" id="detail_trang_thai">
+                            <span v-if="chi_tiet_nguoi_dung.trang_thai === 'active'"
+                                class="badge bg-success rounded-pill" id="detail_trang_thai">
                                 <i class="bi bi-check-circle-fill me-1"></i> Hoạt động
                             </span>
-                            <!-- <span class="badge bg-warning rounded-pill" id="detail_trang_thai">
+                            <span v-else-if="chi_tiet_nguoi_dung.trang_thai === 'inactive'"
+                                class="badge bg-warning rounded-pill" id="detail_trang_thai">
                                 <i class="bi bi-check-circle-fill me-1"></i> Không hoạt động
                             </span>
-                            <span class="badge bg-danger rounded-pill" id="detail_trang_thai">
+                            <span v-else-if="chi_tiet_nguoi_dung.trang_thai === 'banned'"
+                                class="badge bg-danger rounded-pill" id="detail_trang_thai">
                                 <i class="bi bi-check-circle-fill me-1"></i> Bị khoá
-                            </span> -->
+                            </span>
                         </div>
                     </div>
 
@@ -398,7 +447,8 @@
                                 </div>
                                 <div>
                                     <small class="text-muted d-block">Email</small>
-                                    <span class="fw-semibold text-dark" id="detail_email">email@example.com</span>
+                                    <span class="fw-semibold text-dark" id="detail_email">{{ chi_tiet_nguoi_dung.email
+                                        }}</span>
                                 </div>
                             </div>
 
@@ -408,16 +458,11 @@
                                 </div>
                                 <div>
                                     <small class="text-muted d-block">Chức vụ</small>
-                                    <span
+                                    <span v-if="chi_tiet_nguoi_dung.chuc_vu"
                                         class="mt-2 badge bg-primary bg-opacity-10 text-primary border border-primary border-opacity-25 px-3 py-2 rounded-pill"
                                         id="detail_chuc_vu">
-                                        Nhân viên
+                                        {{ chi_tiet_nguoi_dung.chuc_vu.ten_chuc_vu }}
                                     </span>
-                                    <!-- <span
-                                            class="mt-2 badge bg-primary bg-opacity-10 text-success border border-success border-opacity-25 px-3 py-2 rounded-pill"
-                                            id="detail_chuc_vu">
-                                            Khách hàng
-                                        </span> -->
                                 </div>
                             </div>
                         </div>
@@ -431,7 +476,8 @@
                                 </div>
                                 <div>
                                     <small class="text-muted d-block">Số điện thoại</small>
-                                    <span class="fw-semibold" id="detail_sdt">0905 123 456</span>
+                                    <span class="fw-semibold" id="detail_sdt">{{ chi_tiet_nguoi_dung.so_dien_thoai
+                                    }}</span>
                                 </div>
                             </div>
 
@@ -441,7 +487,8 @@
                                 </div>
                                 <div>
                                     <small class="text-muted d-block">Ngày sinh</small>
-                                    <span class="fw-semibold" id="detail_ngay_sinh">01/01/1990</span>
+                                    <span class="fw-semibold" id="detail_ngay_sinh">{{ chi_tiet_nguoi_dung.ngay_sinh
+                                    }}</span>
                                 </div>
                             </div>
 
@@ -451,7 +498,7 @@
                                 </div>
                                 <div>
                                     <small class="text-muted d-block">Số CCCD</small>
-                                    <span class="fw-semibold" id="detail_cccd">044123456789</span>
+                                    <span class="fw-semibold" id="detail_cccd">{{ chi_tiet_nguoi_dung.cccd }}</span>
                                 </div>
                             </div>
                         </div>
@@ -467,9 +514,119 @@
 </template>
 
 <script>
+import axios from 'axios';
+
 
 export default {
+    data() {
+        return {
+            list_chuc_vu: [],
+            list_nguoi_dung: [],
+            them_nguoi_dung: {},
+            xoa_nguoi_dung: {},
+            chi_tiet_nguoi_dung: {},
+            sua_nguoi_dung: {},
+            tim_kiem: {
+                tim_nguoi_dung: ""
+            }
+        }
+    },
+    mounted() {
+        this.getNguoiDung();
+        this.layDataChucVu();
+    },
+    methods: {
+        layDataChucVu() {
+            axios.get('http://127.0.0.1:8000/api/admin/chuc-vu/get-data')
+                .then(res => {
+                    this.list_chuc_vu = res.data.data;
+                    //this.$toast.error("Lấy danh sách chức vụ thức bại.");
+                })
+        },
+        getNguoiDung() {
+            axios.get("http://localhost:8000/api/admin/nguoi-dung", {
+                headers: { Authorization: "Bearer " + localStorage.getItem("auth_token") }
+            })
+                .then(res => {
+                    if (res.data.status) {
+                        this.list_nguoi_dung = res.data.data;
+                    } else {
+                        this.$toast.error(res.data.message);
+                    }
+                });
+        },
+        themNguoiDung() {
+            axios.post("http://localhost:8000/api/admin/nguoi-dung/them-nguoi-dung", this.them_nguoi_dung, {
+                headers: { Authorization: "Bearer " + localStorage.getItem("auth_token") }
+            })
+                .then(res => {
+                    if (res.data.status) {
+                        this.$toast.success(res.data.message);
+                        this.getNguoiDung(); // load lại danh sách
+                        this.them_nguoi_dung = {};  // reset form
+                    } else {
+                        this.$toast.error("Thêm người dùng thất bại.");
+                    }
+                })
+                .catch((res) => {
+                    this.$toast.error("Thêm người dùng thất bại.");
+                });
+        },
+        chiTietNguoiDung() {
+            axios.get("http://localhost:8000/api/admin/nguoi-dung/chi-tiet-nguoi-dung", {
+                headers: { Authorization: "Bearer " + localStorage.getItem("auth_token") }
+            })
+                .then(res => {
+                    if (res.data.status) {
+                        this.chi_tiet_nguoi_dung = res.data.data;
+                    } else {
+                        this.$toast.error(res.data.message);
+                    }
+                })
+                .catch(err => {
+                    this.$toast.error("Lấy chi tiết người dùng thất bại.");
+                });
+        },
+        xoaNguoiDung() {
+            axios
+                .post('http://127.0.0.1:8000/api/admin/nguoi-dung/xoa-nguoi-dung', this.xoa_nguoi_dung, {
+                    headers: { Authorization: "Bearer " + localStorage.getItem("auth_token") }
+                })
+                .then(res => {
+                    if (res.data.status) {
+                        this.$toast.success(res.data.message);
+                        this.getNguoiDung(); // load lại danh sách
+                    } else {
+                        this.$toast.error(res.data.message);
+                    }
+                })
+                .catch(err => {
+                    this.$toast.error("Xóa người dùng thất bại!");
+                });
+        },
+        suaNguoiDung() {
+            axios.post("http://localhost:8000/api/admin/nguoi-dung/sua-nguoi-dung", this.sua_nguoi_dung, {
+                headers: { Authorization: "Bearer " + localStorage.getItem("auth_token") }
+            })
+                .then(res => {
+                    if (res.data.status) {
+                        this.$toast.success(res.data.message);
+                        this.getNguoiDung(); // load lại danh sách
+                    }
+                })
+                .catch((res) => {
+                    this.$toast.error("Thêm người dùng thất bại.");
+                });
+        },
 
+        timKiem() {
+            axios.post('http://127.0.0.1:8000/api/admin/nguoi-dung/tim-kiem', this.tim_kiem)
+                .then((res) => {
+                    this.list_nguoi_dung = res.data.data;
+                });
+        },
+
+    },
 };
 </script>
 

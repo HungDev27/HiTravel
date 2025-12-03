@@ -95,8 +95,6 @@ Route::post('/admin/lien-he/guiThongTin', [ThongTinLienHeController::class, 'gui
 Route::get('/admin/lien-he/get-data', [ThongTinLienHeController::class, 'getData']);
 Route::post('/admin/lien-he/delete', [ThongTinLienHeController::class, 'destroy']);
 Route::post('/admin/lien-he/change-status', [ThongTinLienHeController::class, 'changeStatus']);
-Route::post('/admin/binh-luan/change-status', [DanhGiaController::class, 'changeStatus']);
-Route::post('/admin/binh-luan/tim-kiem', [DanhGiaController::class, 'search']);
 
 
 

@@ -71,8 +71,7 @@
         <transition name="slide">
           <div v-if="showInteract" class="submenu">
             <router-link to="/admin/binh-luan" class="submenu-item">Bình Luận</router-link>
-            <router-link to="/admin/bai-viet" class="submenu-item">Bài Viết</router-link>
-            <router-link to="/admin/quan-ly-lien-he" class="submenu-item">Quản Lý Liên Hệ</router-link>
+            <router-link to="/admin/lien-he" class="submenu-item">Quản Lý Liên Hệ</router-link>
           </div>
         </transition>
       </div>

@@ -120,16 +120,9 @@
                                             class="bx bx-right-arrow-alt"></i>Bình Luận</a>
                                 </li>
                             </router-link>
-                            <router-link to="/admin/bai-viet">
+                            <router-link to="/admin/lien-he">
                                 <li>
-                                    <a class="dropdown-item" href="/admin/bai-viet"><i
-                                            class="bx bx-right-arrow-alt"></i>Bài
-                                        Viết</a>
-                                </li>
-                            </router-link>
-                            <router-link to="/admin/bai-viet">
-                                <li>
-                                    <a class="dropdown-item" href="/admin/quan-ly-lien-he">
+                                    <a class="dropdown-item" href="/admin/lien-he">
                                         <i class="bx bx-right-arrow-alt"></i>Quản Lý Liên Hệ
                                     </a>
                                 </li>

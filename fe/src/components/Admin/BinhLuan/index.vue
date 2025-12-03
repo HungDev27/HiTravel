@@ -15,7 +15,7 @@
                             style="background: #bed9ee; width: 40px; height: 40px; display: flex; justify-content: center; align-items: center; border-radius: 10px; margin-top: 7px; margin-right: 10px;"><i
                                 class="fa-lg fa-regular fa-comment text-primary"></i></span>
                         <div class="d-flex flex-column">
-                            <div style="font-size: large;"><b>10</b></div>
+                            <div style="font-size: large;"><b>{{ reviews.length }}</b></div>
                             <div class="text-secondary">Tổng đánh giá</div>
                         </div>
                     </div>
@@ -29,7 +29,7 @@
                             <i class="fa-regular fa-star" style="color: #e0b000;"></i>
                         </span>
                         <div class="d-flex flex-column">
-                            <div style="font-size: large;"><b>3.5/5</b></div>
+                            <div style="font-size: large;"><b>{{ diemTB }}/5</b></div>
                             <div class="text-secondary">Điểm trung bình</div>
                         </div>
                     </div>
@@ -43,7 +43,7 @@
                             <i class="fa-solid fa-circle-exclamation" style="color: #ff0000;"></i>
                         </span>
                         <div class="d-flex flex-column">
-                            <div style="font-size: large;"><b>10</b></div>
+                            <div style="font-size: large;"><b>{{ xulygap }}</b></div>
                             <div class="text-secondary">Cần xử lý gấp</div>
                         </div>
                     </div>
@@ -64,12 +64,14 @@
                             </svg>
 
                             <!-- TÌM KIẾM -->
-                            <input type="text" placeholder="Tìm kiếm khách hàng, tour..."
-                                style="border: none; outline: none; width: 100%; font-size: 14px; color: #333; font-family: sans-serif; background: transparent;">
+                            <input type="text" v-model="timkiem" placeholder="Tìm kiếm khách hàng, tour, bình luận..."
+                                style="border: none; outline: none; width: 100%; font-size: 14px; color: #333; background: transparent;">
+
                         </div>
                         <div class="d-flex justify-content-end">
                             <!-- LỌC SAO -->
-                            <select class="form-select fw-bold me-3" aria-label="Star Rating" style="width: 130px; border-radius: 12px;
+                            <select v-model="locSao" @change="applyFilter" class="form-select fw-bold me-3"
+                                aria-label="Star Rating" style="width: 130px; border-radius: 12px;
                                 border: 1px solid #dee2e6; box-shadow: 0 2px 4px rgba(0,0,0,0.03);
                                 cursor: pointer; color: #495057; background-color: #fff;"
                                 onfocus="this.style.borderColor='#86b7fe'; this.style.boxShadow='0 0 0 0.25rem rgba(13,110,253,.25)'"
@@ -92,11 +94,15 @@
                                 <option value="2" style="color: #ffc107; font-weight: bold;">
                                     2 &#9733;&#9733;
                                 </option>
+                                <option value="1" style="color: #ffc107; font-weight: bold;">
+                                    1 &#9733;
+                                </option>
 
                             </select>
 
                             <!-- LỌC ẢNH -->
-                            <select class="form-select fw-bold me-3" aria-label="Star Rating" style="border-radius: 12px;
+                            <select v-model="locAnh" @change="applyFilter" class="form-select fw-bold me-3"
+                                aria-label="Star Rating" style="border-radius: 12px;
                                 border: 1px solid #dee2e6; box-shadow: 0 2px 4px rgba(0,0,0,0.03);
                                 cursor: pointer; color: #495057; background-color: #fff;"
                                 onfocus="this.style.borderColor='#86b7fe'; this.style.boxShadow='0 0 0 0.25rem rgba(13,110,253,.25)'"
@@ -139,13 +145,13 @@
                         </thead>
 
                         <tbody>
-                            <tr v-for="(review, index) in reviews" :key="index"
+                            <tr v-for="(review, index) in loc" :key="index"
                                 style="box-shadow: 0 2px 6px rgba(0,0,0,0.02);">
 
                                 <!-- id -->
                                 <td class="bg-white align-middle ps-4"
                                     style="border-top-left-radius: 12px; border-bottom-left-radius: 12px; padding: 20px;">
-                                    <span class="text-secondary fw-bold" style="font-size: 14px;">#{{ review.id
+                                    <span class="text-secondary fw-bold" style="font-size: 14px;">#{{ index + 1
                                     }}</span>
                                 </td>
 
@@ -158,8 +164,8 @@
                                         </div>
                                         <div class="d-flex flex-column">
                                             <span class="fw-bold text-dark" style="font-size: 14px;">{{ review.ten_khach
-                                            }}</span>
-                                            <span class="text-muted" style="font-size: 12px;">customer@email.com</span>
+                                                }}</span>
+                                            <span class="text-muted" style="font-size: 12px;">{{ review.email }}</span>
                                         </div>
                                     </div>
                                 </td>
@@ -190,19 +196,16 @@
                                         "{{ review.binh_luan }}"
                                     </p>
 
-                                    <div v-if="review.hinh_anh && review.hinh_anh.length > 0"
-                                        class="position-relative d-inline-block cursor-pointer hover-zoom"
-                                        @click="openZoomModal(review.hinh_anh)" style="width: 50px; height: 50px;">
+                                    <div class="d-flex gap-2 flex-wrap">
+                                        <div v-for="(img, i) in review.hinh_anh" :key="i"
+                                            class="position-relative d-inline-block cursor-pointer hover-zoom"
+                                            @click="openZoomModal(review.hinh_anh)" style="width: 50px; height: 50px;">
 
-                                        <img :src="review.hinh_anh[0]" class="img-thumbnail"
-                                            style="width: 100%; height: 100%; object-fit: cover; border-radius: 8px; padding: 2px;">
-
-                                        <div v-if="review.hinh_anh.length > 1"
-                                            class="position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center"
-                                            style="background-color: rgba(0,0,0,0.5); border-radius: 8px; color: white; font-weight: bold; font-size: 14px;">
-                                            +{{ review.hinh_anh.length - 1 }}
+                                            <img :src="img" class="img-thumbnail"
+                                                style="width: 100%; height: 100%; object-fit: cover; border-radius: 8px; padding: 2px;">
                                         </div>
                                     </div>
+
                                 </td>
 
                                 <!-- Trạng thái -->
@@ -220,13 +223,16 @@
                                 <td class="bg-white align-middle text-end pe-4"
                                     style="border-top-right-radius: 12px; border-bottom-right-radius: 12px;">
                                     <button data-bs-toggle="modal" data-bs-target="#xemModal"
+                                        @click="xemChiTiet(review)"
                                         class="btn btn-light rounded-2 me-1 text-primary bg-primary bg-opacity-10 border-0">
                                         <i class="fa-regular fa-eye"></i>
                                     </button>
                                     <button data-bs-toggle="modal" data-bs-target="#xoaModal"
+                                        @click="chonDanhGiaCanXoa(review)"
                                         class="btn btn-light rounded-2 text-danger bg-danger bg-opacity-10 border-0">
                                         <i class="fa-regular fa-trash-can"></i>
                                     </button>
+
                                 </td>
 
                             </tr>
@@ -273,14 +279,16 @@
         </div>
     </div>
 
+
     <!-- Modal xem chi tiết -->
-    <div class="modal fade" id="xemModal" tabindex="-1" aria-hidden="true">
+    <div class="modal fade" id="xemModal" tabindex="-1" aria-hidden="true" v-if="chiTiet">
         <div class="modal-dialog modal-dialog-centered modal-lg">
             <div class="modal-content border-0 shadow-lg" style="border-radius: 16px; overflow: hidden;">
 
                 <div class="modal-header bg-primary text-white py-3">
                     <h5 class="modal-title fw-bold text-uppercase" style="font-size: 16px; letter-spacing: 1px;">
-                        <i class="fa-solid fa-circle-info me-2"></i>Chi tiết đánh giá #1024
+                        <i class="fa-solid fa-circle-info me-2"></i>
+                        Chi tiết đánh giá #{{ chiTiet?.id }}
                     </h5>
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
                         aria-label="Close"></button>
@@ -292,26 +300,33 @@
                         <div class="flex-shrink-0">
                             <div class="rounded-circle d-flex align-items-center justify-content-center fw-bold text-white shadow-sm"
                                 style="width: 60px; height: 60px; background-color: #28a745; font-size: 24px;">
-                                A
+                                {{ chiTiet?.ten_khach?.charAt(0) }}
                             </div>
                         </div>
 
                         <div class="flex-grow-1 ms-3">
                             <div class="d-flex justify-content-between align-items-start">
                                 <div>
-                                    <h6 class="fw-bold text-dark mb-1" style="font-size: 1.1rem;">Nguyễn Văn An</h6>
+                                    <h6 class="fw-bold text-dark mb-1" style="font-size: 1.1rem;">
+                                        {{ chiTiet?.ten_khach }}
+                                    </h6>
+
                                     <p class="text-muted small mb-1">
-                                        <i class="fa-solid fa-envelope me-1"></i>an.nguyen@gmail.com
+                                        <i class="fa-solid fa-envelope me-1"></i>{{ chiTiet?.email }}
                                     </p>
+
                                     <p class="text-primary small fw-bold mb-2">
-                                        Tour Phú Quốc 3N2Đ - Đảo Ngọc
+                                        {{ chiTiet?.tour_ten }}
                                         <span class="text-secondary fw-normal ms-2">
-                                            <i class="fa-regular fa-clock me-1"></i>15/10/2023
+                                            <i class="fa-regular fa-clock me-1"></i>{{ chiTiet?.created_at }}
                                         </span>
                                     </p>
                                 </div>
+
                                 <div class="text-end">
-                                    <span class="fw-bold me-2" style="color: #ffc107;">5/5</span>
+                                    <span class="fw-bold me-2" style="color: #ffc107;">
+                                        {{ chiTiet?.diem }}/5
+                                    </span>
                                     <i class="fa-solid fa-star text-warning" style="font-size: 12px;"></i>
                                 </div>
                             </div>
@@ -319,20 +334,16 @@
                             <div class="p-3 bg-light rounded-3 border mt-2 position-relative">
                                 <i
                                     class="fa-solid fa-quote-left text-secondary position-absolute top-0 start-0 m-2 opacity-25 fa-2x"></i>
+
                                 <p class="fst-italic text-dark mb-0 ms-4" style="line-height: 1.6;">
-                                    "Dịch vụ tuyệt vời, hướng dẫn viên nhiệt tình. Tuy nhiên xe di chuyển hơi ồn một
-                                    chút, mong công ty khắc phục. Đồ ăn ngon!"
+                                    "{{ chiTiet?.binh_luan }}"
                                 </p>
                             </div>
 
                             <div class="mt-3">
                                 <p class="fw-bold text-secondary small mb-2">Hình ảnh đính kèm:</p>
-                                <div class="d-flex gap-2">
-                                    <img src="https://i.pinimg.com/736x/59/53/4f/59534ffa7437ee202dbb8cb48d3dfcd7.jpg"
-                                        class="rounded border shadow-sm cursor-pointer hover-scale"
-                                        style="width: 80px; height: 80px; object-fit: cover;">
-
-                                    <img src="https://i.pinimg.com/236x/2f/67/3e/2f673e7241569c895c969639b497f934.jpg"
+                                <div class="d-flex gap-2 flex-wrap mt-2">
+                                    <img v-for="(img, i) in chiTiet?.hinh_anh" :key="i" :src="img"
                                         class="rounded border shadow-sm cursor-pointer hover-scale"
                                         style="width: 80px; height: 80px; object-fit: cover;">
                                 </div>
@@ -352,14 +363,19 @@
 
                         <div class="row g-3">
                             <div class="col-12">
-                                <label class="form-label fw-bold text-secondary small">Nội dung trả lời khách
-                                    hàng</label>
+                                <label class="form-label fw-bold text-secondary small">
+                                    Nội dung trả lời khách hàng
+                                </label>
                                 <textarea class="form-control bg-light" rows="4"
-                                    placeholder="Ví dụ: Cảm ơn quý khách đã góp ý, chúng tôi sẽ kiểm tra lại xe..."></textarea>
+                                    placeholder="Ví dụ: Cảm ơn quý khách đã góp ý..."
+                                    v-model="chiTiet.phan_hoi"></textarea>
+
                             </div>
 
                             <div class="col-md-6">
-                                <label class="form-label fw-bold text-secondary small">Trạng thái hiển thị</label>
+                                <label class="form-label fw-bold text-secondary small">
+                                    Trạng thái hiển thị
+                                </label>
                                 <select class="form-select fw-bold text-success border-success">
                                     <option value="hien_thi" selected>Đang hiển thị</option>
                                     <option value="cho_duyet">Chờ duyệt</option>
@@ -374,7 +390,7 @@
                 <div class="modal-footer bg-light border-top-0 py-3">
                     <button type="button" class="btn btn-outline-secondary px-4 rounded-pill fw-bold"
                         data-bs-dismiss="modal">Đóng</button>
-                    <button type="button" class="btn btn-primary px-4 rounded-pill fw-bold shadow-sm">
+                    <button type="button" class="btn btn-primary px-4 rounded-pill fw-bold shadow-sm" @click="PhanHoi">
                         <i class="fa-solid fa-paper-plane me-2"></i>Gửi phản hồi & Lưu
                     </button>
                 </div>
@@ -383,20 +399,48 @@
         </div>
     </div>
 
+
     <!-- Modal Xoa -->
     <div class="modal fade" id="xoaModal" tabindex="-1" aria-labelledby="xoaModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="xoaModalLabel">Modal title</h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <div class="modal-dialog modal-dialog-centered" style="max-width: 450px;">
+            <div class="modal-content border-0 shadow-lg" style="border-radius: 16px;">
+
+                <div class="modal-header border-0 pb-0 d-flex flex-column align-items-center pt-4">
+                    <button type="button" class="btn-close position-absolute top-0 end-0 m-3" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
+                    <div class="rounded-circle d-flex align-items-center justify-content-center"
+                        style="width: 60px; height: 60px; background-color: #fce7e7; border: 4px solid #f9dcdc;">
+                        <i class="fa-solid fa-triangle-exclamation fa-xl text-danger"></i>
+                    </div>
+                    <h5 class="modal-title fw-bold text-dark mt-3" id="xoaModalLabel">Xác nhận Xóa Đánh giá</h5>
                 </div>
-                <div class="modal-body">
-                    ...
+
+                <div class="modal-body text-center pt-3 pb-4 px-4">
+                    <p class="text-secondary mb-3" style="font-size: 0.95rem;">
+                        Bạn sắp xóa **vĩnh viễn** đánh giá sau. Hành động này **không thể hoàn tác**.
+                    </p>
+
+                    <div class="p-3 bg-light rounded-3 text-start border">
+                        <p class="mb-1 fw-bold text-dark">
+                            ID: <span class="text-danger">{{ delete_binh_luan.id }}</span>
+                        </p>
+                        <p class="mb-1 text-dark">
+                            Khách hàng: <span class="fw-bold">{{ delete_binh_luan.ten_khach }}</span>
+                        </p>
+                        <p class="mb-0 text-muted small">
+                            Tour: <span class="fw-medium">{{ delete_binh_luan.tour_ten }}</span>
+                        </p>
+                    </div>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
+
+                <div class="modal-footer border-0 d-flex justify-content-center gap-2 pt-0 pb-4">
+                    <button type="button" class="btn btn-outline-secondary px-4 rounded-pill fw-bold"
+                        data-bs-dismiss="modal">
+                        Hủy
+                    </button>
+                    <button type="button" class="btn btn-danger px-4 rounded-pill fw-bold shadow-sm" @click="xoa()">
+                        <i class="fa-solid fa-trash-can me-2"></i>Xóa Đánh giá
+                    </button>
                 </div>
             </div>
         </div>
@@ -410,44 +454,51 @@ export default {
     data() {
         return {
             reviews: [], // 1. Khai báo mảng rỗng ban đầu
-            zoomedImageList: [], // Biến cho modal slide ảnh
+            zoomedImageList: [],
+            locSao: 'all',
+            locAnh: 'all',
+            timkiem: "",
+            chiTiet: null,
+            delete_binh_luan: {},
+
+
         }
     },
 
-    // --- CHÈN VÀO ĐÂY ---
     mounted() {
-        // 2. Giả lập dữ liệu ngay khi trang vừa load xong
-        this.reviews = [
-            {
-                id: 1,
-                ten_khach: "Nguyễn Văn A", // Thêm tên nếu cần hiển thị
-                tour_ten: "Tour Phú Quốc",
-                diem: 5,
-                binh_luan: "Tuyệt vời, cảnh rất đẹp!",
-                created_at: "2023-10-20",
-                // Mảng hình ảnh (Demo hiển thị số lượng +2)
-                hinh_anh: [
-                    "https://i.pinimg.com/736x/59/53/4f/59534ffa7437ee202dbb8cb48d3dfcd7.jpg",
-                    "https://i.pinimg.com/736x/c4/92/d9/c492d9257f12219021ea3b98ff1626d7.jpg",
-                    "https://i.pinimg.com/736x/87/0e/3a/870e3a76cf8969643cd6067289c85fc2.jpg"
-                ]
-            },
-            {
-                id: 2,
-                ten_khach: "Trần Thị B",
-                tour_ten: "Tour Đà Nẵng",
-                diem: 4,
-                binh_luan: "Hướng dẫn viên nhiệt tình.",
-                created_at: "2023-10-21",
-                // Mảng hình ảnh (Chỉ có 1 ảnh)
-                hinh_anh: [
-                    "https://i.pinimg.com/736x/c4/92/d9/c492d9257f12219021ea3b98ff1626d7.jpg"
-                ]
-            }
-        ];
+        this.getData();
+    },
+    computed: {
+        diemTB() {
+            if (this.loc.length === 0) return 0;
+            const tong = this.loc.reduce((sum, r) => sum + r.diem, 0);
+            return (tong / this.loc.length).toFixed(1);
+        },
+        xulygap() {
+            return this.loc.filter(r => r.diem <= 2).length;
+        },
 
-        // Nếu sau này có API thật thì gọi hàm này đè lên dữ liệu giả
-        // this.getReviews(); 
+        loc() {
+            return this.reviews
+                .filter(r => {
+
+                    //tìm kiếm theo bình luận
+                    const key = this.timkiem.toLowerCase();
+                    if (key) {
+                        const match = r.binh_luan.toLowerCase().includes(key);
+
+                        if (!match) return false;
+                    }
+                    // 1. Lọc sao
+                    if (this.locSao !== "all" && r.diem != this.locSao) return false;
+
+                    // 2. Lọc hình ảnh
+                    if (this.locAnh === "5" && r.hinh_anh.length === 0) return false; // có ảnh
+                    if (this.locAnh === "4" && r.hinh_anh.length > 0) return false; // không ảnh
+                    return true;
+                });
+        }
+
     },
 
     methods: {
@@ -460,7 +511,111 @@ export default {
                 const myModal = new window.bootstrap.Modal(modalElement);
                 myModal.show();
             }
+        },
+        getData() {
+            axios
+                .get('http://127.0.0.1:8000/api/admin/binh-luan/get-data', {
+                    headers: {
+                        Authorization: 'Bearer ' + localStorage.getItem("auth_token")
+                    }
+                }
+
+                )
+                .then((res) => {
+
+                    this.reviews = res.data.data.map(item => {
+                        return {
+                            id: item.id,
+                            ten_khach: item.ho_ten,
+                            email: item.email,
+                            tour_ten: item.ten_tour,
+                            diem: item.diem,
+                            binh_luan: item.binh_luan,
+                            phan_hoi: item.phan_hoi ?? "",
+                            created_at: this.formatDate(item.created_at),
+                            hinh_anh: Array.isArray(item.hinh_anh)
+                                ? item.hinh_anh
+                                : (item.hinh_anh ? JSON.parse(item.hinh_anh) : []),
+
+
+                            trang_thai: item.trang_thai,
+                        }
+                    });
+
+                });
+        },
+        PhanHoi() {
+            axios.post('http://127.0.0.1:8000/api/admin/binh-luan/phan-hoi', {
+                id: this.chiTiet.id,
+                phan_hoi: this.chiTiet.phan_hoi,
+            }, {
+                headers: {
+                    Authorization: 'Bearer ' + localStorage.getItem("auth_token")
+                }
+            })
+                .then(res => {
+
+                    if (res.data.status) {
+
+                        this.$toast.success(res.data.message);
+
+                        this.getData();
+
+                        // Đóng modal sau khi gửi
+                        // const modal = bootstrap.Modal.getInstance(document.getElementById("xemModal"));
+                        // if (modal) modal.hide();
+                    }
+                    else {
+                        this.$toast.error(res.data.message);
+                    }
+                })
+                .catch(() => {
+                    this.$toast.error("Không thể gửi phản hồi!");
+                });
+        },
+        xoa() {
+            axios.post('http://127.0.0.1:8000/api/admin/binh-luan/delete',
+                this.delete_binh_luan, {
+                headers: {
+                    Authorization: 'Bearer ' + localStorage.getItem("auth_token")
+                }
+            }
+            )
+                .then(res => {
+
+
+                   if (res.data.status) {
+                         this.getData();
+                        this.$toast.success(res.data.message);
+
+                       
+
+                        
+                    }
+                    else {
+                        this.$toast.error(res.data.message);
+                    }
+                });
+        },
+
+
+        formatDate(dateString) {
+            if (!dateString) return "";
+            const d = new Date(dateString);
+            return d.toISOString().slice(0, 10);
+        },
+        xemChiTiet(review) {
+            this.chiTiet = review;
+        },
+        chonDanhGiaCanXoa(review) {
+            this.delete_binh_luan = {
+                id: review.id,
+                ten_khach: review.ten_khach,
+                tour_ten: review.tour_ten,
+            };
         }
+
+
     }
 }
 </script>

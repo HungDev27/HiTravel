@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\DanhGia;
+use App\Models\PhanQuyen;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -17,6 +18,7 @@ class DanhGiaController
                 'danh_gias.*',
                 'nguoi_dungs.ho_ten',
                 'nguoi_dungs.email',
+                'danh_gias.phan_hoi',
                 'tour_du_liches.ten_tour'
             )
             ->orderBy('danh_gias.id', 'DESC')
@@ -28,6 +30,19 @@ class DanhGiaController
     }
     public function changeStatus(Request $request)
     {
+        $id_chuc_nang = 6;
+        $id_chuc_vu   = Auth::guard('sanctum')->user()->id_chuc_vu;
+
+        $check = PhanQuyen::where('id_chuc_vu', $id_chuc_vu)
+            ->where('id_chuc_nang', $id_chuc_nang)
+            ->first();
+
+        if (!$check) {
+            return response()->json([
+                'status'    =>  0,
+                'message'   =>  'Bạn không có quyền thực hiện chức năng này!'
+            ]);
+        }
         $danhGia = DanhGia::find($request->id);
 
         if (!$danhGia) {
@@ -47,6 +62,19 @@ class DanhGiaController
     }
     public function destroy(Request $request)
     {
+        $id_chuc_nang = 6;
+        $id_chuc_vu   = Auth::guard('sanctum')->user()->id_chuc_vu;
+
+        $check = PhanQuyen::where('id_chuc_vu', $id_chuc_vu)
+            ->where('id_chuc_nang', $id_chuc_nang)
+            ->first();
+
+        if (!$check) {
+            return response()->json([
+                'status'    =>  0,
+                'message'   =>  'Bạn không có quyền thực hiện chức năng này!'
+            ]);
+        }
 
         DanhGia::where('id', $request->id)->delete();
 
@@ -107,6 +135,19 @@ class DanhGiaController
 
     public function binhLuantour(Request $request)
     {
+        $id_chuc_nang = 6;
+        $id_chuc_vu   = Auth::guard('sanctum')->user()->id_chuc_vu;
+
+        $check = PhanQuyen::where('id_chuc_vu', $id_chuc_vu)
+            ->where('id_chuc_nang', $id_chuc_nang)
+            ->first();
+
+        if (!$check) {
+            return response()->json([
+                'status'    =>  0,
+                'message'   =>  'Bạn không có quyền thực hiện chức năng này!'
+            ]);
+        }
         // Lấy user đúng cách
         $user = Auth::user();
         if (!$user) {
@@ -148,6 +189,40 @@ class DanhGiaController
         return response()->json([
             'status' => 1,
             'message' => 'Bạn đã gửi đánh giá thành công!'
+        ]);
+    }
+    public function phanHoi(Request $request)
+    {
+        $id_chuc_nang = 6;
+        $id_chuc_vu   = Auth::guard('sanctum')->user()->id_chuc_vu;
+
+        $check = PhanQuyen::where('id_chuc_vu', $id_chuc_vu)
+            ->where('id_chuc_nang', $id_chuc_nang)
+            ->first();
+
+        if (!$check) {
+            return response()->json([
+                'status'    =>  0,
+                'message'   =>  'Bạn không có quyền thực hiện chức năng này!'
+            ]);
+        }
+        $danhGia = DanhGia::find($request->id);
+
+        if (!$danhGia) {
+            return response()->json([
+                'status' => 0,
+                'message' => 'Bình luận không tồn tại!'
+            ]);
+        }
+
+        $danhGia->phan_hoi = $request->phan_hoi;
+
+
+        $danhGia->save();
+
+        return response()->json([
+            'status' => 1,
+            'message' => 'Cập nhật phản hồi thành công!'
         ]);
     }
 

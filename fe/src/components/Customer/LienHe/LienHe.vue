@@ -7,11 +7,16 @@
                         <h4>Liên hệ với chúng tôi</h4>
                     </div>
                     <div class="card-body">
-                        <input type="text" class="form-control mt-2 mb-3" placeholder="Họ và tên">
-                        <input type="text" class="form-control mt-2 mb-3" placeholder="Email">
-                        <input type="text" class="form-control mt-2 mb-3" placeholder="Điện Thoại">
-                        <textarea class="form-control mt-2 mb-3" placeholder="Nội dung" rows="3"></textarea>
-                        <button class="btn btn-primary mt-3">Gửi thông tin</button>
+                        <input v-model="list_lien_he.ten" type="text" class="form-control mt-2 mb-3"
+                            placeholder="Họ và tên">
+                        <input v-model="list_lien_he.email" type="text" class="form-control mt-2 mb-3"
+                            placeholder="Email">
+                        <input v-model="list_lien_he.so_dien_thoai" type="text" class="form-control mt-2 mb-3"
+                            placeholder="Điện Thoại">
+                        <textarea v-model="list_lien_he.tin_nhan" class="form-control mt-2 mb-3" placeholder="Nội dung"
+                            rows="3"></textarea>
+
+                        <button @click="guiThongTinLienHe()" class="btn btn-primary mt-3">Gửi thông tin</button>
                     </div>
                 </div>
                 <div class="card">
@@ -138,8 +143,52 @@
     </div>
 </template>
 <script>
+import axios from 'axios';
 export default {
+    data() {
+        return {
+            list_lien_he: {
+                ten: '',
+                email: '',
+                so_dien_thoai: '',
+                tin_nhan: '',
+                trang_thai: 'chua_xem',
+            }
+        }
+    },
+    methods: {
+        validateLienHe(data) {
+            if (!data.ten || !data.email || !data.so_dien_thoai || !data.tin_nhan) {
+                this.$toast.error("Vui lòng nhập đầy đủ thông tin!");
+                return false;
+            }
+            return true;
+        },
+        guiThongTinLienHe() {
+            if (!this.validateLienHe(this.list_lien_he)) return;
 
+            axios
+                .post("http://127.0.0.1:8000/api/admin/lien-he/guiThongTin", this.list_lien_he)
+
+                .then((res) => {
+                    if (res.data.status) {
+                        this.$toast.success(res.data.message);
+                        this.list_lien_he = {
+                            ten: '',
+                            email: '',
+                            so_dien_thoai: '',
+                            tin_nhan: ''
+                        };
+                    } else {
+                        this.$toast.error(res.data.message || "Gửi thất bại!");
+                    }
+                })
+                .catch(() => this.$toast.error("API lỗi khi gửi thông tin!"));
+        }
+
+
+
+    }
 }
 </script>
 <style></style>

@@ -4,62 +4,68 @@ namespace App\Http\Controllers;
 
 use App\Models\ThongTinLienHe;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controller;
 
-class ThongTinLienHeController
+class ThongTinLienHeController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    public function guiThongTin(Request $request)
     {
-        //
+        ThongTinLienHe::create([
+            'id_khach_hang' => null,
+            'ten'  => $request->ten,
+            'email'  => $request->email,
+            'so_dien_thoai'  => $request->so_dien_thoai,
+            'tin_nhan'  => $request->tin_nhan,
+            'trang_thai'  => $request->trang_thai,
+        ]);
+        return response()->json([
+            'status'  => true,
+            'message' => 'Thông tin của bạn đã được gửi thành công!',
+        ]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    public function getData()
     {
-        //
-    }
+        $data = ThongTinLienHe::leftJoin('nguoi_dungs', 'nguoi_dungs.id', '=', 'thong_tin_lien_hes.id_khach_hang')
+            ->select(
+                'thong_tin_lien_hes.*',
+                'nguoi_dungs.ho_ten',
+                'nguoi_dungs.email as email_khach_hang'
+            )
+            ->orderBy('thong_tin_lien_hes.id', 'DESC')
+            ->get();
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
+        return response()->json([
+            'status' => true,
+            'data'   => $data,
+        ]);
     }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(ThongTinLienHe $thongTinLienHe)
+    public function destroy(Request $request)
     {
-        //
+        $id = $request->id;
+
+
+        $lienHe = ThongTinLienHe::find($id);
+
+
+
+        $lienHe->delete();
+
+        return response()->json([
+            'status' => true,
+            'message' => 'Xóa liên hệ thành công.',
+        ]);
     }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(ThongTinLienHe $thongTinLienHe)
+    public function changeStatus(Request $request)
     {
-        //
-    }
+        $lh = ThongTinLienHe::find($request->id);
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, ThongTinLienHe $thongTinLienHe)
-    {
-        //
-    }
+        $lh->trang_thai = $request->trang_thai;
+        $lh->save();
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(ThongTinLienHe $thongTinLienHe)
-    {
-        //
+        return response()->json([
+            'status' => true,
+            'message' => 'Cập nhật trạng thái thành công!'
+        ]);
     }
 }

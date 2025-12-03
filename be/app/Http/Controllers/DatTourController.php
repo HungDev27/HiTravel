@@ -8,6 +8,7 @@ use App\Models\TourDuLich;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
+use Illuminate\Validation\Rule;
 
 class DatTourController extends Controller
 {
@@ -56,15 +57,26 @@ class DatTourController extends Controller
 
     public function changeStatus(Request $request)
     {
+        $request->validate([
+            'id' => 'required|integer',
+            'trang_thai' => [
+                'required',
+                'string',
+                Rule::in(['cho_xu_ly', 'da_thanh_toan', 'da_huy']),
+            ],
+        ]);
+        
         $booking = DatTour::find($request->id);
 
         if (!$booking) {
+            // Trả về 404 Not Found nếu không tìm thấy ID
             return response()->json([
                 'status' => false,
                 'message' => 'Không tìm thấy đơn đặt tour'
             ], 404);
         }
 
+        // Cập nhật và lưu
         $booking->trang_thai = $request->trang_thai;
         $booking->save();
 
@@ -107,6 +119,7 @@ class DatTourController extends Controller
     public function getDatTour(Request $request)
     {
         $data_tour = TourDuLich::with(['anh', 'phuongTiens'])->where('id', $request->id)->first();
+        $data_tour->anh_dai_dien = $data_tour->anh->first()->url ?? null;
 
         if ($data_tour) {
             return response()->json([
@@ -185,7 +198,6 @@ class DatTourController extends Controller
         'so_tre_em'       => 'required|integer|min:0',
         'id_ma_giam_gia'  => 'nullable|integer',
 
-        // ⭐ Validate thông tin liên lạc
         'ten_lien_lac'    => 'required|string',
         'email_lien_lac'  => 'required|email',
         'so_dien_thoai_lien_lac' => 'required|string',

@@ -1,155 +1,152 @@
 <template>
-    <div class="container py-4 py-md-5">
-        <div class="row g-4">
+    <!-- Thêm màu nền nhẹ cho toàn bộ trang -->
+    <div class="container py-4 py-md-5" style="background-color: #f7f9fc;">
+        <div class="row g-4 justify-content-center">
+            
+            <!-- CỘT NỘI DUNG CHÍNH -->
             <div class="col-lg-12">
-                <div class="bg-white rounded shadow-sm p-3 p-md-4 mb-4">
+                <div style="background-color: white; border-radius: 1rem; box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1); padding: 1.5rem 3rem;">
 
-                    <!-- Tiêu đề bài viết  -->
-                    <!-- <h1 class="fs-2 fs-md-1 fw-bold text-dark mb-3 text-uppercase">{{ chi_tiet_bai_viet.tieu_de }}
-                    </h1> -->
-                    <div class="d-flex flex-wrap align-items-center gap-3 pb-3 mb-4 border-bottom text-secondary small">
-                        <span><i class="bi bi-calendar3 text-danger me-1"></i> 10/05/2025</span>
-                        <div class="ms-auto mt-2 mt-sm-0 d-flex align-items-center">
-                            <span class="me-2">Chia sẻ:</span>
-                            <a href="#"
-                                class="d-inline-flex align-items-center justify-content-center rounded-circle bg-primary text-white me-1"
-                                style="width: 32px; height: 32px;">
-                                <i class="fa-brands fa-2x fa-square-facebook"></i>
-                            </a>
-                            <a href="#"
-                                class="d-inline-flex align-items-center justify-content-center rounded-circle bg-dark text-white me-1"
-                                style="width: 32px; height: 32px;">
-                                <i class="fa-brands fa-2x fa-square-twitter"></i>
-                            </a>
-                            <a href="#"
-                                class="d-inline-flex align-items-center justify-content-center rounded-circle bg-danger text-white"
-                                style="width: 32px; height: 32px;">
-                                <i class="fa-solid fa-2x fa-envelope"></i>
-                            </a>
+                    <!-- 1. HEADER (TIÊU ĐỀ & THÔNG TIN) -->
+                    <header style="padding-bottom: 1rem; margin-bottom: 1.5rem; border-bottom: 1px solid #e9ecef;">
+                        
+                        <!-- Danh mục (Category) -->
+                        <span style="background-color: #e6f7ff; color: #007bff; font-weight: bold; padding: 0.6em 1em; border-radius: 50rem; text-transform: uppercase; display: inline-block; margin-bottom: 1rem;">
+                            <i class="fa-solid fa-layer-group me-1"></i> {{ chi_tiet_bai_viet.danh_muc?.ten_danh_muc || 'Tin tức' }}
+                        </span>
+
+                        <!-- Tiêu đề -->
+                        <h1 style="font-size: 2.5rem; font-weight: 800; color: #212529; margin-bottom: 1rem; line-height: 1.3;">
+                            {{ chi_tiet_bai_viet.tieu_de || 'Đang tải tiêu đề bài viết...' }}
+                        </h1>
+                        
+                        <!-- Meta data (Ngày và Chia sẻ) -->
+                        <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 1rem; color: #6c757d; font-size: 0.875rem;">
+                            <!-- Ngày đăng -->
+                            <span><i class="fa-solid fa-calendar-alt me-1" style="color: #dc3545;"></i> {{ formatDate(chi_tiet_bai_viet.created_at) }}</span>
+                            
+                            <!-- Social Share -->
+                            <div style="margin-left: auto; display: flex; align-items: center;">
+                                <span style="margin-right: 0.5rem; font-weight: 600;">Chia sẻ:</span>
+                                <!-- Facebook -->
+                                <a href="#" title="Chia sẻ Facebook"
+                                    style="display: inline-flex; align-items: center; justify-content: center; border-radius: 50%; background-color: #007bff; color: white; margin-right: 0.25rem; width: 30px; height: 30px; font-size: 1rem;">
+                                    <i class="fa-brands fa-facebook-f"></i>
+                                </a>
+                                <!-- Twitter -->
+                                <a href="#" title="Chia sẻ Twitter"
+                                    style="display: inline-flex; align-items: center; justify-content: center; border-radius: 50%; background-color: #17a2b8; color: white; margin-right: 0.25rem; width: 30px; height: 30px; font-size: 1rem;">
+                                    <i class="fa-brands fa-twitter"></i>
+                                </a>
+                                <!-- Email -->
+                                <a href="#" title="Chia sẻ Email"
+                                    style="display: inline-flex; align-items: center; justify-content: center; border-radius: 50%; background-color: #dc3545; color: white; width: 30px; height: 30px; font-size: 1rem;">
+                                    <i class="fa-solid fa-envelope"></i>
+                                </a>
+                            </div>
                         </div>
+                    </header>
+
+                    <!-- 2. HÌNH ẢNH ĐẠI DIỆN -->
+                    <div style="margin-bottom: 3rem; border-radius: 0.5rem; overflow: hidden; box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);">
+                        <img :src="chi_tiet_bai_viet.hinh_anh || 'https://i.pinimg.com/736x/56/fc/fb/56fcfb804e829afd4070b093ff9c0f50.jpg'" 
+                             alt="Hình ảnh bài viết" 
+                             style="width: 100%; height: auto; max-height: 500px; object-fit: cover; display: block;" 
+                             >
                     </div>
 
-                    <div class="mb-4 rounded overflow-hidden text-center">
-                        <!-- <img :src="chi_tiet_bai_viet.hinh_anh" alt="" style="height: 500px;" class="img-fluid"> -->
+                    <!-- 3. MÔ TẢ NGẮN (PULLQUOTE) -->
+                    <div style="background-color: #fff3cd; border-left: 4px solid #ffc107; border-radius: 0.25rem; padding: 1.5rem; margin-top: 1.5rem; margin-bottom: 1.5rem; box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);">
+                        <p style="font-weight: 600; font-style: italic; color: #c08401; margin-bottom: 0;">
+                            <i class="fa-solid fa-quote-left me-2"></i> {{ chi_tiet_bai_viet.mo_ta_ngan || 'Đoạn tóm tắt ngắn về nội dung chính của bài viết...' }}
+                        </p>
                     </div>
-                    <div class="lh-lg">
-                        <h3 class="fs-4 fw-semibold mb-3">Nội dung bài viết:</h3>
-                        <div class="bg-warning-subtle border-start border-4 border-warning rounded p-4 my-4">
-                            <!-- <span v-html="chi_tiet_bai_viet.noi_dung"></span> -->
-                        </div>
+
+                    <!-- 4. NỘI DUNG CHI TIẾT -->
+                    <div style="line-height: 1.75;">
+                        <h3 style="font-size: 1.5rem; font-weight: 600; margin-bottom: 1rem; color: #212529;">Nội dung chi tiết:</h3>
+                        <!-- Render nội dung HTML -->
+                        <div v-html="chi_tiet_bai_viet.noi_dung"></div>
+                        <div style="clear: both;"></div>
                     </div>
-                    <!-- Tags -->
-                    <div class="mt-4 pt-3 border-top">
-                        <span class="fw-semibold text-secondary me-2">Tags:</span>
-                        <a href="#"
-                            class="badge rounded-pill bg-light text-secondary text-decoration-none me-1 mb-2 py-2 px-3">khuyến
-                            mãi</a>
-                        <a href="#"
-                            class="badge rounded-pill bg-light text-secondary text-decoration-none me-1 mb-2 py-2 px-3">mua
-                            1 tặng 1</a>
-                        <a href="#"
-                            class="badge rounded-pill bg-light text-secondary text-decoration-none me-1 mb-2 py-2 px-3">HI
-                            member</a>
-                        <a href="#"
-                            class="badge rounded-pill bg-light text-secondary text-decoration-none me-1 mb-2 py-2 px-3">vé
-                            tour</a>
-                        <a href="#"
-                            class="badge rounded-pill bg-light text-secondary text-decoration-none me-1 mb-2 py-2 px-3">ưu
-                            đãi</a>
+                    
+                    <!-- 5. TAGS -->
+                    <div style="margin-top: 3rem; padding-top: 1rem; border-top: 1px solid #e9ecef;">
+                        <span style="font-weight: 700; color: #6c757d; margin-right: 0.5rem; font-size: 1rem;"><i class="fa-solid fa-tags me-1"></i> Thẻ (Tags):</span>
+                        <template v-if="chi_tiet_bai_viet.tag" v-for="tag in chi_tiet_bai_viet.tag.split(',')" :key="tag">
+                            <a href="#"
+                                style="display: inline-block; border-radius: 50rem; background-color: #f8f9fa; color: #6c757d; text-decoration: none; margin-right: 0.25rem; margin-bottom: 0.5rem; padding: 0.5rem 1rem; font-size: 0.875rem; border: 1px solid #ddd; transition: background-color 0.2s, box-shadow 0.2s;"
+                                onmouseover="this.style.backgroundColor='#e9ecef'; this.style.boxShadow='0 2px 8px rgba(0, 0, 0, 0.15)'"
+                                onmouseout="this.style.backgroundColor='#f8f9fa'; this.style.boxShadow='none'">
+                                #{{ tag.trim() }}
+                            </a>
+                        </template>
+                        <span v-else style="color: #6c757d; font-size: 0.875rem; font-style: italic;">Không có thẻ nào được gắn.</span>
                     </div>
 
                 </div>
             </div>
-            <div class="col-lg-12">
-                <div class="bg-white rounded shadow-sm p-3 p-md-4 mb-4">
-                    <h3 class="mb-4">Các Bài Viết Liên Quan</h3>
-                    <div class="row">
-                        <div class="col-lg-3 d-flex">
-                            <div class="card flex-full">
-                                <img src="https://statics.vinpearl.com/diem-du-lich-01_1632671030%20(1)_1661249974.jpg"
-                                    class="card-img-top" style="height: 200px;" alt="...">
-                                <div class="card-body">
-                                    <h6 class="card-title">Top 5 tour du lịch Việt Nam năm 2025</h6>
-                                    <p class="card-text"><small>Danh sách những tour du lịch nổi bật nhất năm 2025 trải
-                                            dài từ Bắc vào Nam, mang đến nhiều trải nghiệm hấp dẫn.</small></p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-lg-3 d-flex">
-                            <div class="card flex-full">
-                                <img src="https://resource.kinhtedothi.vn/2022/05/10/1fcea0e8-8981-4fe2-bea3-7acc01de4d98.jpg"
-                                    class="card-img-top" style="height: 200px;" alt="...">
-                                <div class="card-body">
-                                    <h6 class="card-title">Trải nghiệm tour biển đảo tuyệt đẹp</h6>
-                                    <p class="card-text"><small>Khám phá biển xanh, cát trắng, tham gia hoạt động lặn
-                                            ngắm san hô và thưởng thức hải sản tươi ngon.</small></p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-lg-3 d-flex">
-                            <div class="card flex-full">
-                                <img src="https://truongsatour.com/uploads/images/tour-mua-he-da-nang-gia-sieu-re.jpg"
-                                    class="card-img-top" style="height: 200px;" alt="...">
-                                <div class="card-body">
-                                    <h6 class="card-title">Tour khám phá văn hoá, ẩm thực Đà Nẵng</h6>
-                                    <p class="card-text"><small>Đà Nẵng nổi tiếng với cầu Rồng, bãi biển Mỹ Khê và ẩm
-                                            thực miền Trung đậm đà khó quên.</small></p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-lg-3 d-flex">
-                            <div class="card flex-full">
-                                <img src="https://cdn.tgdd.vn/Files/2022/03/26/1422479/17-diem-du-lich-mien-nam-dep-ly-tuong-nhat-khong-nen-bo-lo-202203261508470331.jpg"
-                                    class="card-img-top" style="height: 200px;" alt="...">
-                                <div class="card-body">
-                                    <h6 class="card-title">Khám phá miền Nam sông nước</h6>
-                                    <p class="card-text"><small>Trải nghiệm chợ nổi, vườn trái cây miệt vườn và không
-                                            khí ấm áp, chân tình của người dân Nam Bộ.</small></p>
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-            </div>
-
         </div>
     </div>
-
 </template>
-<script>
-// import axios from 'axios';
 
-// export default {
-//     props: ["id_bai_viet"],
-//     data() {
-//         return {
-//             id_bai_viet: this.$route.params.id_bai_viet,
-//             chi_tiet_bai_viet: {},
-//         }
-//     },
-//     mounted() {
-//         this.loadChiTietBaiViet();
-//     },
-//     methods: {
-//         loadChiTietBaiViet() {
-//             var payload = {
-//                 id: this.id_bai_viet
-//             }
-//             axios.post('http://127.0.0.1:8000/api/client/chi-tiet-bai-viet/get-data', payload)
-//                 .then((res) => {
-//                     if (res.data.status) {
-//                         this.chi_tiet_bai_viet = res.data.data;
-//                     } else {
-//                         this.$toast.error(res.data.message);
-//                         this.$router.push('/');
-//                     }
-//                 });
-//         }
-//     },
-// }
+<script>
+import axios from 'axios'
+
+export default {
+    data() {
+        return {
+            
+            chi_tiet_bai_viet: {},
+            related_posts: []
+        }
+    },
+
+    mounted() {
+        this.layChiTietBaiViet(this.$route.params.id);
+        this.layBaiVietLienQuan(this.$route.params.id);
+
+    },
+
+    methods: {
+        // Hàm format ngày hiển thị
+        formatDate(dateString) {
+            if (!dateString) return '---';
+            const date = new Date(dateString);
+            return `${date.getDate().toString().padStart(2, '0')}/${(date.getMonth() + 1).toString().padStart(2, '0')}/${date.getFullYear()}`;
+        },
+
+        layChiTietBaiViet(id) {
+            axios.get(`http://127.0.0.1:8000/api/customer/bai-viet/${id}`)
+                .then(res => {
+                    this.chi_tiet_bai_viet = res.data.data;
+                })
+                .catch(err => {
+                    console.error("Lỗi khi lấy chi tiết bài viết:", err);
+                });
+        },
+
+        layBaiVietLienQuan(id) {
+            axios.get(`http://127.0.0.1:8000/api/customer/bai-viet/${id}/related`)
+                .then(res => {
+                    this.related_posts = res.data.data;
+                })
+                .catch(err => {
+                    console.error("Lỗi khi lấy bài viết liên quan:", err);
+                });
+        }
+
+    },
+    watch: {
+    '$route.params.id'(newId) {
+        this.layChiTietBaiViet(newId);
+        this.layBaiVietLienQuan(newId);
+    }
+}
+
+}
 </script>
-<style></style>
+
+
+<style>
+</style>

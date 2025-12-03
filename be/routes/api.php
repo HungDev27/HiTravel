@@ -1,13 +1,17 @@
 <?php
 
+use App\Http\Controllers\BaiVietController;
+use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\ChiTietTourController;
 use App\Http\Controllers\ChucNangController;
 use App\Http\Controllers\ChucVuController;
 use App\Http\Controllers\DanhGiaController;
+use App\Http\Controllers\DanhMucBaiVietController;
 use App\Http\Controllers\DanhMucController;
 
 use App\Http\Controllers\DatTourController;
 use App\Http\Controllers\HomeCustomerController;
+use App\Http\Controllers\LichSuDHController;
 use App\Http\Controllers\MaGiamGiaController;
 use App\Http\Controllers\NguoiDungController;
 use App\Http\Controllers\PhanQuyenController;
@@ -136,6 +140,11 @@ Route::prefix('customer')->group(function () {
     // Voucher
     Route::get('/voucher/list', [MaGiamGiaController::class, 'getVoucher']);
 
+    // Lịch Sử Đơn Hàng
+    Route::middleware('auth:sanctum')->get('/ls-dat-tour/list', [LichSuDHController::class, 'getData']);
+
+
+
     // BINH LUAN
     Route::middleware('auth:sanctum')->post(
         '/chi-tiet-tour/binh-luan',
@@ -144,4 +153,15 @@ Route::prefix('customer')->group(function () {
     Route::get('/chi-tiet-tour/binh-luan/get-data/{id}', [DanhGiaController::class, 'getDataCustomerBinhLuan']);
     Route::get('/chi-tiet-tour/diem-trung-binh/{id_tour}', [DanhGiaController::class, 'getDiemTrungBinh']);
 
+    // Chi tiết bài viết
+    Route::get('bai-viet/{id}/related', [BaiVietController::class, 'related']);
+    Route::apiResource('bai-viet', BaiVietController::class);
+    Route::apiResource('danh-muc-bai-viet', DanhMucBaiVietController::class);
+ 
+
 });
+
+// ===================== VNPay ===============================
+Route::post('/payment/vnpay/create', [CheckoutController::class, 'vnpay_payment']);
+Route::get('/payment/vnpay/return', [CheckoutController::class, 'vnpay_return']);
+Route::get('/payment/vnpay/ipn', [CheckoutController::class, 'vnpay_ipn']);

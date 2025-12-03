@@ -6,27 +6,28 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
         Schema::create('thanh_toans', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('id_dat_tour');
-            $table->string('phuong_thuc');
-            $table->dateTime('thoi_gian_thanh_toan');
-            $table->decimal('so_tien', 12, 2);
-            $table->enum('trang_thai', ['pending', 'success', 'failed']);
+
+            $table->enum('phuong_thuc', ['momo', 'vnpay', 'bank', 'tien_mat', 'visa', 'mbbank']);
+            $table->dateTime('thoi_gian_thanh_toan')->nullable();
+
+            $table->decimal('so_tien', 12, 2)->default(0);
+
+            $table->enum('trang_thai', ['cho_thanh_toan', 'thanh_cong', 'that_bai'])
+                  ->default('cho_thanh_toan');
+
             $table->timestamps();
 
-            $table->foreign('id_dat_tour')->references('id')->on('dat_tours')->onDelete('cascade');
+            $table->foreign('id_dat_tour')
+                  ->references('id')->on('dat_tours')
+                  ->onDelete('cascade');
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
         Schema::dropIfExists('thanh_toans');

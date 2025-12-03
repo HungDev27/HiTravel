@@ -110,7 +110,7 @@ const routes = [
     meta: { layout: "customer" },
   },
   {
-    path: "/chi-tiet-bai-viet/:id_bai_viet",
+    path: "/chi-tiet-bai-viet/:idz",
     component: () =>
       import("../components/Customer/ChiTietBV/ChiTietBaiViet.vue"),
     meta: { layout: "customer" },
@@ -157,6 +157,17 @@ const routes = [
     props: true,
   },
   {
+    path: "/lich-su-don-hang",
+    component: () => import("../components/Customer/LichSuDonHang/LSDH.vue"),
+    meta: { layout: "customer" },
+    props: true,
+  },
+  {
+    path: "/vnpay_return",
+    component: () => import("../components/Customer/ThanhToan/index.vue"),
+    meta: { layout: "customer" },
+  },
+  {
     path: "/chinh-sach-bao-mat",
     component: () =>
       import("../components/Customer/ChinhSachBaoMat/ChinhSachBaoMat.vue"),
@@ -201,6 +212,11 @@ const routes = [
 const router = createRouter({
   history: createWebHistory(),
   routes: routes,
+  scrollBehavior(to, from, savedPosition) {
+    // Luôn cuộn lên đầu trang
+    return { top: 0 };
+  },
+
 });
 
 export default router;

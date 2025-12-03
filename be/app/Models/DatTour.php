@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Models\ThanhToan;
 
 class DatTour extends Model
 {
@@ -39,5 +40,15 @@ class DatTour extends Model
     public function thanhToan()
     {
         return $this->hasMany(ThanhToan::class, 'id_dat_tour');
+    }
+
+    public function phuongTien()
+    {
+        return $this->belongsTo(PhuongTien::class, 'id_phuong_tien');
+    }
+
+    public function voucher()
+    {
+        return $this->belongsTo(MaGiamGia::class, 'id_ma_giam_gia');
     }
 }

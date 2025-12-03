@@ -7,59 +7,86 @@ use Illuminate\Http\Request;
 
 class DanhMucBaiVietController
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        //
+        return response()->json([
+            'success' => true,
+            'data' => DanhMucBaiViet::all()
+        ]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'ten_danh_muc' => 'required|max:255',
+            'mo_ta'        => 'nullable|max:500'
+        ]);
+
+        $dm = DanhMucBaiViet::create($validated);
+
+        return response()->json([
+            'success' => true,
+            'data' => $dm
+        ]);
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(DanhMucBaiViet $danhMucBaiViet)
+    public function show($id)
     {
-        //
+        $dm = DanhMucBaiViet::find($id);
+
+        if (!$dm) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Không tìm thấy danh mục.'
+            ], 404);
+        }
+
+        return response()->json([
+            'success' => true,
+            'data' => $dm
+        ]);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(DanhMucBaiViet $danhMucBaiViet)
+    public function update(Request $request, $id)
     {
-        //
+        $dm = DanhMucBaiViet::find($id);
+
+        if (!$dm) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Không tìm thấy danh mục.'
+            ], 404);
+        }
+
+        $validated = $request->validate([
+            'ten_danh_muc' => 'sometimes|max:255',
+            'mo_ta'        => 'sometimes|max:500'
+        ]);
+
+        $dm->update($validated);
+
+        return response()->json([
+            'success' => true,
+            'data' => $dm
+        ]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, DanhMucBaiViet $danhMucBaiViet)
+    public function destroy($id)
     {
-        //
-    }
+        $dm = DanhMucBaiViet::find($id);
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(DanhMucBaiViet $danhMucBaiViet)
-    {
-        //
+        if (!$dm) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Không tìm thấy danh mục.'
+            ], 404);
+        }
+
+        $dm->delete();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Đã xóa danh mục.'
+        ]);
     }
 }

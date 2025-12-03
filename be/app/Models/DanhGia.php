@@ -21,7 +21,7 @@ class DanhGia extends Model
     ];
 
     protected $casts = [
-        'hinh_anh' => 'array', 
+        'hinh_anh' => 'array',
     ];
 
     public function tour()

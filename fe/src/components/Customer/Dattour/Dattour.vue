@@ -120,8 +120,10 @@
                         <!-- Hình ảnh và tiêu đề -->
                         <div class="d-flex flex-row mb-3">
                             <div class="p-2">
-                                <img src="https://i.pinimg.com/736x/b9/9f/a5/b99fa5e3c5a558f6a4c19ce4f518a5ff.jpg"
+                                <img :src="dat_tour.anh_dai_dien || 'https://i.pinimg.com/736x/eb/55/4c/eb554c8ebd4ee9ff53b270504839b3d9.jpg'"
                                     style="border-radius: 10px; height: 130px; width: 160px;">
+
+
                             </div>
                             <div class="p-2">
                                 <b style="font-size: 20px;">{{ dat_tour.ten_tour }}</b>

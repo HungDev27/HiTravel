@@ -46,10 +46,10 @@
                                         style="height: 270px; width: 320px;">
                                     <!-- map -->
                                     <div class="position-absolute bottom-0 start-0">
-                                        <button class="btn-white">
-                                            <img src="../../assets/images/homecustomer/location.png">
+                                        <span class="badge bg-danger">
+                                            <i class="fa-solid fa-map-pin"></i>
                                             {{ value.dia_diem }}
-                                        </button>
+                                        </span>
                                     </div>
                                 </div>
                             </div>

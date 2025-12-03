@@ -37,7 +37,8 @@
 
             <!-- KHUNG TÌM KIẾM CHÍNH (Đã thu gọn) -->
             <div class="bg-white d-flex align-items-center py-2 px-3 rounded-pill shadow-sm mb-3"
-                style="box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);">
+                style="box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);opacity: 0; transform: translateY(30px); transition: all 0.8s ease;"
+                data-animate="fade-in-up">
 
                 <!-- 1. BẠN MUỐN ĐI ĐÂU -->
                 <div class="flex-grow-1 px-3">
@@ -107,12 +108,14 @@
     <div class="mt-5"
         style="background-color: #f0f8ff; padding: 3rem 1rem; border-top: 1px solid #0099ff; border-bottom: 1px solid #0099ff;">
 
-        <h2 style="text-align: center; font-size: 1.8rem; font-weight: bold; margin-bottom: 2rem;">
+        <h2 style="text-align: center; font-size: 1.8rem; font-weight: bold; margin-bottom: 2rem; opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease, transform 0.8s ease;" data-animate="fade-in-up">
             Vì sao bạn nên chọn NHTravel
         </h2>
 
-        <div
-            style="display: flex; justify-content: center; flex-wrap: wrap; gap: 2rem; max-width: 1200px; margin: auto;">
+        <div style="display: flex; justify-content: center; flex-wrap: wrap; gap: 2rem; max-width: 1200px; margin: auto;opacity: 0; transform: translateY(30px); transition: all 0.8s ease;"
+            data-animate="fade-in-up">
 
             <div class="row text-center">
                 <div class="col-lg-4">
@@ -149,7 +152,8 @@
     </div>
 
     <!-- BOOKING CÙNG NHTRAVEL -->
-    <div style="padding: 4rem 10rem; background-color: #fff; text-align: center; position: relative; overflow: hidden;">
+    <div style="padding: 4rem 10rem; background-color: #fff; text-align: center; position: relative; overflow: hidden;opacity: 0; transform: translateY(30px); transition: all 0.8s ease;"
+        data-animate="fade-in-up">
 
         <h2> Booking cùng NHTravel</h2>
 
@@ -194,7 +198,8 @@
                 </div>
             </div>
 
-            <div class="row mt-5">
+            <div class="row mt-5" data-animate="fade-in-up"
+                style="opacity: 0; transform: translateY(30px); transition: all 0.8s ease;">
                 <!-- Hiểu hơn về chúng tôi -->
                 <div class="col-lg-6 text-start">
                     <h4 class="text-primary"><b>Hiểu hơn về chúng tôi</b></h4>
@@ -244,7 +249,8 @@
                 </div>
 
                 <router-link to="/gioi-thieu" style="text-decoration: none;">
-                    <div style="text-align: center; margin-top: 2rem;">
+                    <div style="text-align: center; margin-top: 2rem;opacity: 0; transform: translateY(30px); transition: all 0.8s ease;"
+                        data-animate="fade-in-up">
 
                         <div onmouseover="this.style.color='white'; this.querySelector('.bg-slide').style.width='100%'; this.querySelector('.bg-slide').style.opacity='1';"
                             onmouseout="this.style.color='#e56b2f'; this.querySelector('.bg-slide').style.width='0'; this.querySelector('.bg-slide').style.opacity='0';"
@@ -282,7 +288,8 @@
             </div>
 
             <!-- Hot Deal -->
-            <div class="d-flex justify-content-between" style="padding: 1rem 1rem;">
+            <div class="d-flex justify-content-between" data-animate="fade-in-up"
+                style="opacity: 0; transform: translateY(30px); transition: all 0.8s ease;padding: 1rem 1rem;">
                 <h3 style="font-family: 'Arial Black', Impact, sans-serif; letter-spacing: 1px;">HOT DEAL</h3>
                 <router-link to="/tour-all">
                     <div class="text-success" style="font-size: 13px; border-radius: 1rem; transition:0.4s;"
@@ -293,7 +300,8 @@
             </div>
 
             <!-- Tour -->
-            <div class="row">
+            <div class="row" data-animate="fade-in-up"
+                style="opacity: 0; transform: translateY(30px); transition: all 0.8s ease;">
                 <template v-for="(value, index) in listTour" :key="index">
                     <div class="col-lg-3">
                         <div class="position-relative">
@@ -376,7 +384,8 @@
     <div class="container">
 
         <!-- Điểm đến yêu thích -->
-        <div class="row">
+        <div class="row" data-animate="fade-in-up"
+            style="opacity: 0; transform: translateY(30px); transition: all 0.8s ease;">
             <!-- Tiêu đề -->
             <div class="text-center mb-3">
                 <h2 style="font-family: 'Palatino Linotype', 'Book Antiqua', Palatino, serif; letter-spacing: 1px;"
@@ -388,7 +397,8 @@
         </div>
 
         <!-- Ảnh -->
-        <div class="row mt-3">
+        <div class="row mt-3" data-animate="fade-in-up"
+            style="opacity: 0; transform: translateY(30px); transition: all 0.8s ease;">
             <template v-for="(value, index) in listDiaDiem" :key="index">
                 <div class="col-lg-3">
                     <router-link :to="{ path: '/tour-all', query: { location: value.dia_diem } }"
@@ -412,7 +422,8 @@
         </div>
 
         <!-- TRẢI NGHIỆM SẮC XUÂN VIỆT NAM -->
-        <div class="position-relative text-center mt-5">
+        <div class="position-relative text-center mt-5" data-animate="fade-in-up"
+            style="opacity: 0; transform: translateY(30px); transition: all 0.8s ease;">
             <img src="../../../assets/images/homecustomer/nui.jpg" style="width: 1290px; height: 400px;">
             <div class="position-absolute top-50 translate-middle" style="margin-left: 32rem;">
                 <div class="row">
@@ -444,8 +455,11 @@
         </div>
 
         <!-- BÀI VIẾT -->
-        <h2 class="text-center mb-4" style="margin-top: 5rem;">Cẩm nang du lịch</h2>
-        <div class="row">
+        <h2 data-animate="fade-in-up"
+            style="opacity: 0; transform: translateY(30px); transition: all 0.8s ease;margin-top: 5rem;"
+            class="text-center mb-4">Cẩm nang du lịch</h2>
+        <div class="row" data-animate="fade-in-up"
+            style="opacity: 0; transform: translateY(30px); transition: all 0.8s ease;margin-top: 5rem;">
             <!-- listBaiViet.slice(0, 6) -->
             <template v-for="(value, index) in listBaiViet" :key="index">
                 <div class="col-lg-4 mb-4 ">
@@ -466,7 +480,8 @@
 
 
     <!-- Khách hàng đánh giá  -->
-    <div class="row bg-white text-center">
+    <div class="row bg-white text-center" data-animate="fade-in-up"
+        style="opacity: 0; transform: translateY(30px); transition: all 0.8s ease;">
         <h2 class="mt-4" style="font-family: 'Arial Black', Impact, sans-serif;">Khách hàng đánh giá</h2>
         <p class="mt-2 mb-3">Mục tiêu hàng đầu của chúng tôi là sự hài lòng của khách hàng</p>
 
@@ -487,10 +502,6 @@
                             <div class="text-center p-4">
                                 <p style="font-size: 1.1rem; font-style: italic;">"{{ value.binh_luan }}"</p>
                                 <p style="margin-top: 1rem; font-weight: bold;">⭐ {{ value.diem }}/5</p>
-                                <p>
-                                    <img :src="value.avatar" class="rounded-circle" style="height: 80px; width: 80px;">
-                                </p>
-
                             </div>
 
                         </div>
@@ -511,20 +522,6 @@
                 </div>
 
             </div>
-        </div>
-    </div>
-
-
-    <!-- Bạn có muốn nhận tin khuyến mãi? -->
-    <div class="row text-center mb-5 mt-5">
-        <h3>Bạn có muốn nhận tin khuyến mãi?</h3>
-        <div class="mt-3 d-flex justify-content-center">
-            <form class="d-flex" role="search" style="width: 600px;">
-                <input class="form-control me-2" type="search" placeholder="Nhập địa chỉ email" aria-label="Search" />
-                <button class="btn btn-success text-nowrap" type="submit"><i
-                        class="fa-solid fa-paper-plane me-2"></i>Gửi
-                    ngay</button>
-            </form>
         </div>
     </div>
 
@@ -561,9 +558,14 @@ export default {
         }
     },
     mounted() {
-        this.loadData();
-        this.getDanhGia();
-    },
+    this.loadData();
+    this.getDanhGia();
+
+    // Delay animation setup để chắc chắn DOM đã render
+    setTimeout(() => {
+        this.initFadeInAnimation();
+    }, 500); // có thể chỉnh về 300 nếu thấy mượt
+},
     methods: {
         formatVND(number) {
             return new Intl.NumberFormat('vi-VI', { style: 'currency', currency: 'VND' }).format(number,);
@@ -613,8 +615,22 @@ export default {
                         }
                     });
                 });
+        },
+        initFadeInAnimation() {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                        observer.unobserve(entry.target); // Chỉ trigger 1 lần
+                    }
+                });
+            }, { threshold: 0.1 });
 
+            const targets = document.querySelectorAll('[data-animate="fade-in-up"]');
+            targets.forEach(el => observer.observe(el));
         }
+
     }
 }
 </script>

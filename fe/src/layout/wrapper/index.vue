@@ -1,21 +1,32 @@
 <template>
-    <div class="wrapper">
-        <div class="header-wrapper">
-            <TopAdmin></TopAdmin>
-            <MenuAdmin></MenuAdmin>
-        </div>
-        <div class="page-wrapper">
+    <div class="admin-layout">
+
+        <!-- SIDEBAR -->
+        <MenuAdmin class="sidebar" />
+
+        <div class="main-area">
+
+            <!-- HEADER -->
+            <TopAdmin />
+
+            <!-- CONTENT -->
             <div class="page-content">
-                <router-view> </router-view>
+                <router-view></router-view>
             </div>
+
+            <!-- FOOTER -->
+            <BotAdmin />
         </div>
-        <BotAdmin></BotAdmin>
+
     </div>
 </template>
+
 <script>
 import TopAdmin from "../components/TopAdmin.vue";
 import MenuAdmin from "../components/MenuAdmin.vue";
 import BotAdmin from "../components/BotAdmin.vue";
+
+// assets
 import "../../assets/js/bootstrap.bundle.min.js";
 import "../../assets/js/jquery.min.js";
 import "../../assets/plugins/simplebar/js/simplebar.min.js";
@@ -24,28 +35,55 @@ import "../../assets/plugins/perfect-scrollbar/js/perfect-scrollbar.js";
 import "../../assets/js/index.js";
 import "../../assets/js/app.js";
 import "../../assets/js/pace.min.js";
+
 export default {
-    name: "#app",
-    components: {
-        TopAdmin,
-        MenuAdmin,
-        BotAdmin
-    }
+    name: "App",
+    components: { TopAdmin, MenuAdmin, BotAdmin }
+}
+</script>
+
+<style>
+/* import CSS như bạn đã làm ở trên */
+</style>
+
+<style>
+.admin-layout {
+    display: flex;
+    width: 100%;
+    min-height: 100vh;
+    overflow: hidden;
+    background: #f8fafc;
 }
 
-</script>
-<style>
-@import "../../assets/plugins/simplebar/css/simplebar.css";
-@import "../../assets/plugins/perfect-scrollbar/css/perfect-scrollbar.css";
-@import "../../assets/plugins/metismenu/css/metisMenu.min.css";
-@import "../../assets/css/pace.min.css";
-@import "../../assets/css/bootstrap.min.css";
-@import "../../assets/css/bootstrap-extended.css";
-@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap");
-@import "../../assets/css/app.css";
-@import "../../assets/css/icons.css";
-@import "../../assets/css/dark-theme.css";
-@import "../../assets/css/semi-dark.css";
-@import "../../assets/css/header-colors.css";
-@import url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css");
+/* Sidebar cố định */
+.sidebar {
+    width: 250px;
+    height: 100vh;
+    background: #1e293b;
+    flex-shrink: 0;
+    position: sticky;
+    top: 0;
+    left: 0;
+    z-index: 99;
+}
+
+/* Vùng chính */
+.main-area {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Nội dung trang */
+.page-content {
+    flex: 1;
+    padding: 25px 35px;
+    animation: fade .25s ease;
+}
+
+/* Animation mượt */
+@keyframes fade {
+    from { opacity: 0; transform: translateY(5px); }
+    to { opacity: 1; transform: translateY(0); }
+}
 </style>

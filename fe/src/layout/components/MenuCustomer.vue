@@ -10,6 +10,8 @@
                     style="color: #fff; text-shadow: 0 0 5px #ffc107, 0 0 10px #ffc107; transition: text-shadow 0.3s;"
                     onmouseover="this.style.textShadow='0 0 8px #fff, 0 0 15px #fff'"
                     onmouseout="this.style.textShadow='0 0 5px #ffc107, 0 0 10px #ffc107'">
+                    <img src="../../assets/images/homecustomer/logo.png" class="logo-icon" alt="logo icon"
+                        style="width: 60px; height: 50px;">
                     <span style="color: #ffc107; font-style: italic;">NH</span>Travel
                 </router-link>
 

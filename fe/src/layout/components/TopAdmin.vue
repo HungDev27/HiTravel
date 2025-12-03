@@ -1,9 +1,9 @@
 <template>
-    <div class="topbar d-flex align-items-center">
-        <nav class="navbar navbar-expand">
+    <div class="topbar d-flex align-items-center" >
+        <nav class="navbar navbar-expand" style="justify-content: space-between;">
 
             <!-- Logo -->
-            <div class="topbar-logo-header" style="margin-left: 1cm;">
+            <div class="topbar-logo-header">
                 <img src="../../assets/images/anh/logoNHTravel.jpg" class="logo-icon" alt="logo icon"
                     style="width: 60px; height: 40px;">
                 <h4 class="logo-text" style="font-size: 2.1rem;"><b><i>NHTravel</i></b></h4>
@@ -11,17 +11,6 @@
 
             <!-- Mobile toggle -->
             <div class="mobile-toggle-menu"><i class='bx bx-menu'></i></div>
-
-            <!-- Search bar -->
-            <div class="search-bar flex-grow-1">
-                <div class="position-relative search-bar-box">
-                    <input type="text" class="form-control search-control" placeholder="Tìm Kiếm?">
-                    <span class="position-absolute top-50 search-show translate-middle-y"><i
-                            class='bx bx-search'></i></span>
-                    <span class="position-absolute top-50 search-close translate-middle-y"><i
-                            class='bx bx-x'></i></span>
-                </div>
-            </div>
 
             <!-- User Box -->
             <div class="user-box dropdown" style="margin-right: 2cm;">
@@ -129,4 +118,13 @@ export default {
     border-radius: 50%;
     object-fit: cover;
 }
+.topbar {
+    position: sticky;
+    top: 0;
+    background: #fff;
+    z-index: 50 !important; /* luôn nằm trên sidebar */
+    height: 70px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
 </style>

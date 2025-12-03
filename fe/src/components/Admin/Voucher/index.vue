@@ -1,5 +1,5 @@
 <template>
-  <div class="container-fluid p-0">
+  <div class="container-fluid p-5">
     <div class="d-flex flex-wrap justify-content-between align-items-center gap-3 mb-4">
 
       <!-- Tính tổng -->

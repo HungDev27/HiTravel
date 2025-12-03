@@ -105,7 +105,7 @@ const routes = [
     meta: { layout: "customer" },
   },
   {
-    path: "/chi-tiet-bai-viet/:idz",
+    path: "/chi-tiet-bai-viet/:id",
     component: () =>
       import("../components/Customer/ChiTietBV/ChiTietBaiViet.vue"),
     meta: { layout: "customer" },

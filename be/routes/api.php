@@ -12,10 +12,12 @@ use App\Http\Controllers\MaGiamGiaController;
 use App\Http\Controllers\NguoiDungController;
 use App\Http\Controllers\PhanQuyenController;
 use App\Http\Controllers\PhuongTienController;
+use App\Http\Controllers\ThongTinLienHeController;
 use App\Http\Controllers\TourDuLichController;
 use App\Http\Controllers\TourPhuongTienController;
 use App\Http\Controllers\TrangChuController;
 use App\Models\NguoiDung;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -81,6 +83,14 @@ Route::get('/admin/binh-luan/get-data', [DanhGiaController::class, 'getData']);
 Route::post('/admin/binh-luan/delete', [DanhGiaController::class, 'destroy']);
 Route::post('/admin/binh-luan/tim-kiem', [DanhGiaController::class, 'search']);
 Route::post('/admin/binh-luan/phan-hoi', [DanhGiaController::class, 'phanHoi']);
+
+
+//Khách hàng liên hệ 
+Route::post('/admin/lien-he/guiThongTin', [ThongTinLienHeController::class, 'guiThongTin']);
+//admin liên hệ
+Route::get('/admin/lien-he/get-data', [ThongTinLienHeController::class, 'getData']);
+Route::post('/admin/lien-he/delete', [ThongTinLienHeController::class, 'destroy']);
+Route::post('/admin/lien-he/change-status', [ThongTinLienHeController::class, 'changeStatus']);
 
 
 

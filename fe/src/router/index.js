@@ -34,8 +34,8 @@ const routes = [
     beforeEnter: checkToken,
   },
   {
-    path: "/admin/bai-viet",
-    component: () => import("../components/Admin/BaiViet/index.vue"),
+    path: "/admin/lien-he",
+    component: () => import("../components/Admin/LienHe/index.vue"),
     beforeEnter: checkToken,
   },
   {

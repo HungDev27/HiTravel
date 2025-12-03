@@ -59,7 +59,7 @@ Route::post('/admin/ma-giam-gia/tim-kiem', [MaGiamGiaController::class, 'findmaG
 
 
 //QL Booking Tour
-Route::get('/admin/dat-tour/get-data', [DatTourController::class, 'getData']);
+Route::get('/admin/chi-tiet-dat-tour/get-data', [DatTourController::class, 'getData']);
 Route::post('/admin/dat-tour/delete', [DatTourController::class, 'destroy']);
 Route::post('/admin/dat-tour/change-status', [DatTourController::class, 'changeStatus']);
 Route::post('/admin/dat-tour/loc-thong-tin', [DatTourController::class, 'locThongTin']);
@@ -91,6 +91,8 @@ Route::post('/admin/lien-he/guiThongTin', [ThongTinLienHeController::class, 'gui
 Route::get('/admin/lien-he/get-data', [ThongTinLienHeController::class, 'getData']);
 Route::post('/admin/lien-he/delete', [ThongTinLienHeController::class, 'destroy']);
 Route::post('/admin/lien-he/change-status', [ThongTinLienHeController::class, 'changeStatus']);
+Route::post('/admin/binh-luan/change-status', [DanhGiaController::class, 'changeStatus']);
+Route::post('/admin/binh-luan/tim-kiem', [DanhGiaController::class, 'search']);
 
 
 
@@ -120,8 +122,14 @@ Route::middleware('auth:sanctum')->delete('/admin/tour/delete/{id}', [TourDuLich
 Route::middleware('auth:sanctum')->get('/admin/dashboard', [TrangChuController::class, 'tongDuLieu']);
 Route::middleware('auth:sanctum')->get('/admin/doanh-thu-ngay', [TrangChuController::class, 'doanhThuTheoNgay']);
 Route::middleware('auth:sanctum')->get('/admin/thong-ke-doanh-thu', [TrangChuController::class, 'thongKeDoanhThuTheoThang']);
-
-
+Route::middleware('auth:sanctum')->get('/admin/top-tour-thang', [TrangChuController::class, 'topTourTheoThang']);
+//người dùng
+Route::middleware('auth:sanctum')->get('/admin/nguoi-dung', [NguoiDungController::class, 'getNguoiDung']);
+Route::middleware('auth:sanctum')->get('/admin/nguoi-dung/chi-tiet-nguoi-dung', [NguoiDungController::class, 'chiTietNguoiDung']);
+Route::middleware('auth:sanctum')->post('/admin/nguoi-dung/them-nguoi-dung', [NguoiDungController::class, 'themNguoiDung']);
+Route::middleware('auth:sanctum')->post('/admin/nguoi-dung/sua-nguoi-dung', [NguoiDungController::class, 'suaNguoiDung']);
+Route::middleware('auth:sanctum')->post('/admin/nguoi-dung/xoa-nguoi-dung', [NguoiDungController::class, 'xoaNguoiDung']);
+Route::post('/admin/nguoi-dung/tim-kiem', [NguoiDungController::class, 'timKiem']);
 // =========================================================
 // ======================= CLIENT ==========================
 // =========================================================
@@ -138,10 +146,20 @@ Route::prefix('customer')->group(function () {
     // Chi Tiết Tour
     Route::post('/chi-tiet-tour/get-data', [ChiTietTourController::class, 'getDataTour']);
 
+    // Đặt Tour
+    Route::post('/chi-tiet-dat-tour/get-data', [DatTourController::class, 'getDatTour']);
+    Route::post('/dat-tour/tinh-tien', [DatTourController::class, 'tinhTien']);
+    Route::post('/dat-tour/dat', [DatTourController::class, 'store']);
+
+    // Voucher
+    Route::get('/voucher/list', [MaGiamGiaController::class, 'getVoucher']);
+
     // BINH LUAN
     Route::middleware('auth:sanctum')->post(
         '/chi-tiet-tour/binh-luan',
         [DanhGiaController::class, 'binhLuantour']
     );
     Route::get('/chi-tiet-tour/binh-luan/get-data/{id}', [DanhGiaController::class, 'getDataCustomerBinhLuan']);
+    Route::get('/chi-tiet-tour/diem-trung-binh/{id_tour}', [DanhGiaController::class, 'getDiemTrungBinh']);
+
 });

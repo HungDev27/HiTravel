@@ -162,12 +162,7 @@ class TrangChuController extends Controller
         $raw = DatTour::selectRaw('id_tour, COUNT(*) as so_luot')
             ->whereYear('ngay_dat', $year)
             ->whereMonth('ngay_dat', $month)
-            ->whereHas('thanhToan', function ($q) {
-                $q->where(function ($t) {
-                    $t->where('trang_thai', 'success')
-                        ->orWhere('trang_thai', 'thanh_cong');
-                });
-            })
+            ->where('trang_thai', 'da_thanh_toan')   // 🔥 chỉ lấy tour đã thanh toán
             ->groupBy('id_tour')
             ->orderByDesc('so_luot')
             ->with('tour:id,ten_tour')

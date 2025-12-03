@@ -18,8 +18,8 @@ class DanhGiaController
                 'danh_gias.*',
                 'nguoi_dungs.ho_ten',
                 'nguoi_dungs.email',
-                'tour_du_liches.ten_tour',
                 'danh_gias.phan_hoi',
+                'tour_du_liches.ten_tour'
             )
             ->orderBy('danh_gias.id', 'DESC')
             ->get();
@@ -91,12 +91,13 @@ class DanhGiaController
             ->join('tour_du_liches', 'tour_du_liches.id', '=', 'danh_gias.id_tour')
             ->where(function ($query) use ($keyword) {
                 $query->where('nguoi_dungs.ho_ten', 'like', $keyword)
-                    ->orWhere('danh_gias.binh_luan', 'like', $keyword);
+                    ->orWhere('danh_gias.binh_luan', 'like', $keyword)
+                    ->orWhere('tour_du_liches.ten_tour', 'like', $keyword);
             })
             ->select(
                 'danh_gias.*',
                 'nguoi_dungs.ho_ten',
-
+                'tour_du_liches.ten_tour'
             )
             ->get();
 
@@ -114,11 +115,23 @@ class DanhGiaController
             ->join('nguoi_dungs', 'nguoi_dungs.id', 'danh_gias.id_nguoi_dung')
             ->where('danh_gias.trang_thai', 'hien_thi')
             ->select('danh_gias.*', 'nguoi_dungs.ho_ten', 'nguoi_dungs.avatar')
-            ->get();
+            ->get()
+            ->map(function ($item) {
+                // Nếu hinh_anh là string và có thể decode
+                if (is_string($item->hinh_anh)) {
+                    $decoded = json_decode($item->hinh_anh, true);
+                    $item->hinh_anh = is_array($decoded) ? $decoded : [];
+                }
+                return $item;
+            });
+
+
+
         return response()->json([
-            'data'   =>  $data
+            'data' => $data
         ]);
     }
+
 
     public function binhLuantour(Request $request)
     {
@@ -210,6 +223,20 @@ class DanhGiaController
         return response()->json([
             'status' => 1,
             'message' => 'Cập nhật phản hồi thành công!'
+        ]);
+    }
+
+    public function getDiemTrungBinh($id_tour)
+    {
+        $danh_gia = DanhGia::where('id_tour', $id_tour)
+            ->where('trang_thai', 'hien_thi') // Chỉ lấy đánh giá đã duyệt
+            ->selectRaw('AVG(diem) as diem_tb, COUNT(*) as so_luong')
+            ->first();
+
+        return response()->json([
+            'status'    => true,
+            'diem_tb'   => round($danh_gia->diem_tb, 1), // Làm tròn 1 chữ số thập phân
+            'so_luong'  => $danh_gia->so_luong,
         ]);
     }
 }

@@ -25,33 +25,18 @@
                         </li>
                     </router-link>
 
-
-                    <li class="nav-item dropdown">
-                        <a href="javascript:;" class="nav-link dropdown-toggle dropdown-toggle-nocaret show"
-                            data-bs-toggle="dropdown" aria-expanded="true">
-                            <div class="parent-icon"><i class="fa-solid fa-user-group"></i>
-                            </div>
-                            <div class="menu-title">Quản lý tài khoản</div>
-                        </a>
-                        <ul class="dropdown-menu show" data-bs-popper="static">
-                            <router-link to="/admin/nhan-vien">
-                                <li>
-                                    <a class="dropdown-item" href="/admin/nhan-vien"><i
-                                            class="bx bx-right-arrow-alt"></i>Tài Khoản Nhân
-                                        viên</a>
-                                </li>
-                            </router-link>
-                            <router-link to="/admin/khach-hang">
-                                <li>
-                                    <a class="dropdown-item" href="/admin/khach-hang"><i
-                                            class="bx bx-right-arrow-alt"></i>Tài khoản Khách
-                                        hàng</a>
-                                </li>
-                            </router-link>
-                        </ul>
-                    </li>
-
-
+                    <!-- qly người dùng -->
+                    <router-link to="/admin/nguoi-dung">
+                        <li class="nav-item">
+                            <a class="nav-link" href="/admin/nguoi-dung">
+                                <div class="parent-icon">
+                                    <i class="fa-solid fa-user-group"></i>
+                                </div>
+                                <div class="menu-title">Quản lý tài khoản</div>
+                            </a>
+                        </li>
+                    </router-link>
+                    
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle dropdown-toggle-nocaret" href="javascript:;"
                             data-bs-toggle="dropdown">

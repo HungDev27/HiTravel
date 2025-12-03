@@ -28,8 +28,8 @@ class MaGiamGiaController
         $id_chuc_vu   = Auth::guard('sanctum')->user()->id_chuc_vu;
 
         $check = PhanQuyen::where('id_chuc_vu', $id_chuc_vu)
-                          ->where('id_chuc_nang', $id_chuc_nang)
-                          ->first();
+            ->where('id_chuc_nang', $id_chuc_nang)
+            ->first();
 
         if (!$check) {
             return response()->json([
@@ -60,8 +60,8 @@ class MaGiamGiaController
         $id_chuc_vu   = Auth::guard('sanctum')->user()->id_chuc_vu;
 
         $check = PhanQuyen::where('id_chuc_vu', $id_chuc_vu)
-                          ->where('id_chuc_nang', $id_chuc_nang)
-                          ->first();
+            ->where('id_chuc_nang', $id_chuc_nang)
+            ->first();
 
         if (!$check) {
             return response()->json([
@@ -90,8 +90,8 @@ class MaGiamGiaController
         $id_chuc_vu   = Auth::guard('sanctum')->user()->id_chuc_vu;
 
         $check = PhanQuyen::where('id_chuc_vu', $id_chuc_vu)
-                          ->where('id_chuc_nang', $id_chuc_nang)
-                          ->first();
+            ->where('id_chuc_nang', $id_chuc_nang)
+            ->first();
 
         if (!$check) {
             return response()->json([
@@ -99,21 +99,22 @@ class MaGiamGiaController
                 'message'   =>  'Bạn không có quyền thực hiện chức năng này!'
             ]);
         }
-        
+
         MaGiamGia::where('id', $request->id)->delete();
         return response()->json([
             'status' => true,
             'message' => 'Xóa mã giảm giá thành công',
         ]);
     }
+
     public function changeStatus(Request $request)
     {
         $id_chuc_nang = 3;
         $id_chuc_vu   = Auth::guard('sanctum')->user()->id_chuc_vu;
 
         $check = PhanQuyen::where('id_chuc_vu', $id_chuc_vu)
-                          ->where('id_chuc_nang', $id_chuc_nang)
-                          ->first();
+            ->where('id_chuc_nang', $id_chuc_nang)
+            ->first();
 
         if (!$check) {
             return response()->json([
@@ -121,22 +122,37 @@ class MaGiamGiaController
                 'message'   =>  'Bạn không có quyền thực hiện chức năng này!'
             ]);
         }
-        $maGiamGia = MaGiamGia::where('id',$request->id)->first();
-        $maGiamGia->trang_thai = !$request->trang_thai;
-        $maGiamGia->save();
+
+        $ma = MaGiamGia::find($request->id);
+
+        if (!$ma) {
+            return response()->json([
+                'status' => 0,
+                'message' => 'Không tìm thấy mã giảm giá'
+            ]);
+        }
+
+        $ma->trang_thai = $ma->trang_thai === 'con_hieu_luc'
+            ? 'het_hieu_luc'
+            : 'con_hieu_luc';
+
+        $ma->save();
+
         return response()->json([
             'status' => true,
             'message' => 'Cập nhật trạng thái mã giảm giá thành công',
+            'trang_thai_moi' => $ma->trang_thai
         ]);
     }
+
     public function findmaGiamGia(Request $request)
     {
         $id_chuc_nang = 3;
         $id_chuc_vu   = Auth::guard('sanctum')->user()->id_chuc_vu;
 
         $check = PhanQuyen::where('id_chuc_vu', $id_chuc_vu)
-                          ->where('id_chuc_nang', $id_chuc_nang)
-                          ->first();
+            ->where('id_chuc_nang', $id_chuc_nang)
+            ->first();
 
         if (!$check) {
             return response()->json([
@@ -144,7 +160,7 @@ class MaGiamGiaController
                 'message'   =>  'Bạn không có quyền thực hiện chức năng này!'
             ]);
         }
-        $now= Carbon::now();
+        $now = Carbon::now();
         $data = MaGiamGia::where('ma', $request->ma)
             ->where('trang_thai', 1)
             ->where('so_luong', '>', 0)
@@ -163,5 +179,18 @@ class MaGiamGiaController
                 'message' => 'Mã giảm giá không hợp lệ hoặc đã hết hạn',
             ]);
         }
+    }
+
+    //Bên khách hàng
+    public function getVoucher()
+    {
+        $data = MaGiamGia::where('trang_thai', 'con_hieu_luc')
+            ->where('so_luong', '>', 0)
+            ->get();
+
+        return response()->json([
+            'status' => true,
+            'voucher' => $data
+        ]);
     }
 }

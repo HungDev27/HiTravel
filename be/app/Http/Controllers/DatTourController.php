@@ -65,7 +65,7 @@ class DatTourController extends Controller
                 Rule::in(['cho_xu_ly', 'da_thanh_toan', 'da_huy']),
             ],
         ]);
-        
+
         $booking = DatTour::find($request->id);
 
         if (!$booking) {
@@ -190,83 +190,94 @@ class DatTourController extends Controller
 
 
     public function store(Request $request)
-{
-    $request->validate([
-        'id_khach_hang'   => 'required|integer',
-        'id_tour'         => 'required|integer',
-        'so_nguoi_lon'    => 'required|integer|min:1',
-        'so_tre_em'       => 'required|integer|min:0',
-        'id_ma_giam_gia'  => 'nullable|integer',
+    {
+        $request->validate([
+            'id_khach_hang'   => 'required|integer',
+            'id_tour'         => 'required|integer',
+            'so_nguoi_lon'    => 'required|integer|min:1',
+            'so_tre_em'       => 'required|integer|min:0',
+            'id_ma_giam_gia'  => 'nullable|integer',
 
-        'ten_lien_lac'    => 'required|string',
-        'email_lien_lac'  => 'required|email',
-        'so_dien_thoai_lien_lac' => 'required|string',
-        'dia_chi_lien_lac' => 'nullable|string',
-    ]);
+            'ten_lien_lac'    => 'required|string',
+            'email_lien_lac'  => 'required|email',
+            'so_dien_thoai_lien_lac' => 'required|string',
+            'dia_chi_lien_lac' => 'nullable|string',
+        ]);
 
-    $tour = TourDuLich::find($request->id_tour);
+        $tour = TourDuLich::find($request->id_tour);
 
-    if (!$tour) {
-        return response()->json([
-            'status'  => false,
-            'message' => 'Không tìm thấy tour',
-        ], 404);
-    }
-
-    $voucher = null;
-    if ($request->id_ma_giam_gia) {
-        $voucher = MaGiamGia::find($request->id_ma_giam_gia);
-
-        if (!$voucher || $voucher->so_luong <= 0) {
+        if (!$tour) {
             return response()->json([
                 'status'  => false,
-                'message' => 'Mã giảm giá không hợp lệ hoặc đã hết số lượt',
-            ], 400);
+                'message' => 'Không tìm thấy tour',
+            ], 404);
         }
+
+        $voucher = null;
+        if ($request->id_ma_giam_gia) {
+            $voucher = MaGiamGia::find($request->id_ma_giam_gia);
+
+            if (!$voucher || $voucher->so_luong <= 0) {
+                return response()->json([
+                    'status'  => false,
+                    'message' => 'Mã giảm giá không hợp lệ hoặc đã hết số lượt',
+                ], 400);
+            }
+        }
+
+        [$tongTien, $giamGia, $tienThucNhan] = $this->calculateAmounts(
+            $tour,
+            $request->so_nguoi_lon,
+            $request->so_tre_em,
+            $voucher
+        );
+
+        $maDonHang = 'T' . now()->format('YmdHis') . rand(100, 999);
+
+        $tong_khach = $request->so_nguoi_lon + $request->so_tre_em;
+
+        if ($tour->so_cho_con < $tong_khach) {
+            return response()->json([
+                'status' => false,
+                'message' => 'Số chỗ còn lại không đủ!'
+            ]);
+        }
+
+        // Trừ chỗ
+        $tour->so_cho_con -= $tong_khach;
+        $tour->save();
+
+        $booking = DatTour::create([
+            'id_khach_hang'   => $request->id_khach_hang,
+            'id_tour'         => $request->id_tour,
+            'ma_don_hang'     => $maDonHang,
+            'ngay_dat'        => now(),
+
+            'so_nguoi_lon'    => $request->so_nguoi_lon,
+            'so_tre_em'       => $request->so_tre_em,
+            'tong_tien'       => $tongTien,
+            'giam_gia'        => $giamGia,
+            'tien_thuc_nhan'  => $tienThucNhan,
+
+            'id_ma_giam_gia'  => $voucher ? $voucher->id : null,
+
+            'ten_lien_lac'    => $request->ten_lien_lac,
+            'email_lien_lac'  => $request->email_lien_lac,
+            'so_dien_thoai_lien_lac' => $request->so_dien_thoai_lien_lac,
+            'dia_chi_lien_lac' => $request->dia_chi_lien_lac,
+
+            'trang_thai'      => 'cho_xu_ly',
+        ]);
+
+        if ($voucher) {
+            $voucher->so_luong -= 1;
+            $voucher->save();
+        }
+
+        return response()->json([
+            'status'  => true,
+            'message' => 'Đặt tour thành công',
+            'data'    => $booking,
+        ]);
     }
-
-    [$tongTien, $giamGia, $tienThucNhan] = $this->calculateAmounts(
-        $tour,
-        $request->so_nguoi_lon,
-        $request->so_tre_em,
-        $voucher
-    );
-
-    $maDonHang = 'T' . now()->format('YmdHis') . rand(100, 999);
-
-    $booking = DatTour::create([
-        'id_khach_hang'   => $request->id_khach_hang,
-        'id_tour'         => $request->id_tour,
-        'ma_don_hang'     => $maDonHang,
-        'ngay_dat'        => now(),
-
-        'so_nguoi_lon'    => $request->so_nguoi_lon,
-        'so_tre_em'       => $request->so_tre_em,
-        'tong_tien'       => $tongTien,
-        'giam_gia'        => $giamGia,
-        'tien_thuc_nhan'  => $tienThucNhan,
-
-        'id_ma_giam_gia'  => $voucher ? $voucher->id : null,
-
-        // ⭐ THÔNG TIN LIÊN LẠC
-        'ten_lien_lac'    => $request->ten_lien_lac,
-        'email_lien_lac'  => $request->email_lien_lac,
-        'so_dien_thoai_lien_lac' => $request->so_dien_thoai_lien_lac,
-        'dia_chi_lien_lac' => $request->dia_chi_lien_lac,
-
-        'trang_thai'      => 'cho_xu_ly',
-    ]);
-
-    if ($voucher) {
-        $voucher->so_luong -= 1;
-        $voucher->save();
-    }
-
-    return response()->json([
-        'status'  => true,
-        'message' => 'Đặt tour thành công',
-        'data'    => $booking,
-    ]);
-}
-
 }

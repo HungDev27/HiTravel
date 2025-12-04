@@ -37,6 +37,7 @@ class CheckoutController
     $vnp_Amount = $data['total_vnpay'] * 100;
     $vnp_Locale = "vn";
     $vnp_IpAddr = $_SERVER['REMOTE_ADDR'];
+    
 
     $inputData = array(
         "vnp_Version" => "2.1.0",
@@ -50,7 +51,7 @@ class CheckoutController
         "vnp_OrderInfo" => $vnp_OrderInfo,
         "vnp_OrderType" => $vnp_OrderType,
         "vnp_ReturnUrl" => $vnp_Returnurl,
-        "vnp_TxnRef" => $vnp_TxnRef
+        "vnp_TxnRef" => $vnp_TxnRef,
     );
 
     ksort($inputData);

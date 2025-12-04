@@ -10,7 +10,7 @@
             <TopAdmin />
 
             <!-- CONTENT -->
-            <div class="page-content">
+            <div class="page-content content-wrapper" style="margin-top: 70px;">
                 <router-view></router-view>
             </div>
 
@@ -86,4 +86,12 @@ export default {
     from { opacity: 0; transform: translateY(5px); }
     to { opacity: 1; transform: translateY(0); }
 }
+
+.content-wrapper {
+  margin-left: 260px;
+  padding: 20px;
+  width: calc(100% - 260px); /* giữ cho nội dung không tràn */
+}
+
+
 </style>

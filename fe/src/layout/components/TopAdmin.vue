@@ -119,12 +119,15 @@ export default {
     object-fit: cover;
 }
 .topbar {
-    position: sticky;
-    top: 0;
-    background: #fff;
-    z-index: 50 !important; /* luôn nằm trên sidebar */
-    height: 70px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+  position: fixed;       /* ✅ Dùng fixed thay cho sticky */
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 70px;
+  background: #fff;
+  z-index: 999;           /* ✅ Đảm bảo nằm trên sidebar và các phần khác */
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
 }
+
 
 </style>

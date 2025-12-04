@@ -1,7 +1,7 @@
 <template>
   <div class="sidebar">
 
-    <nav class="menu">
+    <nav class="menu" style="margin-top: 100px;">
 
       <!-- Dashboard -->
       <router-link to="/admin" class="menu-item" active-class="active">
@@ -98,18 +98,20 @@ export default {
 </script>
 
 <style scoped>
-/* SIDEBAR */
 .sidebar {
   width: 260px;
-  min-height: 100vh;
+  height: 100vh;
   background: #1e293b;
   padding: 25px 0;
-  position: sticky;
+  position: fixed;      /* ✅ Sửa từ sticky → fixed */
   top: 0;
+  left: 0;
   z-index: 10;
   display: flex;
   flex-direction: column;
+  overflow-y: auto;     /* ✅ Cho phép cuộn nếu menu dài */
 }
+
 
 /* MENU WRAPPER */
 .menu {
@@ -188,7 +190,6 @@ export default {
 .menu-group:last-child {
   border-bottom: none;
 }
-
 
 
 </style>

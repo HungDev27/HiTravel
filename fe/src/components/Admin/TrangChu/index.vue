@@ -161,7 +161,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr v-for="(value, index) in list_don_dat_moi.slice(0, 6)" :key="index">
+                                    <tr v-for="(value, index) in list_don_dat_moi.slice(0, 8)" :key="index">
                                         <td class="align-middle text-center">{{ index + 1 }}</td>
                                         <td class="align-middle ">{{ value.ten_khach_hang }}</td>
                                         <td class="align-middle ">{{ value.ten_tour }}</td>
@@ -394,7 +394,7 @@ export default {
                 .catch(err => console.error(err));
         },
         getDanhSach() {
-            axios.get('http://127.0.0.1:8000/api/admin/dat-tour/get-data')
+            axios.get('http://127.0.0.1:8000/api/admin/chi-tiet-dat-tour/get-data')
                 .then(res => {
                     this.list_don_dat_moi = res.data.data;
                 });

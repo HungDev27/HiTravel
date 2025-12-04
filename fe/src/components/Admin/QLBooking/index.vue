@@ -293,7 +293,7 @@ export default {
         // LẤY DANH SÁCH
         getDanhSach() {
             this.loading = true; // Bắt đầu tải
-            axios.get('http://127.0.0.1:8000/api/admin/dat-tour/get-data')
+            axios.get('http://127.0.0.1:8000/api/admin/chi-tiet-dat-tour/get-data')
                 .then(res => {
                     this.list_dsBooking = res.data.data;
                 })

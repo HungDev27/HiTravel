@@ -21,7 +21,7 @@
                 <div class="card-body p-4">
                     <div class="row align-items-center">
                         <div class="col-lg-5 d-flex align-items-center">
-                            
+
                             <div class="text-nowrap" style="position: relative;">
                                 <span style="
                                     position: absolute; top: -12px; left: -12px; 
@@ -36,8 +36,9 @@
                             </div>
 
                             <div style="padding-left: 15px;">
-                                <h5 class="fw-bolder mb-1 text-truncate" style="color: #007bff; font-size: 1.1rem; max-width: 90%;">{{
-                                    value.tour.ten_tour }}</h5>
+                                <h5 class="fw-bolder mb-1 text-truncate"
+                                    style="color: #007bff; font-size: 1.1rem; max-width: 90%;">{{
+                                        value.tour.ten_tour }}</h5>
                                 <small class="d-block" style="color: #6c757d; font-size: 0.85rem;">Mã Đơn:
                                     **{{ value.ma_don_hang }}**</small>
                                 <small class="d-block" style="color: #6c757d; font-size: 0.85rem;">Ngày Đặt:
@@ -49,18 +50,28 @@
 
                         <div class="col-lg-3 py-1 text-center" style="border-right: 1px dashed #dee2e6;">
                             <div class="row g-0" style="font-size: 0.9rem;">
-                                <div class="col-6 mb-2"><strong><i class="fa-solid fa-plane-departure me-1 text-info"></i> Đi:</strong>
-                                    <span class="d-block fw-bold">{{ formatDate(value.tour.ngay_di) }}</span></div>
-                                <div class="col-6 mb-2"><strong><i class="fa-solid fa-users me-1 text-secondary"></i> Khách:</strong>
-                                    <span class="d-block fw-bold">{{ value.so_nguoi_lon }} NL, {{ value.so_tre_em }} TE</span></div>
-                                <div class="col-6"><strong><i class="fa-solid fa-plane-arrival me-1 text-info"></i> Về:</strong>
-                                    <span class="d-block fw-bold">{{ formatDate(value.tour.ngay_ve) }}</span></div>
-                                <div class="col-6"><strong><i class="fa-solid fa-tag me-1 text-success"></i> Voucher:</strong> 
-                                    <span class="d-block fw-bold text-success">{{ value.voucher?.ma || 'N/A' }}</span></div>
+                                <div class="col-6 mb-2"><strong><i
+                                            class="fa-solid fa-plane-departure me-1 text-info"></i> Đi:</strong>
+                                    <span class="d-block fw-bold">{{ formatDate(value.tour.ngay_di) }}</span>
+                                </div>
+                                <div class="col-6 mb-2"><strong><i class="fa-solid fa-users me-1 text-secondary"></i>
+                                        Khách:</strong>
+                                    <span class="d-block fw-bold">{{ value.so_nguoi_lon }} NL, {{ value.so_tre_em }}
+                                        TE</span>
+                                </div>
+                                <div class="col-6"><strong><i class="fa-solid fa-plane-arrival me-1 text-info"></i>
+                                        Về:</strong>
+                                    <span class="d-block fw-bold">{{ formatDate(value.tour.ngay_ve) }}</span>
+                                </div>
+                                <div class="col-6"><strong><i class="fa-solid fa-tag me-1 text-success"></i>
+                                        Voucher:</strong>
+                                    <span class="d-block fw-bold text-success">{{ value.voucher?.ma || 'N/A' }}</span>
+                                </div>
                             </div>
                         </div>
 
-                        <div class="col-lg-4 text-center text-lg-end d-flex flex-column justify-content-center align-items-center align-items-lg-end">
+                        <div
+                            class="col-lg-4 text-center text-lg-end d-flex flex-column justify-content-center align-items-center align-items-lg-end">
 
                             <div class="mb-3">
                                 <span class="text-muted d-block" style="font-size: 0.8rem;">Tổng tiền:</span>
@@ -102,13 +113,14 @@
                         border-radius: 15px; 
                         opacity: 0.8;
                         transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-                    " onmouseover="this.style.transform='translateY(-3px)'; this.style.boxShadow='0 8px 20px rgba(220, 53, 69, 0.2)'"
+                    "
+                onmouseover="this.style.transform='translateY(-3px)'; this.style.boxShadow='0 8px 20px rgba(220, 53, 69, 0.2)'"
                 onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 2px 5px rgba(0,0,0,0.1)'">
 
                 <div class="card-body p-4">
                     <div class="row align-items-center">
                         <div class="col-lg-5 d-flex align-items-center">
-                            
+
                             <div style="position: relative;">
                                 <span style="
                                     position: absolute; top: -12px; left: -12px; 
@@ -123,8 +135,9 @@
                             </div>
 
                             <div style="padding-left: 15px;">
-                                <h5 class="fw-bolder mb-1 text-truncate" style="color: #dc3545; font-size: 1.1rem; max-width: 90%;">{{
-                                    value.tour.ten_tour }}</h5>
+                                <h5 class="fw-bolder mb-1 text-truncate"
+                                    style="color: #dc3545; font-size: 1.1rem; max-width: 90%;">{{
+                                        value.tour.ten_tour }}</h5>
                                 <small class="d-block" style="color: #6c757d; font-size: 0.85rem;">Mã Đơn:
                                     **{{ value.ma_don_hang }}**</small>
                                 <small class="d-block" style="color: #6c757d; font-size: 0.85rem;">Ngày Đặt:
@@ -136,18 +149,26 @@
 
                         <div class="col-lg-3 py-1 text-center" style="border-right: 1px dashed #dee2e6;">
                             <div class="row g-0" style="font-size: 0.9rem; color: #6c757d;">
-                                <div class="col-6 mb-2"><strong><i class="fa-solid fa-plane-departure me-1 text-info"></i> Đi:</strong>
-                                    <span class="d-block fw-bold">{{ formatDate(value.tour.ngay_di) }}</span></div>
+                                <div class="col-6 mb-2"><strong><i
+                                            class="fa-solid fa-plane-departure me-1 text-info"></i> Đi:</strong>
+                                    <span class="d-block fw-bold">{{ formatDate(value.tour.ngay_di) }}</span>
+                                </div>
                                 <div class="col-6 mb-2"><strong><i class="fa-solid fa-users me-1"></i> Khách:</strong>
-                                    <span class="d-block fw-bold">{{ value.so_nguoi_lon }} NL, {{ value.so_tre_em }} TE</span></div>
-                                <div class="col-6"><strong><i class="fa-solid fa-plane-arrival me-1 text-info"></i> Về:</strong>
-                                    <span class="d-block fw-bold">{{ formatDate(value.tour.ngay_ve) }}</span></div>
-                                <div class="col-6"><strong><i class="fa-solid fa-tag me-1"></i> Voucher:</strong> 
-                                    <span class="d-block fw-bold">{{ value.voucher?.ma || 'N/A' }}</span></div>
+                                    <span class="d-block fw-bold">{{ value.so_nguoi_lon }} NL, {{ value.so_tre_em }}
+                                        TE</span>
+                                </div>
+                                <div class="col-6"><strong><i class="fa-solid fa-plane-arrival me-1 text-info"></i>
+                                        Về:</strong>
+                                    <span class="d-block fw-bold">{{ formatDate(value.tour.ngay_ve) }}</span>
+                                </div>
+                                <div class="col-6"><strong><i class="fa-solid fa-tag me-1"></i> Voucher:</strong>
+                                    <span class="d-block fw-bold">{{ value.voucher?.ma || 'N/A' }}</span>
+                                </div>
                             </div>
                         </div>
 
-                        <div class="col-lg-4 text-center text-lg-end d-flex flex-column justify-content-center align-items-center align-items-lg-end">
+                        <div
+                            class="col-lg-4 text-center text-lg-end d-flex flex-column justify-content-center align-items-center align-items-lg-end">
 
                             <div class="mb-3">
                                 <span class="text-muted d-block" style="font-size: 0.8rem;">Tổng đã đặt:</span>
@@ -174,18 +195,19 @@
                 </div>
             </div>
 
-            <div v-else class="card shadow-lg mb-5" style="
+            <div v-else-if="value.trang_thai === 'Success' || value.trang_thai === 'da_thanh_toan'" class="card shadow-lg mb-5" style="
                         border: 2px solid #28a745; 
                         border-radius: 15px; 
                         box-shadow: 0 8px 25px rgba(40, 167, 69, 0.2); /* Đổ bóng xanh */
                         transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-                    " onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='0 12px 30px rgba(40, 167, 69, 0.4)'"
+                    "
+                onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='0 12px 30px rgba(40, 167, 69, 0.4)'"
                 onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 8px 25px rgba(40, 167, 69, 0.2)'">
 
                 <div class="card-body p-4">
                     <div class="row align-items-center">
                         <div class="col-lg-5 d-flex align-items-center">
-                            
+
                             <div style="position: relative;">
                                 <span style="
                                     position: absolute; top: -12px; left: -12px; 
@@ -200,8 +222,9 @@
                             </div>
 
                             <div style="padding-left: 15px;">
-                                <h5 class="fw-bolder mb-1 text-truncate" style="color: #28a745; font-size: 1.1rem; max-width: 90%;">{{
-                                    value.tour.ten_tour }}</h5>
+                                <h5 class="fw-bolder mb-1 text-truncate"
+                                    style="color: #28a745; font-size: 1.1rem; max-width: 90%;">{{
+                                        value.tour.ten_tour }}</h5>
                                 <small class="d-block" style="color: #6c757d; font-size: 0.85rem;">Mã Đơn:
                                     **{{ value.ma_don_hang }}**</small>
                                 <small class="d-block" style="color: #6c757d; font-size: 0.85rem;">Ngày Đặt:
@@ -213,18 +236,28 @@
 
                         <div class="col-lg-3 py-1 text-center" style="border-right: 1px dashed #dee2e6;">
                             <div class="row g-0" style="font-size: 0.9rem;">
-                                <div class="col-6 mb-2"><strong><i class="fa-solid fa-plane-departure me-1 text-info"></i> Đi:</strong>
-                                    <span class="d-block fw-bold">{{ formatDate(value.tour.ngay_di) }}</span></div>
-                                <div class="col-6 mb-2"><strong><i class="fa-solid fa-users me-1 text-secondary"></i> Khách:</strong>
-                                    <span class="d-block fw-bold">{{ value.so_nguoi_lon }} NL, {{ value.so_tre_em }} TE</span></div>
-                                <div class="col-6"><strong><i class="fa-solid fa-plane-arrival me-1 text-info"></i> Về:</strong>
-                                    <span class="d-block fw-bold">{{ formatDate(value.tour.ngay_ve) }}</span></div>
-                                <div class="col-6"><strong><i class="fa-solid fa-tag me-1 text-success"></i> Voucher:</strong> 
-                                    <span class="d-block fw-bold text-success">{{ value.voucher?.ma || 'N/A' }}</span></div>
+                                <div class="col-6 mb-2"><strong><i
+                                            class="fa-solid fa-plane-departure me-1 text-info"></i> Đi:</strong>
+                                    <span class="d-block fw-bold">{{ formatDate(value.tour.ngay_di) }}</span>
+                                </div>
+                                <div class="col-6 mb-2"><strong><i class="fa-solid fa-users me-1 text-secondary"></i>
+                                        Khách:</strong>
+                                    <span class="d-block fw-bold">{{ value.so_nguoi_lon }} NL, {{ value.so_tre_em }}
+                                        TE</span>
+                                </div>
+                                <div class="col-6"><strong><i class="fa-solid fa-plane-arrival me-1 text-info"></i>
+                                        Về:</strong>
+                                    <span class="d-block fw-bold">{{ formatDate(value.tour.ngay_ve) }}</span>
+                                </div>
+                                <div class="col-6"><strong><i class="fa-solid fa-tag me-1 text-success"></i>
+                                        Voucher:</strong>
+                                    <span class="d-block fw-bold text-success">{{ value.voucher?.ma || 'N/A' }}</span>
+                                </div>
                             </div>
                         </div>
 
-                        <div class="col-lg-4 text-center text-lg-end d-flex flex-column justify-content-center align-items-center align-items-lg-end">
+                        <div
+                            class="col-lg-4 text-center text-lg-end d-flex flex-column justify-content-center align-items-center align-items-lg-end">
 
                             <div class="mb-3">
                                 <span class="text-muted d-block" style="font-size: 0.8rem;">Tổng đã trả:</span>
@@ -251,8 +284,9 @@
                 </div>
             </div>
         </template>
-        
-        <div v-if="list_dat_tour.length === 0" class="text-center p-5 shadow-sm" style="background-color: white; border-radius: 12px; border: 1px dashed #ddd;">
+
+        <div v-if="list_dat_tour.length === 0" class="text-center p-5 shadow-sm"
+            style="background-color: white; border-radius: 12px; border: 1px dashed #ddd;">
             <i class="fa-solid fa-box-open fa-3x text-secondary mb-3"></i>
             <h4 class="text-muted">Bạn chưa có đơn hàng nào.</h4>
             <p class="text-secondary">Hãy đặt chuyến đi đầu tiên của bạn ngay hôm nay!</p>
@@ -286,7 +320,7 @@
                         <p class="mb-0 fw-bold fs-4">
                             Tổng tiền cần trả: <br>
                             <span style="color: #dc3545;">{{ formatVND(don_hang_chon?.tien_thuc_nhan)
-                                }}</span>
+                            }}</span>
                         </p>
                     </div>
 
@@ -295,7 +329,8 @@
                 <div class="modal-footer justify-content-center" style="border-top: none; padding-bottom: 25px;">
                     <button class="btn btn-lg shadow" @click="thanhToanVNPAY"
                         style="background-color: #28a745; color: white; border-radius: 50rem; font-weight: bold; transition: all 0.3s;"
-                        onmouseover="this.style.backgroundColor='#1e7e34'" onmouseout="this.style.backgroundColor='#28a745'">
+                        onmouseover="this.style.backgroundColor='#1e7e34'"
+                        onmouseout="this.style.backgroundColor='#28a745'">
                         <i class="fa-solid fa-arrow-right-to-bracket me-2"></i> Thanh toán VNPay
                     </button>
                 </div>
@@ -362,17 +397,22 @@ export default {
                 return;
             }
 
+            // Gửi request tạo link
             axios.post("http://127.0.0.1:8000/api/payment/vnpay/create", {
                 ma_don_hang: this.don_hang_chon.ma_don_hang,
-                id_dat_tour: this.don_hang_chon.id,
+                id_dat_tour: this.don_hang_chon.id, // Backend sẽ dùng cái này làm TxnRef
                 total_vnpay: this.don_hang_chon.tien_thuc_nhan
             })
                 .then(res => {
-                    if (res.data.status) {
+                    // --- SỬA Ở ĐÂY ---
+                    // Backend trả về: { code: '00', data: 'url...' }
+                    if (res.data.status == true) {
+                        // Chuyển hướng sang VNPAY
                         window.location.href = res.data.payment_url;
                     } else {
                         this.$toast.error("Không tạo được liên kết thanh toán!");
                     }
+                    // -----------------
                 })
                 .catch(err => {
                     console.log(err);

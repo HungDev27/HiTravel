@@ -7,7 +7,17 @@ use Illuminate\Database\Eloquent\Model;
 class ChatbotLog extends Model
 {
     protected $table = 'chatbot_logs';
-    protected $fillable = ['id_khach_hang', 'noi_dung'];
+    
+    protected $fillable = [
+        'id_khach_hang',
+        'noi_dung',
+        'loai_tin_nhan'
+    ];
+
+    protected $casts = [
+        'created_at' => 'datetime',
+        'updated_at' => 'datetime'
+    ];
 
     public function khachHang()
     {

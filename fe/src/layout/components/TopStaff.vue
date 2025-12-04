@@ -4,7 +4,7 @@
         <nav class="navbar navbar-expand">
             <div class="topbar-logo-header" style="margin-left: 1cm;">
                 <div>
-                    <img src="/public/logoweb.png" class="logo-icon" alt="logo icon"
+                    <img src="/logoweb.png" class="logo-icon" alt="logo icon"
                         style="width: 60px; height: 40px;">
                 </div>
                 <div>

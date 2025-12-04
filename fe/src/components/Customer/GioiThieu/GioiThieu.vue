@@ -80,7 +80,7 @@
       style="padding:60px 20px; max-width:1100px; margin:0 auto; box-sizing:border-box; opacity:0; transform:translateY(30px); transition: all 0.8s ease;">
       <h2 style="text-align:center; font-size:2rem; margin-bottom:25px; color:#2c3e50;">Đội ngũ nhân sự</h2>
       <p style="font-size:1.1rem; line-height:1.6; color:#333;">
-        Với đội ngũ hơn 100 nhân sự trẻ trung, năng động và nhiệt huyết, BizTravel hiện đã xuất hiện tại khắp mọi miền
+        Với đội ngũ hơn 100 nhân sự trẻ trung, năng động và nhiệt huyết, NHTravel hiện đã xuất hiện tại khắp mọi miền
         Tổ quốc, trên các tính thành như: Hà Nội, thành phố Hồ Chí Minh, Đà Nẵng, Tuyên Quang, Thanh Hóa, Bắc Ninh,
         Quảng Ninh và Bắc Kạn. Không chỉ dừng lại ở đó, HiTravel đang tiếp tục mở rộng các đại lý bán nhằm tạo điều kiện
         thuận lợi nhất cho khách hàng trong giao dịch và tư vấn các dịch vụ, tour tuyến một cách tốt nhất và chu đáo

@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\BaiVietController;
 use App\Http\Controllers\CheckoutController;
+use App\Http\Controllers\ChatbotLogController;
 use App\Http\Controllers\ChiTietTourController;
 use App\Http\Controllers\ChucNangController;
 use App\Http\Controllers\ChucVuController;
@@ -182,3 +183,20 @@ Route::post('/payment/vnpay/create', [CheckoutController::class, 'vnpay_payment'
 Route::get('/payment/vnpay/return', [CheckoutController::class, 'vnpay_return']);
 // Route::get('/payment/vnpay/ipn', [CheckoutController::class, 'vnpay_ipn']);
 Route::get('/vnpay/ipn', [CheckoutController::class, 'vnpay_ipn']);
+
+// ===================== CHATBOT ===========================
+// Public endpoints (không cần authentication)
+Route::middleware([\App\Http\Middleware\HandleCors::class])->post('/chatbot/ask', [ChatbotLogController::class, 'askQuestion']);
+
+// Protected endpoints (cần authentication)
+Route::middleware(['auth:sanctum', \App\Http\Middleware\HandleCors::class])->group(function () {
+    Route::get('/chatbot/history/{userId}', [ChatbotLogController::class, 'getHistory']);
+    Route::post('/chatbot/send-message', [ChatbotLogController::class, 'sendMessage']);
+    Route::delete('/chatbot/clear-history/{userId}', [ChatbotLogController::class, 'clearHistory']);
+});
+
+// Admin endpoints
+Route::middleware(['auth:sanctum', \App\Http\Middleware\HandleCors::class])->group(function () {
+    Route::get('/admin/chatbot/logs', [ChatbotLogController::class, 'index']);
+    Route::delete('/admin/chatbot/logs/{id}', [ChatbotLogController::class, 'destroy']);
+});

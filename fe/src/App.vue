@@ -3,6 +3,9 @@
     <router-view></router-view>
   </component>
 
+  <!-- Chatbot Component -->
+  <Chatbot />
+
   <div v-if="!isAdminPage" id="button-contact-vr" style="position: fixed; bottom: 20px; left: 20px; z-index: 9999;">
 
     <div class="phone-vr" style="position: relative; width: 70px; height: 70px; margin-bottom: 15px; cursor: pointer;">
@@ -36,9 +39,14 @@
 </template>
 
 <script>
+import Chatbot from './components/Chatbot.vue'
+
 const default_layout = "default";
 
 export default {
+  components: {
+    Chatbot
+  },
   computed: {
     // 1. Xác định Layout dựa trên Meta của Route (AdminLayout hoặc ClientLayout)
     layout() {

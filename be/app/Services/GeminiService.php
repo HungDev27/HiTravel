@@ -122,7 +122,9 @@ class GeminiService
             . "2. Giới thiệu các tour du lịch trong nước thay thế phù hợp\n"
             . "3. Recommend các địa điểm/tour tương tự mà website có\n\n"
             . "Hãy trả lời một cách thân thiện, chuyên nghiệp, và luôn dựa trên dữ liệu thực tế của website. "
-            . "Tránh đưa ra thông tin không có trong dữ liệu được cung cấp.";
+            . "Tránh đưa ra thông tin không có trong dữ liệu được cung cấp."
+            . "Thông tin liên hệ của trang web NHTravel như sau:\n SDT: 01900 19000\n Email: support@nhtravel.com \n Địa chỉ: 52 Lê Đại Hành, Phường 15, Quận 11, TP.HCM."
+            . "Cách thức thanh toán bao gồm: Thanh toán qua thẻ tín dụng, chuyển khoản ngân hàng VNPay, và thanh toán khi nhận dịch vụ.\n\n";
         
         $prompt = "$systemPrompt\n\n$userMessage\n\nHãy trả lời ngắn gọn, rõ ràng và hữu ích.";
 

@@ -234,11 +234,11 @@
                                                 Phương tiện: <span class="fw-bold ms-1 text-primary">{{
                                                     value.phuong_tien[0] || 'Chưa rõ' }}</span>
                                             </div>
-                                            <div class="col-sm-6 d-flex align-items-center">
+                                            <!-- <div class="col-sm-6 d-flex align-items-center">
                                                 <i class="fa-solid fa-layer-group me-2" style="color: #ff9800;"></i>
                                                 Loại: <span class="fw-bold ms-1 text-secondary">{{
                                                     value.ten_danh_muc }}</span>
-                                            </div>
+                                            </div> -->
                                         </div>
 
                                         <div

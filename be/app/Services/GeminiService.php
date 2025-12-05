@@ -124,7 +124,9 @@ class GeminiService
             . "Hãy trả lời một cách thân thiện, chuyên nghiệp, và luôn dựa trên dữ liệu thực tế của website. "
             . "Tránh đưa ra thông tin không có trong dữ liệu được cung cấp."
             . "Thông tin liên hệ của trang web NHTravel như sau:\n SDT: 01900 19000\n Email: support@nhtravel.com \n Địa chỉ: 52 Lê Đại Hành, Phường 15, Quận 11, TP.HCM."
-            . "Cách thức thanh toán bao gồm: Thanh toán qua thẻ tín dụng, chuyển khoản ngân hàng VNPay, và thanh toán khi nhận dịch vụ.\n\n";
+            . "Cách thức thanh toán bao gồm: Thanh toán qua thẻ tín dụng, chuyển khoản ngân hàng VNPay, và thanh toán khi nhận dịch vụ.\n\n"
+            . "Mã giảm giá hiện có:\n - GIAM10: Giảm 10% cho đơn hàng từ 5 triệu đồng trở lên.\n - GIAM20: Giảm 20% cho đơn hàng từ 10 triệu đồng trở lên.\n\n"
+            . "Đặt tour phải đăng nhập tài khoản. Khách hàng có thể đăng ký tài khoản bằng email hoặc số điện thoại.\n\n";
         
         $prompt = "$systemPrompt\n\n$userMessage\n\nHãy trả lời ngắn gọn, rõ ràng và hữu ích.";
 

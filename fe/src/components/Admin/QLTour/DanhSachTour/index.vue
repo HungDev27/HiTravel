@@ -251,7 +251,7 @@
 
                     <div class="modal-footer">
                         <button class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
-                        <button class="btn btn-primary" @click="capNhatTour(editTour.id)">Lưu Thay Đổi</button>
+                        <button class="btn btn-primary" data-bs-dismiss="modal" @click="capNhatTour(editTour.id)">Lưu Thay Đổi</button>
                     </div>
 
                 </div>

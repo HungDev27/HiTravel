@@ -44,6 +44,54 @@ class TrangChuController extends Controller
         ]);
     }
 
+    // public function doanhThuTheoNgay(Request $request)
+    // {
+    //     $user = $request->user();
+    //     if (!$user) {
+    //         return response()->json([
+    //             'status' => 0,
+    //             'message' => 'Token không hợp lệ!'
+    //         ], 401);
+    //     }
+
+    //     // Ngày hôm nay
+    //     $ngayHienTai = now()->format('Y-m-d');
+
+    //     // Ngày hôm qua
+    //     $ngayHomQua = now()->subDay()->format('Y-m-d');
+
+    //     // Doanh thu hôm nay (dựa vào thoi_gian_thanh_toan)
+    //     $doanhThuHomNay = ThanhToan::where('trang_thai', 'success')
+    //         ->whereDate('thoi_gian_thanh_toan', $ngayHienTai)
+    //         ->sum('so_tien');
+
+    //     // Doanh thu hôm qua
+    //     $doanhThuHomQua = ThanhToan::where('trang_thai', 'success')
+    //         ->whereDate('thoi_gian_thanh_toan', $ngayHomQua)
+    //         ->sum('so_tien');
+
+    //     // Tính phần trăm
+    //     if ($doanhThuHomQua > 0) {
+    //         $phanTram = (($doanhThuHomNay - $doanhThuHomQua) / $doanhThuHomQua) * 100;
+    //     } else {
+    //         // Nếu hôm qua = 0
+    //         if ($doanhThuHomNay > 0) {
+    //             $phanTram = 100; // tăng mạnh
+    //         } else {
+    //             $phanTram = 0; // không doanh thu cả 2 ngày
+    //         }
+    //     }
+
+    //     return response()->json([
+    //         'status' => true,
+    //         'doanh_thu_hom_nay' => $doanhThuHomNay,
+    //         'doanh_thu_hom_qua' => $doanhThuHomQua,
+    //         'phan_tram' => round($phanTram, 2),
+    //         'ngay_hom_qua' => $ngayHomQua,
+    //         'ngay_hom_nay' => $ngayHienTai
+    //     ]);
+    // }
+
     public function doanhThuTheoNgay(Request $request)
     {
         $user = $request->user();
@@ -54,32 +102,25 @@ class TrangChuController extends Controller
             ], 401);
         }
 
-        // Ngày hôm nay
-        $ngayHienTai = now()->format('Y-m-d');
+        // Lấy ngày hôm nay và hôm qua
+        $ngayHienTai = now()->toDateString();       // YYYY-MM-DD
+        $ngayHomQua  = now()->subDay()->toDateString();
 
-        // Ngày hôm qua
-        $ngayHomQua = now()->subDay()->format('Y-m-d');
-
-        // Doanh thu hôm nay (dựa vào thoi_gian_thanh_toan)
-        $doanhThuHomNay = ThanhToan::where('trang_thai', 'success')
-            ->whereDate('thoi_gian_thanh_toan', $ngayHienTai)
+        // Doanh thu hôm nay (dùng created_at)
+        $doanhThuHomNay = ThanhToan::where('trang_thai', 'thanh_cong')
+            ->whereDate('created_at', $ngayHienTai)
             ->sum('so_tien');
 
         // Doanh thu hôm qua
-        $doanhThuHomQua = ThanhToan::where('trang_thai', 'success')
-            ->whereDate('thoi_gian_thanh_toan', $ngayHomQua)
+        $doanhThuHomQua = ThanhToan::where('trang_thai', 'thanh_cong')
+            ->whereDate('created_at', $ngayHomQua)
             ->sum('so_tien');
 
-        // Tính phần trăm
+        // Tính phần trăm biến động
         if ($doanhThuHomQua > 0) {
             $phanTram = (($doanhThuHomNay - $doanhThuHomQua) / $doanhThuHomQua) * 100;
         } else {
-            // Nếu hôm qua = 0
-            if ($doanhThuHomNay > 0) {
-                $phanTram = 100; // tăng mạnh
-            } else {
-                $phanTram = 0; // không doanh thu cả 2 ngày
-            }
+            $phanTram = $doanhThuHomNay > 0 ? 100 : 0;
         }
 
         return response()->json([
@@ -87,8 +128,8 @@ class TrangChuController extends Controller
             'doanh_thu_hom_nay' => $doanhThuHomNay,
             'doanh_thu_hom_qua' => $doanhThuHomQua,
             'phan_tram' => round($phanTram, 2),
-            'ngay_hom_qua' => $ngayHomQua,
-            'ngay_hom_nay' => $ngayHienTai
+            'ngay_hom_nay' => $ngayHienTai,
+            'ngay_hom_qua' => $ngayHomQua
         ]);
     }
 
